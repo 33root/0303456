@@ -85,6 +85,7 @@
             this.estadoChkBox.TabIndex = 4;
             this.estadoChkBox.Text = "Estado Activo";
             this.estadoChkBox.UseVisualStyleBackColor = true;
+            this.estadoChkBox.CheckedChanged += new System.EventHandler(this.estadoChkBox_CheckedChanged);
             // 
             // aceptarBtn
             // 

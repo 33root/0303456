@@ -72,6 +72,7 @@
             this.txbNombre.Name = "txbNombre";
             this.txbNombre.Size = new System.Drawing.Size(183, 20);
             this.txbNombre.TabIndex = 2;
+            this.txbNombre.TextChanged += new System.EventHandler(this.txbNombre_TextChanged);
             // 
             // txbApellido
             // 
@@ -79,6 +80,7 @@
             this.txbApellido.Name = "txbApellido";
             this.txbApellido.Size = new System.Drawing.Size(183, 20);
             this.txbApellido.TabIndex = 3;
+            this.txbApellido.TextChanged += new System.EventHandler(this.txbApellido_TextChanged);
             // 
             // label3
             // 
@@ -129,6 +131,7 @@
             this.txbMail.Name = "txbMail";
             this.txbMail.Size = new System.Drawing.Size(183, 20);
             this.txbMail.TabIndex = 9;
+            this.txbMail.TextChanged += new System.EventHandler(this.txbMail_TextChanged);
             // 
             // dataGridView1
             // 

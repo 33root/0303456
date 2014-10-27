@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using FrbaHotel.ABM_de_Hotel;
 using FrbaHotel.ABM_de_Habitacion;
 using FrbaHotel.ABM_de_Rol;
+using FrbaHotel.ABM_de_Cliente;
 
 
 namespace FrbaHotel.Menu
@@ -69,6 +70,14 @@ namespace FrbaHotel.Menu
             FormRol r = new FormRol();
             this.Hide();
             r.ShowDialog();
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FormBuscadorDeClientes b = new FormBuscadorDeClientes();
+            this.Hide();
+            b.ShowDialog();
             this.Close();
         }
 

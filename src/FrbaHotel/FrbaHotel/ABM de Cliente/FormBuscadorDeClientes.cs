@@ -21,7 +21,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void FormBuscadorDeClientes_Load(object sender, EventArgs e)
         {
-            string consulta = "SELECT Nro_Documento FROM AEFI.TL_Cliente ORDER BY Nro_Documento"; //me parece que esto tendria que ser un tipo de documento, que por ahora no esta en nuestra tabla de clientes
+            string consulta = "SELECT Descripcion FROM AEFI.TL_Tipo_Documento"; //me parece que esto tendria que ser un tipo de documento, que por ahora no esta en nuestra tabla de clientes
             try
             {
                 conexion.Open();
@@ -62,7 +62,7 @@ namespace FrbaHotel.ABM_de_Cliente
             {
                 conexion.Open();
                 string consulta = "SELECT ID_Usuario FROM AEFI.TL_Cliente " +
-                                  "WHERE Nro_Documento = " + dataGridView1.SelectedCells[4].Value;
+                                  "WHERE Documento_Nro = " + dataGridView1.SelectedCells[4].Value;
                 SqlCommand comando = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando.ExecuteReader();
                 reader.Read();
@@ -109,6 +109,21 @@ namespace FrbaHotel.ABM_de_Cliente
                 //alta.ShowDialog();
                 this.Close();
             }
+        }
+
+        private void txbNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txbMail_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txbApellido_TextChanged(object sender, EventArgs e)
+        {
+
         }      
     }
         }

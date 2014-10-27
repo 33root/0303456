@@ -79,7 +79,7 @@
             this.checkedListBox.TabIndex = 25;
             this.checkedListBox.ThreeDCheckBoxes = true;
             this.checkedListBox.Visible = false;
-            this.checkedListBox.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_SelectedIndexChanged);
+            //this.checkedListBox.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_SelectedIndexChanged);
             // 
             // funcionalidadeslbl
             // 
@@ -162,7 +162,7 @@
             this.Controls.Add(this.rolesBox);
             this.Name = "FormModificarRol";
             this.Text = "Modificar Rol";
-            this.Load += new System.EventHandler(this.FormModificarRol_Load);
+           // this.Load += new System.EventHandler(this.FormModificarRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

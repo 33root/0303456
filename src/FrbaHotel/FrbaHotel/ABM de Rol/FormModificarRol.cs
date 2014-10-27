@@ -21,7 +21,7 @@ namespace FrbaHotel.ABM_de_Rol
         public FormModificarRol()
         {
             InitializeComponent();
-            String consultaRoles = "SELECT * " +
+            String consultaRoles = "SELECT Descripcion " +
                                     "FROM AEFI.TL_Rol r ";
 
             try
@@ -56,12 +56,19 @@ namespace FrbaHotel.ABM_de_Rol
 
 
 
+            String consultaActivo = "SELECT Activo " +
+                                    "FROM AEFI.TL_Rol r" +
+                                        " WHERE r.ID_Rol = @rolSeleccionado ";
+
+
+
             String consulta = "SELECT ID_Rol " +
                                   "FROM AEFI.TL_Rol " +
                                   "WHERE Descripcion = @Descripcion ";
 
              String consultaFuncionalidades = "SELECT Descripcion " +
-                                    "FROM AEFI.TL_Funcionalidad f ";
+                                    "FROM AEFI.TL_Funcionalidad f " +
+                                    "WHERE f.Restriccion = @rolSeleccionado OR f.Restriccion IS NULL";
 
             String consultaFuncionalidadXRol = "SELECT ID_Rol " +
                                     "FROM AEFI.TL_Funcionalidad_Rol x , AEFI.TL_Funcionalidad f " +
@@ -76,6 +83,8 @@ namespace FrbaHotel.ABM_de_Rol
                     conexion.Open();
 
                 }
+
+
                 SqlCommand comando = new SqlCommand(consulta, conexion);
                 comando.Parameters.Add(new SqlParameter("@Descripcion", rolesBox.SelectedItem.ToString()));
                 SqlDataReader reader = comando.ExecuteReader();
@@ -85,63 +94,75 @@ namespace FrbaHotel.ABM_de_Rol
                 rolSeleccionado = Convert.ToInt32(reader["ID_Rol"]);
                 reader.Close();
 
+
                 nombreRolBox.Visible = true;
                 aplicarCambiosBtn.Visible = true;
                 checkedListBox.Visible = true;
                 estadoChkBox.Visible = true;
+
+                comando = new SqlCommand(consultaActivo, conexion);
+                comando.Parameters.Add(new SqlParameter("@rolSeleccionado", rolSeleccionado));
+                reader = comando.ExecuteReader();
+
+                reader.Read();
+                bool Activo = Convert.ToBoolean(reader["Activo"]);
+                reader.Close();
+
+                if ( Activo == true) {
+                estadoChkBox.Checked = true;
+                }
+
+
                 nombreLbl.Visible = true;
                 funcionalidadeslbl.Visible = true;
 
 
-                 // cargo las funcionalidades que puede elegir
-                    comando = new SqlCommand(consultaFuncionalidades, conexion);
-                    reader = comando.ExecuteReader();            
-            
-                while (reader.Read()){
-                    checkedListBox.Items.Add(Convert.ToString(reader["Descripcion"]));
+                // cargo las funcionalidades que puede elegir
+                comando = new SqlCommand(consultaFuncionalidades, conexion);
+                comando.Parameters.Add(new SqlParameter("@rolSeleccionado", rolSeleccionado));
+                reader = comando.ExecuteReader();
 
-                                 
-
-
-                for (int i = 0; i < checkedListBox.Items.Count; i++)
+                while (reader.Read())
                 {
-                    String funcionalidadSeleccionada = Convert.ToString(checkedListBox.Items[i]);
-                        
-                    comando = new SqlCommand(consultaFuncionalidadXRol, conexion);
-                    comando.Parameters.Add(new SqlParameter("@rol", rolSeleccionado));
-                    comando.Parameters.Add(new SqlParameter("@descripcion", funcionalidadSeleccionada));
-                   
-                    reader = comando.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        checkedListBox.SetItemChecked(i, true);
-                    }
-
-
-
+                    checkedListBox.Items.Add(Convert.ToString(reader["Descripcion"]));
                 }
+                
+
+                    for (int i = 0; i < checkedListBox.Items.Count; i++)
+                    {
+                        String funcionalidadSeleccionada = Convert.ToString(checkedListBox.Items[i]);
+
+                        comando = new SqlCommand(consultaFuncionalidadXRol, conexion);
+                        comando.Parameters.Add(new SqlParameter("@rol", rolSeleccionado));
+                        comando.Parameters.Add(new SqlParameter("@descripcion", funcionalidadSeleccionada));
+
+                        reader = comando.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            checkedListBox.SetItemChecked(i, true);
+                        }
+
+
+
+                    }
+                }
+            
+                
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
-            
-                         
 
-            
-
-             catch (SqlException exc)
-                {
-                    MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                }
-
-                //Para cada uno veo si esta en check o no
-                    
+                                   
 
                 finally
                 {
                     conexion.Close();
                 }
         }
+        
 
         private void cancelarBtn_Click(object sender, EventArgs e)
         {
@@ -241,10 +262,13 @@ namespace FrbaHotel.ABM_de_Rol
         }
 
         else
-        {  
-           
+        {
+            if (conexion.State == ConnectionState.Closed)
+            {
                 conexion.Open();
-               
+
+            }
+    
                     SqlCommand comando = new SqlCommand("AEFI.inhabilitar_rol", conexion);
                     comando.CommandType = CommandType.StoredProcedure;
                     comando.Parameters.Add(new SqlParameter("@ID_Rol", rolSeleccionado));

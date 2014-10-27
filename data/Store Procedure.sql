@@ -101,7 +101,7 @@ BEGIN
 	DELETE AEFI.TL_Funcionalidad_Rol WHERE ID_Rol = @ID_Rol AND ID_Funcionalidad = @ID_Funcionalidad
 END;
 
-
+GO
 CREATE PROCEDURE AEFI.inhabilitar_rol
 	@ID_rol NUMERIC(18,0)
 AS
@@ -112,7 +112,7 @@ BEGIN
 
 END;
 
-
+GO
 CREATE PROCEDURE AEFI.habilitar_rol
 	@ID_rol NUMERIC(18,0)
 AS
