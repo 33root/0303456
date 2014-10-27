@@ -127,6 +127,12 @@
     <Compile Include="ABM de Hotel\FormNuevoHotel.designer.cs">
       <DependentUpon>FormNuevoHotel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login\NuevaClave.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\NuevaClave.Designer.cs">
+      <DependentUpon>NuevaClave.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu\FormMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Login\FrmLogIn.resx">
       <DependentUpon>FrmLogIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\NuevaClave.resx">
+      <DependentUpon>NuevaClave.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu\FormMenu.resx">
       <DependentUpon>FormMenu.cs</DependentUpon>

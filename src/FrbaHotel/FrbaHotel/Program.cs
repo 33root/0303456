@@ -10,8 +10,7 @@ using System.Configuration;
 namespace FrbaHotel
 {
 
-    //using FrbaHotel.Login;
-    using FrbaHotel.Menu;
+    using FrbaHotel.Login;
     static class Program
     {
 
@@ -31,7 +30,7 @@ namespace FrbaHotel
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMenu()); 
+            Application.Run(new FrmLogIn());
         }
     }
 }

@@ -9,7 +9,7 @@ CREATE TABLE [AEFI].[TL_Usuario](
 	[Username] NVARCHAR(255) NOT NULL, /*UNIQUE: ESTO LO VAMOS A TENER QUE VERIFICAR EN EL PROGRAMA PARA NO PERDER DATOS */
 	[Password] NVARCHAR(64) NOT NULL,
 	[Pass_Temporal] bit DEFAULT 1, /*1 VERDADERO, 0 FALSO */
-	[Habilitado] bit DEFAULT 1
+	[Habilitado] bit DEFAULT 1	
 
 
 );

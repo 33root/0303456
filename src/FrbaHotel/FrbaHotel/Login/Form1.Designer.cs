@@ -51,6 +51,7 @@
             // 
             this.txbContrasena.Location = new System.Drawing.Point(81, 119);
             this.txbContrasena.Name = "txbContrasena";
+            this.txbContrasena.PasswordChar = '*';
             this.txbContrasena.Size = new System.Drawing.Size(191, 20);
             this.txbContrasena.TabIndex = 1;
             // 
@@ -62,9 +63,11 @@
             this.validarBtn.TabIndex = 2;
             this.validarBtn.Text = "Validar";
             this.validarBtn.UseVisualStyleBackColor = true;
+            this.validarBtn.Click += new System.EventHandler(this.validarBtn_Click);
             // 
             // cxbRol
             // 
+            this.cxbRol.Enabled = false;
             this.cxbRol.FormattingEnabled = true;
             this.cxbRol.Location = new System.Drawing.Point(81, 193);
             this.cxbRol.Name = "cxbRol";
@@ -73,30 +76,33 @@
             // 
             // entrarBtn
             // 
-            this.entrarBtn.Location = new System.Drawing.Point(27, 233);
+            this.entrarBtn.Enabled = false;
+            this.entrarBtn.Location = new System.Drawing.Point(27, 238);
             this.entrarBtn.Name = "entrarBtn";
-            this.entrarBtn.Size = new System.Drawing.Size(104, 28);
+            this.entrarBtn.Size = new System.Drawing.Size(107, 38);
             this.entrarBtn.TabIndex = 4;
             this.entrarBtn.Text = "Entrar";
             this.entrarBtn.UseVisualStyleBackColor = true;
             // 
             // invitadoBtn
             // 
-            this.invitadoBtn.Location = new System.Drawing.Point(173, 233);
+            this.invitadoBtn.Location = new System.Drawing.Point(193, 237);
             this.invitadoBtn.Name = "invitadoBtn";
-            this.invitadoBtn.Size = new System.Drawing.Size(99, 28);
+            this.invitadoBtn.Size = new System.Drawing.Size(99, 41);
             this.invitadoBtn.TabIndex = 5;
             this.invitadoBtn.Text = "Entrar Como Invitado";
             this.invitadoBtn.UseVisualStyleBackColor = true;
+            this.invitadoBtn.Click += new System.EventHandler(this.invitadoBtn_Click);
             // 
             // salirBtn
             // 
-            this.salirBtn.Location = new System.Drawing.Point(64, 267);
+            this.salirBtn.Location = new System.Drawing.Point(68, 298);
             this.salirBtn.Name = "salirBtn";
-            this.salirBtn.Size = new System.Drawing.Size(175, 38);
+            this.salirBtn.Size = new System.Drawing.Size(166, 23);
             this.salirBtn.TabIndex = 6;
             this.salirBtn.Text = "Salir";
             this.salirBtn.UseVisualStyleBackColor = true;
+            this.salirBtn.Click += new System.EventHandler(this.salirBtn_Click);
             // 
             // lblUsuario
             // 

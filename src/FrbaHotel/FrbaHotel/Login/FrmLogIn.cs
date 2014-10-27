@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaHotel.Menu;
 
 namespace FrbaHotel.Login
 {
@@ -24,16 +25,6 @@ namespace FrbaHotel.Login
         private void FrmLogIn_Load(object sender, EventArgs e)
         {
             SqlConnection conexion = BaseDeDatos.conectar();
-
-        }
-
-        private void cmbRoles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblElegirRol_Click(object sender, EventArgs e)
-        {
 
         }
 
@@ -75,14 +66,10 @@ namespace FrbaHotel.Login
             }
         }
 
-        private void txbUsuario_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void validarBtn_Click(object sender, EventArgs e)
         {
-            String consultaUsuario = "SELECT ID_Usuario, Username, Password, Intentos_Fallidos" +
+            String consultaUsuario = "SELECT ID_Usuario, Username, Password, Pass_Temporal, Habilitado " +
                                      "FROM AEFI.TL_Usuario " +
                                      "WHERE Username = @Username";
 
@@ -94,9 +81,9 @@ namespace FrbaHotel.Login
 
             try
             {
-                conexion.Open(); //me parece que esto esta de mas aca o esta bien aca y la BaseDeDatos lo hace de mas :P
+                conexion.Open(); 
                 SqlCommand comando = new SqlCommand(consultaUsuario, conexion);
-                comando.Parameters.Add(new SqlParameter("@usuario", txbUsuario.Text));
+                comando.Parameters.Add(new SqlParameter("@Username", txbUsuario.Text));
                 SqlDataReader reader = comando.ExecuteReader();
 
                 // chequeo que exista el usuario ingresado
@@ -108,12 +95,13 @@ namespace FrbaHotel.Login
                 else
                 {
                     reader.Read();
-                    int idUsuario = Convert.ToInt32(reader["id_usuario"]);
-                    bool primerIngreso = (bool)reader["pass_temporal"];
-                    bool habilitado = (bool)reader["habilitado"];
-                    string usuario = reader["username"].ToString();
-                    string contrasena = reader["password"].ToString();
+                    int idUsuario = Convert.ToInt32(reader["ID_Usuario"]);
+                    bool primerIngreso = Convert.ToBoolean(reader["Pass_Temporal"]);
+                    bool habilitado = Convert.ToBoolean(reader["Habilitado"]);
+                    string usuario = reader["Username"].ToString();
+                    string contrasena = reader["Password"].ToString();
                     reader.Close();
+                    cxbRol.Enabled = true;
 
                     if (!contrasena.Equals(BaseDeDatos.cifrar256(txbContrasena.Text)))
                     {
@@ -137,8 +125,8 @@ namespace FrbaHotel.Login
 
                     if (primerIngreso)
                     {
-                        //CambioContrasena ingreso = new CambioContrasena(usuario);
-                        //ingreso.ShowDialog();
+                        NuevaClave ingreso = new NuevaClave(usuario);
+                        ingreso.ShowDialog();
                     }
 
                     txbContrasena.Enabled = false;
@@ -147,14 +135,13 @@ namespace FrbaHotel.Login
                     Program.idUsuario = idUsuario;
                     Program.usuario = usuario;
 
-                    cxbRol.Enabled = true;
                     entrarBtn.Enabled = true;
 
                     // cargo los roles del usuario logeado que puede elegir
                     comando = new SqlCommand(consultaRoles, conexion);
-                    comando.Parameters.Add(new SqlParameter("@usuario", usuario));
+                    comando.Parameters.Add(new SqlParameter("@Username", usuario));
                     reader = comando.ExecuteReader();
-                    cxbRol.Items.Clear();
+                   // cxbRol.Items.Clear();
 
                     if (reader.HasRows)
                     {
@@ -186,7 +173,7 @@ namespace FrbaHotel.Login
                 {
                     string consultaInhabilitar = "UPDATE AEFI.TL_Usuario" +
                         "SET habilitado = 0 " +
-                        "WHERE username = @username";
+                        "WHERE username = @usuario";
                     SqlCommand comandoInhabilitar = new SqlCommand(consultaInhabilitar, conexion);
                     comandoInhabilitar.Parameters.Add(new SqlParameter("@usuario", txbUsuario.Text));
                     comandoInhabilitar.ExecuteNonQuery();
@@ -206,9 +193,20 @@ namespace FrbaHotel.Login
             }
         }
 
-        private void cxbRol_SelectedIndexChanged(object sender, EventArgs e)
+        private void salirBtn_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            this.Close();
         }
+
+        private void invitadoBtn_Click(object sender, EventArgs e)
+        {
+            FormMenu menu = new FormMenu();
+            this.Hide();
+            menu.ShowDialog();
+            this.Close(); 
+        }
+
+
     }
 }
