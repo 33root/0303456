@@ -1,5 +1,5 @@
 
-
+DROP PROCEDURE AEFI.crear_usuario;
 DROP PROCEDURE AEFI.habilitar_rol;
 DROP PROCEDURE AEFI.inhabilitar_rol;
 DROP PROCEDURE AEFI.eliminar_funcionalidad_rol;
@@ -8,6 +8,7 @@ DROP PROCEDURE AEFI.crear_Habitacion;
 DROP PROCEDURE AEFI.actualizar_Hotel;
 DROP PROCEDURE AEFI.crear_Hotel;
 
+DROP TABLE [AEFI].[TL_Usuario_Por_Hotel];
 DROP TABLE [AEFI].[TL_Regimen_Por_Hotel];
 DROP TABLE [AEFI].[TL_Item_Por_Factura];
 DROP TABLE [AEFI].[TL_Usuario_Por_Rol];

@@ -137,6 +137,7 @@ CREATE PROCEDURE AEFI.crear_usuario
 		@calle_nro numeric(18,0),
 		@piso numeric(18,0),
 		@dpto nvarchar(50),
+		@mail nvarchar(255),
 		@fecha_nacimiento datetime,
 
 AS
