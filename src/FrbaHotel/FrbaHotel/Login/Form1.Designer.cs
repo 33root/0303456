@@ -83,6 +83,7 @@
             this.entrarBtn.TabIndex = 4;
             this.entrarBtn.Text = "Entrar";
             this.entrarBtn.UseVisualStyleBackColor = true;
+            this.entrarBtn.Click += new System.EventHandler(this.entrarBtn_Click);
             // 
             // invitadoBtn
             // 

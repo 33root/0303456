@@ -201,11 +201,21 @@ namespace FrbaHotel.Login
 
         private void invitadoBtn_Click(object sender, EventArgs e)
         {
+
+            // cargo el rol de guest en la variable global del sistema
+            Program.idRol = 1;
+
+            MessageBox.Show("Bienvenido al sistema, usted ingresó como invitado", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //new de la ventana que se tiene que abrir
+
             FormMenu menu = new FormMenu();
             this.Hide();
             menu.ShowDialog();
             this.Close(); 
+        
         }
+
+       
 
 
     }

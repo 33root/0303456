@@ -40,6 +40,7 @@
             // 
             this.claveTxtBox.Location = new System.Drawing.Point(51, 50);
             this.claveTxtBox.Name = "claveTxtBox";
+            this.claveTxtBox.PasswordChar = '*';
             this.claveTxtBox.Size = new System.Drawing.Size(183, 20);
             this.claveTxtBox.TabIndex = 0;
             // 
