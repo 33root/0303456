@@ -122,3 +122,29 @@ BEGIN
 	WHERE ID_Rol = @ID_rol;
 
 END;
+
+GO
+CREATE PROCEDURE AEFI.crear_usuario
+
+		@Username nvarchar(255),
+		@Password nvarchar(64),
+		@Nombre nvarchar(255),
+		@Apellido nvarchar(255),
+		@id_tipo_documento nvarchar(255),
+		@documento_nro numeric(18,0),
+		@telefono numeric(18,0),
+		@calle nvarchar(255),
+		@calle_nro numeric(18,0),
+		@piso numeric(18,0),
+		@dpto nvarchar(50),
+		@fecha_nacimiento datetime,
+
+AS
+BEGIN
+		IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario u WHERE Username = @Username )
+	BEGIN
+			INSERT INTO AEFI.TL_Usuario(Username, Password, Pass_Temporal, Habilitado, Nombre, Apellido, ID_Tipo_Documento, Documento_Nro, Mail, Telefono, Calle, Calle_Nro, Piso, Dpto, Fecha_Nacimiento)
+			VALUES (@Username, @Password, 1, 1, @Nombre, @Apellido, @id_tipo_documento, @documento_nro, @mail, @telefono, @calle, @calle_nro, @piso, @dpto, @fecha_de_nacimiento)
+	END;
+
+END;

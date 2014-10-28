@@ -6,11 +6,21 @@ GO
 
 CREATE TABLE [AEFI].[TL_Usuario](
 	[ID_Usuario] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
-	[Username] NVARCHAR(255) NOT NULL, /*UNIQUE: ESTO LO VAMOS A TENER QUE VERIFICAR EN EL PROGRAMA PARA NO PERDER DATOS */
+	[Username] NVARCHAR(255) NOT NULL UNIQUE,
 	[Password] NVARCHAR(64) NOT NULL,
 	[Pass_Temporal] bit DEFAULT 1, /*1 VERDADERO, 0 FALSO */
-	[Habilitado] bit DEFAULT 1	
-
+	[Habilitado] bit DEFAULT 1,
+		[Nombre] NVARCHAR(255),
+		[Apellido] NVARCHAR(255),
+		[ID_Tipo_Documento] nvarchar(255),
+		[Documento_Nro] NUMERIC(18,0),	
+		[Mail] nvarchar(255) UNIQUE, 
+		[Telefono] NUMERIC(18,0),		
+		[Calle] NVARCHAR (255),
+		[Calle_Nro] NUMERIC(18,0),
+		[Piso] NUMERIC(18,0),
+		[Dpto] NVARCHAR(50),
+		[Fecha_Nacimiento] datetime
 
 );
 
@@ -223,3 +233,16 @@ CREATE TABLE [AEFI].[TL_Regimen_Por_Hotel](
 	FOREIGN KEY (ID_Hotel) REFERENCES [AEFI].[TL_Hotel] (ID_Hotel),
 	FOREIGN KEY (ID_Regimen) REFERENCES [AEFI].[TL_Regimen] (ID_Regimen)
 );
+
+/*TABLA MUCHOS A MUCHOS */
+CREATE TABLE [AEFI].[TL_Usuario_Por_Hotel](
+	[ID_Usuario_Hotel] NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,
+	[ID_Hotel] NUMERIC(18,0),
+	[ID_Usuario] NUMERIC(18,0),
+	[ID_Rol] NUMERIC(18,0),
+	FOREIGN KEY (ID_Hotel) REFERENCES [AEFI].[TL_Hotel] (ID_Hotel),
+	FOREIGN KEY (ID_Usuario) REFERENCES [AEFI].[TL_Usuario] (ID_Usuario),
+	FOREIGN KEY (ID_Rol) REFERENCES [AEFI].[TL_Rol] (ID_Rol)
+	
+);
+	

@@ -1,9 +1,9 @@
 BEGIN TRANSACTION
 
-INSERT INTO [AEFI].[TL_Usuario](username, password)
+/*INSERT INTO [AEFI].[TL_Usuario](username, password)
 SELECT m.Cliente_Nombre + '_' + m.Cliente_Apellido, '03AC674216F3E15C761EE1A5E255F067953623C8B388B4459E13F978D7C846F4' /*Borre el DISTINCT para no perder registros */
 FROM gd_esquema.Maestra m
-WHERE Cliente_Nombre IS NOT NULL
+WHERE Cliente_Nombre IS NOT NULL*/
 
 INSERT INTO AEFI.TL_Cliente(Nombre,Apellido,ID_Tipo_Documento,Documento_Nro,Mail,Calle,Calle_Nro,Piso,Dpto,Fecha_Nacimiento,Nacionalidad,Localidad,PaisOrigen)
 SELECT DISTINCT m.Cliente_Nombre, m.Cliente_Apellido ,2, m.Cliente_Pasaporte_Nro, m.Cliente_Mail, m.Cliente_Dom_Calle, m.Cliente_Nro_Calle, m.Cliente_Piso, m.Cliente_Depto, m.Cliente_Fecha_Nac, m.Cliente_Nacionalidad,'CABA','Argentina' 
@@ -16,7 +16,6 @@ FROM gd_esquema.Maestra
 
 
 SET IDENTITY_INSERT AEFI.TL_Tipo_Habitacion ON
-	/*TODO: Setear cantidad de huespedes total a manopla*/
 INSERT INTO AEFI.TL_Tipo_Habitacion(ID_Tipo_Habitacion, Descripcion, Porcentual)
 SELECT DISTINCT m.Habitacion_Tipo_Codigo, m.Habitacion_Tipo_Descripcion, m.Habitacion_Tipo_Porcentual 
 FROM gd_esquema.Maestra m
