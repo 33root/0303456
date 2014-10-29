@@ -60,7 +60,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(252, 13);
+            this.label2.Location = new System.Drawing.Point(324, 12);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 1;
@@ -76,9 +76,9 @@
             // 
             // txbApellido
             // 
-            this.txbApellido.Location = new System.Drawing.Point(302, 13);
+            this.txbApellido.Location = new System.Drawing.Point(374, 13);
             this.txbApellido.Name = "txbApellido";
-            this.txbApellido.Size = new System.Drawing.Size(183, 20);
+            this.txbApellido.Size = new System.Drawing.Size(206, 20);
             this.txbApellido.TabIndex = 3;
             this.txbApellido.TextChanged += new System.EventHandler(this.txbApellido_TextChanged);
             // 
@@ -102,7 +102,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(252, 50);
+            this.label4.Location = new System.Drawing.Point(269, 50);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(99, 13);
             this.label4.TabIndex = 6;
@@ -111,10 +111,11 @@
             // cbTipoDeDocumento
             // 
             this.cbTipoDeDocumento.FormattingEnabled = true;
-            this.cbTipoDeDocumento.Location = new System.Drawing.Point(357, 49);
+            this.cbTipoDeDocumento.Location = new System.Drawing.Point(374, 42);
             this.cbTipoDeDocumento.Name = "cbTipoDeDocumento";
-            this.cbTipoDeDocumento.Size = new System.Drawing.Size(128, 21);
+            this.cbTipoDeDocumento.Size = new System.Drawing.Size(206, 21);
             this.cbTipoDeDocumento.TabIndex = 7;
+            this.cbTipoDeDocumento.SelectedIndexChanged += new System.EventHandler(this.cbTipoDeDocumento_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -135,16 +136,21 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView1.Location = new System.Drawing.Point(16, 116);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(469, 130);
-            this.dataGridView1.TabIndex = 10;
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(564, 240);
+            this.dataGridView1.TabIndex = 9;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(247, 278);
+            this.button1.Location = new System.Drawing.Point(410, 362);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 11;
@@ -154,16 +160,17 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(328, 278);
+            this.button2.Location = new System.Drawing.Point(313, 362);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 12;
             this.button2.Text = "Limpiar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // buscarButton
             // 
-            this.buscarButton.Location = new System.Drawing.Point(409, 278);
+            this.buscarButton.Location = new System.Drawing.Point(505, 362);
             this.buscarButton.Name = "buscarButton";
             this.buscarButton.Size = new System.Drawing.Size(75, 23);
             this.buscarButton.TabIndex = 13;
@@ -173,7 +180,7 @@
             // 
             // modificarButton
             // 
-            this.modificarButton.Location = new System.Drawing.Point(166, 278);
+            this.modificarButton.Location = new System.Drawing.Point(212, 362);
             this.modificarButton.Name = "modificarButton";
             this.modificarButton.Size = new System.Drawing.Size(75, 23);
             this.modificarButton.TabIndex = 14;
@@ -183,7 +190,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(85, 278);
+            this.button5.Location = new System.Drawing.Point(113, 362);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 15;
@@ -193,7 +200,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(4, 278);
+            this.button6.Location = new System.Drawing.Point(12, 362);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 16;
@@ -205,7 +212,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(508, 324);
+            this.ClientSize = new System.Drawing.Size(592, 397);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.modificarButton);

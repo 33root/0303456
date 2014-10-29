@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Menu;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
@@ -49,20 +50,20 @@ namespace FrbaHotel.ABM_de_Cliente
         }
 
         private void button6_Click(object sender, EventArgs e)
-        {
-            /*Menu inicio = new Menu();   lo dejo comentado porque no me deja poner el using
+        {   //Volver
+            FormMenu inicio = new FormMenu();               
             this.Hide();
             inicio.ShowDialog();
-            this.Close();*/
+            this.Close();
         }
 
         private void button5_Click(object sender, EventArgs e)
-        {
+        {   //Habilitar
             try
             {
                 conexion.Open();
                 string consulta = "SELECT ID_Usuario FROM AEFI.TL_Cliente " +
-                                  "WHERE Documento_Nro = " + dataGridView1.SelectedCells[4].Value;
+                                  "WHERE Documento_Nro = " + dataGridView1.SelectedCells[0].Value; //[0] porque el ID_Cliente es la primer columna
                 SqlCommand comando = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando.ExecuteReader();
                 reader.Read();
@@ -88,12 +89,11 @@ namespace FrbaHotel.ABM_de_Cliente
         private void button3_Click(object sender, EventArgs e)
         {//BUSCAR
             String consulta = "SELECT c.ID_Cliente, c.Nombre, c.Apellido, t.Descripcion, c.Documento_Nro, " +
-                    "c.Mail, c.Telefono, c.Fecha_Nacimiento, c.Calle, c.Calle_Nro, c.Piso, c.Dpto, " +
-                    "c.Localidad, u.Habilitado " + //la tabla clientes no tiene la codigo postal
-                "FROM AEFI.TL_Cliente c " +
-                "JOIN AEFI.TL_Tipo_Documento t ON (c.ID_Tipo_Documento = t.ID_Tipo_Documento) " +
-                "JOIN AEFI.TL_Usuario u ON (c.ID_Cliente = u.ID_Usuario) " +
-                "WHERE c.ID_Cliente > 0 ";
+                                     "c.Mail, c.Telefono, c.Fecha_Nacimiento, c.Calle, c.Calle_Nro, c.Piso, c.Dpto, " +
+                                     "c.Localidad, u.Habilitado " + //la tabla clientes no tiene la codigo postal
+                              "FROM AEFI.TL_Cliente c " +
+                              "JOIN AEFI.TL_Tipo_Documento t ON (c.ID_Tipo_Documento = t.ID_Tipo_Documento) " +
+                              "WHERE c.ID_Cliente > 0 ";
 
 
             //Se castean los tipos para que se puedan mostrar y/o ingresar en los campos, ademas de para poder buscar cuando algunos son null
@@ -158,7 +158,7 @@ namespace FrbaHotel.ABM_de_Cliente
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
-                //FormClienteNuevo alta = new FormClienteNuevo(1, row.Cells); la otra clase no esta terminada :P
+                //FormClienteNuevo alta = new FormClienteNuevo(1, row.Cells);// la otra clase no esta terminada :P
                 this.Hide();
                 //alta.ShowDialog();
                 this.Close();
@@ -176,6 +176,22 @@ namespace FrbaHotel.ABM_de_Cliente
         }
 
         private void txbApellido_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //Limpiar
+            dataGridView1.DataSource = null;
+            txbApellido.Clear();
+            txbDocumento.Clear();
+            txbMail.Clear();
+            txbNombre.Clear();
+            cbTipoDeDocumento.SelectedIndex = 0;
+        }
+
+        private void cbTipoDeDocumento_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }      

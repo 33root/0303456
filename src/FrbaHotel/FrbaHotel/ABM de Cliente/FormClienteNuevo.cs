@@ -6,19 +6,107 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+using FrbaHotel.Menu;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
-    public partial class Form1 : Form
+    public partial class FormClienteNuevo : Form
     {
-        public Form1()
+        public FormClienteNuevo()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+        SqlConnection conexion = BaseDeDatos.conectar();
+        int x = 0;
+        string usu = "";
+        string con = "";
 
+        public FormClienteNuevo(int cod, DataGridViewCellCollection cells)
+        {
+            this.x = cod;
+            InitializeComponent();
+            txbNombre.Text = cells[1].Value.ToString();
+            txbApellido.Text = cells[2].Value.ToString();
+            cbTipoDeDocumento.Text = cells[3].Value.ToString();
+            txbDocumentoNumero.Text = cells[4].Value.ToString();
+            txbMail.Text = cells[5].Value.ToString();
+            txbTelefono.Text = cells[6].Value.ToString();
+            dtpFecha.Text = cells[7].Value.ToString();
+            txbDireccion.Text = cells[8].Value.ToString();
+            txbNumero.Text = cells[9].Value.ToString();
+            txbPiso.Text = cells[10].Value.ToString();
+            txbDpto.Text = cells[11].Value.ToString();
+            txbCodigoPostal.Text = cells[12].Value.ToString();
+            txbLocalidad.Text = cells[13].Value.ToString();
+            CrearButton.Text = "Actualizar";
+        }
+
+        public FormClienteNuevo(int id, string u, string c)
+        {
+            this.x = id;
+            this.usu = u;
+            this.con = c;
+            InitializeComponent();
+            this.ControlBox = false;
+            VolverButton.Enabled = false;
+        }
+
+        private void VolverButton_Click(object sender, EventArgs e)
+        {
+            FormMenu inicio = new FormMenu();
+            this.Hide();
+            inicio.ShowDialog();
+            this.Close();
+        }
+
+        private void FormClienteNuevo_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                conexion.Open();
+                string consulta = "SELECT Descripcion FROM AEFI.TL_Tipo_Documento ORDER BY ID_Tipo_Documento";
+                SqlCommand comando = new SqlCommand(consulta, conexion);
+                SqlDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
+                    cbTipoDeDocumento.Items.Add(reader[0]);
+                reader.Close();
+                cbTipoDeDocumento.SelectedIndex = 0;
+            }
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+
+            dtpFecha.Text = DateTime.Today.ToString();
+        }
+
+        private void LimpiarButton_Click(object sender, EventArgs e)
+        {
+            txbNombre.Clear();
+            txbApellido.Clear();
+            txbDocumentoNumero.Clear();
+            txbMail.Clear();
+            txbTelefono.Clear();
+            txbDireccion.Clear();
+            txbNumero.Clear();
+            txbPiso.Clear();
+            txbDpto.Clear();
+            txbCodigoPostal.Clear();
+            txbLocalidad.Clear();
+            cbTipoDeDocumento.SelectedIndex = 0;
+            dtpFecha.Text = DateTime.Today.ToString();
+        
+        }
+
+        private void CrearButton_Click(object sender, EventArgs e)
+        {
+            //en construccion, aca tengo que usar un sp y estoy medio verde en eso :S
         }
     }
 }
