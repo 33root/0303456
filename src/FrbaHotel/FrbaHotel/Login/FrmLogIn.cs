@@ -52,9 +52,10 @@ namespace FrbaHotel.Login
 
                 MessageBox.Show("Bienvenido al sistema", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //new de la ventana que se tiene que abrir
+                FormMenu menu = new FormMenu();
                 this.Hide();
-                //ShowDialog()
-                this.Close();
+                menu.ShowDialog();
+                this.Close(); 
             }
             catch (SqlException exc)
             {
@@ -158,6 +159,7 @@ namespace FrbaHotel.Login
                         MessageBox.Show("No tiene roles asignados", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         this.Close();
                     }
+
                 }
 
 

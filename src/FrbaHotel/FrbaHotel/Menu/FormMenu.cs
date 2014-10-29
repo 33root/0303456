@@ -10,6 +10,7 @@ using FrbaHotel.ABM_de_Hotel;
 using FrbaHotel.ABM_de_Habitacion;
 using FrbaHotel.ABM_de_Rol;
 using FrbaHotel.ABM_de_Cliente;
+using FrbaHotel.ABM_de_Usuario;
 
 
 namespace FrbaHotel.Menu
@@ -76,6 +77,14 @@ namespace FrbaHotel.Menu
         private void button2_Click(object sender, EventArgs e)
         {
             FormBuscadorDeClientes b = new FormBuscadorDeClientes();
+            this.Hide();
+            b.ShowDialog();
+            this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            FrmNuevoUsuario b = new FrmNuevoUsuario();
             this.Hide();
             b.ShowDialog();
             this.Close();

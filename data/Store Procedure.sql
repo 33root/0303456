@@ -138,14 +138,48 @@ CREATE PROCEDURE AEFI.crear_usuario
 		@piso numeric(18,0),
 		@dpto nvarchar(50),
 		@mail nvarchar(255),
-		@fecha_nacimiento datetime,
+		@fecha_nacimiento datetime
 
 AS
 BEGIN
 		IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario u WHERE Username = @Username )
 	BEGIN
 			INSERT INTO AEFI.TL_Usuario(Username, Password, Pass_Temporal, Habilitado, Nombre, Apellido, ID_Tipo_Documento, Documento_Nro, Mail, Telefono, Calle, Calle_Nro, Piso, Dpto, Fecha_Nacimiento)
-			VALUES (@Username, @Password, 1, 1, @Nombre, @Apellido, @id_tipo_documento, @documento_nro, @mail, @telefono, @calle, @calle_nro, @piso, @dpto, @fecha_de_nacimiento)
+			VALUES (@Username, @Password, 1, 1, @Nombre, @Apellido, @id_tipo_documento, @documento_nro, @mail, @telefono, @calle, @calle_nro, @piso, @dpto, @fecha_nacimiento)
+	END;
+
+END;
+
+GO
+CREATE PROCEDURE AEFI.crear_usuario_por_rol
+
+		@ID_Rol NUMERIC(18,0),
+		@ID_Usuario NUMERIC(18,0)
+
+AS
+BEGIN
+		IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario_Por_Rol u WHERE ID_Rol = @ID_Rol AND ID_Usuario=@ID_Usuario )
+	BEGIN
+			INSERT INTO AEFI.TL_Usuario_Por_Rol(ID_Rol, ID_Usuario)
+			VALUES (@ID_Rol, @ID_Usuario)
+	END;
+
+END;
+
+
+GO
+CREATE PROCEDURE AEFI.crear_usuario_por_hotel
+
+		@ID_Rol NUMERIC(18,0),
+		@ID_Usuario NUMERIC(18,0),
+		@ID_Hotel NUMERIC(18,0)
+
+AS
+BEGIN
+		IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario_Por_Hotel u WHERE ID_Rol = @ID_Rol AND ID_Usuario=@ID_Usuario AND ID_Hotel = @ID_Hotel )
+	BEGIN
+			INSERT INTO AEFI.TL_Usuario_Por_Hotel(ID_Rol, ID_Usuario, ID_Hotel)
+			VALUES (@ID_Rol, @ID_Usuario, @ID_Hotel)
 	END;
 
 END;

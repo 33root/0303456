@@ -10,8 +10,8 @@ SELECT DISTINCT m.Cliente_Nombre, m.Cliente_Apellido ,2, m.Cliente_Pasaporte_Nro
 FROM gd_esquema.Maestra m
 WHERE Cliente_Apellido IS NOT NULL AND Cliente_Nombre IS NOT NULL
 
-INSERT INTO [AEFI].[TL_Hotel](Calle,Nro_Calle,Ciudad,Cantidad_Estrellas,Recarga_Estrellas, Pais)
-SELECT DISTINCT Hotel_Calle, Hotel_Nro_Calle, Hotel_Ciudad, Hotel_CantEstrella, Hotel_Recarga_Estrella, 'Argentina'
+INSERT INTO [AEFI].[TL_Hotel](Nombre,Nro_Calle,Ciudad,Cantidad_Estrellas,Recarga_Estrellas, Pais)
+SELECT DISTINCT 'Hotel '+ Hotel_Calle, Hotel_Calle, Hotel_Nro_Calle, Hotel_Ciudad, Hotel_CantEstrella, Hotel_Recarga_Estrella, 'Argentina'
 FROM gd_esquema.Maestra
 
 
