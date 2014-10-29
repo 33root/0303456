@@ -87,8 +87,8 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void button3_Click(object sender, EventArgs e)
         {//BUSCAR
-            String consulta = "SELECT c.ID_Cliente, c.Nombre, c.Apellido, t.Descripcion, c.Documento_Numero, " +
-                    "c.Mail, c.Telefono, c.Fecha_Nacimiento, c.Calle, c.Calle_Numero, c.Piso, c.Dpto, " +
+            String consulta = "SELECT c.ID_Cliente, c.Nombre, c.Apellido, t.Descripcion, c.Documento_Nro, " +
+                    "c.Mail, c.Telefono, c.Fecha_Nacimiento, c.Calle, c.Calle_Nro, c.Piso, c.Dpto, " +
                     "c.Localidad, u.Habilitado " + //la tabla clientes no tiene la codigo postal
                 "FROM AEFI.TL_Cliente c " +
                 "JOIN AEFI.TL_Tipo_Documento t ON (c.ID_Tipo_Documento = t.ID_Tipo_Documento) " +
