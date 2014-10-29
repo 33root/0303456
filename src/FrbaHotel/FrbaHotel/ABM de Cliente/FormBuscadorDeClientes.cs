@@ -115,7 +115,7 @@ namespace FrbaHotel.ABM_de_Cliente
             }
             if (!String.IsNullOrEmpty(txbDocumento.Text))
             {
-                consulta = consulta + " AND c.Documento_Numero = @Documento_Numero";
+                consulta = consulta + " AND c.Documento_Nro = @Documento_Nro";
             }
 
             try
@@ -126,7 +126,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 SqlParameter[] parametros = new SqlParameter[5];
                 parametros[0] = new SqlParameter("@Nombre", BaseDeDatos.agregarPorcentajes(txbNombre.Text));
                 parametros[1] = new SqlParameter("@Apellido", BaseDeDatos.agregarPorcentajes(txbApellido.Text));
-                parametros[2] = new SqlParameter("@Documento_Numero", txbDocumento.Text);
+                parametros[2] = new SqlParameter("@Documento_Nro", txbDocumento.Text);
                 parametros[3] = new SqlParameter("@Tipo_Documento", cbTipoDeDocumento.Text);
                 parametros[4] = new SqlParameter("@Mail", BaseDeDatos.agregarPorcentajes(txbMail.Text));
                 comando.Parameters.AddRange(parametros);
