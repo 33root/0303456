@@ -21,14 +21,14 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void FormBuscadorDeClientes_Load(object sender, EventArgs e)
         {
-            string consulta = "SELECT Descripcion FROM AEFI.TL_Tipo_Documento"; //me parece que esto tendria que ser un tipo de documento, que por ahora no esta en nuestra tabla de clientes
+            string consulta = "SELECT Descripcion FROM AEFI.TL_Tipo_Documento";
             try
             {
                 conexion.Open();
                 SqlCommand comando = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
-                    cbTipoDeDocumento.Items.Add(reader[0]); //carga los tipos de documentos en el combo box, aunque por ahora no estan cargados los tipos
+                    cbTipoDeDocumento.Items.Add(reader[0]); //carga los tipos de documentos en el combo box
                     reader.Close();
                     cbTipoDeDocumento.SelectedIndex = 0;
             }
@@ -86,8 +86,62 @@ namespace FrbaHotel.ABM_de_Cliente
         }
 
         private void button3_Click(object sender, EventArgs e)
-        {
-            
+        {//BUSCAR
+            String consulta = "SELECT c.ID_Cliente, c.Nombre, c.Apellido, t.Descripcion, c.Documento_Numero, " +
+                    "c.Mail, c.Telefono, c.Fecha_Nacimiento, c.Calle, c.Calle_Numero, c.Piso, c.Dpto, " +
+                    "c.Localidad, u.Habilitado " + //la tabla clientes no tiene la codigo postal
+                "FROM AEFI.TL_Cliente c " +
+                "JOIN AEFI.TL_Tipo_Documento t ON (c.ID_Tipo_Documento = t.ID_Tipo_Documento) " +
+                "JOIN AEFI.TL_Usuario u ON (c.ID_Cliente = u.ID_Usuario) " +
+                "WHERE c.ID_Cliente > 0 ";
+
+
+            //Se castean los tipos para que se puedan mostrar y/o ingresar en los campos, ademas de para poder buscar cuando algunos son null
+            if (!String.IsNullOrEmpty(cbTipoDeDocumento.SelectedItem.ToString()))
+            {
+                consulta = consulta + "AND t.Descripcion = @Tipo_Documento ";
+            }
+            if (!String.IsNullOrEmpty(txbNombre.Text))
+            {
+                consulta = consulta + " AND c.Nombre LIKE @Nombre ";
+            }
+            if (!String.IsNullOrEmpty(txbApellido.Text))
+            {
+                consulta = consulta + " AND c.Apellido LIKE @Apellido ";
+            }
+            if (!String.IsNullOrEmpty(txbMail.Text))
+            {
+                consulta = consulta + " AND c.Mail LIKE @Mail ";
+            }
+            if (!String.IsNullOrEmpty(txbDocumento.Text))
+            {
+                consulta = consulta + " AND c.Documento_Numero = @Documento_Numero";
+            }
+
+            try
+            {
+                conexion.Open();
+                DataTable tabla = new DataTable();
+                SqlCommand comando = new SqlCommand(consulta, conexion);
+                SqlParameter[] parametros = new SqlParameter[5];
+                parametros[0] = new SqlParameter("@Nombre", BaseDeDatos.agregarPorcentajes(txbNombre.Text));
+                parametros[1] = new SqlParameter("@Apellido", BaseDeDatos.agregarPorcentajes(txbApellido.Text));
+                parametros[2] = new SqlParameter("@Documento_Numero", txbDocumento.Text);
+                parametros[3] = new SqlParameter("@Tipo_Documento", cbTipoDeDocumento.Text);
+                parametros[4] = new SqlParameter("@Mail", BaseDeDatos.agregarPorcentajes(txbMail.Text));
+                comando.Parameters.AddRange(parametros);
+                SqlDataAdapter adapter = new SqlDataAdapter(comando);
+                adapter.Fill(tabla);
+                dataGridView1.DataSource = tabla;
+            }
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
