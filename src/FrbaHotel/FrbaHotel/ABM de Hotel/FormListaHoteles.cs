@@ -6,19 +6,20 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Servicios;
 using System.Data.SqlClient;
 using FrbaHotel.Menu;
 
 
 
 
-namespace FrbaHotel.ABM_de_Hotel
+namespace FrbaHotel.Vistas.ABM_de_Hotel
 {
     public partial class FormListaDeHoteles : Form
     {                      
 
 
-        SqlConnection conexion = BaseDeDatos.conectar();
+        SqlConnection conexion = BaseDeDatos.ObtenerConexion();
 
         public FormListaDeHoteles()
         {
@@ -48,7 +49,7 @@ namespace FrbaHotel.ABM_de_Hotel
             conexion.Open();
 
 
-            string Query = "SELECT h.ID_Hotel, h.Nombre, h.Cantidad_Estrellas, h.Ciudad, h.Pais, h.Mail, h.Telefono, h.Calle, h.Fecha_Creacion, h.Nro_Calle FROM AEFI.TL_Hotel h WHERE h.Cantidad_Estrellas IS NOT NULL";
+            string Query = "SELECT h.ID_Hotel, h.Nombre, h.Cantidad_Estrellas, h.Ciudad, h.Pais, h.Mail, h.Telefono, h.Calle, h.Fecha_Creacion, h.Nro_Calle, h.Recarga_Estrellas FROM AEFI.TL_Hotel h WHERE h.Cantidad_Estrellas IS NOT NULL";
                 
 
 
@@ -63,6 +64,12 @@ namespace FrbaHotel.ABM_de_Hotel
             {
                 String aux = BaseDeDatos.agregarApostrofos("%" + tbCiudad.Text + "%");
                 Query = Query + " AND h.Ciudad LIKE " + aux;   
+            }
+
+            if (!String.IsNullOrEmpty(tbPais.Text))
+            {
+                String aux = BaseDeDatos.agregarApostrofos("%" + tbPais.Text + "%");
+                Query = Query + " AND h.Pais LIKE " + aux;
             }
 
            

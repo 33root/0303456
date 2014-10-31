@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaHotel.Servicios;
 
-namespace FrbaHotel.ABM_de_Hotel
+namespace FrbaHotel.Vistas.ABM_de_Hotel
 {
     public partial class FormBajaHotel : Form
     {

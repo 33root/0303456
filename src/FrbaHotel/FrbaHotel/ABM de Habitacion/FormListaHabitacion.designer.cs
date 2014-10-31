@@ -1,4 +1,4 @@
-﻿namespace FrbaHotel.ABM_de_Habitacion
+﻿namespace FrbaHotel.Vistas.ABM_de_Habitacion
 {
     partial class FormListaHabitacion
     {
@@ -58,6 +58,7 @@
             this.btnModificiar.TabIndex = 4;
             this.btnModificiar.Text = "Modificar";
             this.btnModificiar.UseVisualStyleBackColor = true;
+            this.btnModificiar.Click += new System.EventHandler(this.btnModificiar_Click);
             // 
             // btnLimpiar
             // 

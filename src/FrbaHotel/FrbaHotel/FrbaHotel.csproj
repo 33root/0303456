@@ -64,14 +64,20 @@
     <Compile Include="ABM de Habitacion\FormListaHabitacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Habitacion\FormListaHabitacion.designer.cs">
+    <Compile Include="ABM de Habitacion\FormListaHabitacion.Designer.cs">
       <DependentUpon>FormListaHabitacion.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Habitacion\FormNuevaHabitacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Habitacion\FormNuevaHabitacion.designer.cs">
+    <Compile Include="ABM de Habitacion\FormNuevaHabitacion.Designer.cs">
       <DependentUpon>FormNuevaHabitacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Hotel\FormNuevoHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Hotel\FormNuevoHotel.Designer.cs">
+      <DependentUpon>FormNuevoHotel.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Regimen\Form1.cs">
       <SubType>Form</SubType>
@@ -121,12 +127,6 @@
     <Compile Include="ABM de Hotel\FormListaHoteles.designer.cs">
       <DependentUpon>FormListaHoteles.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Hotel\FormNuevoHotel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM de Hotel\FormNuevoHotel.designer.cs">
-      <DependentUpon>FormNuevoHotel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Login\NuevaClave.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +164,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Cliente\FormClienteNuevo.resx">
       <DependentUpon>FormClienteNuevo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Habitacion\FormListaHabitacion.resx">
+      <DependentUpon>FormListaHabitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Habitacion\FormNuevaHabitacion.resx">
+      <DependentUpon>FormNuevaHabitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Hotel\FormNuevoHotel.es-AR.resx">
+      <DependentUpon>FormNuevoHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Hotel\FormNuevoHotel.resx">
+      <DependentUpon>FormNuevoHotel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Rol\FormCrearRol.resx">
       <DependentUpon>FormCrearRol.cs</DependentUpon>
