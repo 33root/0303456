@@ -8,14 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menu;
 using System.Data.SqlClient;
-using FrbaHotel.Servicios;
 
-
-namespace FrbaHotel.Vistas.ABM_de_Hotel
+namespace FrbaHotel.ABM_de_Hotel
 {
     public partial class FormNuevoHotel : Form
     {
-        SqlConnection conexion = BaseDeDatos.ObtenerConexion();
+        SqlConnection conexion = BaseDeDatos.conectar();
         int x = 0;
       
 
@@ -32,16 +30,13 @@ namespace FrbaHotel.Vistas.ABM_de_Hotel
             tbNombre.Text = cells[1].Value.ToString();
             tbMail.Text = cells[5].Value.ToString();
             tbTelefono.Text = cells[6].Value.ToString();
-            tbCalle.Text = cells[7].Value.ToString();
-            tbNroCalle.Text = cells[9].Value.ToString();
             tbCantEstrellas.Text = cells[2].Value.ToString();
-            nudRecarga.Text = cells[10].Value.ToString();
+            tbCalle.Text = cells[7].Value.ToString();
             tbCiudad.Text = cells[3].Value.ToString();
             tbPais.Text = cells[4].Value.ToString();
-            //dtpFecha.Text = cells[8].Value.ToString();
-            
-            
-            //cbRegimen.Text = cells[7].Value.ToString();
+            tbNroCalle.Text = cells[9].Value.ToString();
+            dtpFecha.Text = cells[8].Value.ToString();
+            //cbRegimen.Text = cells[8].Value.ToString();
             btnCrear.Text = "Actualizar";
         
         }
@@ -116,13 +111,12 @@ namespace FrbaHotel.Vistas.ABM_de_Hotel
                 comando.Parameters.Add(new SqlParameter("@Telefono", tbTelefono.Text));
                 //comando.Parameters.Add(new SqlParameter("@Regimen", cbRegimen.Text));
                 comando.Parameters.Add(new SqlParameter("@Cantidad_Estrellas", tbCantEstrellas.Text));
-                //comando.Parameters.Add(new SqlParameter("@Fecha_Creacion", dtpFecha.Text));
-                comando.Parameters.Add(new SqlParameter("@NroCalle", tbNroCalle.Text));
+                comando.Parameters.Add(new SqlParameter("@Fecha_Creacion", dtpFecha.Text));
                 comando.Parameters.Add(new SqlParameter("@Calle", tbCalle.Text));
                 comando.Parameters.Add(new SqlParameter("@Ciudad", tbCiudad.Text));
                 comando.Parameters.Add(new SqlParameter("@Pais", tbPais.Text));
-                comando.Parameters.Add(new SqlParameter("@Recarga_Estrellas", nudRecarga.Text));
-
+                comando.Parameters.Add(new SqlParameter("@NroCalle", tbNroCalle.Text));
+                
 
                 SqlDataReader dr = comando.ExecuteReader();
 

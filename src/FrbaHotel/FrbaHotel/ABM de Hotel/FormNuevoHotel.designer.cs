@@ -1,4 +1,4 @@
-﻿namespace FrbaHotel.Vistas.ABM_de_Hotel
+﻿namespace FrbaHotel.ABM_de_Hotel
 {
     partial class FormNuevoHotel
     {
@@ -45,6 +45,7 @@
             this.tbPais = new System.Windows.Forms.TextBox();
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbRegimen = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnCrear = new System.Windows.Forms.Button();
@@ -52,8 +53,6 @@
             this.tbNroCalle = new System.Windows.Forms.TextBox();
             this.lbIdHotel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.nudRecarga = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRecarga)).BeginInit();
             this.SuspendLayout();
             // 
             // tbNombre
@@ -148,6 +147,12 @@
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             // 
+            // cbRegimen
+            // 
+            this.cbRegimen.FormattingEnabled = true;
+            resources.ApplyResources(this.cbRegimen, "cbRegimen");
+            this.cbRegimen.Name = "cbRegimen";
+            // 
             // label2
             // 
             resources.ApplyResources(this.label2, "label2");
@@ -188,16 +193,10 @@
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
             // 
-            // nudRecarga
-            // 
-            resources.ApplyResources(this.nudRecarga, "nudRecarga");
-            this.nudRecarga.Name = "nudRecarga";
-            // 
             // FormNuevoHotel
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.nudRecarga);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.lbIdHotel);
             this.Controls.Add(this.label3);
@@ -205,6 +204,7 @@
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.cbRegimen);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dtpFecha);
             this.Controls.Add(this.labelPais);
@@ -223,7 +223,6 @@
             this.Controls.Add(this.tbNombre);
             this.Name = "FormNuevoHotel";
             this.Load += new System.EventHandler(this.FormHotel_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.nudRecarga)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -247,6 +246,7 @@
         private System.Windows.Forms.TextBox tbPais;
         private System.Windows.Forms.DateTimePicker dtpFecha;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbRegimen;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Button btnCrear;
@@ -254,6 +254,5 @@
         private System.Windows.Forms.TextBox tbNroCalle;
         private System.Windows.Forms.Label lbIdHotel;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown nudRecarga;
     }
 }

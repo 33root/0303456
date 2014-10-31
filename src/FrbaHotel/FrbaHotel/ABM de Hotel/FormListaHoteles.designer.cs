@@ -1,4 +1,4 @@
-﻿namespace FrbaHotel.Vistas.ABM_de_Hotel
+﻿namespace FrbaHotel.ABM_de_Hotel
 {
     partial class FormListaDeHoteles
     {
