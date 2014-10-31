@@ -274,7 +274,6 @@
             this.numeroTxtBox.Name = "numeroTxtBox";
             this.numeroTxtBox.Size = new System.Drawing.Size(65, 20);
             this.numeroTxtBox.TabIndex = 2;
-            this.numeroTxtBox.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // calleTxtBox
             // 

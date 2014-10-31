@@ -58,26 +58,26 @@
             // 
             // tbNombre
             // 
-            resources.ApplyResources(this.tbNombre, "tbNombre");
+         //   resources.ApplyResources(this.tbNombre, "tbNombre");
             this.tbNombre.Name = "tbNombre";
             this.tbNombre.Tag = "";
             this.tbNombre.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // tbMail
             // 
-            resources.ApplyResources(this.tbMail, "tbMail");
+       //     resources.ApplyResources(this.tbMail, "tbMail");
             this.tbMail.Name = "tbMail";
             this.tbMail.Tag = "";
             // 
             // tbTelefono
             // 
-            resources.ApplyResources(this.tbTelefono, "tbTelefono");
+          //  resources.ApplyResources(this.tbTelefono, "tbTelefono");
             this.tbTelefono.Name = "tbTelefono";
             this.tbTelefono.Tag = "";
             // 
             // tbCalle
             // 
-            resources.ApplyResources(this.tbCalle, "tbCalle");
+        //    resources.ApplyResources(this.tbCalle, "tbCalle");
             this.tbCalle.Name = "tbCalle";
             this.tbCalle.Tag = "";
             this.tbCalle.TextChanged += new System.EventHandler(this.textBox3_TextChanged);

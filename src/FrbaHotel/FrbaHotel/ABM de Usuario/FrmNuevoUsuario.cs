@@ -57,7 +57,7 @@ namespace FrbaHotel.ABM_de_Usuario
                     tipoDocCmbBox.Items.Add(reader["Descripcion"].ToString());
                 }
 
-                rolesBox.SelectedIndex = 0;
+                tipoDocCmbBox.SelectedIndex = 0;
 
 
 
@@ -100,7 +100,7 @@ namespace FrbaHotel.ABM_de_Usuario
             String ObtenerIdHotel = "SELECT ID_Hotel " +
                                     "FROM AEFI.TL_Hotel " +
                                     "WHERE h.Nombre = @NombreHotel";
-            String verificarUsernameNoUsado = "SELECT * COUNT (*) " +
+            String verificarUsernameNoUsado = "SELECT COUNT (*) " +
                                               "FROM AEFI.TL_Usuario u " +
                                               "WHERE u.Username != @Username ";
             String obtenerIdTipoDocumento = "SELECT ID_Tipo_Documento " +
@@ -122,8 +122,6 @@ namespace FrbaHotel.ABM_de_Usuario
             {
 
 
-                conexion.Open();
-
                 SqlCommand comando = new SqlCommand(obtenerIdTipoDocumento, conexion);
                 comando.Parameters.Add(new SqlParameter("@Descripcion", tipoDocCmbBox.Text));
                 SqlDataReader reader = comando.ExecuteReader();
@@ -141,161 +139,125 @@ namespace FrbaHotel.ABM_de_Usuario
                 reader.Close();
 
 
-                comando = new SqlCommand(verificarUsernameNoUsado, conexion);
-                comando.Parameters.Add(new SqlParameter("@Username", userTxtBox.Text));
-                reader = comando.ExecuteReader();
-
-
-                if (!reader.HasRows)
+                
+                if (!String.IsNullOrEmpty(userTxtBox.Text))
                 {
-                    comando = new SqlCommand("AEFI.crear_usuario", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
 
+                    comando = new SqlCommand(verificarUsernameNoUsado, conexion);
+                    comando.Parameters.Add(new SqlParameter("@Username", userTxtBox.Text));
+                    reader = comando.ExecuteReader();
 
-
-                    if (!String.IsNullOrEmpty(userTxtBox.Text))
+                    if (!reader.HasRows)
                     {
+                        comando = new SqlCommand("AEFI.crear_usuario", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
                         comando.Parameters.Add(new SqlParameter("@Username", userTxtBox.Text));
-                    }
-                    else
-                    {
-                        throw new Excepciones("Debe ingresar un usuario");
-                    }
-                    if (!String.IsNullOrEmpty(nombreTxtBox.Text))
-                    {
+
                         comando.Parameters.Add(new SqlParameter("@Nombre", nombreTxtBox.Text));
-                    }
-                    else
-                    {
-                        throw new Excepciones("Debe Ingresar un nombre");
-                    }
 
-                    if (!String.IsNullOrEmpty(apellidoTxtBox.Text))
-                    {
+
                         comando.Parameters.Add(new SqlParameter("@Password", passwordTxtBox.Text));
-                    }
-                    else
-                    {
-                        throw new Excepciones("Debe Ingresar un apellido");
-                    }
 
-                    if (!String.IsNullOrEmpty(passwordTxtBox.Text))
-                    {
+
                         comando.Parameters.Add(new SqlParameter("@Password", BaseDeDatos.cifrar256(passwordTxtBox.Text)));
-                    }
-                    else
-                    {
-                        throw new Excepciones("Debe ingresar una clave");
-                    }
 
-                    if (!String.IsNullOrEmpty(calleTxtBox.Text) && !String.IsNullOrEmpty(numeroTxtBox.Text) && !(String.IsNullOrEmpty(pisoTxtBox.Text)) && !(String.IsNullOrEmpty(dptoTxtBox.Text)))
-                    {
+
                         comando.Parameters.Add(new SqlParameter("@calle", calleTxtBox.Text));
                         comando.Parameters.Add(new SqlParameter("@calle_nro", numeroTxtBox.Text));
                         comando.Parameters.Add(new SqlParameter("@piso", pisoTxtBox.Text));
-                        comando.Parameters.Add(new SqlParameter("@dpto", dptoTxtBox.Text));
-                    }
-                    else
-                    {
-                        throw new Excepciones("La dirección debe estar completa");
-                    }
 
-                    if (!String.IsNullOrEmpty(mailTxtBox.Text))
-                    {
                         comando.Parameters.Add(new SqlParameter("@mail", mailTxtBox.Text));
-                    }
-                    else
-                    {
-                        throw new Excepciones("El mail no puede ser vacío");
-                    }
-                    if (!String.IsNullOrEmpty(telefonoTxtBox.Text))
-                    {
+
                         comando.Parameters.Add(new SqlParameter("@telefono", telefonoTxtBox.Text));
-                    }
-                    else
-                    {
-                        throw new Excepciones("El Telefono no puede ser vacío");
-                    }
 
-                    comando.Parameters.Add(new SqlParameter("@fecha_nacimiento", dateTimePicker1.Value.Date));
-                    comando.Parameters.Add(new SqlParameter("@id_tipo_documento", id_tipo_doc));
+                        comando.Parameters.Add(new SqlParameter("@fecha_nacimiento", dateTimePicker1.Value.Date));
+                        comando.Parameters.Add(new SqlParameter("@id_tipo_documento", id_tipo_doc));
 
 
-                    SqlDataReader dr = comando.ExecuteReader();
+                        reader = comando.ExecuteReader();
 
 
-                    comando = new SqlCommand(obtenerIdUsuarioCreado, conexion);
-                    comando.Parameters.Add("@Username", userTxtBox.Text);
-                    reader = comando.ExecuteReader();
-                    reader.Read();
-                    id_usuario_creado = Convert.ToInt32(reader["ID_Usuario"]);
-                    reader.Close();
+                        comando = new SqlCommand(obtenerIdUsuarioCreado, conexion);
+                        comando.Parameters.Add(new SqlParameter("@Username", userTxtBox.Text));
+                        reader = comando.ExecuteReader();
+                        reader.Read();
+                        id_usuario_creado = Convert.ToInt32(reader["ID_Usuario"]);
+                        reader.Close();
 
 
 
 
 
-                    comando = new SqlCommand("AEFI.crear_usuario_por_rol", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.Add(new SqlParameter("@ID_Rol", id_rol));
-                    comando.Parameters.Add(new SqlParameter("@ID_Usuario", id_usuario_creado));
-
-
-
-                   
+                        comando = new SqlCommand("AEFI.crear_usuario_por_rol", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.Add(new SqlParameter("@ID_Rol", id_rol));
+                        comando.Parameters.Add(new SqlParameter("@ID_Usuario", id_usuario_creado));
 
 
 
 
-                    for (int i = 0; i < checkedListBox.Items.Count; i++)
-                    {
-                        if (checkedListBox.GetItemCheckState(i) == CheckState.Checked)
-                        {   //Obtengo el ID del Hotel si esta checkeado
-                            try
-                            {
-                                comando = new SqlCommand(ObtenerIdHotel, conexion);
-                                comando.Parameters.Add(new SqlParameter("@NombreHotel", Convert.ToString(checkedListBox.Items[i])));
-                                reader = comando.ExecuteReader();
 
 
-                                reader.Read();
-                                id_Hotel = Convert.ToInt32(reader["ID_Hotel"]);
-                                reader.Close();
 
-                                comando = new SqlCommand("AEFI.crear_usuario_por_hotel", conexion);
-                                comando.CommandType = CommandType.StoredProcedure;
-                                comando.Parameters.Add(new SqlParameter("ID_Rol", id_rol));
-                                comando.Parameters.Add(new SqlParameter("ID_Usuario", id_usuario_creado));
-                                comando.Parameters.Add(new SqlParameter("ID_Hotel", id_Hotel));
-                            }
-                            catch (Excepciones exc)
-                            {
-                                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        for (int i = 0; i < checkedListBox.Items.Count; i++)
+                        {
+                            if (checkedListBox.GetItemCheckState(i) == CheckState.Checked)
+                            {   //Obtengo el ID del Hotel si esta checkeado
+                                try
+                                {
+                                    comando = new SqlCommand(ObtenerIdHotel, conexion);
+                                    comando.Parameters.Add(new SqlParameter("@NombreHotel", Convert.ToString(checkedListBox.Items[i])));
+                                    reader = comando.ExecuteReader();
+
+
+                                    reader.Read();
+                                    id_Hotel = Convert.ToInt32(reader["ID_Hotel"]);
+                                    reader.Close();
+
+                                    comando = new SqlCommand("AEFI.crear_usuario_por_hotel", conexion);
+                                    comando.CommandType = CommandType.StoredProcedure;
+                                    comando.Parameters.Add(new SqlParameter("ID_Rol", id_rol));
+                                    comando.Parameters.Add(new SqlParameter("ID_Usuario", id_usuario_creado));
+                                    comando.Parameters.Add(new SqlParameter("ID_Hotel", id_Hotel));
+                                }
+                                catch (Excepciones exc)
+                                {
+                                    MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
                             }
                         }
+
+
+                        MessageBox.Show("El Usuario se creo satisfactoriamente", "Usuario Creado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    MessageBox.Show("El Usuario se creo satisfactoriamente", "Usuario Creado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
                 }
-
             }
 
-
-            catch (Excepciones exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
 
             finally
             {
                 conexion.Close();
             }
 
+        }
 
         }
 
+            
+
+
+         
+
+
+
+        
+
     }
 
-}
+
         
     
 

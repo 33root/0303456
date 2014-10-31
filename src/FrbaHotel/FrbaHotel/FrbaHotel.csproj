@@ -103,11 +103,11 @@
     <Compile Include="ABM de Rol\FormRol.designer.cs">
       <DependentUpon>FormRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Usuario\Form1.cs">
+    <Compile Include="ABM de Usuario\FrmNuevoUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Usuario\Form1.designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM de Usuario\FrmNuevoUsuario.designer.cs">
+      <DependentUpon>FrmNuevoUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Cancelar Reserva\Form1.cs">
       <SubType>Form</SubType>
@@ -185,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Rol\FormRol.resx">
       <DependentUpon>FormRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Usuario\FrmNuevoUsuario.resx">
+      <DependentUpon>FrmNuevoUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\FrmLogIn.resx">
       <DependentUpon>FrmLogIn.cs</DependentUpon>
