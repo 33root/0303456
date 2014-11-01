@@ -19,7 +19,7 @@ namespace FrbaHotel.ABM_de_Cliente
         }
 
         SqlConnection conexion = BaseDeDatos.conectar();
-        int x = 0;
+        int x = 0; //0 cuando entran directamente al form, 1 cuando entran desde el listado con un seleccionado
         string usu = "";
         string con = "";
 
@@ -55,10 +55,20 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void VolverButton_Click(object sender, EventArgs e)
         {
-            FormMenu inicio = new FormMenu();
-            this.Hide();
-            inicio.ShowDialog();
-            this.Close();
+            if (x == 0)
+            {
+                FormMenu inicio = new FormMenu();
+                this.Hide();
+                inicio.ShowDialog();
+                this.Close();
+            }
+            else if (x == 1)
+            {
+                FormBuscadorDeClientes listado = new FormBuscadorDeClientes();
+                this.Hide();
+                listado.ShowDialog();
+                this.Close();
+            }
         }
 
         private void FormClienteNuevo_Load(object sender, EventArgs e)
@@ -107,6 +117,67 @@ namespace FrbaHotel.ABM_de_Cliente
         private void CrearButton_Click(object sender, EventArgs e)
         {
             //en construccion, aca tengo que usar un sp y estoy medio verde en eso :S
+            try
+            {
+                conexion.Open();
+                SqlCommand comando = null;
+
+                if (x == 0)
+                    comando = new SqlCommand("AEFI.insertar_cliente", conexion);
+                else if (x == 1)
+                    comando = new SqlCommand("AEFI.actualizar_cliente", conexion);
+    
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add(new SqlParameter("@Nombre", txbNombre.Text));
+                comando.Parameters.Add(new SqlParameter("@Apellido", txbApellido.Text));
+                comando.Parameters.Add(new SqlParameter("@ID_Tipo_Documetno", cbTipoDeDocumento.Text));
+                comando.Parameters.Add(new SqlParameter("@Documento_Nro", txbDocumentoNumero.Text));
+                comando.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
+                comando.Parameters.Add(new SqlParameter("@Fecha_Nacimiento", dtpFecha.Text));
+                comando.Parameters.Add(new SqlParameter("@Calle", txbDireccion.Text));
+                comando.Parameters.Add(new SqlParameter("@Calle_Nro", txbCalle.Text));
+
+                if (!String.IsNullOrEmpty(txbPiso.Text))
+                    comando.Parameters.Add(new SqlParameter("@Piso", txbPiso.Text));
+                if (!String.IsNullOrEmpty(txbDpto.Text))
+                    comando.Parameters.Add(new SqlParameter("@Dpto", txbDpto.Text));
+                if (!String.IsNullOrEmpty(txbLocalidad.Text))
+                    comando.Parameters.Add(new SqlParameter("@Localidad", txbLocalidad.Text));
+                if (!String.IsNullOrEmpty(txbTelefono.Text))
+                {
+                    if (x != 1)
+                    {
+                        SqlCommand comandoTelefono = new SqlCommand("SELECT * FROM AEFI.clientes " +
+                                        "WHERE Telefono = @telefono", conexion);
+                        comandoTelefono.Parameters.Add(new SqlParameter("@Telefono", txbTelefono.Text));
+                        SqlDataReader reader = comandoTelefono.ExecuteReader();
+                        if (reader.HasRows)
+                            throw new Excepciones("El telefono ya existe");
+                        reader.Close();
+                    }
+                    comando.Parameters.Add(new SqlParameter("@Telefono", txbTelefono.Text));
+                }
+                else
+                    throw new Excepciones("No se ingreso ningun telefono");
+
+                comando.ExecuteNonQuery();
+                MessageBox.Show("Operacion Completada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LimpiarButton_Click(sender, e);
+                VolverButton.Enabled = true;
+
+            }
+            catch (Excepciones exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
         }
     }
 }

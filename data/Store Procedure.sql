@@ -77,3 +77,219 @@ BEGIN
 	END;
 
 END;
+
+GO
+
+CREATE PROCEDURE AEFI.insertar_cliente
+    @Nombre NVARCHAR(255),
+    @Apellido NVARCHAR(255),
+    @ID_Tipo_Documento NVARCHAR(255),
+    @Documento_Numero NUMERIC(18,0),
+    @Mail NVARCHAR(255),
+    @Calle NVARCHAR(255),
+    @Calle_Nro NUMERIC(18,0),
+    @Piso NUMERIC(18,0) = NULL,
+    @Dpto NVARCHAR(50) = NULL,
+    @Telefono NUMERIC(18,0),
+    @Fecha_Nacimiento DATETIME,
+    @Localidad NVARCHAR(255) = NULL,
+    @PaisOrigen NVARCHAR(255)
+		
+AS
+BEGIN
+	IF @localidad IS NOT NULL
+	BEGIN
+		IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Localidad = @Localidad)
+			INSERT INTO AEFI.TL_Cliente(Localidad)
+			VALUES (@Localidad);
+	END;
+	
+	IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Calle = @Calle AND Calle_Nro = @Calle_Nro)
+	BEGIN
+		IF @localidad IS NOT NULL
+			INSERT INTO AEFI.TL_Cliente(Calle, Calle_Nro, Piso, Dpto, Localidad)
+			VALUES (@Calle, @Calle_Nro, @Piso, @Dpto,
+			(
+				SELECT Localidad
+				FROM AEFI.TL_Cliente
+				WHERE Localidad = @Localidad)
+			);
+		ELSE
+			INSERT INTO AEFI.TL_Cliente(Calle, Calle_Nro, Piso, Dpto, Localidad)
+			VALUES (@Calle, @Calle_Nro, @Piso, @Dpto, NULL);
+	END;
+	
+	IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario WHERE Username = @Nombre + '_' + @Apellido)
+	BEGIN
+		INSERT INTO AEFI.TL_Usuario (Username, Password)
+		VALUES (@Nombre + '_' + @Apellido, '03AC674216F3E15C761EE1A5E255F067953623C8B388B4459E13F978D7C846F4'); /* 1234 */
+		INSERT INTO AEFI.TL_Usuario_Por_Rol(ID_Usuario, ID_Rol)
+		VALUES ((SELECT ID_Usuario FROM AEFI.TL_Usuario WHERE Username = @Nombre + '_' + @Apellido), 1);
+	END;
+	
+	IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Nombre = @Nombre AND Apellido = @Apellido)
+		INSERT INTO AEFI.TL_Cliente (Documento_Nro, Nombre, Apellido, Telefono, Mail, Fecha_Nacimiento, ID_Tipo_Documento, Calle, ID_Cliente)
+		VALUES (@Documento_Numero, @Nombre, @Apellido, @Telefono, @Mail, @Fecha_Nacimiento, (
+			SELECT ID_Tipo_Documento
+			FROM AEFI.TL_Tipo_Documento
+			WHERE Descripcion = @ID_Tipo_Documento), (
+			SELECT Calle
+			FROM AEFI.TL_Cliente
+			WHERE Calle = @Calle AND Calle_Nro = @Calle_Nro), (
+			SELECT ID_Usuario
+			FROM AEFI.TL_Usuario
+			WHERE Username = @Nombre + '_' + @Apellido));
+END;
+
+GO
+
+CREATE PROCEDURE AEFI.actualizar_cliente
+	@ID_Cliente NUMERIC(18,0),
+	@Nombre NVARCHAR(255),
+    @Apellido NVARCHAR(255),
+    @ID_Tipo_Documento NVARCHAR(255),
+    @Documento_Numero NUMERIC(18,0),
+    @Mail NVARCHAR(255),
+    @Calle NVARCHAR(255),
+    @Calle_Nro NUMERIC(18,0),
+    @Piso NUMERIC(18,0) = NULL,
+    @Dpto NVARCHAR(50) = NULL,
+    @Telefono NUMERIC(18,0),
+    @Fecha_Nacimiento DATETIME,
+    @Localidad NVARCHAR(255) = NULL,
+    @PaisOrigen NVARCHAR(255)
+AS
+BEGIN
+	IF @localidad IS NOT NULL
+	BEGIN
+		IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Localidad = @Localidad)
+			INSERT INTO AEFI.TL_Cliente(Localidad)
+			VALUES (@Localidad);
+	END;
+
+	IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Calle = @Calle
+		AND Calle_Nro = @Calle_Nro AND Piso = @Piso AND Dpto = @Dpto)
+	BEGIN
+		IF @Localidad IS NOT NULL
+			INSERT INTO AEFI.TL_Cliente(Calle, Calle_Nro, Piso, Dpto, Localidad)
+			VALUES (@Calle, @Calle_Nro, @Piso, @Dpto,
+			(
+				SELECT Localidad
+				FROM AEFI.TL_Cliente
+				WHERE Localidad = @localidad AND ID_Cliente = @ID_Cliente)
+			);
+		ELSE
+			INSERT INTO AEFI.TL_Cliente(Calle, Calle_Nro, Piso, Dpto,  Localidad)
+			VALUES (@Calle, @Calle_Nro, @Piso, @Dpto, NULL);
+	END;
+	
+	UPDATE AEFI.TL_Cliente
+	SET ID_Tipo_Documento = (
+		SELECT ID_Tipo_Documento
+		FROM AEFI.TL_Tipo_Documento
+		WHERE Descripcion = @ID_Tipo_Documento), Documento_Nro = @Documento_Numero, Mail = @Mail, Telefono = @Telefono, Fecha_Nacimiento = @Fecha_Nacimiento, Calle = @Calle	
+END;
+
+GO
+
+CREATE PROCEDURE AEFI.insertar_rol_funcionalidad
+ @ID_Funcionalidad NUMERIC(18,0),
+ @ID_rol NUMERIC(18,0)
+AS
+BEGIN
+ IF NOT EXISTS (SELECT * FROM AEFI.TL_Funcionalidad_Rol WHERE ID_Funcionalidad = @ID_Funcionalidad AND ID_Rol = @ID_rol)
+ INSERT INTO AEFI.TL_Funcionalidad_Rol VALUES (@ID_Rol, @ID_Funcionalidad)
+END;
+
+
+GO
+
+CREATE PROCEDURE AEFI.eliminar_funcionalidad_rol
+ @ID_Funcionalidad NUMERIC(18,0),
+ @ID_Rol NUMERIC(18,0)
+AS
+BEGIN
+ IF EXISTS (SELECT * FROM AEFI.TL_Funcionalidad_Rol WHERE ID_Funcionalidad = @ID_funcionalidad AND ID_Rol = @ID_Rol)
+ DELETE AEFI.TL_Funcionalidad_Rol WHERE ID_Rol = @ID_Rol AND ID_Funcionalidad = @ID_Funcionalidad
+END;
+
+GO
+CREATE PROCEDURE AEFI.inhabilitar_rol
+ @ID_rol NUMERIC(18,0)
+AS
+BEGIN
+ UPDATE AEFI.TL_Rol
+ SET Activo = 0
+ WHERE ID_Rol = @ID_rol;
+
+END;
+
+GO
+CREATE PROCEDURE AEFI.habilitar_rol
+ @ID_rol NUMERIC(18,0)
+AS
+BEGIN
+ UPDATE AEFI.TL_Rol
+ SET Activo = 1
+ WHERE ID_Rol = @ID_rol;
+
+END;
+
+GO
+CREATE PROCEDURE AEFI.crear_usuario
+
+ @Username nvarchar(255),
+ @Password nvarchar(64),
+ @Nombre nvarchar(255),
+ @Apellido nvarchar(255),
+ @id_tipo_documento nvarchar(255),
+ @documento_nro numeric(18,0),
+ @telefono numeric(18,0),
+ @calle nvarchar(255),
+ @calle_nro numeric(18,0),
+ @piso numeric(18,0),
+ @dpto nvarchar(50),
+ @mail nvarchar(255),
+ @fecha_nacimiento datetime
+
+AS
+BEGIN
+ IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario u WHERE Username = @Username )
+ BEGIN
+ INSERT INTO AEFI.TL_Usuario(Username, Password, Pass_Temporal, Habilitado, Nombre, Apellido, ID_Tipo_Documento, Documento_Nro, Mail, Telefono, Calle, Calle_Nro, Piso, Dpto, Fecha_Nacimiento)
+ VALUES (@Username, @Password, 1, 1, @Nombre, @Apellido, @id_tipo_documento, @documento_nro, @mail, @telefono, @calle, @calle_nro, @piso, @dpto, @fecha_nacimiento)
+ END;
+
+END;
+
+GO
+CREATE PROCEDURE AEFI.crear_usuario_por_rol
+
+ @ID_Rol NUMERIC(18,0),
+ @ID_Usuario NUMERIC(18,0)
+
+AS
+BEGIN
+ IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario_Por_Rol u WHERE ID_Rol = @ID_Rol AND ID_Usuario=@ID_Usuario )
+ BEGIN
+ INSERT INTO AEFI.TL_Usuario_Por_Rol(ID_Rol, ID_Usuario)
+ VALUES (@ID_Rol, @ID_Usuario)
+ END;
+
+END;
+
+
+GO
+CREATE PROCEDURE AEFI.crear_usuario_por_hotel
+
+ @ID_Rol NUMERIC(18,0),
+ @ID_Usuario NUMERIC(18,0),
+ @ID_Hotel NUMERIC(18,0)
+
+AS
+ BEGIN
+ IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario_Por_Hotel u WHERE ID_Rol = @ID_Rol AND ID_Usuario=@ID_Usuario AND ID_Hotel = @ID_Hotel )
+ BEGIN
+ INSERT INTO AEFI.TL_Usuario_Por_Hotel(ID_Rol, ID_Usuario, ID_Hotel)
+ VALUES (@ID_Rol, @ID_Usuario, @ID_Hotel)
+END;
