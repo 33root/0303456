@@ -22,7 +22,70 @@ namespace FrbaHotel.ABM_de_Habitacion
             InitializeComponent();
             cmbVista.Items.Add("S");
             cmbVista.Items.Add("N");
+            cmbTHabitacion.Items.Add("");
+
+            try
+            {
+                conexion.Open();
+                string consulta = "SELECT descripcion FROM AEFI.TL_Tipo_Habitacion ORDER BY ID_Tipo_Habitacion ";
+                SqlCommand comando = new SqlCommand(consulta, conexion);
+                SqlDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
+                    cmbTHabitacion.Items.Add(reader[0]);
+                reader.Close();
+            }
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+
         }
+
+        public FormNuevaHabitacion(int cod, DataGridViewCellCollection cells)
+        {
+            this.x = cod;
+            InitializeComponent();
+
+            /*Falta el ID_Hotel*/
+            lbIDHabitacion.Text = cells[0].Value.ToString();
+            tbNumero.Text = cells[1].Value.ToString();
+            tbPiso.Text = cells[2].Value.ToString();
+            cmbVista.Text = cells[3].Value.ToString();
+            cmbTHabitacion.Text = cells[5].Value.ToString();
+            //rtbDescripcion.Text = cells[4].Value.ToString(); no va (?
+            btnCrear.Text = "Actualizar";
+
+            /*Codigo repedito*/
+            cmbVista.Items.Add("S");
+            cmbVista.Items.Add("N");
+            cmbTHabitacion.Items.Add("");
+
+            try
+            {
+                conexion.Open();
+                string consulta = "SELECT descripcion FROM AEFI.TL_Tipo_Habitacion ORDER BY ID_Tipo_Habitacion ";
+                SqlCommand comando = new SqlCommand(consulta, conexion);
+                SqlDataReader reader = comando.ExecuteReader();
+                while (reader.Read())
+                    cmbTHabitacion.Items.Add(reader[0]);
+                reader.Close();
+            }
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            /*Termina codigo repetido*/
+
+
+        }               
 
         private void tbNombre_TextChanged(object sender, EventArgs e)
         {
@@ -37,16 +100,20 @@ namespace FrbaHotel.ABM_de_Habitacion
                 SqlCommand comando = null;
 
 
-                comando = new SqlCommand("AEFI.crear_Habitacion", conexion);
+                if (x == 0)
+                    comando = new SqlCommand("AEFI.crear_Habitacion", conexion);
 
+                else if (x == 1)
+                    comando = new SqlCommand("AEFI.actualizar_Habitacion", conexion);
+
+                
                 comando.CommandType = CommandType.StoredProcedure;
-                //comando.Parameters.Add(new SqlParameter("@ID_Habitacion", lbIdHabitacion.Text));
+                comando.Parameters.Add(new SqlParameter("@ID_Habitacion", lbIDHabitacion.Text));
                 comando.Parameters.Add(new SqlParameter("@Numero", tbNumero.Text));
                 comando.Parameters.Add(new SqlParameter("@Piso", tbPiso.Text));
                 comando.Parameters.Add(new SqlParameter("@Vista", cmbVista.Text));
                 comando.Parameters.Add(new SqlParameter("@Tipo_Habitacion", cmbTHabitacion.Text));
-                comando.Parameters.Add(new SqlParameter("@Descripcion", rtbDescripcion.Text));
-                comando.Parameters.Add(new SqlParameter("@Porcentual", tbPorcentual.Text));
+                //comando.Parameters.Add(new SqlParameter("@Descripcion", rtbDescripcion.Text)); no va (?
 
 
                 SqlDataReader dr = comando.ExecuteReader();
@@ -80,6 +147,13 @@ namespace FrbaHotel.ABM_de_Habitacion
                 FormMenu inicio = new FormMenu();
                 this.Hide();
                 inicio.ShowDialog();
+                this.Close();
+            }
+            else if (x == 1)
+            {
+                FormListaHabitacion listado = new FormListaHabitacion();
+                this.Hide();
+                listado.ShowDialog();
                 this.Close();
             }
         }

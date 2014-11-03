@@ -48,38 +48,44 @@ namespace FrbaHotel.ABM_de_Hotel
             conexion.Open();
 
 
-            string Query = "SELECT h.ID_Hotel, h.Nombre, h.Cantidad_Estrellas, h.Ciudad, h.Pais, h.Mail, h.Telefono, h.Calle, h.Fecha_Creacion, h.Nro_Calle FROM AEFI.TL_Hotel h WHERE h.Cantidad_Estrellas IS NOT NULL";
-                
+            string Query = "SELECT h.ID_Hotel, h.Nombre, h.Cantidad_Estrellas, h.Ciudad, h.Pais, h.Mail, h.Telefono, h.Calle, h.Fecha_Creacion, h.Nro_Calle, h.Recarga_Estrellas FROM AEFI.TL_Hotel h WHERE h.Cantidad_Estrellas IS NOT NULL";
+
 
 
 
             if (!String.IsNullOrEmpty(tbCantEstrellas.Text))
             {
                 String aux = BaseDeDatos.agregarApostrofos(tbCantEstrellas.Text);
-                Query = Query + " AND h.Cantidad_Estrellas LIKE " + aux;   
+                Query = Query + " AND h.Cantidad_Estrellas LIKE " + aux;
             }
 
             if (!String.IsNullOrEmpty(tbCiudad.Text))
             {
                 String aux = BaseDeDatos.agregarApostrofos("%" + tbCiudad.Text + "%");
-                Query = Query + " AND h.Ciudad LIKE " + aux;   
+                Query = Query + " AND h.Ciudad LIKE " + aux;
             }
 
-           
+            if (!String.IsNullOrEmpty(tbPais.Text))
+            {
+                String aux = BaseDeDatos.agregarApostrofos("%" + tbPais.Text + "%");
+                Query = Query + " AND h.Pais LIKE " + aux;
+            }
 
 
-           // falta Nombre, Pais...
-           
 
-            
 
-           SqlDataAdapter adapter = new SqlDataAdapter(Query, conexion);
+            // falta Nombre, Pais...
+
+
+
+
+            SqlDataAdapter adapter = new SqlDataAdapter(Query, conexion);
             DataTable tabla = new DataTable();
             adapter.Fill(tabla);
             dgvHoteles.DataSource = tabla;
-          
-          
-           conexion.Close();
+
+
+            conexion.Close();
 
         }
 

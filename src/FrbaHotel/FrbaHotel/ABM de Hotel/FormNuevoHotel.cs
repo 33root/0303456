@@ -13,6 +13,7 @@ namespace FrbaHotel.ABM_de_Hotel
 {
     public partial class FormNuevoHotel : Form
     {
+
         SqlConnection conexion = BaseDeDatos.conectar();
         int x = 0;
       
@@ -20,6 +21,11 @@ namespace FrbaHotel.ABM_de_Hotel
         public FormNuevoHotel()
         {
             InitializeComponent();
+        }
+
+        private void FormNuevoHotel_Load(object sender, EventArgs e)
+        {
+
         }
 
         public FormNuevoHotel(int cod, DataGridViewCellCollection cells)
@@ -30,57 +36,42 @@ namespace FrbaHotel.ABM_de_Hotel
             tbNombre.Text = cells[1].Value.ToString();
             tbMail.Text = cells[5].Value.ToString();
             tbTelefono.Text = cells[6].Value.ToString();
-            tbCantEstrellas.Text = cells[2].Value.ToString();
             tbCalle.Text = cells[7].Value.ToString();
+            tbNroCalle.Text = cells[9].Value.ToString();
+            tbCantEstrellas.Text = cells[2].Value.ToString();
+            nudRecarga.Text = cells[10].Value.ToString();
             tbCiudad.Text = cells[3].Value.ToString();
             tbPais.Text = cells[4].Value.ToString();
-            tbNroCalle.Text = cells[9].Value.ToString();
-            dtpFecha.Text = cells[8].Value.ToString();
-            //cbRegimen.Text = cells[8].Value.ToString();
+            //dtpFecha.Text = cells[8].Value.ToString();
+            
+            
+            //cbRegimen.Text = cells[7].Value.ToString();
             btnCrear.Text = "Actualizar";
         
         }
 
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void tbNombre_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void tbMail_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void FormHotel_Load(object sender, EventArgs e)
+        private void tbTelefono_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            if (x == 0)
-            {
-                FormMenu inicio = new FormMenu();
-                this.Hide();
-                inicio.ShowDialog();
-                this.Close();
-            }
-            else if (x == 1)
-            {
-                FormListaDeHoteles listado = new FormListaDeHoteles();
-                this.Hide();
-                listado.ShowDialog();
-                this.Close();
-            }
-        }
-
-        private void labelDireccion_Click(object sender, EventArgs e)
+        private void nudRecarga_ValueChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private void tbCantEstrellas_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -90,10 +81,29 @@ namespace FrbaHotel.ABM_de_Hotel
 
         }
 
-        private void btnCrear_Click(object sender, EventArgs e)
+        private void tbCalle_TextChanged(object sender, EventArgs e)
         {
 
-            try
+        }
+
+        private void tbNroCalle_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbCiudad_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbPais_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCrear_Click(object sender, EventArgs e)
+        {
+              try
             {
                 conexion.Open();
                 SqlCommand comando = null;
@@ -111,12 +121,13 @@ namespace FrbaHotel.ABM_de_Hotel
                 comando.Parameters.Add(new SqlParameter("@Telefono", tbTelefono.Text));
                 //comando.Parameters.Add(new SqlParameter("@Regimen", cbRegimen.Text));
                 comando.Parameters.Add(new SqlParameter("@Cantidad_Estrellas", tbCantEstrellas.Text));
-                comando.Parameters.Add(new SqlParameter("@Fecha_Creacion", dtpFecha.Text));
+                //comando.Parameters.Add(new SqlParameter("@Fecha_Creacion", dtpFecha.Text));
+                comando.Parameters.Add(new SqlParameter("@NroCalle", tbNroCalle.Text));
                 comando.Parameters.Add(new SqlParameter("@Calle", tbCalle.Text));
                 comando.Parameters.Add(new SqlParameter("@Ciudad", tbCiudad.Text));
                 comando.Parameters.Add(new SqlParameter("@Pais", tbPais.Text));
-                comando.Parameters.Add(new SqlParameter("@NroCalle", tbNroCalle.Text));
-                
+                comando.Parameters.Add(new SqlParameter("@Recarga_Estrellas", nudRecarga.Text));
+
 
                 SqlDataReader dr = comando.ExecuteReader();
 
@@ -140,9 +151,23 @@ namespace FrbaHotel.ABM_de_Hotel
         
         }
 
-        private void tbIdHotel_TextChanged(object sender, EventArgs e)
+        private void btnVolver_Click(object sender, EventArgs e)
         {
-
+             if (x == 0)
+            {
+                FormMenu inicio = new FormMenu();
+                this.Hide();
+                inicio.ShowDialog();
+                this.Close();
+            }
+            else if (x == 1)
+            {
+                FormListaDeHoteles listado = new FormListaDeHoteles();
+                this.Hide();
+                listado.ShowDialog();
+                this.Close();
+            }
+        }
         }
     }
-}
+

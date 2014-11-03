@@ -58,6 +58,7 @@
             this.btnModificiar.TabIndex = 4;
             this.btnModificiar.Text = "Modificar";
             this.btnModificiar.UseVisualStyleBackColor = true;
+            this.btnModificiar.Click += new System.EventHandler(this.btnModificiar_Click);
             // 
             // btnLimpiar
             // 
