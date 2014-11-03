@@ -6,6 +6,13 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.csconfig
+*.config
+*.pdb
+*.manifest
+*.resources
+
+
 
 # Build results
 [Dd]ebug/
