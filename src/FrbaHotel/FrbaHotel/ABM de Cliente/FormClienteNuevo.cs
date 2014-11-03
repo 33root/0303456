@@ -129,6 +129,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     comando = new SqlCommand("AEFI.actualizar_cliente", conexion);
     
                 comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add(new SqlParameter("@ID_Cliente",this.x));//le paso el ID_Cliente que se asigna en la clase
                 comando.Parameters.Add(new SqlParameter("@Nombre", txbNombre.Text));
                 comando.Parameters.Add(new SqlParameter("@Apellido", txbApellido.Text));
                 comando.Parameters.Add(new SqlParameter("@ID_Tipo_Documetno", cbTipoDeDocumento.Text));
