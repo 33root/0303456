@@ -84,7 +84,7 @@ namespace FrbaHotel.Menu
 
         private void button3_Click(object sender, EventArgs e)
         {
-            FrmNuevoUsuario b = new FrmNuevoUsuario();
+            FrmUsuario b = new FrmUsuario();
             this.Hide();
             b.ShowDialog();
             this.Close();

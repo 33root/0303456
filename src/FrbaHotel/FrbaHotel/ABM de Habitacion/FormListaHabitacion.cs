@@ -7,42 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using FrbaHotel.Servicios;
 using FrbaHotel.Menu;
 
 
-namespace FrbaHotel.Vistas.ABM_de_Habitacion
+namespace FrbaHotel.ABM_de_Habitacion
 {
     public partial class FormListaHabitacion : Form
     {
-        SqlConnection conexion = BaseDeDatos.ObtenerConexion();
+        SqlConnection conexion = BaseDeDatos.conectar();
 
         public FormListaHabitacion()
         {
             InitializeComponent();
             cmbVista.Items.Add("S");
             cmbVista.Items.Add("N");
-            cmbTHabitacion.Items.Add("");
-
-            try
-            {
-                conexion.Open();
-                string consulta = "SELECT descripcion FROM AEFI.TL_Tipo_Habitacion ORDER BY ID_Tipo_Habitacion ";
-                SqlCommand comando = new SqlCommand(consulta, conexion);
-                SqlDataReader reader = comando.ExecuteReader();
-                while (reader.Read())
-                    cmbTHabitacion.Items.Add(reader[0]);
-                reader.Close();
-            }
-            catch (SqlException exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conexion.Close();
-            }
-
         }
 
         private void FormListaHabitacion_Load(object sender, EventArgs e)
@@ -55,11 +33,7 @@ namespace FrbaHotel.Vistas.ABM_de_Habitacion
             conexion.Open();
 
 
-            string Query = "SELECT h.ID_Hotel, h.Numero, h.Piso, h.Vista, Tipo_Comodidades, " +
-                "th.Descripcion, th.Porcentual " +
-                "FROM AEFI.TL_Habitacion h " +
-                "JOIN AEFI.TL_Tipo_Habitacion th ON (h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion) " +
-                "WHERE h.Numero IS NOT NULL ";
+            string Query = "SELECT h.Numero, h.Piso, h.Vista, Tipo_Comodidades, Tipo_Porcentual FROM AEFI.TL_Habitacion h WHERE h.Numero IS NOT NULL";
 
             if (!String.IsNullOrEmpty(tbNumero.Text))
             {
@@ -76,7 +50,7 @@ namespace FrbaHotel.Vistas.ABM_de_Habitacion
             if (!String.IsNullOrEmpty(cmbTHabitacion.Text))
             {
                 String aux = BaseDeDatos.agregarApostrofos("%" + cmbTHabitacion.Text + "%");
-                Query = Query + "AND th.descripcion LIKE " + aux;
+                Query = Query + " AND h.Tipo_Habitacion LIKE " + aux;
             }
 
             SqlDataAdapter adapter = new SqlDataAdapter(Query, conexion);
@@ -93,7 +67,6 @@ namespace FrbaHotel.Vistas.ABM_de_Habitacion
         {
             dgvHabitaciones.DataSource = null;
             tbNumero.Clear();
-            /*falta ver como limpiar los CMB */
             
         }
 
@@ -103,17 +76,6 @@ namespace FrbaHotel.Vistas.ABM_de_Habitacion
             this.Hide();
             menu.ShowDialog();
             this.Close();
-        }
-
-        private void btnModificiar_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow row in dgvHabitaciones.SelectedRows)
-            {
-                FormNuevaHabitacion alta = new FormNuevaHabitacion(1, row.Cells);
-                this.Hide();
-                alta.ShowDialog();
-                this.Close();
-            }
         }
     }
 }

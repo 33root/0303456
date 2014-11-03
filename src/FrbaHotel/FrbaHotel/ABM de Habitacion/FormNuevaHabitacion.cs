@@ -8,14 +8,13 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menu;
 using System.Data.SqlClient;
-using FrbaHotel.Servicios;
 
-namespace FrbaHotel.Vistas.ABM_de_Habitacion
+namespace FrbaHotel.ABM_de_Habitacion
 {
     public partial class FormNuevaHabitacion : Form
     {
 
-        SqlConnection conexion = BaseDeDatos.ObtenerConexion();
+        SqlConnection conexion = BaseDeDatos.conectar();
         int x = 0;
 
         public FormNuevaHabitacion()
@@ -23,69 +22,7 @@ namespace FrbaHotel.Vistas.ABM_de_Habitacion
             InitializeComponent();
             cmbVista.Items.Add("S");
             cmbVista.Items.Add("N");
-            cmbTHabitacion.Items.Add("");
-
-            try
-            {
-                conexion.Open();
-                string consulta = "SELECT descripcion FROM AEFI.TL_Tipo_Habitacion ORDER BY ID_Tipo_Habitacion ";
-                SqlCommand comando = new SqlCommand(consulta, conexion);
-                SqlDataReader reader = comando.ExecuteReader();
-                while (reader.Read())
-                    cmbTHabitacion.Items.Add(reader[0]);
-                reader.Close();
-            }
-            catch (SqlException exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conexion.Close();
-            }
-
         }
-
-        public FormNuevaHabitacion(int cod, DataGridViewCellCollection cells)
-        {
-            this.x = cod;
-            InitializeComponent();
-
-            /*Falta el ID_Hotel*/
-            tbNumero.Text = cells[1].Value.ToString();
-            tbPiso.Text = cells[2].Value.ToString();
-            cmbVista.Text = cells[3].Value.ToString();
-            cmbTHabitacion.Text = cells[5].Value.ToString();
-            //rtbDescripcion.Text = cells[4].Value.ToString();
-            btnCrear.Text = "Actualizar";
-
-            /*Codigo repedito*/
-            cmbVista.Items.Add("S");
-            cmbVista.Items.Add("N");
-            cmbTHabitacion.Items.Add("");
-
-            try
-            {
-                conexion.Open();
-                string consulta = "SELECT descripcion FROM AEFI.TL_Tipo_Habitacion ORDER BY ID_Tipo_Habitacion ";
-                SqlCommand comando = new SqlCommand(consulta, conexion);
-                SqlDataReader reader = comando.ExecuteReader();
-                while (reader.Read())
-                    cmbTHabitacion.Items.Add(reader[0]);
-                reader.Close();
-            }
-            catch (SqlException exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conexion.Close();
-            }
-            /*Termina codigo repetido*/
-
-
-        }               
 
         private void tbNombre_TextChanged(object sender, EventArgs e)
         {
@@ -109,6 +46,7 @@ namespace FrbaHotel.Vistas.ABM_de_Habitacion
                 comando.Parameters.Add(new SqlParameter("@Vista", cmbVista.Text));
                 comando.Parameters.Add(new SqlParameter("@Tipo_Habitacion", cmbTHabitacion.Text));
                 comando.Parameters.Add(new SqlParameter("@Descripcion", rtbDescripcion.Text));
+                comando.Parameters.Add(new SqlParameter("@Porcentual", tbPorcentual.Text));
 
 
                 SqlDataReader dr = comando.ExecuteReader();
@@ -142,13 +80,6 @@ namespace FrbaHotel.Vistas.ABM_de_Habitacion
                 FormMenu inicio = new FormMenu();
                 this.Hide();
                 inicio.ShowDialog();
-                this.Close();
-            }
-            else if (x == 1)
-            {
-                FormListaHabitacion listado = new FormListaHabitacion();
-                this.Hide();
-                listado.ShowDialog();
                 this.Close();
             }
         }

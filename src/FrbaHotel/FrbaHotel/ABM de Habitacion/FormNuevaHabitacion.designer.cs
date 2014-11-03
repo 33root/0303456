@@ -1,4 +1,4 @@
-﻿namespace FrbaHotel.Vistas.ABM_de_Habitacion
+﻿namespace FrbaHotel.ABM_de_Habitacion
 {
     partial class FormNuevaHabitacion
     {
@@ -40,6 +40,8 @@
             this.cmbVista = new System.Windows.Forms.ComboBox();
             this.tbPiso = new System.Windows.Forms.TextBox();
             this.tbNumero = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbPorcentual = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnCrear
@@ -123,7 +125,6 @@
             this.cmbTHabitacion.Name = "cmbTHabitacion";
             this.cmbTHabitacion.Size = new System.Drawing.Size(121, 21);
             this.cmbTHabitacion.TabIndex = 27;
-            this.cmbTHabitacion.Text = "Base Simple";
             this.cmbTHabitacion.SelectedIndexChanged += new System.EventHandler(this.cmbTHabitacion_SelectedIndexChanged);
             // 
             // cmbVista
@@ -133,7 +134,6 @@
             this.cmbVista.Name = "cmbVista";
             this.cmbVista.Size = new System.Drawing.Size(121, 21);
             this.cmbVista.TabIndex = 26;
-            this.cmbVista.Text = "N";
             this.cmbVista.SelectedIndexChanged += new System.EventHandler(this.cmbVista_SelectedIndexChanged);
             // 
             // tbPiso
@@ -152,11 +152,29 @@
             this.tbNumero.TabIndex = 24;
             this.tbNumero.TextChanged += new System.EventHandler(this.tbNombre_TextChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(258, 129);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.TabIndex = 37;
+            this.label1.Text = "Tipo Porcentual";
+            // 
+            // tbPorcentual
+            // 
+            this.tbPorcentual.Location = new System.Drawing.Point(346, 125);
+            this.tbPorcentual.Name = "tbPorcentual";
+            this.tbPorcentual.Size = new System.Drawing.Size(100, 20);
+            this.tbPorcentual.TabIndex = 36;
+            // 
             // FormNuevaHabitacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(544, 208);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tbPorcentual);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.label6);
@@ -191,5 +209,7 @@
         private System.Windows.Forms.ComboBox cmbVista;
         private System.Windows.Forms.TextBox tbPiso;
         private System.Windows.Forms.TextBox tbNumero;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbPorcentual;
     }
 }
