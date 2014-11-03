@@ -288,8 +288,10 @@ CREATE PROCEDURE AEFI.crear_usuario_por_hotel
 
 AS
  BEGIN
- IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario_Por_Hotel u WHERE ID_Rol = @ID_Rol AND ID_Usuario=@ID_Usuario AND ID_Hotel = @ID_Hotel )
- BEGIN
- INSERT INTO AEFI.TL_Usuario_Por_Hotel(ID_Rol, ID_Usuario, ID_Hotel)
- VALUES (@ID_Rol, @ID_Usuario, @ID_Hotel)
+	IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario_Por_Hotel u WHERE ID_Rol = @ID_Rol AND ID_Usuario=@ID_Usuario AND ID_Hotel = @ID_Hotel )
+	BEGIN
+	INSERT INTO AEFI.TL_Usuario_Por_Hotel(ID_Rol, ID_Usuario, ID_Hotel)
+	VALUES (@ID_Rol, @ID_Usuario, @ID_Hotel)
+	END;
+
 END;
