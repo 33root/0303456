@@ -254,12 +254,12 @@ CREATE PROCEDURE AEFI.crear_usuario
 
 AS
 BEGIN
- IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario u WHERE Username = @Username )
+ IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario u WHERE Username = @Username OR Mail=@mail OR (Documento_Nro = @documento_nro AND ID_Tipo_Documento = @id_tipo_documento))
  BEGIN
  INSERT INTO AEFI.TL_Usuario(Username, Password, Pass_Temporal, Habilitado, Nombre, Apellido, ID_Tipo_Documento, Documento_Nro, Mail, Telefono, Calle, Calle_Nro, Piso, Dpto, Fecha_Nacimiento)
  VALUES (@Username, @Password, 1, 1, @Nombre, @Apellido, @id_tipo_documento, @documento_nro, @mail, @telefono, @calle, @calle_nro, @piso, @dpto, @fecha_nacimiento)
  END;
-
+ 
 END;
 
 GO
