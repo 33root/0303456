@@ -387,6 +387,7 @@
             // 
             // cancelarBtn
             // 
+            this.cancelarBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelarBtn.Location = new System.Drawing.Point(268, 724);
             this.cancelarBtn.Name = "cancelarBtn";
             this.cancelarBtn.Size = new System.Drawing.Size(166, 23);
@@ -397,9 +398,12 @@
             // 
             // FrmNuevoUsuario
             // 
+            this.AcceptButton = this.nuevoUsuarioBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 877);
+            this.AutoScroll = true;
+            this.CancelButton = this.cancelarBtn;
+            this.ClientSize = new System.Drawing.Size(601, 746);
             this.Controls.Add(this.cancelarBtn);
             this.Controls.Add(this.nuevoUsuarioBtn);
             this.Controls.Add(this.groupBox1);
