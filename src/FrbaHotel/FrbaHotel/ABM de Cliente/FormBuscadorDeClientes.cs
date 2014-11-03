@@ -93,6 +93,7 @@ namespace FrbaHotel.ABM_de_Cliente
                                      "c.Localidad, u.Habilitado " + //la tabla clientes no tiene la codigo postal
                               "FROM AEFI.TL_Cliente c " +
                               "JOIN AEFI.TL_Tipo_Documento t ON (c.ID_Tipo_Documento = t.ID_Tipo_Documento) " +
+                              "JOIN AEFI.TL_Usuario u ON (c.ID_Cliente = u.ID_Usuario)" +
                               "WHERE c.ID_Cliente > 0 ";
 
 
@@ -158,9 +159,9 @@ namespace FrbaHotel.ABM_de_Cliente
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
-                //FormClienteNuevo alta = new FormClienteNuevo(1, row.Cells);// la otra clase no esta terminada :P
+                FormClienteNuevo alta = new FormClienteNuevo(1, row.Cells);// la otra clase no esta terminada :P
                 this.Hide();
-                //alta.ShowDialog();
+                alta.ShowDialog();
                 this.Close();
             }
         }
