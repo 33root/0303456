@@ -117,6 +117,7 @@ namespace FrbaHotel.ABM_de_Cliente
         private void CrearButton_Click(object sender, EventArgs e)
         {
             //en construccion, aca tengo que usar un sp y estoy medio verde en eso :S
+            //it is done
             try
             {
                 conexion.Open();
