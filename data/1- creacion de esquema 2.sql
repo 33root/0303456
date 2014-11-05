@@ -146,7 +146,7 @@ CREATE TABLE [AEFI].[TL_Consumible](
 CREATE TABLE [AEFI].[TL_Estadia](
 		
 		[ID_Estadia] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
-		[Estado] bit,
+		[Estado] bit, /*1 activo, 0 finalizado*/
 		[Fecha_Inicio] datetime,
 		[Cantidad_Noches] NUMERIC(18,0),
 		[ID_Reserva] NUMERIC(18,0),
@@ -245,4 +245,12 @@ CREATE TABLE [AEFI].[TL_Usuario_Por_Hotel](
 	FOREIGN KEY (ID_Rol) REFERENCES [AEFI].[TL_Rol] (ID_Rol)
 	
 );
-	
+  
+/*TABLA MUCHOS A MUCHOS */
+CREATE TABLE [AEFI].[TL_Consumible_Por_Estadia](
+	[ID_Consumible_Por_Estadia] NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,
+	[ID_Consumible] NUMERIC(18,0),
+	[ID_Estadia] NUMERIC(18,0),
+	FOREIGN KEY (ID_Consumible) REFERENCES [AEFI].[TL_Consumible] (ID_Consumible),
+	FOREIGN KEY (ID_Estadia) REFERENCES [AEFI].[TL_Estadia] (ID_Estadia)
+);

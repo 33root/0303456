@@ -12,6 +12,7 @@ DROP PROCEDURE AEFI.actualizar_cliente;
 DROP PROCEDURE AEFI.insertar_cliente;
 DROP PROCEDURE AEFI.crear_Hotel;
 
+DROP TABLE [AEFI].[TL_Consumible_Por_Estadia];
 DROP TABLE [AEFI].[TL_Usuario_Por_Hotel];
 DROP TABLE [AEFI].[TL_Regimen_Por_Hotel];
 DROP TABLE [AEFI].[TL_Item_Por_Factura];

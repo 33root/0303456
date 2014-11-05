@@ -295,3 +295,10 @@ AS
 	END;
 
 END;
+
+/*
+CREATE TRIGGER TR_Insertar_Consumible_Estadia ON AEFI.TL_Consumible_Por_Estadia
+FOR INSERT
+AS
+BEGIN TRANSACTION
+	*/
