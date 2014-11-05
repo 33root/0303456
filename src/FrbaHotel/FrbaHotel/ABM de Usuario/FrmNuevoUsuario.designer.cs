@@ -59,14 +59,16 @@
             this.nrolbl = new System.Windows.Forms.Label();
             this.numeroTxtBox = new System.Windows.Forms.TextBox();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
+            this.hotelesLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // nuevoUsuarioBtn
             // 
-            this.nuevoUsuarioBtn.Location = new System.Drawing.Point(42, 724);
+            this.nuevoUsuarioBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.29F);
+            this.nuevoUsuarioBtn.Location = new System.Drawing.Point(56, 651);
             this.nuevoUsuarioBtn.Name = "nuevoUsuarioBtn";
-            this.nuevoUsuarioBtn.Size = new System.Drawing.Size(167, 23);
-            this.nuevoUsuarioBtn.TabIndex = 2;
+            this.nuevoUsuarioBtn.Size = new System.Drawing.Size(196, 42);
+            this.nuevoUsuarioBtn.TabIndex = 16;
             this.nuevoUsuarioBtn.Text = "Crear Nuevo Usuario";
             this.nuevoUsuarioBtn.UseVisualStyleBackColor = true;
             this.nuevoUsuarioBtn.Click += new System.EventHandler(this.nuevoUsuarioBtn_Click);
@@ -74,10 +76,11 @@
             // cancelarBtn
             // 
             this.cancelarBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelarBtn.Location = new System.Drawing.Point(268, 724);
+            this.cancelarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.29F);
+            this.cancelarBtn.Location = new System.Drawing.Point(384, 651);
             this.cancelarBtn.Name = "cancelarBtn";
-            this.cancelarBtn.Size = new System.Drawing.Size(166, 23);
-            this.cancelarBtn.TabIndex = 3;
+            this.cancelarBtn.Size = new System.Drawing.Size(197, 42);
+            this.cancelarBtn.TabIndex = 17;
             this.cancelarBtn.Text = "Cancelar";
             this.cancelarBtn.UseVisualStyleBackColor = true;
             this.cancelarBtn.Click += new System.EventHandler(this.cancelarBtn_Click);
@@ -85,7 +88,7 @@
             // tipolbl
             // 
             this.tipolbl.AutoSize = true;
-            this.tipolbl.Location = new System.Drawing.Point(43, 451);
+            this.tipolbl.Location = new System.Drawing.Point(238, 372);
             this.tipolbl.Name = "tipolbl";
             this.tipolbl.Size = new System.Drawing.Size(104, 13);
             this.tipolbl.TabIndex = 29;
@@ -94,22 +97,22 @@
             // tipoDocCmbBox
             // 
             this.tipoDocCmbBox.FormattingEnabled = true;
-            this.tipoDocCmbBox.Location = new System.Drawing.Point(172, 451);
+            this.tipoDocCmbBox.Location = new System.Drawing.Point(367, 372);
             this.tipoDocCmbBox.Name = "tipoDocCmbBox";
             this.tipoDocCmbBox.Size = new System.Drawing.Size(121, 21);
-            this.tipoDocCmbBox.TabIndex = 24;
+            this.tipoDocCmbBox.TabIndex = 9;
             // 
             // nrodocTxtBox
             // 
-            this.nrodocTxtBox.Location = new System.Drawing.Point(172, 410);
+            this.nrodocTxtBox.Location = new System.Drawing.Point(397, 408);
             this.nrodocTxtBox.Name = "nrodocTxtBox";
             this.nrodocTxtBox.Size = new System.Drawing.Size(121, 20);
-            this.nrodocTxtBox.TabIndex = 22;
+            this.nrodocTxtBox.TabIndex = 10;
             // 
             // nrodoclbl
             // 
             this.nrodoclbl.AutoSize = true;
-            this.nrodoclbl.Location = new System.Drawing.Point(40, 410);
+            this.nrodoclbl.Location = new System.Drawing.Point(265, 408);
             this.nrodoclbl.Name = "nrodoclbl";
             this.nrodoclbl.Size = new System.Drawing.Size(120, 13);
             this.nrodoclbl.TabIndex = 20;
@@ -118,7 +121,7 @@
             // fechalbl
             // 
             this.fechalbl.AutoSize = true;
-            this.fechalbl.Location = new System.Drawing.Point(36, 374);
+            this.fechalbl.Location = new System.Drawing.Point(207, 326);
             this.fechalbl.Name = "fechalbl";
             this.fechalbl.Size = new System.Drawing.Size(111, 13);
             this.fechalbl.TabIndex = 28;
@@ -126,46 +129,46 @@
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(172, 374);
+            this.dateTimePicker1.Location = new System.Drawing.Point(343, 326);
             this.dateTimePicker1.MaxDate = new System.DateTime(2010, 12, 31, 0, 0, 0, 0);
             this.dateTimePicker1.MinDate = new System.DateTime(1940, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(121, 20);
-            this.dateTimePicker1.TabIndex = 27;
+            this.dateTimePicker1.TabIndex = 8;
             this.dateTimePicker1.Value = new System.DateTime(2010, 12, 31, 0, 0, 0, 0);
             // 
             // nombreTxtBox
             // 
-            this.nombreTxtBox.Location = new System.Drawing.Point(166, 219);
+            this.nombreTxtBox.Location = new System.Drawing.Point(184, 158);
             this.nombreTxtBox.Name = "nombreTxtBox";
             this.nombreTxtBox.Size = new System.Drawing.Size(121, 20);
-            this.nombreTxtBox.TabIndex = 26;
+            this.nombreTxtBox.TabIndex = 4;
             // 
             // apellidoTxtBox
             // 
-            this.apellidoTxtBox.Location = new System.Drawing.Point(166, 261);
+            this.apellidoTxtBox.Location = new System.Drawing.Point(221, 200);
             this.apellidoTxtBox.Name = "apellidoTxtBox";
             this.apellidoTxtBox.Size = new System.Drawing.Size(121, 20);
-            this.apellidoTxtBox.TabIndex = 25;
+            this.apellidoTxtBox.TabIndex = 5;
             // 
             // mailTxtBox
             // 
-            this.mailTxtBox.Location = new System.Drawing.Point(166, 299);
+            this.mailTxtBox.Location = new System.Drawing.Point(254, 241);
             this.mailTxtBox.Name = "mailTxtBox";
             this.mailTxtBox.Size = new System.Drawing.Size(121, 20);
-            this.mailTxtBox.TabIndex = 23;
+            this.mailTxtBox.TabIndex = 6;
             // 
             // telefonoTxtBox
             // 
-            this.telefonoTxtBox.Location = new System.Drawing.Point(166, 334);
+            this.telefonoTxtBox.Location = new System.Drawing.Point(285, 285);
             this.telefonoTxtBox.Name = "telefonoTxtBox";
             this.telefonoTxtBox.Size = new System.Drawing.Size(121, 20);
-            this.telefonoTxtBox.TabIndex = 21;
+            this.telefonoTxtBox.TabIndex = 7;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(59, 334);
+            this.label5.Location = new System.Drawing.Point(178, 285);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 13);
             this.label5.TabIndex = 19;
@@ -174,7 +177,7 @@
             // mailbl
             // 
             this.mailbl.AutoSize = true;
-            this.mailbl.Location = new System.Drawing.Point(59, 302);
+            this.mailbl.Location = new System.Drawing.Point(147, 244);
             this.mailbl.Name = "mailbl";
             this.mailbl.Size = new System.Drawing.Size(29, 13);
             this.mailbl.TabIndex = 18;
@@ -184,7 +187,7 @@
             // apellidolbl
             // 
             this.apellidolbl.AutoSize = true;
-            this.apellidolbl.Location = new System.Drawing.Point(59, 268);
+            this.apellidolbl.Location = new System.Drawing.Point(114, 207);
             this.apellidolbl.Name = "apellidolbl";
             this.apellidolbl.Size = new System.Drawing.Size(47, 13);
             this.apellidolbl.TabIndex = 17;
@@ -193,7 +196,7 @@
             // nombrelbl
             // 
             this.nombrelbl.AutoSize = true;
-            this.nombrelbl.Location = new System.Drawing.Point(59, 226);
+            this.nombrelbl.Location = new System.Drawing.Point(77, 165);
             this.nombrelbl.Name = "nombrelbl";
             this.nombrelbl.Size = new System.Drawing.Size(47, 13);
             this.nombrelbl.TabIndex = 16;
@@ -205,7 +208,7 @@
             this.rolesBox.Location = new System.Drawing.Point(150, 121);
             this.rolesBox.Name = "rolesBox";
             this.rolesBox.Size = new System.Drawing.Size(121, 21);
-            this.rolesBox.TabIndex = 41;
+            this.rolesBox.TabIndex = 3;
             // 
             // rollbl
             // 
@@ -241,26 +244,26 @@
             this.passwordTxtBox.Name = "passwordTxtBox";
             this.passwordTxtBox.PasswordChar = '*';
             this.passwordTxtBox.Size = new System.Drawing.Size(121, 20);
-            this.passwordTxtBox.TabIndex = 37;
+            this.passwordTxtBox.TabIndex = 2;
             // 
             // userTxtBox
             // 
             this.userTxtBox.Location = new System.Drawing.Point(150, 40);
             this.userTxtBox.Name = "userTxtBox";
             this.userTxtBox.Size = new System.Drawing.Size(121, 20);
-            this.userTxtBox.TabIndex = 36;
+            this.userTxtBox.TabIndex = 1;
             // 
             // pisoTxtBox
             // 
-            this.pisoTxtBox.Location = new System.Drawing.Point(109, 539);
+            this.pisoTxtBox.Location = new System.Drawing.Point(355, 494);
             this.pisoTxtBox.Name = "pisoTxtBox";
             this.pisoTxtBox.Size = new System.Drawing.Size(100, 20);
-            this.pisoTxtBox.TabIndex = 45;
+            this.pisoTxtBox.TabIndex = 13;
             // 
             // pisolbl
             // 
             this.pisolbl.AutoSize = true;
-            this.pisolbl.Location = new System.Drawing.Point(58, 539);
+            this.pisolbl.Location = new System.Drawing.Point(304, 494);
             this.pisolbl.Name = "pisolbl";
             this.pisolbl.Size = new System.Drawing.Size(30, 13);
             this.pisolbl.TabIndex = 44;
@@ -268,15 +271,15 @@
             // 
             // calleTxtBox
             // 
-            this.calleTxtBox.Location = new System.Drawing.Point(109, 498);
+            this.calleTxtBox.Location = new System.Drawing.Point(355, 453);
             this.calleTxtBox.Name = "calleTxtBox";
             this.calleTxtBox.Size = new System.Drawing.Size(100, 20);
-            this.calleTxtBox.TabIndex = 43;
+            this.calleTxtBox.TabIndex = 11;
             // 
             // callelbl
             // 
             this.callelbl.AutoSize = true;
-            this.callelbl.Location = new System.Drawing.Point(55, 498);
+            this.callelbl.Location = new System.Drawing.Point(301, 453);
             this.callelbl.Name = "callelbl";
             this.callelbl.Size = new System.Drawing.Size(33, 13);
             this.callelbl.TabIndex = 42;
@@ -284,15 +287,15 @@
             // 
             // dptoTxtBox
             // 
-            this.dptoTxtBox.Location = new System.Drawing.Point(310, 536);
+            this.dptoTxtBox.Location = new System.Drawing.Point(556, 491);
             this.dptoTxtBox.Name = "dptoTxtBox";
             this.dptoTxtBox.Size = new System.Drawing.Size(65, 20);
-            this.dptoTxtBox.TabIndex = 49;
+            this.dptoTxtBox.TabIndex = 14;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(228, 536);
+            this.label1.Location = new System.Drawing.Point(474, 491);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 13);
             this.label1.TabIndex = 48;
@@ -301,7 +304,7 @@
             // nrolbl
             // 
             this.nrolbl.AutoSize = true;
-            this.nrolbl.Location = new System.Drawing.Point(246, 498);
+            this.nrolbl.Location = new System.Drawing.Point(492, 453);
             this.nrolbl.Name = "nrolbl";
             this.nrolbl.Size = new System.Drawing.Size(47, 13);
             this.nrolbl.TabIndex = 47;
@@ -309,20 +312,29 @@
             // 
             // numeroTxtBox
             // 
-            this.numeroTxtBox.Location = new System.Drawing.Point(310, 495);
+            this.numeroTxtBox.Location = new System.Drawing.Point(556, 450);
             this.numeroTxtBox.Name = "numeroTxtBox";
             this.numeroTxtBox.Size = new System.Drawing.Size(65, 20);
-            this.numeroTxtBox.TabIndex = 46;
+            this.numeroTxtBox.TabIndex = 12;
             // 
             // checkedListBox
             // 
             this.checkedListBox.CheckOnClick = true;
             this.checkedListBox.FormattingEnabled = true;
             this.checkedListBox.HorizontalScrollbar = true;
-            this.checkedListBox.Location = new System.Drawing.Point(166, 609);
+            this.checkedListBox.Location = new System.Drawing.Point(452, 537);
             this.checkedListBox.Name = "checkedListBox";
             this.checkedListBox.Size = new System.Drawing.Size(191, 64);
-            this.checkedListBox.TabIndex = 50;
+            this.checkedListBox.TabIndex = 15;
+            // 
+            // hotelesLbl
+            // 
+            this.hotelesLbl.AutoSize = true;
+            this.hotelesLbl.Location = new System.Drawing.Point(325, 537);
+            this.hotelesLbl.Name = "hotelesLbl";
+            this.hotelesLbl.Size = new System.Drawing.Size(101, 13);
+            this.hotelesLbl.TabIndex = 51;
+            this.hotelesLbl.Text = "Hotel(es) Asignados";
             // 
             // FrmNuevoUsuario
             // 
@@ -331,7 +343,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.CancelButton = this.cancelarBtn;
-            this.ClientSize = new System.Drawing.Size(601, 746);
+            this.ClientSize = new System.Drawing.Size(698, 746);
+            this.Controls.Add(this.hotelesLbl);
             this.Controls.Add(this.checkedListBox);
             this.Controls.Add(this.dptoTxtBox);
             this.Controls.Add(this.label1);
@@ -364,6 +377,7 @@
             this.Controls.Add(this.cancelarBtn);
             this.Controls.Add(this.nuevoUsuarioBtn);
             this.Name = "FrmNuevoUsuario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nuevo Usuario";
             this.Load += new System.EventHandler(this.FrmNuevoUsuario_Load);
             this.ResumeLayout(false);
@@ -404,5 +418,6 @@
         private System.Windows.Forms.Label nrolbl;
         private System.Windows.Forms.TextBox numeroTxtBox;
         private System.Windows.Forms.CheckedListBox checkedListBox;
+        private System.Windows.Forms.Label hotelesLbl;
     }
 }

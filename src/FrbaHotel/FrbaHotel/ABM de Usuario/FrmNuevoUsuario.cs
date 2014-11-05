@@ -98,9 +98,7 @@ namespace FrbaHotel.ABM_de_Usuario
             }
             else
             {
-
                 MessageBox.Show("Todos los campos deben ser rellenados ", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             }
 
 

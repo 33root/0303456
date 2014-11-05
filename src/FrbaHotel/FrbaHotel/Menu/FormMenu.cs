@@ -11,6 +11,7 @@ using FrbaHotel.ABM_de_Habitacion;
 using FrbaHotel.ABM_de_Rol;
 using FrbaHotel.ABM_de_Cliente;
 using FrbaHotel.ABM_de_Usuario;
+using FrbaHotel.Facturar_Estadia;
 
 
 namespace FrbaHotel.Menu
@@ -88,6 +89,15 @@ namespace FrbaHotel.Menu
             this.Hide();
             b.ShowDialog();
             this.Close();
+        }
+
+        private void facturarBtn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FrmFacturar facturar = new FrmFacturar();
+            facturar.ShowDialog();
+            this.Close();
+
         }
 
     }
