@@ -102,6 +102,7 @@
             this.Controls.Add(this.nuevaClavelbl);
             this.Controls.Add(this.claveTxtBox);
             this.Name = "NuevaClave";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nueva Clave";
             this.Load += new System.EventHandler(this.NuevaClave_Load);
             this.ResumeLayout(false);

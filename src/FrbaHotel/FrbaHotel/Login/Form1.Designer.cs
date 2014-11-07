@@ -149,6 +149,7 @@
             this.Controls.Add(this.txbUsuario);
             this.Name = "FrmLogIn";
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LogIn";
             this.Load += new System.EventHandler(this.FrmLogIn_Load);
             this.ResumeLayout(false);
