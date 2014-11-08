@@ -90,8 +90,6 @@ CREATE TABLE [AEFI].[TL_Habitacion](
 		[Numero] numeric(18,0),
 		[Piso] numeric (18,0),
 		[Vista] nvarchar(50),
-		[Tipo_Comodidades] nvarchar(255),/*ESTO NO VA*/
-		[Tipo_Porcentual] numeric (18,2),/*ESTO NO VA*/
 		[ID_Hotel] NUMERIC(18,0),
 		FOREIGN KEY (ID_Hotel) REFERENCES [AEFI].[TL_Hotel] (ID_Hotel)
 		);
@@ -149,11 +147,9 @@ CREATE TABLE [AEFI].[TL_Estadia](
 		[Fecha_Inicio] datetime,
 		[Cantidad_Noches] NUMERIC(18,0),
 		[ID_Reserva] NUMERIC(18,0),
-		[ID_Consumible] NUMERIC(18,0),
 		[Monto] NUMERIC(18,2),
-		FOREIGN KEY (ID_Reserva) REFERENCES [AEFI].[TL_Reserva](ID_Reserva),
-		FOREIGN KEY (ID_Consumible) REFERENCES [AEFI].[TL_Consumible] (ID_Consumible)
-		);
+		FOREIGN KEY (ID_Reserva) REFERENCES [AEFI].[TL_Reserva](ID_Reserva)
+				);
 
 CREATE TABLE [AEFI].[TL_FormaDePago] (
 	[ID_FormaDePago] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,

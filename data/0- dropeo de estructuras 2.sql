@@ -12,6 +12,7 @@ DROP PROCEDURE AEFI.actualizar_cliente;
 DROP PROCEDURE AEFI.insertar_cliente;
 DROP PROCEDURE AEFI.crear_Hotel;
 
+
 DROP TABLE [AEFI].[TL_Consumible_Por_Estadia];
 DROP TABLE [AEFI].[TL_Usuario_Por_Hotel];
 DROP TABLE [AEFI].[TL_Regimen_Por_Hotel];
@@ -28,8 +29,8 @@ DROP TABLE [AEFI].[TL_Cancelacion];
 DROP TABLE [AEFI].[TL_Reserva];
 DROP TABLE [AEFI].[TL_Tipo_Habitacion];
 DROP TABLE [AEFI].[TL_Habitacion];
-DROP TABLE [AEFI].[TL_Hotel];
 DROP TABLE [AEFI].[TL_Regimen];
+DROP TABLE [AEFI].[TL_Hotel];
 DROP TABLE [AEFI].[TL_Funcionalidad];
 DROP TABLE [AEFI].[TL_Rol];
 DROP TABLE [AEFI].[TL_Cliente];

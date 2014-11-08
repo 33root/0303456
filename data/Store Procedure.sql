@@ -54,6 +54,9 @@ BEGIN
 			
 END;	
 	
+	
+/* TODO: ARREGLAR ESTO 
+	
 GO	
 	
 CREATE PROCEDURE AEFI.crear_Habitacion
@@ -77,7 +80,7 @@ BEGIN
 	END;
 
 END;
-
+*/
 GO
 
 CREATE PROCEDURE AEFI.insertar_cliente
@@ -296,9 +299,47 @@ AS
 
 END;
 
-/*
-CREATE TRIGGER TR_Insertar_Consumible_Estadia ON AEFI.TL_Consumible_Por_Estadia
-FOR INSERT
+GO
+
+CREATE FUNCTION AEFI.calcular_consumibles
+ (@ID_Estadia NUMERIC(18,0))
+ RETURNS NUMERIC(18, 2)
+ AS
+ BEGIN
+	declare @RESULTADO NUMERIC(18,2)
+	set @RESULTADO = (SELECT SUM(c.Precio) FROM AEFI.TL_Consumible_Por_Estadia cpe, AEFI.TL_Consumible c
+						WHERE cpe.ID_Estadia = @ID_Estadia
+						AND c.ID_Consumible = cpe.ID_Consumible
+						)
+	RETURN @RESULTADO
+ END;
+ 
+ GO
+ CREATE FUNCTION AEFI.calcular_costo_habitacion
+ (@ID_Estadia NUMERIC(18,0))
+ RETURNS NUMERIC(18, 2)
+ AS
+ BEGIN
+	declare @RESULTADO NUMERIC(18,2)
+	set @RESULTADO = (SELECT DISTINCT m.Habitacion_Tipo_Porcentual * m.Regimen_Precio
+						FROM gd_esquema.Maestra m, AEFI.TL_Estadia e
+						WHERE e.ID_Estadia = @ID_Estadia 
+						AND m.Reserva_Codigo = e.ID_Reserva
+						AND m.Habitacion_Tipo_Porcentual IS NOT NULL
+						AND m.Regimen_Precio IS NOT NULL
+						)
+	RETURN @RESULTADO
+	END;
+	
+
+GO
+CREATE PROCEDURE AEFI.calcular_monto
+(@ID_Estadia NUMERIC(18,0)) 
 AS
-BEGIN TRANSACTION
-	*/
+BEGIN
+
+			INSERT INTO AEFI.TL_Estadia(Monto)
+			VALUES (AEFI.calcular_consumibles(@ID_Estadia) + AEFI.calcular_costo_habitacion(@ID_Estadia))
+END;
+	
+

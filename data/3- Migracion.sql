@@ -1,10 +1,5 @@
 BEGIN TRANSACTION
 
-/*INSERT INTO [AEFI].[TL_Usuario](username, password)
-SELECT m.Cliente_Nombre + '_' + m.Cliente_Apellido, '03AC674216F3E15C761EE1A5E255F067953623C8B388B4459E13F978D7C846F4' /*Borre el DISTINCT para no perder registros */
-FROM gd_esquema.Maestra m
-WHERE Cliente_Nombre IS NOT NULL*/
-
 INSERT INTO AEFI.TL_Cliente(Nombre,Apellido,ID_Tipo_Documento,Documento_Nro,Mail,Calle,Calle_Nro,Piso,Dpto,Fecha_Nacimiento,Nacionalidad,Localidad,PaisOrigen)
 SELECT DISTINCT m.Cliente_Nombre, m.Cliente_Apellido ,2, m.Cliente_Pasaporte_Nro, m.Cliente_Mail, m.Cliente_Dom_Calle, m.Cliente_Nro_Calle, m.Cliente_Piso, m.Cliente_Depto, m.Cliente_Fecha_Nac, m.Cliente_Nacionalidad,'CABA','Argentina' 
 FROM gd_esquema.Maestra m
@@ -46,8 +41,8 @@ JOIN AEFI.TL_Tipo_Habitacion t ON (m.Habitacion_Tipo_Codigo = t.ID_Tipo_Habitaci
 JOIN AEFI.TL_Hotel h ON (h.Calle = m.Hotel_Calle AND h.Nro_Calle=m.Hotel_Nro_Calle)
 
 
-INSERT INTO [AEFI].[TL_Regimen] (Descripcion,Precio_Base)
-SELECT DISTINCT Regimen_Descripcion, Regimen_Precio
+INSERT INTO [AEFI].[TL_Regimen] (Descripcion,Precio_Base, Estado)
+SELECT DISTINCT Regimen_Descripcion, Regimen_Precio, 1
 FROM  gd_esquema.Maestra
 
 
@@ -82,18 +77,26 @@ JOIN AEFI.TL_Cliente x ON (x.Documento_Nro = m.Cliente_Pasaporte_Nro)
 WHERE m.Factura_Nro IS NOT NULL;
 
 
-INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches, Monto)
-SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, m.Factura_Total
+INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches, Monto, Estado)
+SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, m.Factura_Total, 1
 FROM gd_esquema.Maestra m, AEFI.TL_Reserva r
 WHERE r.ID_Reserva = m.Reserva_Codigo
-AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL;
+AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL
+AND m.Factura_Total IS NULL;
+
+
+INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches, Monto, Estado)
+SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, m.Factura_Total, 0
+FROM gd_esquema.Maestra m, AEFI.TL_Reserva r
+WHERE r.ID_Reserva = m.Reserva_Codigo
+AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL
+AND m.Factura_Total IS NOT NULL;
+
 
 INSERT INTO AEFI.TL_Consumible_Por_Estadia
 SELECT c.ID_Consumible, e.ID_Estadia
 FROM gd_esquema.Maestra m, AEFI.TL_Consumible c, AEFI.TL_Estadia e
 WHERE m.Consumible_Codigo = c.ID_Consumible AND e.ID_Reserva=m.Reserva_Codigo;
-
-/*FALTA LA PARTE DE REGIMEN*/
 
 
 

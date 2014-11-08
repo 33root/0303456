@@ -27,8 +27,7 @@ namespace FrbaHotel.Facturar_Estadia
 
             String cargarEstadias = "SELECT * FROM AEFI.TL_Estadia";
 
-            String cargarMedioDePago = "SELECT Descripcion FROM TL_FormaDePago";
-
+          
             //Cargo las estadias
             conexion.Open();
             SqlDataAdapter adapter = new SqlDataAdapter(cargarEstadias, conexion);
@@ -38,13 +37,10 @@ namespace FrbaHotel.Facturar_Estadia
             conexion.Close();
 
             //Cargo los medios de pago
-            conexion.Open();
-            SqlCommand comando = new SqlCommand(cargarMedioDePago, conexion);
-            SqlDataReader reader = comando.ExecuteReader();
-            while (reader.Read())
-            {
-                medioDePagoCmbBox.Items.Add(reader["Descripcion"].ToString());
-            }
+          
+                medioDePagoCmbBox.Items.Add("Efectivo");
+                medioDePagoCmbBox.Items.Add("Tarjeta de Crédito");
+            
 
 
 
