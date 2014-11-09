@@ -30,7 +30,6 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.dtpHasta = new System.Windows.Forms.DateTimePicker();
             this.dtpDesde = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -42,6 +41,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.verCostoButton = new System.Windows.Forms.Button();
             this.ingresarButton = new System.Windows.Forms.Button();
+            this.txbCantidadDeNoches = new System.Windows.Forms.TextBox();
+            this.CancelarButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,17 +60,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(232, 32);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 13);
+            this.label2.Size = new System.Drawing.Size(106, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Fecha hasta";
-            // 
-            // dtpHasta
-            // 
-            this.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpHasta.Location = new System.Drawing.Point(235, 49);
-            this.dtpHasta.Name = "dtpHasta";
-            this.dtpHasta.Size = new System.Drawing.Size(200, 20);
-            this.dtpHasta.TabIndex = 2;
+            this.label2.Text = "Cantidad De Noches";
             // 
             // dtpDesde
             // 
@@ -170,11 +163,29 @@
             this.ingresarButton.UseVisualStyleBackColor = true;
             this.ingresarButton.Click += new System.EventHandler(this.ingresarButton_Click);
             // 
+            // txbCantidadDeNoches
+            // 
+            this.txbCantidadDeNoches.Location = new System.Drawing.Point(235, 49);
+            this.txbCantidadDeNoches.Name = "txbCantidadDeNoches";
+            this.txbCantidadDeNoches.Size = new System.Drawing.Size(200, 20);
+            this.txbCantidadDeNoches.TabIndex = 14;
+            // 
+            // CancelarButton
+            // 
+            this.CancelarButton.Location = new System.Drawing.Point(198, 384);
+            this.CancelarButton.Name = "CancelarButton";
+            this.CancelarButton.Size = new System.Drawing.Size(75, 23);
+            this.CancelarButton.TabIndex = 15;
+            this.CancelarButton.Text = "Cancelar";
+            this.CancelarButton.UseVisualStyleBackColor = true;
+            // 
             // FormGenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(461, 429);
+            this.Controls.Add(this.CancelarButton);
+            this.Controls.Add(this.txbCantidadDeNoches);
             this.Controls.Add(this.ingresarButton);
             this.Controls.Add(this.verCostoButton);
             this.Controls.Add(this.dataGridView1);
@@ -186,7 +197,6 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dtpDesde);
-            this.Controls.Add(this.dtpHasta);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormGenerarReserva";
@@ -201,7 +211,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dtpHasta;
         private System.Windows.Forms.DateTimePicker dtpDesde;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
@@ -213,5 +222,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button verCostoButton;
         private System.Windows.Forms.Button ingresarButton;
+        private System.Windows.Forms.TextBox txbCantidadDeNoches;
+        private System.Windows.Forms.Button CancelarButton;
     }
 }
