@@ -62,8 +62,8 @@ namespace FrbaHotel.ABM_de_Hotel
 
                 comando.CommandType = CommandType.StoredProcedure;
                 comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIdHotel.Text));
-                comando.Parameters.Add(new SqlParameter("@Fecha_Inicio", dtpInicio.Text));
-                comando.Parameters.Add(new SqlParameter("@Fecha_Fin", dtpFin.Text));
+                comando.Parameters.Add(new SqlParameter("@Fecha_Inicio", dtpInicio.Value));
+                comando.Parameters.Add(new SqlParameter("@Fecha_Fin", dtpFin.Value));
                 comando.Parameters.Add(new SqlParameter("@Descripcion", rtbMotivos.Text));
 
                 SqlDataReader dr = comando.ExecuteReader();
@@ -78,6 +78,11 @@ namespace FrbaHotel.ABM_de_Hotel
             {
                 conexion.Close();
             }
+
+            FormListaDeHoteles listado = new FormListaDeHoteles();
+            this.Hide();
+            listado.ShowDialog();
+            this.Close();
 
         }
 

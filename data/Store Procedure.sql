@@ -54,7 +54,7 @@ BEGIN
 END;	
 	
 	
-/*	
+
 GO
 
 /* Se podria implementar un Trigger o algo asi para habilitarlo cuando termine el plazo (hay q ver ) */
@@ -70,16 +70,17 @@ AS
 /* Falta realizar la validacion de estadia de hoteles, si esta vacio y todo eso */
 
 BEGIN
-
+										
 	INSERT INTO AEFI.TL_Baja_Hotel (Fecha_Inicio, Fecha_Fin, Descripcion, ID_Hotel)
 	VALUES (@Fecha_Inicio, @Fecha_Fin, @Descripcion, @ID_Hotel)
 	
 	UPDATE AEFI.TL_Hotel
 	SET Estado = 'Deshabilitado'
 	WHERE @ID_Hotel = ID_Hotel
+
 	
-END;*/
- 
+END;
+	
 	
 GO	
 	

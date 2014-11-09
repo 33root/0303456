@@ -122,6 +122,11 @@ namespace FrbaHotel.ABM_de_Hotel
             }
         }
 
+        private void btnHabilitar_Click(object sender, EventArgs e)
+        {
+            /*falta implemetar o no, Se podria implementar un Trigger o algo asi para habilitarlo cuando termine el plazo (hay q ver como lo hacemos )*/
+        }
+
        
     }
 }

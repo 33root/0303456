@@ -42,6 +42,7 @@
             this.btnFiltrar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.btnHabilitar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHoteles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +58,7 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(299, 92);
+            this.btnModificar.Location = new System.Drawing.Point(299, 52);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(80, 30);
             this.btnModificar.TabIndex = 2;
@@ -67,7 +68,7 @@
             // 
             // btnDesabilitar
             // 
-            this.btnDesabilitar.Location = new System.Drawing.Point(299, 128);
+            this.btnDesabilitar.Location = new System.Drawing.Point(299, 124);
             this.btnDesabilitar.Name = "btnDesabilitar";
             this.btnDesabilitar.Size = new System.Drawing.Size(80, 30);
             this.btnDesabilitar.TabIndex = 3;
@@ -141,7 +142,7 @@
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(299, 22);
+            this.btnFiltrar.Location = new System.Drawing.Point(299, 17);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(80, 29);
             this.btnFiltrar.TabIndex = 12;
@@ -151,7 +152,7 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(299, 57);
+            this.btnLimpiar.Location = new System.Drawing.Point(393, 17);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(80, 29);
             this.btnLimpiar.TabIndex = 13;
@@ -161,7 +162,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(393, 128);
+            this.btnVolver.Location = new System.Drawing.Point(393, 123);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(80, 29);
             this.btnVolver.TabIndex = 14;
@@ -169,11 +170,22 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnHabilitar
+            // 
+            this.btnHabilitar.Location = new System.Drawing.Point(299, 88);
+            this.btnHabilitar.Name = "btnHabilitar";
+            this.btnHabilitar.Size = new System.Drawing.Size(80, 30);
+            this.btnHabilitar.TabIndex = 15;
+            this.btnHabilitar.Text = "Habilitar";
+            this.btnHabilitar.UseVisualStyleBackColor = true;
+            this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
+            // 
             // FormListaDeHoteles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(485, 372);
+            this.Controls.Add(this.btnHabilitar);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnFiltrar);
@@ -214,5 +226,6 @@
         private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Button btnHabilitar;
     }
 }
