@@ -87,10 +87,13 @@ GO
 	
 CREATE PROCEDURE AEFI.crear_Habitacion
 
-		@Numero nvarchar (50),
-		@Piso nvarchar (50),
+
+/*por alguna razon si les pongo numeric no puede tranformar nvarchar a numeric, por eso son nvarchar (funciona) */
+		@ID_Habitacion nvarchar(10),
+		@Numero nvarchar(50),
+		@Piso nvarchar(50),
 		@Vista nvarchar (50),
-		@Tipo_Habitacion nvarchar(255)
+		@Tipo_Habitacion nvarchar(50)
 		
 
 AS
@@ -115,7 +118,10 @@ CREATE PROCEDURE AEFI.actualizar_Habitacion
 		@Numero numeric(18,0),
 		@Piso numeric(18,0),
 		@Vista nvarchar (50),
-		@Tipo_Habitacion numeric (18,0)
+		@Tipo_Habitacion numeric(18,0)/*hay un problema aca de tipos, en los combobox se muestra la descripcion
+										(Strings) del tipo de habitacion, que es lo q agarra este argumento. El
+										problema es que a la habitacion se le debe setear el ID de ese tipo de
+										habitacion y no el string de su descripcion (nombre)*/
 
 AS
 BEGIN
