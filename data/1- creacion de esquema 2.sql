@@ -92,6 +92,7 @@ CREATE TABLE [AEFI].[TL_Habitacion](
 		[Piso] numeric (18,0),
 		[Vista] nvarchar(50),
 		[Estado] varchar(255),
+		[Disponible] nvarchar(2),
 		[ID_Hotel] NUMERIC(18,0),
 		FOREIGN KEY (ID_Hotel) REFERENCES [AEFI].[TL_Hotel] (ID_Hotel)
 		);

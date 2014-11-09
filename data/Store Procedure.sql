@@ -78,8 +78,7 @@ BEGIN
 	SET Estado = 'Deshabilitado'
 	WHERE @ID_Hotel = ID_Hotel
 	
-END;
-*/	
+END;*/
  
 	
 GO	

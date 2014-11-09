@@ -2,6 +2,8 @@
 DROP PROCEDURE AEFI.crear_usuario_por_hotel;
 DROP PROCEDURE AEFI.crear_usuario_por_rol;
 DROP PROCEDURE AEFI.crear_usuario;
+DROP PROCEDURE AEFI.baja_Hotel;
+DROP PROCEDURE AEFI.baja_Habitacion;
 DROP PROCEDURE AEFI.habilitar_rol;
 DROP PROCEDURE AEFI.inhabilitar_rol;
 DROP PROCEDURE AEFI.eliminar_funcionalidad_rol;
