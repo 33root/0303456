@@ -138,6 +138,21 @@ END;
 
 GO
 
+CREATE PROCEDURE AEFI.baja_Habitacion
+	@ID_Habitacion NVARCHAR(255)
+	
+AS
+BEGIN
+	UPDATE AEFI.TL_Habitacion
+	SET Estado = 'Deshabilitado'
+	WHERE ID_Habitacion = @ID_Habitacion
+	
+	
+END;
+
+
+GO
+
 CREATE PROCEDURE AEFI.insertar_cliente
     @Nombre NVARCHAR(255),
     @Apellido NVARCHAR(255),
