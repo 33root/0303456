@@ -55,7 +55,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             tbNumero.Text = cells[1].Value.ToString();
             tbPiso.Text = cells[2].Value.ToString();
             cmbVista.Text = cells[3].Value.ToString();
-            cmbTHabitacion.Text = cells[5].Value.ToString();
+            cmbTHabitacion.Text = cells[4].Value.ToString();
             //rtbDescripcion.Text = cells[4].Value.ToString(); no va (?
             btnCrear.Text = "Actualizar";
 
