@@ -32,7 +32,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dtpDesde = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txbCantidadDeHuespedes = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbTipoDeHabitacion = new System.Windows.Forms.ComboBox();
             this.checkearDisponibilidadButton = new System.Windows.Forms.Button();
@@ -81,13 +81,13 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Cantidad de huespedes";
             // 
-            // textBox1
+            // txbCantidadDeHuespedes
             // 
-            this.textBox1.Location = new System.Drawing.Point(16, 92);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(200, 20);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txbCantidadDeHuespedes.Location = new System.Drawing.Point(16, 92);
+            this.txbCantidadDeHuespedes.Name = "txbCantidadDeHuespedes";
+            this.txbCantidadDeHuespedes.Size = new System.Drawing.Size(200, 20);
+            this.txbCantidadDeHuespedes.TabIndex = 5;
+            this.txbCantidadDeHuespedes.TextChanged += new System.EventHandler(this.txbCantidadDeHuespedes_TextChanged);
             // 
             // label4
             // 
@@ -195,7 +195,7 @@
             this.Controls.Add(this.checkearDisponibilidadButton);
             this.Controls.Add(this.cbTipoDeHabitacion);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txbCantidadDeHuespedes);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dtpDesde);
             this.Controls.Add(this.label2);
@@ -215,7 +215,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpDesde;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txbCantidadDeHuespedes;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbTipoDeHabitacion;
         private System.Windows.Forms.Button checkearDisponibilidadButton;

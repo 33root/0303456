@@ -21,14 +21,35 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             InitializeComponent();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+     
 
         private void checkearDisponibilidadButton_Click(object sender, EventArgs e)
         {
+            string consultaDisponibilidadDeLaReserva = "SELECT ID_Reserva, Fecha_Desde, Cantidad_Huespedes, Cantidad_Noches, ID_Regimen, ID_Habitacion, ID_Cliente"
+                                                              + "FROM AEFI.TL_Reserva r, AEFI.TL_Regimen e, AEFI.TL_Habitacion h"
+                                                              + "WHERE Fecha_Desde = @Fecha_Desde"
+                                                              + "AND Cantidad_Huespedes = @Cantidad_Huespedes"
+                                                              + "AND Cantidad_Noches = @Cantidad_Noches"
+                                                              + "AND ID_Cliente = @ID_Cliente";
+                                                              //tengo que ver de donde sacar el ID_Habitacion
+            try
+            {
+                conexion.Open();
+                SqlCommand comando = new SqlCommand(consultaDisponibilidadDeLaReserva, conexion);
+                comando.Parameters.Add(new SqlParameter("@Fecha_Desde", dtpDesde));
+                comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes));
+                comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches));
+                comando.Parameters.Add(new SqlParameter("@ID_Cliente", Program.idUsuario));
+                SqlDataReader reader = comando.ExecuteReader();
 
+                // chequeo que no exista otra reserva igual
+                if (reader.HasRows)
+                {
+                    throw new Excepciones("Ya existe una reserva con los mismos datos");
+                }
+            }
+
+            catch { }
         }
 
         private void ingresarButton_Click(object sender, EventArgs e)
@@ -83,6 +104,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.Hide();
             inicio.ShowDialog();
             this.Close();
+        }
+
+        private void txbCantidadDeHuespedes_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
