@@ -55,7 +55,33 @@ BEGIN
 END;	
 	
 	
-/* TODO: ARREGLAR ESTO 
+/*	
+GO
+
+/* Se podria implementar un Trigger o algo asi para habilitarlo cuando termine el plazo (hay q ver ) */
+CREATE PROCEDURE AEFI.baja_Hotel
+
+		@ID_Hotel numeric(18,0),
+		@Fecha_Inicio datetime,
+		@Fecha_Fin datetime,
+		@Descripcion varchar(255)
+
+AS
+
+/* Falta realizar la validacion de estadia de hoteles, si esta vacio y todo eso */
+
+BEGIN
+
+	INSERT INTO AEFI.TL_Baja_Hotel (Fecha_Inicio, Fecha_Fin, Descripcion, ID_Hotel)
+	VALUES (@Fecha_Inicio, @Fecha_Fin, @Descripcion, @ID_Hotel)
+	
+	UPDATE AEFI.TL_Hotel
+	SET Estado = 'Deshabilitado'
+	WHERE @ID_Hotel = ID_Hotel
+	
+END;
+*/	
+ 
 	
 GO	
 	
@@ -64,7 +90,6 @@ CREATE PROCEDURE AEFI.crear_Habitacion
 		@Numero nvarchar (50),
 		@Piso nvarchar (50),
 		@Vista nvarchar (50),
-		@Descripcion nvarchar(255),
 		@Tipo_Habitacion nvarchar(255)
 		
 
@@ -73,14 +98,39 @@ BEGIN
 		IF NOT EXISTS (SELECT * FROM AEFI.TL_Habitacion h WHERE Numero = @Numero)	
 	
 	BEGIN
-			INSERT INTO AEFI.TL_Habitacion(Numero, Piso, Vista, Tipo_Comodidades, ID_Tipo_Habitacion)
-			VALUES (@Numero, @Piso, @Vista, @Descripcion, (SELECT ID_Tipo_Habitacion 
+			INSERT INTO AEFI.TL_Habitacion(Numero, Piso, Vista, ID_Tipo_Habitacion)
+			VALUES (@Numero, @Piso, @Vista, (SELECT ID_Tipo_Habitacion 
 	FROM AEFI.TL_Tipo_Habitacion th
 	WHERE th.Descripcion = @Tipo_Habitacion))
 	END;
 
 END;
-*/
+
+
+
+GO
+CREATE PROCEDURE AEFI.actualizar_Habitacion
+
+		@ID_Habitacion numeric(18,0),
+		@Numero numeric(18,0),
+		@Piso numeric(18,0),
+		@Vista nvarchar (50),
+		@Tipo_Habitacion numeric (18,0)
+
+AS
+BEGIN
+	
+	BEGIN
+    
+    UPDATE AEFI.TL_Habitacion
+	SET Numero =@Numero, Piso = @Piso, Vista = @Vista, ID_Tipo_Habitacion = @Tipo_Habitacion
+	WHERE ID_Habitacion = @ID_Habitacion
+						
+	END;	
+			
+END;	
+
+
 GO
 
 CREATE PROCEDURE AEFI.insertar_cliente
@@ -299,7 +349,7 @@ AS
 
 END;
 
-GO
+/*GO
 
 CREATE FUNCTION AEFI.calcular_consumibles
  (@ID_Estadia NUMERIC(18,0))
@@ -312,9 +362,9 @@ CREATE FUNCTION AEFI.calcular_consumibles
 						AND c.ID_Consumible = cpe.ID_Consumible
 						)
 	RETURN @RESULTADO
- END;
+ END;*/
  
- GO
+/* GO
  CREATE FUNCTION AEFI.calcular_costo_habitacion
  (@ID_Estadia NUMERIC(18,0))
  RETURNS NUMERIC(18, 2)
@@ -330,9 +380,9 @@ CREATE FUNCTION AEFI.calcular_consumibles
 						)
 	RETURN @RESULTADO
 	END;
-	
+	*/
 
-GO
+/*GO
 CREATE PROCEDURE AEFI.calcular_monto
 (@ID_Estadia NUMERIC(18,0)) 
 AS
@@ -341,5 +391,5 @@ BEGIN
 			INSERT INTO AEFI.TL_Estadia(Monto)
 			VALUES (AEFI.calcular_consumibles(@ID_Estadia) + AEFI.calcular_costo_habitacion(@ID_Estadia))
 END;
-	
+	*/
 

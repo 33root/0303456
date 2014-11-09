@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dtpInicio = new System.Windows.Forms.DateTimePicker();
+            this.dtpFin = new System.Windows.Forms.DateTimePicker();
             this.rtbMotivos = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -37,21 +37,23 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.lbNombre = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lbIdHotel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // dateTimePicker1
+            // dtpInicio
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(121, 46);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 0;
+            this.dtpInicio.Location = new System.Drawing.Point(121, 46);
+            this.dtpInicio.Name = "dtpInicio";
+            this.dtpInicio.Size = new System.Drawing.Size(200, 20);
+            this.dtpInicio.TabIndex = 0;
             // 
-            // dateTimePicker2
+            // dtpFin
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(121, 81);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 1;
+            this.dtpFin.Location = new System.Drawing.Point(121, 81);
+            this.dtpFin.Name = "dtpFin";
+            this.dtpFin.Size = new System.Drawing.Size(200, 20);
+            this.dtpFin.TabIndex = 1;
             // 
             // rtbMotivos
             // 
@@ -87,6 +89,7 @@
             this.btnBaja.TabIndex = 5;
             this.btnBaja.Text = "Dar de Baja";
             this.btnBaja.UseVisualStyleBackColor = true;
+            this.btnBaja.Click += new System.EventHandler(this.btnBaja_Click);
             // 
             // btnCancelar
             // 
@@ -96,6 +99,7 @@
             this.btnCancelar.TabIndex = 6;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // label3
             // 
@@ -114,11 +118,31 @@
             this.lbNombre.Size = new System.Drawing.Size(0, 13);
             this.lbNombre.TabIndex = 8;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(232, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(21, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "ID:";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // lbIdHotel
+            // 
+            this.lbIdHotel.AutoSize = true;
+            this.lbIdHotel.Location = new System.Drawing.Point(250, 18);
+            this.lbIdHotel.Name = "lbIdHotel";
+            this.lbIdHotel.Size = new System.Drawing.Size(0, 13);
+            this.lbIdHotel.TabIndex = 10;
+            // 
             // FormBajaHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(336, 271);
+            this.Controls.Add(this.lbIdHotel);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.lbNombre);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnCancelar);
@@ -126,8 +150,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.rtbMotivos);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtpFin);
+            this.Controls.Add(this.dtpInicio);
             this.Name = "FormBajaHotel";
             this.Text = "BajaHotel";
             this.Load += new System.EventHandler(this.BajaHotel_Load);
@@ -138,8 +162,8 @@
 
         #endregion
 
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dtpInicio;
+        private System.Windows.Forms.DateTimePicker dtpFin;
         private System.Windows.Forms.RichTextBox rtbMotivos;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -147,5 +171,7 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lbNombre;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbIdHotel;
     }
 }

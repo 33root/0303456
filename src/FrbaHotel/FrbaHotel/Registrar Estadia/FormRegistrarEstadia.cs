@@ -9,11 +9,16 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.Registrar_Estadia
 {
-    public partial class Form1 : Form
+    public partial class FormRegistroEstadia : Form
     {
-        public Form1()
+        public FormRegistroEstadia()
         {
             InitializeComponent();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

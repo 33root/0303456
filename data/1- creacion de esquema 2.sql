@@ -79,7 +79,8 @@ CREATE TABLE [AEFI].[TL_Hotel](
 		[Recarga_Estrellas] NUMERIC(18,0),
 		[Ciudad] nvarchar(255),
 		[Pais] nvarchar(255),
-		[Fecha_Creacion] datetime
+		[Fecha_Creacion] datetime,
+		[Estado] varchar(50)
 		
 		);
 		
@@ -102,6 +103,16 @@ CREATE TABLE [AEFI].[TL_Tipo_Habitacion](
 		[Cantidad_Huespedes_Total] NUMERIC(18,0),
 		);
 
+CREATE TABLE [AEFI].[TL_Baja_Hotel](
+		[ID_Baja] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY, /* Nueva tabla para las bajas de hoteles */
+		[Fecha_Inicio] datetime,
+		[Fecha_Fin] datetime,
+		[Descripcion] varchar(255),
+		[ID_Hotel] NUMERIC (18,0),
+		FOREIGN KEY (ID_Hotel) REFERENCES [AEFI].[TL_Hotel] (ID_Hotel)
+		);
+		
+		
 		
 CREATE TABLE [AEFI].[TL_Reserva](
 

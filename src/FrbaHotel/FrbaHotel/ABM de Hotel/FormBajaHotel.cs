@@ -7,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaHotel.Menu;
 
 namespace FrbaHotel.ABM_de_Hotel
 {
     public partial class FormBajaHotel : Form
     {
+
+        SqlConnection conexion = BaseDeDatos.conectar();
+       
+
 
         public FormBajaHotel()
         {
@@ -22,6 +27,7 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             InitializeComponent();
             lbNombre.Text = cells[1].Value.ToString();
+            lbIdHotel.Text = cells[0].Value.ToString();
         }
 
 
@@ -29,5 +35,43 @@ namespace FrbaHotel.ABM_de_Hotel
         {
 
         }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+
+            FormMenu menu = new FormMenu();
+            this.Hide();
+            menu.ShowDialog();
+            this.Close();
+
+            /* esto se deberia adaptar segun el loguin del admin y los hoteles q administra (al que quiere modificar)*/
+
+        }
+
+        private void btnBaja_Click(object sender, EventArgs e)
+        {
+            conexion.Open();
+            SqlCommand comando = null;
+
+            comando = new SqlCommand("AEFI.baja_Hotel", conexion);
+
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIdHotel.Text));
+            comando.Parameters.Add(new SqlParameter("@Fecha_Inicio", dtpInicio.Text));
+            comando.Parameters.Add(new SqlParameter("@Fecha_Fin", dtpFin.Text));
+            comando.Parameters.Add(new SqlParameter("@Descripcion", rtbMotivos.Text));
+
+            SqlDataReader dr = comando.ExecuteReader();
+
+            MessageBox.Show("El Hotel se dio de baja satisfactoriamente", "Baja Hotel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

@@ -116,13 +116,12 @@
             this.facturarBtn.TabIndex = 7;
             this.facturarBtn.Text = "Facturar Estadia";
             this.facturarBtn.UseVisualStyleBackColor = true;
-            this.facturarBtn.Click += new System.EventHandler(this.facturarBtn_Click);
             // 
             // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 302);
+            this.ClientSize = new System.Drawing.Size(287, 337);
             this.Controls.Add(this.facturarBtn);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
