@@ -39,6 +39,8 @@
             this.cmbTHabitacion = new System.Windows.Forms.ComboBox();
             this.cmbVista = new System.Windows.Forms.ComboBox();
             this.tbNumero = new System.Windows.Forms.TextBox();
+            this.btnDeshabilitar = new System.Windows.Forms.Button();
+            this.btnHabilitar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,12 +49,12 @@
             this.dgvHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHabitaciones.Location = new System.Drawing.Point(13, 83);
             this.dgvHabitaciones.Name = "dgvHabitaciones";
-            this.dgvHabitaciones.Size = new System.Drawing.Size(580, 166);
+            this.dgvHabitaciones.Size = new System.Drawing.Size(592, 166);
             this.dgvHabitaciones.TabIndex = 3;
             // 
             // btnModificiar
             // 
-            this.btnModificiar.Location = new System.Drawing.Point(349, 51);
+            this.btnModificiar.Location = new System.Drawing.Point(146, 51);
             this.btnModificiar.Name = "btnModificiar";
             this.btnModificiar.Size = new System.Drawing.Size(100, 26);
             this.btnModificiar.TabIndex = 4;
@@ -62,7 +64,7 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(484, 51);
+            this.btnLimpiar.Location = new System.Drawing.Point(493, 51);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(100, 26);
             this.btnLimpiar.TabIndex = 5;
@@ -72,7 +74,7 @@
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(212, 51);
+            this.btnFiltrar.Location = new System.Drawing.Point(26, 51);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(100, 26);
             this.btnFiltrar.TabIndex = 6;
@@ -82,7 +84,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(484, 258);
+            this.btnVolver.Location = new System.Drawing.Point(493, 258);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(100, 26);
             this.btnVolver.TabIndex = 7;
@@ -140,11 +142,33 @@
             this.tbNumero.Size = new System.Drawing.Size(100, 20);
             this.tbNumero.TabIndex = 13;
             // 
+            // btnDeshabilitar
+            // 
+            this.btnDeshabilitar.Location = new System.Drawing.Point(378, 51);
+            this.btnDeshabilitar.Name = "btnDeshabilitar";
+            this.btnDeshabilitar.Size = new System.Drawing.Size(100, 26);
+            this.btnDeshabilitar.TabIndex = 14;
+            this.btnDeshabilitar.Text = "Deshabilitar";
+            this.btnDeshabilitar.UseVisualStyleBackColor = true;
+            this.btnDeshabilitar.Click += new System.EventHandler(this.btnDeshabilitar_Click);
+            // 
+            // btnHabilitar
+            // 
+            this.btnHabilitar.Location = new System.Drawing.Point(263, 51);
+            this.btnHabilitar.Name = "btnHabilitar";
+            this.btnHabilitar.Size = new System.Drawing.Size(100, 26);
+            this.btnHabilitar.TabIndex = 15;
+            this.btnHabilitar.Text = "Habilitar";
+            this.btnHabilitar.UseVisualStyleBackColor = true;
+            this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
+            // 
             // FormListaHabitacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(605, 296);
+            this.ClientSize = new System.Drawing.Size(617, 296);
+            this.Controls.Add(this.btnHabilitar);
+            this.Controls.Add(this.btnDeshabilitar);
             this.Controls.Add(this.tbNumero);
             this.Controls.Add(this.cmbVista);
             this.Controls.Add(this.cmbTHabitacion);
@@ -178,5 +202,7 @@
         private System.Windows.Forms.ComboBox cmbTHabitacion;
         private System.Windows.Forms.ComboBox cmbVista;
         private System.Windows.Forms.TextBox tbNumero;
+        private System.Windows.Forms.Button btnDeshabilitar;
+        private System.Windows.Forms.Button btnHabilitar;
     }
 }

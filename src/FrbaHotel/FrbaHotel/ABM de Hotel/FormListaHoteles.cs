@@ -48,7 +48,7 @@ namespace FrbaHotel.ABM_de_Hotel
             conexion.Open();
 
 
-            string Query = "SELECT h.ID_Hotel, h.Nombre, h.Cantidad_Estrellas, h.Ciudad, h.Pais, h.Mail, h.Telefono, h.Calle, h.Fecha_Creacion, h.Nro_Calle, h.Recarga_Estrellas FROM AEFI.TL_Hotel h WHERE h.Cantidad_Estrellas IS NOT NULL";
+            string Query = "SELECT h.ID_Hotel, h.Nombre, h.Cantidad_Estrellas, h.Ciudad, h.Pais, h.Mail, h.Telefono, h.Calle, h.Fecha_Creacion, h.Nro_Calle, h.Recarga_Estrellas, h.Estado FROM AEFI.TL_Hotel h WHERE h.Cantidad_Estrellas IS NOT NULL";
 
 
 

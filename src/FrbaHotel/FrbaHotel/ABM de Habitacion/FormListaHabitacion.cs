@@ -55,7 +55,7 @@ namespace FrbaHotel.ABM_de_Habitacion
 
 
             string Query = "SELECT h.ID_Habitacion, h.ID_Hotel, h.Numero, h.Piso, h.Vista, " +
-                "th.Descripcion, th.Porcentual " +
+                "th.Descripcion, th.Porcentual, h.Estado " +
                 "FROM AEFI.TL_Habitacion h " +
                 "JOIN AEFI.TL_Tipo_Habitacion th ON (h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion) " +
                 "WHERE h.Numero IS NOT NULL ";
@@ -115,5 +115,83 @@ namespace FrbaHotel.ABM_de_Habitacion
                 this.Close();
             }
         }
+
+        private void btnDeshabilitar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                conexion.Open();
+                foreach (DataGridViewRow row in dgvHabitaciones.SelectedRows)
+                {
+                    string consulta = "SELECT ID_Habitacion FROM AEFI.TL_Habitacion " +
+                                      "WHERE ID_Hotel = " + BaseDeDatos.agregarApostrofos(row.Cells[1].Value.ToString()) +
+                                      "AND Numero = " + BaseDeDatos.agregarApostrofos(row.Cells[2].Value.ToString());
+                   
+                   SqlCommand comando = new SqlCommand(consulta, conexion);
+                    SqlDataReader reader = comando.ExecuteReader();
+                    reader.Read();
+                    int cod = Convert.ToInt32(reader[0]);
+                    reader.Close();
+                    comando = new SqlCommand("AEFI.baja_Habitacion", conexion);
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.Add(new SqlParameter("@ID_Habitacion", cod));
+                    comando.ExecuteNonQuery();
+
+                }
+                MessageBox.Show("Habitacion Deshabilitada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            btnFiltrar_Click(sender, e);
+
+        }
+
+        private void btnHabilitar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                conexion.Open();
+                foreach (DataGridViewRow row in dgvHabitaciones.SelectedRows)
+                {
+                    string consulta = "SELECT ID_Habitacion FROM AEFI.TL_Habitacion " +
+                                      "WHERE ID_Hotel = " + BaseDeDatos.agregarApostrofos(row.Cells[1].Value.ToString()) +
+                                      "AND Numero = " + BaseDeDatos.agregarApostrofos(row.Cells[2].Value.ToString());
+
+                    SqlCommand comando = new SqlCommand(consulta, conexion);
+                    SqlDataReader reader = comando.ExecuteReader();
+                    reader.Read();
+                    int cod = Convert.ToInt32(reader[0]);
+                    reader.Close();
+                    consulta = "UPDATE AEFI.TL_Habitacion SET Estado = 'Habilitado' WHERE ID_Habitacion = " + cod;
+                    comando = new SqlCommand(consulta, conexion);
+                    comando.ExecuteNonQuery();
+                    MessageBox.Show("Habitacion Habilitada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+           
+            }
+
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            btnFiltrar_Click(sender, e);
+
+
+
+        }
+
+      
     }
 }
