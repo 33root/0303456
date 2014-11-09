@@ -54,7 +54,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             conexion.Open();
 
 
-            string Query = "SELECT h.ID_Hotel, h.Numero, h.Piso, h.Vista, " +
+            string Query = "SELECT h.ID_Habitacion, h.ID_Hotel, h.Numero, h.Piso, h.Vista, " +
                 "th.Descripcion, th.Porcentual " +
                 "FROM AEFI.TL_Habitacion h " +
                 "JOIN AEFI.TL_Tipo_Habitacion th ON (h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion) " +

@@ -50,40 +50,17 @@ namespace FrbaHotel.ABM_de_Habitacion
             this.x = cod;
             InitializeComponent();
 
-            /*Falta el ID_Hotel*/
             lbIDHabitacion.Text = cells[0].Value.ToString();
-            tbNumero.Text = cells[1].Value.ToString();
-            tbPiso.Text = cells[2].Value.ToString();
-            cmbVista.Text = cells[3].Value.ToString();
-            cmbTHabitacion.Text = cells[4].Value.ToString();
-            //rtbDescripcion.Text = cells[4].Value.ToString(); no va (?
+            lbIDHotel.Text = cells[1].Value.ToString();
+            tbNumero.Text = cells[2].Value.ToString();
+            tbPiso.Text = cells[3].Value.ToString();
+            cmbVista.Text = cells[4].Value.ToString();
             btnCrear.Text = "Actualizar";
 
-            /*Codigo repedito*/
+    
             cmbVista.Items.Add("S");
             cmbVista.Items.Add("N");
-            cmbTHabitacion.Items.Add("");
-
-            try
-            {
-                conexion.Open();
-                string consulta = "SELECT descripcion FROM AEFI.TL_Tipo_Habitacion ORDER BY ID_Tipo_Habitacion ";
-                SqlCommand comando = new SqlCommand(consulta, conexion);
-                SqlDataReader reader = comando.ExecuteReader();
-                while (reader.Read())
-                    cmbTHabitacion.Items.Add(reader[0]);
-                reader.Close();
-            }
-            catch (SqlException exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conexion.Close();
-            }
-            /*Termina codigo repetido*/
-
+            
 
         }               
 
@@ -108,12 +85,12 @@ namespace FrbaHotel.ABM_de_Habitacion
 
                 
                 comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIDHotel.Text));
                 comando.Parameters.Add(new SqlParameter("@ID_Habitacion", lbIDHabitacion.Text));
                 comando.Parameters.Add(new SqlParameter("@Numero", tbNumero.Text));
                 comando.Parameters.Add(new SqlParameter("@Piso", tbPiso.Text));
                 comando.Parameters.Add(new SqlParameter("@Vista", cmbVista.Text));
-                comando.Parameters.Add(new SqlParameter("@Tipo_Habitacion", cmbTHabitacion.Text));
-                //comando.Parameters.Add(new SqlParameter("@Descripcion", rtbDescripcion.Text)); no va (?
+           
 
 
                 SqlDataReader dr = comando.ExecuteReader();

@@ -114,14 +114,12 @@ END;
 GO
 CREATE PROCEDURE AEFI.actualizar_Habitacion
 
+		@ID_Hotel numeric(18,0),
 		@ID_Habitacion numeric(18,0),
 		@Numero numeric(18,0),
 		@Piso numeric(18,0),
-		@Vista nvarchar (50),
-		@Tipo_Habitacion numeric(18,0)/*hay un problema aca de tipos, en los combobox se muestra la descripcion
-										(Strings) del tipo de habitacion, que es lo q agarra este argumento. El
-										problema es que a la habitacion se le debe setear el ID de ese tipo de
-										habitacion y no el string de su descripcion (nombre)*/
+		@Vista nvarchar (50)
+		
 
 AS
 BEGIN
@@ -129,8 +127,9 @@ BEGIN
 	BEGIN
     
     UPDATE AEFI.TL_Habitacion
-	SET Numero =@Numero, Piso = @Piso, Vista = @Vista, ID_Tipo_Habitacion = @Tipo_Habitacion
+	SET Numero =@Numero, Piso = @Piso, Vista = @Vista
 	WHERE ID_Habitacion = @ID_Habitacion
+	AND ID_Hotel = @ID_Hotel
 						
 	END;	
 			

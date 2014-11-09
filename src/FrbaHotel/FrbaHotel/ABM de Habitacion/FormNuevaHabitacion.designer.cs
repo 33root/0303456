@@ -38,13 +38,15 @@
             this.cmbVista = new System.Windows.Forms.ComboBox();
             this.tbPiso = new System.Windows.Forms.TextBox();
             this.tbNumero = new System.Windows.Forms.TextBox();
-            this.lbIDHabitacion = new System.Windows.Forms.Label();
+            this.lbIDHotel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbIDHabitacion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCrear
             // 
-            this.btnCrear.Location = new System.Drawing.Point(112, 165);
+            this.btnCrear.Location = new System.Drawing.Point(35, 165);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(79, 31);
             this.btnCrear.TabIndex = 35;
@@ -54,7 +56,7 @@
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(206, 165);
+            this.btnVolver.Location = new System.Drawing.Point(212, 165);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(79, 31);
             this.btnVolver.TabIndex = 34;
@@ -65,7 +67,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(49, 128);
+            this.label7.Location = new System.Drawing.Point(3, 131);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(82, 13);
             this.label7.TabIndex = 32;
@@ -74,7 +76,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(78, 91);
+            this.label8.Location = new System.Drawing.Point(32, 91);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(30, 13);
             this.label8.TabIndex = 31;
@@ -83,7 +85,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(78, 52);
+            this.label9.Location = new System.Drawing.Point(32, 52);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(27, 13);
             this.label9.TabIndex = 30;
@@ -92,7 +94,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(78, 15);
+            this.label10.Location = new System.Drawing.Point(32, 15);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(44, 13);
             this.label10.TabIndex = 29;
@@ -101,7 +103,7 @@
             // cmbTHabitacion
             // 
             this.cmbTHabitacion.FormattingEnabled = true;
-            this.cmbTHabitacion.Location = new System.Drawing.Point(137, 125);
+            this.cmbTHabitacion.Location = new System.Drawing.Point(91, 128);
             this.cmbTHabitacion.Name = "cmbTHabitacion";
             this.cmbTHabitacion.Size = new System.Drawing.Size(121, 21);
             this.cmbTHabitacion.TabIndex = 27;
@@ -111,7 +113,7 @@
             // cmbVista
             // 
             this.cmbVista.FormattingEnabled = true;
-            this.cmbVista.Location = new System.Drawing.Point(137, 88);
+            this.cmbVista.Location = new System.Drawing.Point(91, 88);
             this.cmbVista.Name = "cmbVista";
             this.cmbVista.Size = new System.Drawing.Size(121, 21);
             this.cmbVista.TabIndex = 26;
@@ -120,7 +122,7 @@
             // 
             // tbPiso
             // 
-            this.tbPiso.Location = new System.Drawing.Point(137, 49);
+            this.tbPiso.Location = new System.Drawing.Point(91, 49);
             this.tbPiso.Name = "tbPiso";
             this.tbPiso.Size = new System.Drawing.Size(100, 20);
             this.tbPiso.TabIndex = 25;
@@ -128,36 +130,55 @@
             // 
             // tbNumero
             // 
-            this.tbNumero.Location = new System.Drawing.Point(137, 12);
+            this.tbNumero.Location = new System.Drawing.Point(91, 12);
             this.tbNumero.Name = "tbNumero";
             this.tbNumero.Size = new System.Drawing.Size(100, 20);
             this.tbNumero.TabIndex = 24;
             this.tbNumero.TextChanged += new System.EventHandler(this.tbNombre_TextChanged);
             // 
-            // lbIDHabitacion
+            // lbIDHotel
             // 
-            this.lbIDHabitacion.AutoSize = true;
-            this.lbIDHabitacion.Location = new System.Drawing.Point(84, 174);
-            this.lbIDHabitacion.Name = "lbIDHabitacion";
-            this.lbIDHabitacion.Size = new System.Drawing.Size(0, 13);
-            this.lbIDHabitacion.TabIndex = 36;
+            this.lbIDHotel.AutoSize = true;
+            this.lbIDHotel.Location = new System.Drawing.Point(281, 52);
+            this.lbIDHotel.Name = "lbIDHotel";
+            this.lbIDHotel.Size = new System.Drawing.Size(0, 13);
+            this.lbIDHotel.TabIndex = 36;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 174);
+            this.label1.Location = new System.Drawing.Point(226, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 13);
             this.label1.TabIndex = 37;
             this.label1.Text = "ID Hotel:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(226, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.TabIndex = 39;
+            this.label2.Text = "ID Habit:";
+            // 
+            // lbIDHabitacion
+            // 
+            this.lbIDHabitacion.AutoSize = true;
+            this.lbIDHabitacion.Location = new System.Drawing.Point(281, 15);
+            this.lbIDHabitacion.Name = "lbIDHabitacion";
+            this.lbIDHabitacion.Size = new System.Drawing.Size(0, 13);
+            this.lbIDHabitacion.TabIndex = 38;
             // 
             // FormNuevaHabitacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(318, 208);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.lbIDHabitacion);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbIDHotel);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.label7);
@@ -188,7 +209,9 @@
         private System.Windows.Forms.ComboBox cmbVista;
         private System.Windows.Forms.TextBox tbPiso;
         private System.Windows.Forms.TextBox tbNumero;
-        private System.Windows.Forms.Label lbIDHabitacion;
+        private System.Windows.Forms.Label lbIDHotel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbIDHabitacion;
     }
 }
