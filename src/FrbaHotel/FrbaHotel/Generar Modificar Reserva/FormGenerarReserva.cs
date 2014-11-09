@@ -40,6 +40,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes));
                 comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches));
                 comando.Parameters.Add(new SqlParameter("@ID_Cliente", Program.idUsuario));
+                //falta que ivan agregue el campu reservada en la tabla de habitaciones, para checkear hay habitaciones del tipo pedido sin reserva
                 SqlDataReader reader = comando.ExecuteReader();
 
                 // chequeo que no exista otra reserva igual
@@ -47,9 +48,27 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 {
                     throw new Excepciones("Ya existe una reserva con los mismos datos");
                 }
+
+                if(cbTipoDeRegimen == null){
+                    //significa que el usuario no tiene en claro el regimen que desea
+                    string consulta = "SELECT Descripcion, Precio_Base"
+                                     + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p"
+                                     + "WHERE p.ID_Hotel = @ID_Hotel AND r.ID_Regimen = p.ID_Regimen";
+                                     //falte ver de donde saco el ID_Hotel
+
+                    //cargar la tabla con descripcion y precio base del hotel
+                    DataTable tabla = new DataTable();
+                    SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                    SqlDataAdapter adapter = new SqlDataAdapter(comando);
+                    adapter.Fill(tabla);
+                    dataGridView1.DataSource = tabla;
+                }
             }
 
-            catch { }
+            catch (Excepciones exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ingresarButton_Click(object sender, EventArgs e)
@@ -59,7 +78,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void verCostoButton_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void FormGenerarReserva_Load(object sender, EventArgs e)
