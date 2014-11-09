@@ -15,6 +15,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     {
 
         SqlConnection conexion = BaseDeDatos.conectar();
+        int cantidadDeEstrellas;
 
         public FormGenerarReserva()
         {
@@ -32,6 +33,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                                                               + "AND Cantidad_Noches = @Cantidad_Noches"
                                                               + "AND ID_Cliente = @ID_Cliente";
                                                               //tengo que ver de donde sacar el ID_Habitacion
+
+            string consultaCantidadDeHuespedesParaLaHabitacion = "SELECT Cantidad_Uespedes_Total"
+                                                               + "FROM AEFI.TL_Tipo_Habitacion h"
+                                                               + "WHERE h.Cantidad_Uespedes_Total = @Cantidad_Uespedes_Total AND h.Descripcion = @Descripcion ";
+
             try
             {
                 conexion.Open();
@@ -63,6 +69,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     adapter.Fill(tabla);
                     dataGridView1.DataSource = tabla;
                 }
+
+                SqlCommand comando3 = new SqlCommand(consultaCantidadDeHuespedesParaLaHabitacion, conexion);
+                comando3.Parameters.Add(new SqlParameter("@Cantidad_Uespedes_Total", txbCantidadDeHuespedes));
+                comando3.Parameters.Add(new SqlParameter("@Descripcion",cbTipoDeHabitacion));
+                SqlDataReader reader3 = comando3.ExecuteReader();
+
+                if(!reader3.HasRows){
+                    //si no encontro ninguna coincidencia
+                    throw new Excepciones("El tipo de habitacion elegido no tiene la capacidad que usted eligio de huespedes");
+                }
             }
 
             catch (Excepciones exc)
@@ -78,7 +94,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void verCostoButton_Click(object sender, EventArgs e)
         {
-            
+            try
+            {
+                int costo = Convert.ToInt32(txbCantidadDeHuespedes) * cantidadDeEstrellas;//lo que falta de la cuenta, por el momento no se bien como sacarlo
+            }
+
+            catch { }
         }
 
         private void FormGenerarReserva_Load(object sender, EventArgs e)
