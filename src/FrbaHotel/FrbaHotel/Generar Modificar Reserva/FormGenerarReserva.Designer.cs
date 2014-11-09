@@ -178,6 +178,7 @@
             this.CancelarButton.TabIndex = 15;
             this.CancelarButton.Text = "Cancelar";
             this.CancelarButton.UseVisualStyleBackColor = true;
+            this.CancelarButton.Click += new System.EventHandler(this.CancelarButton_Click);
             // 
             // FormGenerarReserva
             // 
@@ -201,6 +202,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormGenerarReserva";
             this.Text = "GenerarReserva";
+            this.Load += new System.EventHandler(this.FormGenerarReserva_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
