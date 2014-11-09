@@ -36,8 +36,6 @@
             this.btnCrear = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.labelPais = new System.Windows.Forms.Label();
             this.tbPais = new System.Windows.Forms.TextBox();
             this.labelCiudad = new System.Windows.Forms.Label();
@@ -86,7 +84,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label3.Location = new System.Drawing.Point(316, 98);
+            this.label3.Location = new System.Drawing.Point(319, 68);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 13);
             this.label3.TabIndex = 45;
@@ -96,7 +94,7 @@
             // 
             this.tbNroCalle.AccessibleDescription = "";
             this.tbNroCalle.AccessibleName = "";
-            this.tbNroCalle.Location = new System.Drawing.Point(396, 91);
+            this.tbNroCalle.Location = new System.Drawing.Point(399, 61);
             this.tbNroCalle.Name = "tbNroCalle";
             this.tbNroCalle.Size = new System.Drawing.Size(134, 20);
             this.tbNroCalle.TabIndex = 44;
@@ -135,30 +133,11 @@
             this.label2.TabIndex = 41;
             this.label2.Text = "Recarga Estrellas";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label1.Location = new System.Drawing.Point(316, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 13);
-            this.label1.TabIndex = 40;
-            this.label1.Text = "Fecha De Creacion";
-            // 
-            // dtpFecha
-            // 
-            this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFecha.Location = new System.Drawing.Point(420, 13);
-            this.dtpFecha.Name = "dtpFecha";
-            this.dtpFecha.Size = new System.Drawing.Size(147, 20);
-            this.dtpFecha.TabIndex = 39;
-            this.dtpFecha.ValueChanged += new System.EventHandler(this.dtpFecha_ValueChanged);
-            // 
             // labelPais
             // 
             this.labelPais.AutoSize = true;
             this.labelPais.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.labelPais.Location = new System.Drawing.Point(316, 169);
+            this.labelPais.Location = new System.Drawing.Point(319, 139);
             this.labelPais.Name = "labelPais";
             this.labelPais.Size = new System.Drawing.Size(27, 13);
             this.labelPais.TabIndex = 38;
@@ -168,7 +147,7 @@
             // 
             this.tbPais.AccessibleDescription = "";
             this.tbPais.AccessibleName = "";
-            this.tbPais.Location = new System.Drawing.Point(396, 162);
+            this.tbPais.Location = new System.Drawing.Point(399, 132);
             this.tbPais.Name = "tbPais";
             this.tbPais.Size = new System.Drawing.Size(134, 20);
             this.tbPais.TabIndex = 37;
@@ -179,7 +158,7 @@
             // 
             this.labelCiudad.AutoSize = true;
             this.labelCiudad.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.labelCiudad.Location = new System.Drawing.Point(316, 131);
+            this.labelCiudad.Location = new System.Drawing.Point(319, 101);
             this.labelCiudad.Name = "labelCiudad";
             this.labelCiudad.Size = new System.Drawing.Size(40, 13);
             this.labelCiudad.TabIndex = 36;
@@ -199,7 +178,7 @@
             // 
             this.labelDireccion.AutoSize = true;
             this.labelDireccion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.labelDireccion.Location = new System.Drawing.Point(316, 65);
+            this.labelDireccion.Location = new System.Drawing.Point(319, 35);
             this.labelDireccion.Name = "labelDireccion";
             this.labelDireccion.Size = new System.Drawing.Size(30, 13);
             this.labelDireccion.TabIndex = 34;
@@ -239,7 +218,7 @@
             // 
             this.tbCiudad.AccessibleDescription = "";
             this.tbCiudad.AccessibleName = "";
-            this.tbCiudad.Location = new System.Drawing.Point(396, 124);
+            this.tbCiudad.Location = new System.Drawing.Point(399, 94);
             this.tbCiudad.Name = "tbCiudad";
             this.tbCiudad.Size = new System.Drawing.Size(134, 20);
             this.tbCiudad.TabIndex = 30;
@@ -261,7 +240,7 @@
             // 
             this.tbCalle.AccessibleDescription = "";
             this.tbCalle.AccessibleName = "";
-            this.tbCalle.Location = new System.Drawing.Point(396, 58);
+            this.tbCalle.Location = new System.Drawing.Point(399, 28);
             this.tbCalle.Name = "tbCalle";
             this.tbCalle.Size = new System.Drawing.Size(200, 20);
             this.tbCalle.TabIndex = 28;
@@ -314,8 +293,6 @@
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.dtpFecha);
             this.Controls.Add(this.labelPais);
             this.Controls.Add(this.tbPais);
             this.Controls.Add(this.labelCiudad);
@@ -349,8 +326,6 @@
         private System.Windows.Forms.Button btnCrear;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dtpFecha;
         private System.Windows.Forms.Label labelPais;
         private System.Windows.Forms.TextBox tbPais;
         private System.Windows.Forms.Label labelCiudad;

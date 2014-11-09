@@ -50,21 +50,34 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void btnBaja_Click(object sender, EventArgs e)
         {
-            conexion.Open();
-            SqlCommand comando = null;
 
-            comando = new SqlCommand("AEFI.baja_Hotel", conexion);
+            try
+            {
 
-            comando.CommandType = CommandType.StoredProcedure;
-            comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIdHotel.Text));
-            comando.Parameters.Add(new SqlParameter("@Fecha_Inicio", dtpInicio.Text));
-            comando.Parameters.Add(new SqlParameter("@Fecha_Fin", dtpFin.Text));
-            comando.Parameters.Add(new SqlParameter("@Descripcion", rtbMotivos.Text));
 
-            SqlDataReader dr = comando.ExecuteReader();
+                conexion.Open();
+                SqlCommand comando = null;
 
-            MessageBox.Show("El Hotel se dio de baja satisfactoriamente", "Baja Hotel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                comando = new SqlCommand("AEFI.baja_Hotel", conexion);
 
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIdHotel.Text));
+                comando.Parameters.Add(new SqlParameter("@Fecha_Inicio", dtpInicio.Text));
+                comando.Parameters.Add(new SqlParameter("@Fecha_Fin", dtpFin.Text));
+                comando.Parameters.Add(new SqlParameter("@Descripcion", rtbMotivos.Text));
+
+                SqlDataReader dr = comando.ExecuteReader();
+
+                MessageBox.Show("El Hotel se dio de baja satisfactoriamente", "Baja Hotel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
 
         }
 

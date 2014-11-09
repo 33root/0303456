@@ -42,10 +42,7 @@ namespace FrbaHotel.ABM_de_Hotel
             nudRecarga.Text = cells[10].Value.ToString();
             tbCiudad.Text = cells[3].Value.ToString();
             tbPais.Text = cells[4].Value.ToString();
-            //dtpFecha.Text = cells[8].Value.ToString();
-            
-            
-            //cbRegimen.Text = cells[7].Value.ToString();
+
             btnCrear.Text = "Actualizar";
         
         }
@@ -121,7 +118,7 @@ namespace FrbaHotel.ABM_de_Hotel
                 comando.Parameters.Add(new SqlParameter("@Telefono", tbTelefono.Text));
                 //comando.Parameters.Add(new SqlParameter("@Regimen", cbRegimen.Text));
                 comando.Parameters.Add(new SqlParameter("@Cantidad_Estrellas", tbCantEstrellas.Text));
-                //comando.Parameters.Add(new SqlParameter("@Fecha_Creacion", dtpFecha.Text));
+                comando.Parameters.Add(new SqlParameter("@Fecha_Creacion", Program.fecha));
                 comando.Parameters.Add(new SqlParameter("@NroCalle", tbNroCalle.Text));
                 comando.Parameters.Add(new SqlParameter("@Calle", tbCalle.Text));
                 comando.Parameters.Add(new SqlParameter("@Ciudad", tbCiudad.Text));
