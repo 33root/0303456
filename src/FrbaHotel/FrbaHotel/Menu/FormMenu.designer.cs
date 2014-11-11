@@ -116,6 +116,8 @@
             this.facturarBtn.TabIndex = 7;
             this.facturarBtn.Text = "Facturar Estadia";
             this.facturarBtn.UseVisualStyleBackColor = true;
+            this.facturarBtn.Click += new System.EventHandler(this.facturarBtn_Click);
+
             // 
             // FormMenu
             // 

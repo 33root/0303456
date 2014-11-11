@@ -39,6 +39,11 @@ VALUES (2,3),(2,7), (2,8), (2,9), (2,10), (2,11);
 INSERT INTO [AEFI].[TL_Funcionalidad_Rol]
 VALUES (3,1),(3,2),(3,4),(3,5),(3,6),(3,12);
 
+/*FORMAS DE PAGO*/
+
+INSERT INTO [AEFI].[TL_FormaDePago] (Descripcion)
+VALUES ('Efectivo'), ('Tarjeta de Crédito');
+
 COMMIT
 
 /*FIN DE INSERTS */

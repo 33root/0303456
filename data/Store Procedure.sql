@@ -411,4 +411,66 @@ BEGIN
 			VALUES (AEFI.calcular_consumibles(@ID_Estadia) + AEFI.calcular_costo_habitacion(@ID_Estadia))
 END;
 	*/
+GO
+CREATE PROCEDURE AEFI.insertar_factura
+	@forma_pago NVARCHAR(50),
+	@fecha DATETIME,
+	@id_factura NUMERIC(18,0) OUTPUT,
+	@id_reserva NUMERIC(18,0)
+AS
+BEGIN	
+	INSERT INTO AEFI.TL_Factura (Numero, Fecha, Total, ID_FormaDePago, ID_Cliente)
+	VALUES ((
+		SELECT MAX(Numero) + 1
+		FROM AEFI.TL_Factura), @fecha, 0, (
+			SELECT ID_FormaDePago
+			FROM AEFI.TL_FormaDePago
+			WHERE descripcion = @forma_pago), 
+			(SELECT ID_Cliente
+			FROM AEFI.TL_Reserva
+			WHERE ID_Reserva = @id_reserva));
+	SET @id_factura = (
+		SELECT MAX(ID_Factura)
+		FROM AEFI.TL_Factura);
+END;
 
+GO
+CREATE PROCEDURE AEFI.insertar_item_precio_estadia
+	@id_factura NUMERIC(18,0),
+	@id_estadia NUMERIC(18,0),
+	@id_regimen NUMERIC(18,0)
+	
+AS
+BEGIN	
+	INSERT INTO AEFI.TL_Item_Por_Factura (ID_Factura, Monto, Cantidad, ID_Estadia)
+	VALUES (@id_factura, (
+		SELECT Precio_Base
+		FROM AEFI.TL_Regimen reg
+		WHERE reg.ID_Regimen = @id_regimen), 1, @id_estadia);
+	UPDATE AEFI.TL_Factura
+	SET Total = Total + (SELECT Precio_Base FROM AEFI.TL_Regimen WHERE ID_Regimen = @id_regimen)
+	WHERE ID_Factura = @id_factura;
+
+	UPDATE AEFI.TL_Estadia
+	SET Estado = 0
+	WHERE ID_Estadia = @id_estadia
+END;
+
+GO
+CREATE PROCEDURE AEFI.insertar_item_consumible
+	@id_factura NUMERIC(18,0),
+	@id_consumible NUMERIC(18,0),
+	@cantidad NUMERIC(18,0),
+	@id_regimen NUMERIC(18,0)
+	
+AS
+BEGIN	
+	INSERT INTO AEFI.TL_Item_Por_Factura (ID_Factura, Monto, Cantidad, ID_Consumible)
+	VALUES (@id_factura, (
+		SELECT Precio
+		FROM AEFI.TL_Consumible
+		WHERE ID_Consumible = @id_consumible), @cantidad, @id_consumible);
+	UPDATE AEFI.TL_Factura
+	SET Total = Total + (SELECT Precio_Base FROM AEFI.TL_Regimen WHERE ID_Regimen = @id_regimen)
+	WHERE ID_Factura = @id_factura;
+END;

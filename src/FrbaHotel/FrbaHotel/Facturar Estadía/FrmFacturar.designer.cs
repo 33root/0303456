@@ -44,6 +44,7 @@
             this.facturarBtn.TabIndex = 2;
             this.facturarBtn.Text = "Facturar Estadía";
             this.facturarBtn.UseVisualStyleBackColor = true;
+            this.facturarBtn.Click += new System.EventHandler(this.facturarBtn_Click);
             // 
             // volverBtn
             // 

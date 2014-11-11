@@ -1,4 +1,7 @@
 
+DROP PROCEDURE AEFI.insertar_item_consumible;
+DROP PROCEDURE AEFI.insertar_item_precio_estadia;
+DROP PROCEDURE AEFI.insertar_factura;
 DROP PROCEDURE AEFI.crear_usuario_por_hotel;
 DROP PROCEDURE AEFI.crear_usuario_por_rol;
 DROP PROCEDURE AEFI.crear_usuario;
