@@ -153,18 +153,6 @@ CREATE TABLE [AEFI].[TL_Consumible](
 		[Precio] NUMERIC(18,2)
 );		
 		
-		
-CREATE TABLE [AEFI].[TL_Estadia](
-		
-		[ID_Estadia] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
-		[Estado] bit, /*1 activo, 0 finalizado*/
-		[Fecha_Inicio] datetime,
-		[Cantidad_Noches] NUMERIC(18,0),
-		[ID_Reserva] NUMERIC(18,0),
-		[Monto] NUMERIC(18,2),
-		FOREIGN KEY (ID_Reserva) REFERENCES [AEFI].[TL_Reserva](ID_Reserva)
-				);
-
 CREATE TABLE [AEFI].[TL_FormaDePago] (
 	[ID_FormaDePago] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
 	[Descripcion] NVARCHAR(50)
@@ -183,6 +171,20 @@ CREATE TABLE [AEFI].[TL_Factura](
 		FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente)
 		
 );
+		
+CREATE TABLE [AEFI].[TL_Estadia](
+		
+		[ID_Estadia] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+		[Estado] bit, /*1 activo, 0 finalizado*/
+		[Fecha_Inicio] datetime,
+		[Cantidad_Noches] NUMERIC(18,0),
+		[ID_Reserva] NUMERIC(18,0),
+		[ID_Factura] NUMERIC(18,0),
+		FOREIGN KEY (ID_Reserva) REFERENCES [AEFI].[TL_Reserva](ID_Reserva),
+		FOREIGN KEY (ID_Factura) REFERENCES [AEFI].[TL_Factura](ID_Factura)
+				);
+
+
 
 
 CREATE TABLE [AEFI].[TL_Tipo_Documento](

@@ -416,7 +416,8 @@ CREATE PROCEDURE AEFI.insertar_factura
 	@forma_pago NVARCHAR(50),
 	@fecha DATETIME,
 	@id_factura NUMERIC(18,0) OUTPUT,
-	@id_reserva NUMERIC(18,0)
+	@id_reserva NUMERIC(18,0),
+	@id_estadia NUMERIC(18,0)
 AS
 BEGIN	
 	INSERT INTO AEFI.TL_Factura (Numero, Fecha, Total, ID_FormaDePago, ID_Cliente)
@@ -432,6 +433,11 @@ BEGIN
 	SET @id_factura = (
 		SELECT MAX(ID_Factura)
 		FROM AEFI.TL_Factura);
+		
+		UPDATE AEFI.TL_Estadia
+		SET ID_Factura = @id_factura
+		WHERE ID_Estadia = @id_estadia;
+		
 END;
 
 GO
