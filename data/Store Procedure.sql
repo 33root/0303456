@@ -416,8 +416,7 @@ CREATE PROCEDURE AEFI.insertar_factura
 	@forma_pago NVARCHAR(50),
 	@fecha DATETIME,
 	@id_factura NUMERIC(18,0) OUTPUT,
-	@id_reserva NUMERIC(18,0),
-	@id_estadia NUMERIC(18,0)
+	@id_reserva NUMERIC(18,0)
 AS
 BEGIN	
 	INSERT INTO AEFI.TL_Factura (Numero, Fecha, Total, ID_FormaDePago, ID_Cliente)
@@ -434,9 +433,8 @@ BEGIN
 		SELECT MAX(ID_Factura)
 		FROM AEFI.TL_Factura);
 		
-		UPDATE AEFI.TL_Estadia
-		SET ID_Factura = @id_factura
-		WHERE ID_Estadia = @id_estadia;
+	UPDATE AEFI.TL_Estadia
+	SET Estado = 0;
 		
 END;
 
@@ -466,8 +464,8 @@ GO
 CREATE PROCEDURE AEFI.insertar_item_consumible
 	@id_factura NUMERIC(18,0),
 	@id_consumible NUMERIC(18,0),
-	@cantidad NUMERIC(18,0),
-	@id_regimen NUMERIC(18,0)
+	@id_regimen NUMERIC(18,0),
+	@id_estadia NUMERIC(18,0)
 	
 AS
 BEGIN	
@@ -475,7 +473,9 @@ BEGIN
 	VALUES (@id_factura, (
 		SELECT Precio
 		FROM AEFI.TL_Consumible
-		WHERE ID_Consumible = @id_consumible), @cantidad, @id_consumible);
+		WHERE ID_Consumible = @id_consumible), (SELECT COUNT(*) FROM AEFI.TL_Consumible_Por_Estadia cpe
+												WHERE cpe.ID_Estadia = @id_estadia AND cpe.ID_Consumible = @id_consumible
+												group by cpe.ID_Consumible) , @id_consumible);
 	UPDATE AEFI.TL_Factura
 	SET Total = Total + (SELECT Precio_Base FROM AEFI.TL_Regimen WHERE ID_Regimen = @id_regimen)
 	WHERE ID_Factura = @id_factura;

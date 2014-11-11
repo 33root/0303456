@@ -25,9 +25,9 @@ namespace FrbaHotel.Facturar_Estadia
         private void FrmFacturar_Load(object sender, EventArgs e)
         {
 
-            String cargarEstadias = "SELECT * FROM AEFI.TL_Estadia";
+            String cargarEstadias = "SELECT * FROM AEFI.TL_Estadia WHERE ID_Factura IS NULL";
             String consultaMediosDePago = "SELECT Descripcion FROM AEFI.TL_FormaDePago";
-
+            
             try
             {
                 //Cargo las estadias
@@ -78,6 +78,11 @@ namespace FrbaHotel.Facturar_Estadia
         {
             String obtenerReserva = "SELECT ID_Reserva FROM AEFI.TL_Estadia WHERE ID_Estadia = @id_estadia";
             String obtenerRegimen = "SELECT ID_Regimen FROM AEFI.TL_Reserva WHERE ID_Reserva= @id_reserva";
+
+            String obtenerTodoConsumoDeEstadia= "SELECT ID_Consumible FROM AEFI.TL_Consumible_Por_Estadia "+
+                                                 "WHERE ID_Estadia = @id_estadia";
+            String asignarFacturaAEstadia = "UPDATE AEFI.TL_Estadia SET ID_Factura = @id_factura WHERE ID_Estadia = @id_estadia";
+
             try
             {
                 conexion.Open();
@@ -86,6 +91,7 @@ namespace FrbaHotel.Facturar_Estadia
                 {
                     foreach (DataGridViewRow row in estadiaDGV.SelectedRows)
                     {
+
                         SqlCommand comando = new SqlCommand(obtenerReserva, conexion);
                         comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
                         SqlDataReader reader = comando.ExecuteReader();
@@ -101,39 +107,66 @@ namespace FrbaHotel.Facturar_Estadia
                         int id_regimen = Convert.ToInt32(reader[0]);
                         reader.Close();
 
+
+                        //Creo la factura
                         comando = new SqlCommand("AEFI.insertar_factura", conexion);
                         comando.CommandType = CommandType.StoredProcedure;
                         comando.Parameters.Add(new SqlParameter("@forma_pago", medioDePagoCmbBox.SelectedItem.ToString()));
                         comando.Parameters.Add(new SqlParameter("@fecha", Program.fecha));
-                        SqlParameter par = new SqlParameter("@nro_factura", 0);
+                        comando.Parameters.Add(new SqlParameter("@id_reserva",id_reserva));
+                        SqlParameter par = new SqlParameter("@id_factura", 0);
                         par.Direction = ParameterDirection.Output;
                         comando.Parameters.Add(par);
                         comando.ExecuteNonQuery();
-                        /*
-                                        if (dataGridView.SelectedRows.Count > 0)
-                                        {
-                                            foreach (DataGridViewRow row in dataGridView.SelectedRows)
-                                            {
-                                                string consultaCantidadConsumiciones = "SELECT COUNT(*) " +
-                                                    "FROM AEFI.Consumible_Por_Estadia c " +
-                                                    "JOIN AEFI.Estadia e ON (e.ID_Estadia = c.ID_Estadia ) "+
-                                                    "AND c.ID_Consumible = @consumible ";
-                                                comando = new SqlCommand(consultaCantidadConsumiciones, conexion);
-                                                SqlDataReader reader = comando.ExecuteReader();
-                                                reader.Read();
-                                                int cantidadConsumiciones = Convert.ToInt32(reader[0]);
-                                                reader.Close();
+
+                        //Linkeo factura con estadia
+                        comando = new SqlCommand(asignarFacturaAEstadia, conexion);
+                        comando.Parameters.Add(new SqlParameter("@id_factura", par.Value));
+                        comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
+                        comando.ExecuteNonQuery();
+
+
+                        //Cargo los items de la factura
+
+                        //cargo el item estadia
+                        comando = new SqlCommand("AEFI.insertar_item_precio_estadia", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.Add(new SqlParameter("@id_factura", par.Value)); //Item factura;
+                        comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
+                        comando.Parameters.Add(new SqlParameter("@id_regimen", id_regimen));
+                        comando.ExecuteNonQuery();
+
+                        //cargo los consumibles
+                        comando = new SqlCommand(obtenerTodoConsumoDeEstadia, conexion);
+                        comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
+                       
+                        reader = comando.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            int id_consumible = Convert.ToInt32(reader[0]);
+
+
+                            comando = new SqlCommand("AEFI.insertar_item_consumible", conexion);
+                            comando.CommandType = CommandType.StoredProcedure;
+                            comando.Parameters.Add(new SqlParameter("@id_factura", par.Value));
+                            comando.Parameters.Add(new SqlParameter("@id_consumible", id_consumible));
+                            comando.Parameters.Add(new SqlParameter("@id_regimen", id_regimen));
+                            comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
+                            comando.ExecuteNonQuery();
 
 
 
 
 
+                        }
 
+                        MessageBox.Show("La factura generada en la Número: " +  par.Value.ToString(), "" , MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        
 
-                                }*/
                     }
 
-
+                    
                 }
             }
 
@@ -141,6 +174,11 @@ namespace FrbaHotel.Facturar_Estadia
             {
                 MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+            }
+
+            finally
+            {
+                conexion.Close();
             }
 
 
