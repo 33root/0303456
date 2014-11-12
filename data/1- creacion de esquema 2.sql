@@ -171,7 +171,9 @@ CREATE TABLE [AEFI].[TL_Factura](
 		FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente)
 		
 );
-		
+	
+
+
 CREATE TABLE [AEFI].[TL_Estadia](
 		
 		[ID_Estadia] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
@@ -197,11 +199,18 @@ CREATE TABLE [AEFI].[TL_Registro_Pago](
 		[ID_Factura] NUMERIC(18,0),
 		[ID_Cliente] NUMERIC(18,0),
 		[Fecha] DATETIME,
+		[ID_Tarjeta] NUMERIC(18,0)
 		PRIMARY KEY (ID_Factura, ID_Cliente),
 		FOREIGN KEY (ID_Factura) REFERENCES [AEFI].[TL_Factura] (ID_Factura),
 		FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente)
 );
 		
+CREATE TABLE [AEFI].[TL_Tarjeta](
+	[ID_Tarjeta] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+	[Numero] NUMERIC(18,0),
+	[Fecha_Vto] DATETIME
+);
+
 		
 /* TABLA MUCHOS A MUCHOS*/
 CREATE TABLE [AEFI].[TL_Funcionalidad_Rol] (

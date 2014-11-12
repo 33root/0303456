@@ -1,4 +1,6 @@
-
+DROP PROCEDURE AEFI.insertar_nueva_Tarjeta;
+DROP PROCEDURE AEFI.insertar_Registro_Pago_Sin_Tarjeta;
+DROP PROCEDURE AEFI.insertar_Registro_Pago_Con_Tarjeta;
 DROP PROCEDURE AEFI.insertar_item_consumible;
 DROP PROCEDURE AEFI.insertar_item_precio_estadia;
 DROP PROCEDURE AEFI.insertar_factura;
@@ -25,11 +27,12 @@ DROP TABLE [AEFI].[TL_Regimen_Por_Hotel];
 DROP TABLE [AEFI].[TL_Item_Por_Factura];
 DROP TABLE [AEFI].[TL_Usuario_Por_Rol];
 DROP TABLE [AEFI].[TL_Funcionalidad_Rol];
+DROP TABLE [AEFI].[TL_Tarjeta];
 DROP TABLE [AEFI].[TL_Registro_Pago];
 DROP TABLE [AEFI].[TL_Tipo_Documento];
-DROP TABLE [AEFI].[TL_FormaDePago];
 DROP TABLE [AEFI].[TL_Estadia];
 DROP TABLE [AEFI].[TL_Factura];
+DROP TABLE [AEFI].[TL_FormaDePago];
 DROP TABLE [AEFI].[TL_Consumible];
 DROP TABLE [AEFI].[TL_Cancelacion];
 DROP TABLE [AEFI].[TL_Reserva];

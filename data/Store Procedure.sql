@@ -480,3 +480,51 @@ BEGIN
 	SET Total = Total + (SELECT Precio_Base FROM AEFI.TL_Regimen WHERE ID_Regimen = @id_regimen)
 	WHERE ID_Factura = @id_factura;
 END;
+
+GO
+CREATE PROCEDURE AEFI.insertar_Registro_Pago_Sin_Tarjeta
+	@id_factura NUMERIC(18,0),
+	@fecha DATETIME
+	
+AS
+BEGIN	
+	INSERT INTO AEFI.TL_Registro_Pago (ID_Factura, Fecha)
+	VALUES (@id_factura, @fecha);
+	
+END;
+
+
+GO
+CREATE PROCEDURE AEFI.insertar_Registro_Pago_Con_Tarjeta
+	@id_factura NUMERIC(18,0),
+	@fecha DATETIME,
+	@id_tarjeta NUMERIC(18,0)
+	
+AS
+BEGIN	
+	INSERT INTO AEFI.TL_Registro_Pago (ID_Factura, Fecha, ID_Tarjeta)
+	VALUES (@id_factura, @fecha, @id_tarjeta);
+	
+END;
+
+GO
+CREATE PROCEDURE AEFI.insertar_nueva_Tarjeta
+	@numero NUMERIC(18,0),
+	@fecha DATETIME,
+	@id_tarjeta NUMERIC(18,0)
+	
+AS
+BEGIN	
+
+IF NOT EXISTS (SELECT * FROM AEFI.TL_Tarjeta t WHERE t.Numero = @numero)
+ BEGIN
+	INSERT INTO AEFI.TL_Tarjeta (Numero, Fecha_vto)
+	VALUES (@numero, @fecha);
+	
+	SET @id_tarjeta = (
+		SELECT MAX(ID_Tarjeta)
+		FROM AEFI.TL_ID_Tarjeta);
+	
+	END;
+
+END;
