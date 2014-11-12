@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menu;
 using System.Data.SqlClient;
+using FrbaHotel.Facturar_Estadía;
 
 namespace FrbaHotel.Facturar_Estadia
 {
@@ -107,6 +108,14 @@ namespace FrbaHotel.Facturar_Estadia
                         int id_regimen = Convert.ToInt32(reader[0]);
                         reader.Close();
 
+                        //Verifico medio de pago seleccionado
+                        if (String.Equals(medioDePagoCmbBox.SelectedItem.ToString(), "Tarjeta de Crédito"))
+                        {
+                            FrmTarjeta ingreso = new FrmTarjeta();
+                            ingreso.ShowDialog();
+
+
+                        }
 
                         //Creo la factura
                         comando = new SqlCommand("AEFI.insertar_factura", conexion);
@@ -155,14 +164,14 @@ namespace FrbaHotel.Facturar_Estadia
                             comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
                             comando.ExecuteNonQuery();
 
+                         }
+                    
 
 
-
-
-                        }
 
                         MessageBox.Show("La factura generada en la Número: " +  par.Value.ToString(), "" , MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        
+                        conexion.Close();
+                        this.FrmFacturar_Load(this, e);
 
                     }
 
