@@ -161,6 +161,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 SqlDataReader reader = comando2.ExecuteReader();
                 comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0]));
             }
+            comando.Parameters.Add(new SqlParameter("@Estado","Correcta"));
             comando.Parameters.Add(new SqlParameter("@ID_Cliente", Program.usuario));
         }
 

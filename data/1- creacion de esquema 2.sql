@@ -127,6 +127,7 @@ CREATE TABLE [AEFI].[TL_Reserva](
 		[ID_Regimen] NUMERIC(18,0) NOT NULL,
 		[ID_Habitacion] NUMERIC(18,0) NOT NULL,
 		[ID_Cliente] NUMERIC(18,0) NOT NULL,
+		[Estado] varchar(255),
 		FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente),
 		FOREIGN KEY (ID_Habitacion) REFERENCES [AEFI].[TL_Habitacion] (ID_Habitacion),
 		FOREIGN KEY (ID_Regimen) REFERENCES [AEFI].[TL_Regimen] (ID_Regimen)	
