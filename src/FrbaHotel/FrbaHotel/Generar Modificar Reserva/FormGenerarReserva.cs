@@ -89,7 +89,79 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void ingresarButton_Click(object sender, EventArgs e)
         {
+            //agregar una reserva en la tabla
+            conexion.Open();
+            SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
+            DateTime fechaAcutal = new DateTime();
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
+            comando.Parameters.Add(new SqlParameter("@Fecha_Desde",dtpDesde));
+            comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes",txbCantidadDeHuespedes));
+            comando.Parameters.Add(new SqlParameter("@Cantidad_Noches",txbCantidadDeNoches));
+            if (cbTipoDeRegimen.SelectedItem.ToString() == "Pension Completa")
+            {
+            comando.Parameters.Add(new SqlParameter("@ID_Regimen",1));
+            if (cbTipoDeRegimen.SelectedItem.ToString() == "Media Pensión") 
+                {
+                    comando.Parameters.Add(new SqlParameter("@ID_Regimen", 2));
+                    if (cbTipoDeRegimen.SelectedItem.ToString() == "All Inclusive moderado")
+                    {
+                        comando.Parameters.Add(new SqlParameter("@ID_Regimen", 3));
+                        if (cbTipoDeRegimen.SelectedItem.ToString() == "All inclusive")
+                        {
+                            comando.Parameters.Add(new SqlParameter("@ID_Regimen", 4));
+                        }
+                    }
+                }
+            }
+            if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Simple")
+            {
+                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion"
+                                 +"FROM AEFI.TL_Habitacion"
+                                 +"WHERE ID_Tipo_Habitacion = 1001";
+                SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                SqlDataReader reader = comando2.ExecuteReader();
 
+                comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0]));
+            }
+            if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Doble")
+            {
+                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion"
+                                 + "FROM AEFI.TL_Habitacion"
+                                 + "WHERE ID_Tipo_Habitacion = 1002";
+                SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                SqlDataReader reader = comando2.ExecuteReader();
+
+                comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0]));
+            }
+            if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Triple")
+            {
+                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion"
+                                 + "FROM AEFI.TL_Habitacion"
+                                 + "WHERE ID_Tipo_Habitacion = 1003";
+                SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                SqlDataReader reader = comando2.ExecuteReader();
+                comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0]));
+            }
+            if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Cuadruple")
+            {
+                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion"
+                                 + "FROM AEFI.TL_Habitacion"
+                                 + "WHERE ID_Tipo_Habitacion = 1004";
+                SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                SqlDataReader reader = comando2.ExecuteReader();
+                comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0]));
+            }
+            if (cbTipoDeHabitacion.SelectedItem.ToString() == "King")
+            {
+                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion"
+                                 + "FROM AEFI.TL_Habitacion"
+                                 + "WHERE ID_Tipo_Habitacion = 1005";
+                SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                SqlDataReader reader = comando2.ExecuteReader();
+                comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0]));
+            }
+            comando.Parameters.Add(new SqlParameter("@ID_Cliente", Program.usuario));
         }
 
         private void verCostoButton_Click(object sender, EventArgs e)
