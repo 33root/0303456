@@ -47,8 +47,8 @@ FROM  gd_esquema.Maestra
 
 
 SET IDENTITY_INSERT AEFI.TL_Reserva ON
-INSERT INTO [AEFI].[TL_Reserva] (ID_Reserva, Fecha_Desde, Cantidad_Noches, Cantidad_Huespedes, ID_Cliente, ID_Habitacion, ID_Regimen)
-SELECT DISTINCT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, x.Cantidad_Huespedes_Total, c.ID_Cliente, h.ID_Habitacion, r.ID_Regimen
+INSERT INTO [AEFI].[TL_Reserva] (ID_Reserva, Fecha_Desde, Cantidad_Noches, Cantidad_Huespedes, ID_Cliente, ID_Habitacion, ID_Regimen, Estado)
+SELECT DISTINCT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, x.Cantidad_Huespedes_Total, c.ID_Cliente, h.ID_Habitacion, r.ID_Regimen, 'Efectivizada'
 FROM gd_esquema.Maestra m
 
 JOIN AEFI.TL_Tipo_Habitacion x ON (m.Habitacion_Tipo_Codigo= x.ID_Tipo_Habitacion) 
