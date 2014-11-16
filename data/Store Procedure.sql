@@ -550,3 +550,26 @@ BEGIN
  END;
  
 END;
+
+
+/*CREATE PROCEDURE AEFI.registrarEstadia
+
+		@ID_Reserva numeric(18,0)
+		
+AS
+
+IF(GETDATE() = (Select Fecha_Desde from AEFI.TL_Reserva r where r.ID_Reserva = @id_reserva))
+
+begin 
+
+/*Se deberia agregar la cantidad de huespedes que realmente se hospedan?? */
+
+INSERT INTO AEFI.TL_Estadia (Estado, Fecha_Inicio, Cantidad_Noches)
+SELECT '1', GETDATE(), r.Cantidad_Noches 
+from AEFI.TL_Reserva r
+where r.ID_Reserva = @ID_Reserva
+
+
+end;
+
+*/
