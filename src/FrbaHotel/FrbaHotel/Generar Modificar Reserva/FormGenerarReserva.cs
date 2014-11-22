@@ -110,6 +110,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         if (cbTipoDeRegimen.SelectedItem.ToString() == "All inclusive")
                         {
                             comando.Parameters.Add(new SqlParameter("@ID_Regimen", 4));
+
+                            if (cbTipoDeRegimen.SelectedItem == null)
+                            {
+                                //el cliente no tiene en claro el tipo de régimen que desea
+                                comando.Parameters.Add(new SqlParameter("ID_Regimen",null));
+
+                            }
                         }
                     }
                 }
