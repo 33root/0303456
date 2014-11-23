@@ -36,6 +36,9 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.facturarBtn = new System.Windows.Forms.Button();
+            this.NuevoClienteButton = new System.Windows.Forms.Button();
+            this.GenerarReservaButton = new System.Windows.Forms.Button();
+            this.CancerlarReservaButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnListaHoteles
@@ -117,13 +120,45 @@
             this.facturarBtn.Text = "Facturar Estadia";
             this.facturarBtn.UseVisualStyleBackColor = true;
             this.facturarBtn.Click += new System.EventHandler(this.facturarBtn_Click);
-
+            // 
+            // NuevoClienteButton
+            // 
+            this.NuevoClienteButton.Location = new System.Drawing.Point(83, 280);
+            this.NuevoClienteButton.Name = "NuevoClienteButton";
+            this.NuevoClienteButton.Size = new System.Drawing.Size(109, 23);
+            this.NuevoClienteButton.TabIndex = 8;
+            this.NuevoClienteButton.Text = "Nuevo Cliente";
+            this.NuevoClienteButton.UseVisualStyleBackColor = true;
+            this.NuevoClienteButton.Click += new System.EventHandler(this.NuevoClienteButton_Click);
+            // 
+            // GenerarReservaButton
+            // 
+            this.GenerarReservaButton.Location = new System.Drawing.Point(83, 310);
+            this.GenerarReservaButton.Name = "GenerarReservaButton";
+            this.GenerarReservaButton.Size = new System.Drawing.Size(109, 23);
+            this.GenerarReservaButton.TabIndex = 9;
+            this.GenerarReservaButton.Text = "Generar Reserva";
+            this.GenerarReservaButton.UseVisualStyleBackColor = true;
+            this.GenerarReservaButton.Click += new System.EventHandler(this.GenerarReservaButton_Click);
+            // 
+            // CancerlarReservaButton
+            // 
+            this.CancerlarReservaButton.Location = new System.Drawing.Point(83, 340);
+            this.CancerlarReservaButton.Name = "CancerlarReservaButton";
+            this.CancerlarReservaButton.Size = new System.Drawing.Size(109, 23);
+            this.CancerlarReservaButton.TabIndex = 10;
+            this.CancerlarReservaButton.Text = "Cancelar Reserva";
+            this.CancerlarReservaButton.UseVisualStyleBackColor = true;
+            this.CancerlarReservaButton.Click += new System.EventHandler(this.CancerlarReservaButton_Click);
             // 
             // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 337);
+            this.ClientSize = new System.Drawing.Size(285, 431);
+            this.Controls.Add(this.CancerlarReservaButton);
+            this.Controls.Add(this.GenerarReservaButton);
+            this.Controls.Add(this.NuevoClienteButton);
             this.Controls.Add(this.facturarBtn);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -150,5 +185,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button facturarBtn;
+        private System.Windows.Forms.Button NuevoClienteButton;
+        private System.Windows.Forms.Button GenerarReservaButton;
+        private System.Windows.Forms.Button CancerlarReservaButton;
     }
 }

@@ -12,6 +12,8 @@ using FrbaHotel.ABM_de_Rol;
 using FrbaHotel.ABM_de_Cliente;
 using FrbaHotel.ABM_de_Usuario;
 using FrbaHotel.Facturar_Estadia;
+using FrbaHotel.Generar_Modificar_Reserva;
+using FrbaHotel.Cancelar_Reserva;
 
 
 namespace FrbaHotel.Menu
@@ -102,6 +104,32 @@ namespace FrbaHotel.Menu
             this.Close();
 
         }
+
+       private void NuevoClienteButton_Click(object sender, EventArgs e)
+       {
+           FormClienteNuevo c = new FormClienteNuevo();
+           this.Hide();
+           c.ShowDialog();
+           this.Close();
+       }
+
+       private void GenerarReservaButton_Click(object sender, EventArgs e)
+       {
+           FormGenerarReserva r = new FormGenerarReserva();
+           this.Hide();
+           r.ShowDialog();
+           this.Close();
+
+       }
+
+       private void CancerlarReservaButton_Click(object sender, EventArgs e)
+       {
+           FormCancelarReserva r = new FormCancelarReserva();
+           this.Hide();
+           r.ShowDialog();
+           this.Close();
+
+       }
 
 
       

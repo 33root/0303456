@@ -9,12 +9,14 @@ using System.Windows.Forms;
 using FrbaHotel.Menu;
 using System.Data.SqlClient;
 
+
 namespace FrbaHotel.Cancelar_Reserva
 {
     public partial class FormCancelarReserva : Form
     {
         SqlConnection conexion = BaseDeDatos.conectar();
-        ShortDateString f;
+        DateTimePicker f;
+       
 
         public FormCancelarReserva()
         {
@@ -38,8 +40,9 @@ namespace FrbaHotel.Cancelar_Reserva
         {
             try
             {
-                f = dtpFechaDeCancelacion.Value.ToShortDateString;
-                if (0 > DateTime.Compare(f, DateTime.Now))
+                f = dtpFechaDeCancelacion;
+                
+                if (0 > DateTime.Compare(f.Value, DateTime.Now))
                 {
                     conexion.Open();
                     SqlCommand comando = new SqlCommand("AEFI.cancelar_Reserva", conexion);
