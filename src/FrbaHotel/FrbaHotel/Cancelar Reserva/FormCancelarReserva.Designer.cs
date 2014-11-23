@@ -95,6 +95,7 @@
             this.CancelarReservaButton.TabIndex = 6;
             this.CancelarReservaButton.Text = "Cancelar Reserva";
             this.CancelarReservaButton.UseVisualStyleBackColor = true;
+            this.CancelarReservaButton.Click += new System.EventHandler(this.CancelarReservaButton_Click);
             // 
             // VolverButton
             // 
@@ -104,6 +105,7 @@
             this.VolverButton.TabIndex = 7;
             this.VolverButton.Text = "Volver";
             this.VolverButton.UseVisualStyleBackColor = true;
+            this.VolverButton.Click += new System.EventHandler(this.VolverButton_Click);
             // 
             // FormCancelarReserva
             // 
@@ -120,6 +122,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormCancelarReserva";
             this.Text = "FormCancelarReserva";
+            this.Load += new System.EventHandler(this.FormCancelarReserva_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
