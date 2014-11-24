@@ -55,6 +55,8 @@ namespace FrbaHotel.ABM_de_Habitacion
             tbNumero.Text = cells[2].Value.ToString();
             tbPiso.Text = cells[3].Value.ToString();
             cmbVista.Text = cells[4].Value.ToString();
+            cmbTHabitacion.Hide();
+            label7.Hide();
             btnCrear.Text = "Actualizar";
 
     
@@ -85,11 +87,13 @@ namespace FrbaHotel.ABM_de_Habitacion
 
                 
                 comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIDHotel.Text));
+                //comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIDHotel.Text)); /* Esto se habilitaria para el hotel del admin en particular (parte del Login)*/
                 comando.Parameters.Add(new SqlParameter("@ID_Habitacion", lbIDHabitacion.Text));
                 comando.Parameters.Add(new SqlParameter("@Numero", tbNumero.Text));
                 comando.Parameters.Add(new SqlParameter("@Piso", tbPiso.Text));
                 comando.Parameters.Add(new SqlParameter("@Vista", cmbVista.Text));
+                comando.Parameters.Add(new SqlParameter("@Tipo_habitacion", cmbTHabitacion.Text));
+                
            
 
 

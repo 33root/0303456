@@ -18,8 +18,8 @@ AS
 BEGIN
 		IF NOT EXISTS (SELECT * FROM AEFI.TL_Hotel h WHERE Nombre = @Nombre AND Nro_Calle = @NroCalle)
 	BEGIN
-			INSERT INTO AEFI.TL_Hotel(Nombre, Mail, Telefono, Calle, Cantidad_Estrellas, Ciudad, Pais, Fecha_Creacion, Nro_Calle, Recarga_Estrellas)
-			VALUES (@Nombre, @Mail, @Telefono, @Calle, @Cantidad_Estrellas, @Ciudad, @Pais, @Fecha_Creacion, @NroCalle, @Recarga_Estrellas)
+			INSERT INTO AEFI.TL_Hotel(Nombre, Mail, Telefono, Calle, Cantidad_Estrellas, Ciudad, Pais, Fecha_Creacion, Nro_Calle, Recarga_Estrellas, Estado)
+			VALUES (@Nombre, @Mail, @Telefono, @Calle, @Cantidad_Estrellas, @Ciudad, @Pais, @Fecha_Creacion, @NroCalle, @Recarga_Estrellas, 'Habilitado')
 	END;
 
 END;
@@ -100,8 +100,8 @@ BEGIN
 		IF NOT EXISTS (SELECT * FROM AEFI.TL_Habitacion h WHERE Numero = @Numero)	
 	
 	BEGIN
-			INSERT INTO AEFI.TL_Habitacion(Numero, Piso, Vista, ID_Tipo_Habitacion)
-			VALUES (@Numero, @Piso, @Vista, (SELECT ID_Tipo_Habitacion 
+			INSERT INTO AEFI.TL_Habitacion(Numero, Piso, Vista, Disponible, Estado, ID_Tipo_Habitacion)
+			VALUES (@Numero, @Piso, @Vista, 'Si', 'Habilitado',(SELECT ID_Tipo_Habitacion 
 	FROM AEFI.TL_Tipo_Habitacion th
 	WHERE th.Descripcion = @Tipo_Habitacion))
 	END;
@@ -558,6 +558,8 @@ END;
 		
 AS
 
+begin transaction
+
 IF(GETDATE() = (Select Fecha_Desde from AEFI.TL_Reserva r where r.ID_Reserva = @id_reserva))
 
 begin 
@@ -570,6 +572,27 @@ from AEFI.TL_Reserva r
 where r.ID_Reserva = @ID_Reserva
 
 
-end;
+end
 
+ELSE 
+
+	begin transaction
+	
+	INSERT INTO [AEFI].[TL_Cancelacion](Motivo, Fecha, ID_Usuario)
+	Select 'La fecha de reserva expiro', GETDATE(), (Select id_Cliente FROM [AEFI].[TL_Reserva] r 
+														where r.ID_Cliente = @ID_Reserva)
+														
+	Update [AEFI].[TL_Habitacion]
+	Set Disponible = 'Si'
+	
+	/*Hay que ver si cuando se cancela la reserva se elimina el registro de reserva y solo queda el de
+	cancelacion (tendria que haber una fk de reserva a cancelacion? o como esta esta bien?) 
+	- Las reservas no tienen que cambiar la disponibilidad de las habitacions a "NO"??
+	*/
+	
+	
+	
+	
+	end
+end
 */
