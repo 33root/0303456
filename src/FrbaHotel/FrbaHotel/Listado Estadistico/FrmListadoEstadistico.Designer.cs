@@ -36,8 +36,8 @@
             this.listadoCmbBox = new System.Windows.Forms.ComboBox();
             this.listadoBtn = new System.Windows.Forms.Button();
             this.volverBtn = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.listadoDGV = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.listadoDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -57,7 +57,6 @@
             this.trimestreCmbBox.Name = "trimestreCmbBox";
             this.trimestreCmbBox.Size = new System.Drawing.Size(121, 21);
             this.trimestreCmbBox.TabIndex = 2;
-            this.trimestreCmbBox.SelectedIndexChanged += new System.EventHandler(this.trimestreCmbBox_SelectedIndexChanged);
             // 
             // anioTxtBox
             // 
@@ -94,9 +93,8 @@
             this.listadoCmbBox.FormattingEnabled = true;
             this.listadoCmbBox.Location = new System.Drawing.Point(179, 121);
             this.listadoCmbBox.Name = "listadoCmbBox";
-            this.listadoCmbBox.Size = new System.Drawing.Size(121, 21);
+            this.listadoCmbBox.Size = new System.Drawing.Size(274, 21);
             this.listadoCmbBox.TabIndex = 3;
-            this.listadoCmbBox.SelectedIndexChanged += new System.EventHandler(this.listadoCmbBox_SelectedIndexChanged);
             // 
             // listadoBtn
             // 
@@ -107,10 +105,11 @@
             this.listadoBtn.TabIndex = 5;
             this.listadoBtn.Text = "Mostrar Listado";
             this.listadoBtn.UseVisualStyleBackColor = true;
+            this.listadoBtn.Click += new System.EventHandler(this.listadoBtn_Click);
             // 
             // volverBtn
             // 
-            this.volverBtn.Location = new System.Drawing.Point(277, 394);
+            this.volverBtn.Location = new System.Drawing.Point(415, 366);
             this.volverBtn.Name = "volverBtn";
             this.volverBtn.Size = new System.Drawing.Size(121, 23);
             this.volverBtn.TabIndex = 6;
@@ -118,22 +117,22 @@
             this.volverBtn.UseVisualStyleBackColor = true;
             this.volverBtn.Click += new System.EventHandler(this.volverBtn_Click);
             // 
-            // dataGridView1
+            // listadoDGV
             // 
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(66, 197);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(332, 150);
-            this.dataGridView1.TabIndex = 7;
+            this.listadoDGV.AllowUserToDeleteRows = false;
+            this.listadoDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.listadoDGV.Location = new System.Drawing.Point(66, 197);
+            this.listadoDGV.Name = "listadoDGV";
+            this.listadoDGV.ReadOnly = true;
+            this.listadoDGV.Size = new System.Drawing.Size(470, 141);
+            this.listadoDGV.TabIndex = 7;
             // 
             // FrmListadoEstadistico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(465, 425);
-            this.Controls.Add(this.dataGridView1);
+            this.ClientSize = new System.Drawing.Size(607, 445);
+            this.Controls.Add(this.listadoDGV);
             this.Controls.Add(this.volverBtn);
             this.Controls.Add(this.listadoBtn);
             this.Controls.Add(this.listadoCmbBox);
@@ -145,7 +144,7 @@
             this.Name = "FrmListadoEstadistico";
             this.Text = "Listado Estadístico";
             this.Load += new System.EventHandler(this.FrmListadoEstadistico_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listadoDGV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,6 +160,6 @@
         private System.Windows.Forms.ComboBox listadoCmbBox;
         private System.Windows.Forms.Button listadoBtn;
         private System.Windows.Forms.Button volverBtn;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView listadoDGV;
     }
 }

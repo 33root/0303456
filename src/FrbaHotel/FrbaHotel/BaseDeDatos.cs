@@ -38,7 +38,10 @@ namespace FrbaHotel
             }
             return textoHash;
         }
-
+        public static int converTrimToInt(int numero)
+        {
+            return numero * 3;
+        }
     }
 
 }

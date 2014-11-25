@@ -1,3 +1,4 @@
+DROP PROCEDURE AEFI.top5_consumiblesFacturados;
 DROP PROCEDURE AEFI.insertar_Reserva
 DROP PROCEDURE AEFI.insertar_nueva_Tarjeta;
 DROP PROCEDURE AEFI.insertar_Registro_Pago_Sin_Tarjeta;

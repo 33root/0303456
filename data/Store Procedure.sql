@@ -507,6 +507,7 @@ BEGIN
 	
 END;
 
+
 GO
 CREATE PROCEDURE AEFI.insertar_nueva_Tarjeta
 	@numero NUMERIC(18,0),
@@ -550,7 +551,6 @@ BEGIN
  END;
  
 END;
-
 
 /*CREATE PROCEDURE AEFI.registrarEstadia
 
@@ -596,3 +596,26 @@ ELSE
 	end
 end
 */
+
+		
+GO		
+CREATE PROCEDURE AEFI.top5_consumiblesFacturados
+	@ano int,
+	@inicio_trimestre int, 
+	@fin_trimestre int
+AS
+BEGIN
+	SELECT DISTINCT TOP 5 ho.ID_Hotel, ho.Nombre, ho.Calle,(SELECT SUM(it1.Cantidad) from AEFI.TL_Item_Por_Factura  it1 WHERE it1.ID_Factura = it.ID_Factura)  AS CANTIDAD
+		FROM AEFI.TL_Hotel ho, AEFI.TL_Item_Por_Factura it, AEFI.TL_Consumible_Por_Estadia cpe, AEFI.TL_Habitacion ha, AEFI.TL_Reserva re, AEFI.TL_Factura fa, AEFI.TL_Estadia es
+		WHERE cpe.ID_Consumible = it.ID_Consumible
+		AND re.ID_Cliente = fa.ID_Cliente
+		AND es.ID_Reserva = re.ID_Reserva
+		AND cpe.ID_Estadia = es.ID_Estadia
+		AND it.ID_Factura = fa.ID_Factura
+		AND re.ID_Habitacion = ha.ID_Habitacion
+		AND ha.ID_Hotel = ho.ID_Hotel
+		AND YEAR(fa.Fecha) = @ano
+		AND MONTH(fa.Fecha) BETWEEN @inicio_trimestre AND @fin_trimestre
+		GROUP BY ho.ID_Hotel, ho.Nombre, ho.Calle, it.ID_Consumible, it.ID_Factura
+		ORDER BY CANTIDAD DESC
+END;

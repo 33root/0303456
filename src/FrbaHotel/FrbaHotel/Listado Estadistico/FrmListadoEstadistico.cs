@@ -35,9 +35,8 @@ namespace FrbaHotel.Listado_Estadistico
             listadoCmbBox.Items.Add("Habitaciones con mayor cantidad de DIAS Y VECES que fueron ocupadas");
             listadoCmbBox.Items.Add("Cliente con mayor cantidad de puntos");
 
-
-        
-
+            trimestreCmbBox.SelectedIndex = 0;
+            listadoCmbBox.SelectedIndex = 0;
 
         }
 
@@ -60,22 +59,15 @@ namespace FrbaHotel.Listado_Estadistico
             
         }
 
-        private void trimestreCmbBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.listadoCmbBox.Enabled = true;
 
-        }
 
         private void anioTxtBox_TextChanged(object sender, EventArgs e)
         {
             this.trimestreCmbBox.Enabled = true;
-        }
-
-        private void listadoCmbBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            this.listadoCmbBox.Enabled = true;
             this.listadoBtn.Enabled = true;
-
         }
+
 
         private void volverBtn_Click(object sender, EventArgs e)
         {
@@ -87,11 +79,67 @@ namespace FrbaHotel.Listado_Estadistico
         
 
         }
+
+        private void listadoBtn_Click(object sender, EventArgs e)
+        {
+            string procedimiento = null;
+            switch (listadoCmbBox.SelectedIndex)
+            {
+                case 0:
+                    procedimiento = "AEFI.";
+                    break;
+                case 1:
+                    procedimiento = "AEFI.top5_consumiblesFacturados";
+                    break;
+                case 2:
+                    procedimiento = "";
+                    break;
+                case 3:
+                    procedimiento = "";
+                    break;
+            }
+
+            try
+            {
+                conexion.Open();
+                SqlCommand comando = new SqlCommand(procedimiento, conexion);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add(new SqlParameter("@ano", anioTxtBox.Text));
+                comando.Parameters.Add(new SqlParameter("@inicio_trimestre",
+                    BaseDeDatos.converTrimToInt(trimestreCmbBox.SelectedIndex) + 1));
+                comando.Parameters.Add(new SqlParameter("@fin_trimestre",
+                    BaseDeDatos.converTrimToInt(trimestreCmbBox.SelectedIndex) + 3));
+
+                SqlDataAdapter adapter = new SqlDataAdapter(comando);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                listadoDGV.DataSource = dataTable;
+
+            }
+            catch (Excepciones exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
+
+
+       
+
+        
+                                                }
  
         }
 
           
  
 
-    }
+    
 
