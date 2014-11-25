@@ -39,6 +39,7 @@
             this.NuevoClienteButton = new System.Windows.Forms.Button();
             this.GenerarReservaButton = new System.Windows.Forms.Button();
             this.CancerlarReservaButton = new System.Windows.Forms.Button();
+            this.listadoBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnListaHoteles
@@ -151,11 +152,22 @@
             this.CancerlarReservaButton.UseVisualStyleBackColor = true;
             this.CancerlarReservaButton.Click += new System.EventHandler(this.CancerlarReservaButton_Click);
             // 
+            // listadoBtn
+            // 
+            this.listadoBtn.Location = new System.Drawing.Point(83, 369);
+            this.listadoBtn.Name = "listadoBtn";
+            this.listadoBtn.Size = new System.Drawing.Size(109, 23);
+            this.listadoBtn.TabIndex = 11;
+            this.listadoBtn.Text = "Listado Estadístico";
+            this.listadoBtn.UseVisualStyleBackColor = true;
+            this.listadoBtn.Click += new System.EventHandler(this.listadoBtn_Click);
+            // 
             // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(285, 431);
+            this.Controls.Add(this.listadoBtn);
             this.Controls.Add(this.CancerlarReservaButton);
             this.Controls.Add(this.GenerarReservaButton);
             this.Controls.Add(this.NuevoClienteButton);
@@ -188,5 +200,6 @@
         private System.Windows.Forms.Button NuevoClienteButton;
         private System.Windows.Forms.Button GenerarReservaButton;
         private System.Windows.Forms.Button CancerlarReservaButton;
+        private System.Windows.Forms.Button listadoBtn;
     }
 }

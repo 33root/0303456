@@ -14,6 +14,8 @@ using FrbaHotel.ABM_de_Usuario;
 using FrbaHotel.Facturar_Estadia;
 using FrbaHotel.Generar_Modificar_Reserva;
 using FrbaHotel.Cancelar_Reserva;
+using FrbaHotel.Listado_Estadistico;
+
 
 
 namespace FrbaHotel.Menu
@@ -128,6 +130,16 @@ namespace FrbaHotel.Menu
            this.Hide();
            r.ShowDialog();
            this.Close();
+
+       }
+
+       private void listadoBtn_Click(object sender, EventArgs e)
+       {
+           FrmListadoEstadistico r = new FrmListadoEstadistico();
+           this.Hide();
+           r.ShowDialog();
+           this.Close();
+
 
        }
 
