@@ -99,6 +99,12 @@ SELECT c.ID_Consumible, e.ID_Estadia
 FROM gd_esquema.Maestra m, AEFI.TL_Consumible c, AEFI.TL_Estadia e
 WHERE m.Consumible_Codigo = c.ID_Consumible AND e.ID_Reserva=m.Reserva_Codigo;
 
+INSERT INTO AEFI.TL_Item_Por_Factura (ID_Consumible, Cantidad, ID_Factura, Monto)
+SELECT m.Consumible_Codigo, m.Item_Factura_Cantidad, f.ID_Factura, m.Item_Factura_Monto 
+FROM gd_esquema.Maestra m, AEFI.TL_Factura f
+WHERE f.Numero = m.Factura_Nro;
+
+
 
 
 COMMIT
