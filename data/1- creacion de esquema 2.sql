@@ -275,3 +275,16 @@ CREATE TABLE [AEFI].[TL_Consumible_Por_Estadia](
 	FOREIGN KEY (ID_Consumible) REFERENCES [AEFI].[TL_Consumible] (ID_Consumible),
 	FOREIGN KEY (ID_Estadia) REFERENCES [AEFI].[TL_Estadia] (ID_Estadia)
 );
+
+CREATE TABLE [AEFI].[TL_Puntos_Por_Factura] (
+ [ID_Factura] NUMERIC(18,0),
+ [ID_Cliente] NUMERIC(18,0),
+ [Fecha] DATETIME,
+ [Puntos] NUMERIC(18,0), 
+ PRIMARY KEY (ID_Factura, ID_Cliente), 
+ FOREIGN KEY (ID_Factura) REFERENCES [AEFI].[TL_Factura] (ID_Factura),
+ FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente)
+ 
+ );
+ 
+ 

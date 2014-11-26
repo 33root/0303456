@@ -684,10 +684,10 @@ BEGIN
 		GROUP BY ho.ID_Hotel, ho.Nombre, ho.Calle, ha.Numero, e.ID_Estadia
 		ORDER BY CANTIDAD DESC
 END;
-/*
+
 GO		
 CREATE PROCEDURE AEFI.top5_vecesReservada
-	@ano int,
+	@ano int,	
 	@inicio_trimestre int, 
 	@fin_trimestre int
 AS
@@ -696,18 +696,35 @@ BEGIN
 																		WHERE ho1.ID_Hotel = ha1.ID_Hotel
 																		AND r1.ID_Habitacion = ha1.ID_Habitacion
 																		AND e1.ID_Reserva = r1.ID_Reserva
-																		and e1.ID_Estadia = e.ID_Estadia
-																		group by e1.ID_Estadia) AS CANTIDAD
+																		and ho1.ID_Hotel = ho.ID_Hotel
+																		group by ho1.ID_Hotel) AS CANTIDAD
 		FROM AEFI.TL_Hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Estadia e, AEFI.TL_Reserva re
 		WHERE ho.ID_Hotel = ha.ID_Hotel
 		AND re.ID_Habitacion = ha.ID_Habitacion
 		AND e.ID_Reserva = re.ID_Reserva
-		--AND YEAR(e.Fecha_Inicio) = @ano
-		--AND MONTH(e.Fecha_Inicio) BETWEEN @inicio_trimestre AND @fin_trimestre
-		GROUP BY ho.ID_Hotel, ho.Nombre, ho.Calle, ha.Numero, e.ID_Estadia
+		AND YEAR(e.Fecha_Inicio) = @ano
+		AND MONTH(e.Fecha_Inicio) BETWEEN @inicio_trimestre AND @fin_trimestre
+		GROUP BY ho.ID_Hotel, ho.Nombre, ho.Calle, ha.Numero
 		ORDER BY CANTIDAD DESC
 END;
 
-select * from AEFI.TL_Estadia e, AEFI.TL_Reserva r where r.ID_Reserva = e.ID_Reserva order by r.ID_Habitacion
+/*Cliente con mayor cantidad de puntos, donde cada $10 en estadías vale 1 puntos y cada $5 de consumibles es 1 punto, 
+de la sumatoria de todas las facturaciones que haya tenido dentro de un periodo independientemente del Hotel. 
+Tener en cuenta que la facturación siempre es a quien haya realizado la reserva.*/
 
-*/
+
+GO		
+CREATE PROCEDURE AEFI.top5_puntosCliente
+	@ano int,	
+	@inicio_trimestre int, 
+	@fin_trimestre int
+AS
+BEGIN
+	SELECT DISTINCT TOP 5 c.ID_Cliente, c.nombre, c.apellido, (SELECT SUM(Puntos) from AEFI.TL_Puntos_Por_Factura p1 WHERE p1.ID_Cliente = p.ID_Cliente) as PUNTOS
+	FROM AEFI.TL_Cliente c, AEFI.TL_Puntos_Por_Factura p
+	WHERE p.ID_Cliente = c.ID_Cliente
+	AND YEAR(p.Fecha) = 2016--@ano
+	AND MONTH(p.Fecha) BETWEEN 03 and 05-- @inicio_trimestre AND @fin_trimestre
+	GROUP BY c.ID_Cliente,p.ID_Cliente, c.Nombre, c.Apellido
+	ORDER BY PUNTOS DESC
+END;

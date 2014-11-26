@@ -92,7 +92,7 @@ AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL
 AND m.Factura_Total IS NOT NULL;
 
 
-INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches, Estado, ID_Factura)
+/*INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches, Estado, ID_Factura)
 SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, 1, ID_Factura  = (CASE WHEN (EXISTS (select factura_nro from gd_esquema.Maestra m where r.ID_reserva = m.Reserva_Codigo))
 																							THEN(select top 1 factura_nro from gd_esquema.Maestra m where Factura_Nro is not null and r.ID_reserva = m.Reserva_Codigo)
 																							ELSE NULL
@@ -101,7 +101,7 @@ FROM gd_esquema.Maestra m, AEFI.TL_Reserva r
 WHERE r.ID_Reserva = m.Reserva_Codigo
 AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL;
 
-
+*/
 
 
 INSERT INTO AEFI.TL_Consumible_Por_Estadia
@@ -112,9 +112,22 @@ WHERE m.Consumible_Codigo = c.ID_Consumible AND e.ID_Reserva=m.Reserva_Codigo;
 INSERT INTO AEFI.TL_Item_Por_Factura (ID_Consumible, Cantidad, ID_Factura, Monto)
 SELECT m.Consumible_Codigo, m.Item_Factura_Cantidad, f.ID_Factura, m.Item_Factura_Monto 
 FROM gd_esquema.Maestra m, AEFI.TL_Factura f
-WHERE f.Numero = m.Factura_Nro;
+WHERE f.Numero = m.Factura_Nro
+AND m.Consumible_Codigo IS NOT NULL;
 
-
-
+INSERT INTO AEFI.TL_Item_Por_Factura (ID_Estadia, Cantidad, ID_Factura, Monto)
+SELECT DISTINCT e.ID_Estadia, m.Item_Factura_Cantidad, f.ID_Factura, m.Item_Factura_Monto 
+FROM gd_esquema.Maestra m, AEFI.TL_Factura f, AEFI.TL_Estadia e
+WHERE f.Numero = m.Factura_Nro
+AND e.ID_Reserva = m.Reserva_Codigo;
+	
+INSERT INTO AEFI.TL_Puntos_Por_Factura
+SElECT ID_Factura, ID_Cliente, Fecha, (SELECT (SUM(ipf.Monto/10) + SUM(ipf1.Monto/5))
+							FROM AEFI.TL_Item_Por_Factura ipf, AEFI.TL_Item_Por_Factura ipf1
+							WHERE ipf.ID_Estadia IS NOT NULL 
+							AND ipf1.ID_Consumible IS NOT NULL
+							AND ipf.ID_Factura = f.ID_Factura
+							AND ipf1.ID_Factura = f.ID_Factura)
+FROM AEFI.TL_Factura f;
 
 COMMIT
