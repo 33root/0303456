@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.trimestreCmbBox = new System.Windows.Forms.ComboBox();
             this.anioTxtBox = new System.Windows.Forms.TextBox();
@@ -61,9 +64,9 @@
             // anioTxtBox
             // 
             this.anioTxtBox.HideSelection = false;
-            this.anioTxtBox.Location = new System.Drawing.Point(191, 36);
+            this.anioTxtBox.Location = new System.Drawing.Point(179, 36);
             this.anioTxtBox.Name = "anioTxtBox";
-            this.anioTxtBox.Size = new System.Drawing.Size(100, 20);
+            this.anioTxtBox.Size = new System.Drawing.Size(64, 20);
             this.anioTxtBox.TabIndex = 1;
             this.anioTxtBox.TextChanged += new System.EventHandler(this.anioTxtBox_TextChanged);
             this.anioTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.anioTxtBox_KeyPress);
@@ -98,8 +101,9 @@
             // 
             // listadoBtn
             // 
+            this.listadoBtn.AutoSize = true;
             this.listadoBtn.Enabled = false;
-            this.listadoBtn.Location = new System.Drawing.Point(161, 157);
+            this.listadoBtn.Location = new System.Drawing.Point(228, 157);
             this.listadoBtn.Name = "listadoBtn";
             this.listadoBtn.Size = new System.Drawing.Size(154, 24);
             this.listadoBtn.TabIndex = 5;
@@ -119,13 +123,41 @@
             // 
             // listadoDGV
             // 
+            this.listadoDGV.AllowUserToAddRows = false;
             this.listadoDGV.AllowUserToDeleteRows = false;
+            this.listadoDGV.AllowUserToResizeColumns = false;
+            this.listadoDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.listadoDGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.listadoDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.listadoDGV.DefaultCellStyle = dataGridViewCellStyle5;
             this.listadoDGV.Location = new System.Drawing.Point(66, 197);
             this.listadoDGV.Name = "listadoDGV";
             this.listadoDGV.ReadOnly = true;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.listadoDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.listadoDGV.Size = new System.Drawing.Size(470, 141);
             this.listadoDGV.TabIndex = 7;
+            this.listadoDGV.VirtualMode = true;
             // 
             // FrmListadoEstadistico
             // 

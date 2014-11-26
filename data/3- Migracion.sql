@@ -84,24 +84,12 @@ WHERE m.Factura_Nro IS NOT NULL;
 
 
 INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches,Estado, ID_Factura)
-SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, 0, f.ID_Factura
+SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, (CASE WHEN (DATEADD(day, m.estadia_cant_noches, m.estadia_fecha_inicio) > GETDATE()) THEN 1 ELSE 0 END) as activa , f.ID_Factura
 FROM gd_esquema.Maestra m, AEFI.TL_Reserva r, AEFI.TL_Factura f
 WHERE r.ID_Reserva = m.Reserva_Codigo
 AND f.Numero = m.Factura_Nro
 AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL
 AND m.Factura_Total IS NOT NULL;
-
-
-/*INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches, Estado, ID_Factura)
-SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, 1, ID_Factura  = (CASE WHEN (EXISTS (select factura_nro from gd_esquema.Maestra m where r.ID_reserva = m.Reserva_Codigo))
-																							THEN(select top 1 factura_nro from gd_esquema.Maestra m where Factura_Nro is not null and r.ID_reserva = m.Reserva_Codigo)
-																							ELSE NULL
-																							END)
-FROM gd_esquema.Maestra m, AEFI.TL_Reserva r
-WHERE r.ID_Reserva = m.Reserva_Codigo
-AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL;
-
-*/
 
 
 INSERT INTO AEFI.TL_Consumible_Por_Estadia

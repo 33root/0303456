@@ -70,6 +70,7 @@
             this.numeroTxtBox.Name = "numeroTxtBox";
             this.numeroTxtBox.Size = new System.Drawing.Size(100, 20);
             this.numeroTxtBox.TabIndex = 4;
+            this.numeroTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeroTxtBox_KeyPress);
             // 
             // cancelarBtn
             // 
@@ -83,10 +84,11 @@
             // 
             // vtoCalendar
             // 
+            System.DateTime manana = System.DateTime.Today.AddDays(1);
             this.vtoCalendar.Location = new System.Drawing.Point(119, 93);
             this.vtoCalendar.MaxDate = new System.DateTime(2030, 12, 31, 0, 0, 0, 0);
             this.vtoCalendar.MaxSelectionCount = 1;
-            this.vtoCalendar.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.vtoCalendar.MinDate = manana;
             this.vtoCalendar.Name = "vtoCalendar";
             this.vtoCalendar.TabIndex = 3;
             // 

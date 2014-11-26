@@ -11,6 +11,11 @@ DROP PROCEDURE AEFI.insertar_Registro_Pago_Sin_Tarjeta;
 DROP PROCEDURE AEFI.insertar_Registro_Pago_Con_Tarjeta;
 DROP PROCEDURE AEFI.insertar_item_consumible;
 DROP PROCEDURE AEFI.insertar_item_precio_estadia;
+
+
+
+DROP FUNCTION AEFI.calcular_consumibles;
+DROP FUNCTION AEFI.calcular_costo_habitacion;
 DROP PROCEDURE AEFI.insertar_factura;
 DROP PROCEDURE AEFI.crear_usuario_por_hotel;
 DROP PROCEDURE AEFI.crear_usuario_por_rol;

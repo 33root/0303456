@@ -42,42 +42,47 @@ namespace FrbaHotel.Facturar_Estadía
             }
             else
             {
-                try
-                {
+             
                     conexion.Open();
 
                     SqlCommand comando = new SqlCommand("AEFI.insertar_nueva_Tarjeta", conexion);
                     comando.CommandType = CommandType.StoredProcedure;
                     comando.Parameters.Add(new SqlParameter("@numero", Convert.ToInt32(numeroTxtBox.Text)));
                     comando.Parameters.Add(new SqlParameter("@fecha", vtoCalendar.SelectionStart));
-                    SqlParameter id1 = new SqlParameter("@id_factura", 0);
-                    id1.Direction = ParameterDirection.Output;
-                    comando.Parameters.Add(id1);
+             
                     comando.ExecuteNonQuery();
 
-                    
+                    conexion.Close();
 
                     MessageBox.Show("La tarjeta ha sido generada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ;
+                    
                     this.Close();
 
-                }
-                catch (SqlException exc)
-                {
-                    MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                }
-
-                finally
-                {
-                    
-                    conexion.Close();
-                }
-               
+      
             }
 
            
         }
+
+        private void numeroTxtBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+
+            else if (Char.IsControl(e.KeyChar))
+            {
+
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+
 
     }
 

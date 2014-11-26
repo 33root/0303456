@@ -368,7 +368,7 @@ AS
 
 END;
 
-/*GO
+GO
 
 CREATE FUNCTION AEFI.calcular_consumibles
  (@ID_Estadia NUMERIC(18,0))
@@ -381,9 +381,9 @@ CREATE FUNCTION AEFI.calcular_consumibles
 						AND c.ID_Consumible = cpe.ID_Consumible
 						)
 	RETURN @RESULTADO
- END;*/
+ END;
  
-/* GO
+GO
  CREATE FUNCTION AEFI.calcular_costo_habitacion
  (@ID_Estadia NUMERIC(18,0))
  RETURNS NUMERIC(18, 2)
@@ -399,9 +399,9 @@ CREATE FUNCTION AEFI.calcular_consumibles
 						)
 	RETURN @RESULTADO
 	END;
-	*/
 
-/*GO
+/*
+GO
 CREATE PROCEDURE AEFI.calcular_monto
 (@ID_Estadia NUMERIC(18,0)) 
 AS
@@ -410,7 +410,8 @@ BEGIN
 			INSERT INTO AEFI.TL_Estadia(Monto)
 			VALUES (AEFI.calcular_consumibles(@ID_Estadia) + AEFI.calcular_costo_habitacion(@ID_Estadia))
 END;
-	*/
+*/	
+
 GO
 CREATE PROCEDURE AEFI.insertar_factura
 	@forma_pago NVARCHAR(50),
@@ -434,7 +435,8 @@ BEGIN
 		FROM AEFI.TL_Factura);
 		
 	UPDATE AEFI.TL_Estadia
-	SET Estado = 0;
+	SET Estado = 0
+	WHERE ID_Reserva = @id_reserva;
 		
 END;
 
@@ -494,6 +496,7 @@ BEGIN
 END;
 
 
+
 GO
 CREATE PROCEDURE AEFI.insertar_Registro_Pago_Con_Tarjeta
 	@id_factura NUMERIC(18,0),
@@ -507,28 +510,27 @@ BEGIN
 	
 END;
 
-
 GO
 CREATE PROCEDURE AEFI.insertar_nueva_Tarjeta
 	@numero NUMERIC(18,0),
-	@fecha DATETIME,
-	@id_tarjeta NUMERIC(18,0)
+	@fecha DATETIME
 	
 AS
 BEGIN	
 
 IF NOT EXISTS (SELECT * FROM AEFI.TL_Tarjeta t WHERE t.Numero = @numero)
  BEGIN
-	INSERT INTO AEFI.TL_Tarjeta (Numero, Fecha_vto)
-	VALUES (@numero, @fecha);
+ 
+ SET IDENTITY_INSERT AEFI.TL_Tarjeta ON
+	INSERT INTO AEFI.TL_Tarjeta (Numero, Fecha_vto, ID_Tarjeta)
+	VALUES (@numero, @fecha,((SELECT COUNT(*) FROM AEFI.TL_Tarjeta)+1));
 	
-	SET @id_tarjeta = (
-		SELECT MAX(ID_Tarjeta)
-		FROM AEFI.TL_ID_Tarjeta);
+SET IDENTITY_INSERT AEFI.TL_Tarjeta OFF
 	
 	END;
 
 END;
+
 
 GO
 CREATE PROCEDURE AEFI.insertar_Reserva
@@ -720,11 +722,13 @@ CREATE PROCEDURE AEFI.top5_puntosCliente
 	@fin_trimestre int
 AS
 BEGIN
-	SELECT DISTINCT TOP 5 c.ID_Cliente, c.nombre, c.apellido, (SELECT SUM(Puntos) from AEFI.TL_Puntos_Por_Factura p1 WHERE p1.ID_Cliente = p.ID_Cliente) as PUNTOS
+	SELECT DISTINCT TOP 5 c.ID_Cliente, c.nombre, c.apellido, (SELECT SUM(Puntos) from AEFI.TL_Puntos_Por_Factura p1 WHERE p1.ID_Cliente = p.ID_Cliente)AS PUNTO
 	FROM AEFI.TL_Cliente c, AEFI.TL_Puntos_Por_Factura p
 	WHERE p.ID_Cliente = c.ID_Cliente
-	AND YEAR(p.Fecha) = 2016--@ano
-	AND MONTH(p.Fecha) BETWEEN 03 and 05-- @inicio_trimestre AND @fin_trimestre
+	AND YEAR(p.Fecha) = @ano
+	AND MONTH(p.Fecha) BETWEEN @inicio_trimestre AND @fin_trimestre
 	GROUP BY c.ID_Cliente,p.ID_Cliente, c.Nombre, c.Apellido
-	ORDER BY PUNTOS DESC
+	ORDER BY PUNTO DESC
 END;
+
+

@@ -32,7 +32,8 @@ namespace FrbaHotel.Listado_Estadistico
             listadoCmbBox.Items.Add("Hoteles con mayor cantidad de RESERVAS CANCELADAS");
             listadoCmbBox.Items.Add("Hoteles con mayor cantidad de CONSUMIBLES FACTURADOS");
             listadoCmbBox.Items.Add("Hoteles con mayor cantidad de DIAS FUERA DE SERVICIO");
-            listadoCmbBox.Items.Add("Habitaciones con mayor cantidad de DIAS Y VECES que fueron ocupadas");
+            listadoCmbBox.Items.Add("Habitaciones con mayor cantidad de DIAS que fueron ocupadas");
+            listadoCmbBox.Items.Add("Habitaciones con mayor cantidad de VECES que fueron ocupadas");
             listadoCmbBox.Items.Add("Cliente con mayor cantidad de puntos");
 
             trimestreCmbBox.SelectedIndex = 0;
@@ -86,16 +87,22 @@ namespace FrbaHotel.Listado_Estadistico
             switch (listadoCmbBox.SelectedIndex)
             {
                 case 0:
-                    procedimiento = "AEFI.";
+                    procedimiento = "AEFI.top5_reservasCanceladas";
                     break;
                 case 1:
                     procedimiento = "AEFI.top5_consumiblesFacturados";
                     break;
                 case 2:
-                    procedimiento = "";
+                    procedimiento = "AEFI.top5_diasFueraDeServicio";
                     break;
                 case 3:
-                    procedimiento = "";
+                    procedimiento = "AEFI.top5_diasOcupados";
+                    break;
+                case 4:
+                    procedimiento = "AEFI.top5_vecesReservada";
+                    break;
+                case 5:
+                    procedimiento = "AEFI.top5_puntosCliente";
                     break;
             }
 
@@ -109,6 +116,8 @@ namespace FrbaHotel.Listado_Estadistico
                     BaseDeDatos.converTrimToInt(trimestreCmbBox.SelectedIndex) + 1));
                 comando.Parameters.Add(new SqlParameter("@fin_trimestre",
                     BaseDeDatos.converTrimToInt(trimestreCmbBox.SelectedIndex) + 3));
+
+
 
                 SqlDataAdapter adapter = new SqlDataAdapter(comando);
                 DataTable dataTable = new DataTable();

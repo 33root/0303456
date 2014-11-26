@@ -26,7 +26,7 @@ namespace FrbaHotel.Facturar_Estadia
         private void FrmFacturar_Load(object sender, EventArgs e)
         {
 
-            String cargarEstadias = "SELECT * FROM AEFI.TL_Estadia WHERE ID_Factura IS NULL";
+            String cargarEstadias = "SELECT ID_Estadia, ID_Reserva, Fecha_Inicio, Cantidad_Noches, ID_Factura FROM AEFI.TL_Estadia WHERE Estado = 1";
             String consultaMediosDePago = "SELECT Descripcion FROM AEFI.TL_FormaDePago";
             
             try
@@ -164,9 +164,15 @@ namespace FrbaHotel.Facturar_Estadia
                             comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
                             comando.ExecuteNonQuery();
 
+                            //Almaceno el pago dependiendo del tipo .   
+
+
+
+
+
                          }
                     
-
+                        
 
 
                         MessageBox.Show("La factura generada en la Número: " +  par.Value.ToString(), "" , MessageBoxButtons.OK, MessageBoxIcon.Information);
