@@ -619,3 +619,95 @@ BEGIN
 		GROUP BY ho.ID_Hotel, ho.Nombre, ho.Calle, it.ID_Consumible, it.ID_Factura
 		ORDER BY CANTIDAD DESC
 END;
+
+
+GO		
+CREATE PROCEDURE AEFI.top5_reservasCanceladas
+	@ano int,
+	@inicio_trimestre int, 
+	@fin_trimestre int
+AS
+BEGIN
+	SELECT DISTINCT TOP 5 ho.ID_Hotel, ho.Nombre, ho.Calle, (SELECT COUNT(DISTINCT id_cancelacion) from AEFI.TL_Cancelacion c1, AEFI.TL_Hotel ho1, AEFI.TL_Reserva r1, AEFI.TL_Habitacion ha1
+		WHERE ho1.ID_Hotel = ha1.ID_Hotel
+		AND r1.ID_Habitacion = ha1.ID_Habitacion
+		AND r1.ID_Reserva = c1.ID_Reserva
+		AND ho1.ID_Hotel = ho.ID_Hotel
+		GROUP BY ho1.ID_Hotel) AS CANTIDAD
+		FROM AEFI.TL_Hotel ho, AEFI.TL_Cancelacion c, AEFI.TL_Reserva r, AEFI.TL_Habitacion ha
+		WHERE ho.ID_Hotel = ha.ID_Hotel
+		AND r.ID_Habitacion = ha.ID_Habitacion
+		AND c.ID_Reserva = r.ID_Reserva
+		AND YEAR(c.Fecha) = @ano
+		AND MONTH(c.Fecha) BETWEEN @inicio_trimestre AND @fin_trimestre
+		GROUP BY ho.ID_Hotel, ho.Nombre, ho.Calle
+		ORDER BY CANTIDAD DESC
+END;
+
+
+GO		
+CREATE PROCEDURE AEFI.top5_diasFueraDeServicio
+	@ano int,
+	@inicio_trimestre int, 
+	@fin_trimestre int
+AS
+BEGIN
+	SELECT DISTINCT TOP 5 ho.ID_Hotel, ho.Nombre, ho.Calle, (SELECT SUM(DATEDIFF(DAY, fecha_fin, fecha_inicio)) from AEFI.TL_Baja_Hotel ba1 where ba1.ID_Hotel = ho.ID_Hotel) AS CANTIDAD
+		FROM AEFI.TL_Hotel ho,AEFI.TL_Baja_Hotel ba
+		WHERE ho.ID_Hotel = ba.ID_Hotel
+		AND YEAR(ba.Fecha_Inicio) = @ano
+		AND MONTH(ba.Fecha_Inicio) BETWEEN @inicio_trimestre AND @fin_trimestre
+		GROUP BY ho.ID_Hotel, ho.Nombre, ho.Calle, ba.ID_Hotel
+		ORDER BY CANTIDAD DESC
+END;
+
+
+GO		
+CREATE PROCEDURE AEFI.top5_diasOcupados
+	@ano int,
+	@inicio_trimestre int, 
+	@fin_trimestre int
+AS
+BEGIN
+	SELECT DISTINCT TOP 5 ho.ID_Hotel, ho.Nombre, ho.Calle, ha.Numero, (SELECT SUM(e1.Cantidad_Noches) from AEFI.TL_Estadia e1, AEFI.TL_Reserva r1, AEFI.TL_Habitacion ha1, AEFI.TL_Hotel ho1 
+																		WHERE ho1.ID_Hotel = ha1.ID_Hotel
+																		AND r1.ID_Habitacion = ha1.ID_Habitacion
+																		AND e1.ID_Reserva = r1.ID_Reserva
+																		and e1.ID_Estadia = e.ID_Estadia
+																		group by e1.ID_Estadia) AS CANTIDAD
+		FROM AEFI.TL_Hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Estadia e, AEFI.TL_Reserva re
+		WHERE ho.ID_Hotel = ha.ID_Hotel
+		AND re.ID_Habitacion = ha.ID_Habitacion
+		AND e.ID_Reserva = re.ID_Reserva
+		AND YEAR(e.Fecha_Inicio) = @ano
+		AND MONTH(e.Fecha_Inicio) BETWEEN @inicio_trimestre AND @fin_trimestre
+		GROUP BY ho.ID_Hotel, ho.Nombre, ho.Calle, ha.Numero, e.ID_Estadia
+		ORDER BY CANTIDAD DESC
+END;
+/*
+GO		
+CREATE PROCEDURE AEFI.top5_vecesReservada
+	@ano int,
+	@inicio_trimestre int, 
+	@fin_trimestre int
+AS
+BEGIN
+	SELECT DISTINCT TOP 5 ho.ID_Hotel, ho.Nombre, ho.Calle, ha.Numero, (SELECT COUNT(DISTINCT e1.ID_Estadia) from AEFI.TL_Estadia e1, AEFI.TL_Reserva r1, AEFI.TL_Habitacion ha1, AEFI.TL_Hotel ho1 
+																		WHERE ho1.ID_Hotel = ha1.ID_Hotel
+																		AND r1.ID_Habitacion = ha1.ID_Habitacion
+																		AND e1.ID_Reserva = r1.ID_Reserva
+																		and e1.ID_Estadia = e.ID_Estadia
+																		group by e1.ID_Estadia) AS CANTIDAD
+		FROM AEFI.TL_Hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Estadia e, AEFI.TL_Reserva re
+		WHERE ho.ID_Hotel = ha.ID_Hotel
+		AND re.ID_Habitacion = ha.ID_Habitacion
+		AND e.ID_Reserva = re.ID_Reserva
+		--AND YEAR(e.Fecha_Inicio) = @ano
+		--AND MONTH(e.Fecha_Inicio) BETWEEN @inicio_trimestre AND @fin_trimestre
+		GROUP BY ho.ID_Hotel, ho.Nombre, ho.Calle, ha.Numero, e.ID_Estadia
+		ORDER BY CANTIDAD DESC
+END;
+
+select * from AEFI.TL_Estadia e, AEFI.TL_Reserva r where r.ID_Reserva = e.ID_Reserva order by r.ID_Habitacion
+
+*/

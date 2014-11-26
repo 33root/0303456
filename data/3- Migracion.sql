@@ -49,14 +49,18 @@ FROM  gd_esquema.Maestra
 SET IDENTITY_INSERT AEFI.TL_Reserva ON
 INSERT INTO [AEFI].[TL_Reserva] (ID_Reserva, Fecha_Desde, Cantidad_Noches, Cantidad_Huespedes, ID_Cliente, ID_Habitacion, ID_Regimen, Estado)
 SELECT DISTINCT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, x.Cantidad_Huespedes_Total, c.ID_Cliente, h.ID_Habitacion, r.ID_Regimen, 'Efectivizada'
-FROM gd_esquema.Maestra m
-
-JOIN AEFI.TL_Tipo_Habitacion x ON (m.Habitacion_Tipo_Codigo= x.ID_Tipo_Habitacion) 
-JOIN AEFI.TL_Cliente c ON (m.Cliente_Pasaporte_Nro = c.Documento_Nro AND m.Cliente_Apellido= c.Apellido AND m.Cliente_Nombre= c.Nombre)
-JOIN AEFI.TL_Habitacion  h ON (m.Habitacion_Numero = h.ID_Habitacion)
-JOIN AEFI.TL_Regimen r ON (m.Regimen_Descripcion = r.Descripcion)
+FROM gd_esquema.Maestra m, AEFI.TL_Tipo_Habitacion x ,AEFI.TL_Cliente c, AEFI.TL_Habitacion  h, AEFI.TL_Regimen r, AEFI.TL_Hotel ho
+WHERE m.Habitacion_Tipo_Codigo= x.ID_Tipo_Habitacion
+AND m.Cliente_Pasaporte_Nro = c.Documento_Nro 
+AND m.Cliente_Apellido= c.Apellido 
+AND m.Cliente_Nombre= c.Nombre
+AND m.Habitacion_Numero = h.Numero
+AND m.Hotel_Calle = ho.Calle
+AND m.Hotel_Ciudad = ho.Ciudad
+AND m.Hotel_Nro_Calle = ho.Nro_Calle
+AND h.ID_Hotel = ho.ID_Hotel
+AND m.Regimen_Descripcion = r.Descripcion
 SET IDENTITY_INSERT AEFI.TL_Reserva OFF
-
 	
 
 --Uso codigos que ya existen
@@ -77,12 +81,6 @@ JOIN AEFI.TL_Cliente x ON (x.Documento_Nro = m.Cliente_Pasaporte_Nro)
 WHERE m.Factura_Nro IS NOT NULL;
 
 
-INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches, Estado)
-SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, 1
-FROM gd_esquema.Maestra m, AEFI.TL_Reserva r
-WHERE r.ID_Reserva = m.Reserva_Codigo
-AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL
-AND m.Factura_Total IS NULL;
 
 
 INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches,Estado, ID_Factura)
@@ -92,6 +90,18 @@ WHERE r.ID_Reserva = m.Reserva_Codigo
 AND f.Numero = m.Factura_Nro
 AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL
 AND m.Factura_Total IS NOT NULL;
+
+
+INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches, Estado, ID_Factura)
+SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, 1, ID_Factura  = (CASE WHEN (EXISTS (select factura_nro from gd_esquema.Maestra m where r.ID_reserva = m.Reserva_Codigo))
+																							THEN(select top 1 factura_nro from gd_esquema.Maestra m where Factura_Nro is not null and r.ID_reserva = m.Reserva_Codigo)
+																							ELSE NULL
+																							END)
+FROM gd_esquema.Maestra m, AEFI.TL_Reserva r
+WHERE r.ID_Reserva = m.Reserva_Codigo
+AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL;
+
+
 
 
 INSERT INTO AEFI.TL_Consumible_Por_Estadia

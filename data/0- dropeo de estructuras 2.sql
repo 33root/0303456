@@ -1,3 +1,6 @@
+DROP PROCEDURE AEFI.top5_diasOcupados
+DROP PROCEDURE AEFI.top5_diasFueraDeServicio;
+DROP PROCEDURE AEFI.top5_reservasCanceladas;
 DROP PROCEDURE AEFI.top5_consumiblesFacturados;
 DROP PROCEDURE AEFI.insertar_Reserva
 DROP PROCEDURE AEFI.insertar_nueva_Tarjeta;
@@ -21,7 +24,6 @@ DROP PROCEDURE AEFI.actualizar_Hotel;
 DROP PROCEDURE AEFI.actualizar_cliente;
 DROP PROCEDURE AEFI.insertar_cliente;
 DROP PROCEDURE AEFI.crear_Hotel;
-
 
 DROP TABLE [AEFI].[TL_Consumible_Por_Estadia];
 DROP TABLE [AEFI].[TL_Usuario_Por_Hotel];
