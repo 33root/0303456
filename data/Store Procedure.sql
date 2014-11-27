@@ -400,17 +400,6 @@ GO
 	RETURN @RESULTADO
 	END;
 
-/*
-GO
-CREATE PROCEDURE AEFI.calcular_monto
-(@ID_Estadia NUMERIC(18,0)) 
-AS
-BEGIN
-
-			INSERT INTO AEFI.TL_Estadia(Monto)
-			VALUES (AEFI.calcular_consumibles(@ID_Estadia) + AEFI.calcular_costo_habitacion(@ID_Estadia))
-END;
-*/	
 
 GO
 CREATE PROCEDURE AEFI.insertar_factura
@@ -486,34 +475,36 @@ END;
 GO
 CREATE PROCEDURE AEFI.insertar_Registro_Pago_Sin_Tarjeta
 	@id_factura NUMERIC(18,0),
-	@fecha DATETIME
+	@fecha DATETIME,
+	@id_cliente NUMERIC(18,0)
 	
 AS
 BEGIN	
-	INSERT INTO AEFI.TL_Registro_Pago (ID_Factura, Fecha)
-	VALUES (@id_factura, @fecha);
+	INSERT INTO AEFI.TL_Registro_Pago (ID_Factura, Fecha, ID_Cliente)
+	VALUES (@id_factura, @fecha, @id_cliente);
 	
 END;
-
-
 
 GO
 CREATE PROCEDURE AEFI.insertar_Registro_Pago_Con_Tarjeta
 	@id_factura NUMERIC(18,0),
 	@fecha DATETIME,
-	@id_tarjeta NUMERIC(18,0)
+	@numeroTarjeta NUMERIC(18,0),
+	@id_cliente NUMERIC(18,0)
 	
 AS
 BEGIN	
-	INSERT INTO AEFI.TL_Registro_Pago (ID_Factura, Fecha, ID_Tarjeta)
-	VALUES (@id_factura, @fecha, @id_tarjeta);
+	INSERT INTO AEFI.TL_Registro_Pago (ID_Factura, Fecha, ID_Tarjeta, ID_Cliente)
+	VALUES (@id_factura, @fecha, (SELECT ID_Tarjeta FROM AEFI.TL_Tarjeta WHERE Numero = @numeroTarjeta), @id_cliente);
 	
 END;
+
 
 GO
 CREATE PROCEDURE AEFI.insertar_nueva_Tarjeta
 	@numero NUMERIC(18,0),
-	@fecha DATETIME
+	@fecha DATETIME,
+	@id_Cliente NUMERIC(18,0)
 	
 AS
 BEGIN	
@@ -522,10 +513,11 @@ IF NOT EXISTS (SELECT * FROM AEFI.TL_Tarjeta t WHERE t.Numero = @numero)
  BEGIN
  
  SET IDENTITY_INSERT AEFI.TL_Tarjeta ON
-	INSERT INTO AEFI.TL_Tarjeta (Numero, Fecha_vto, ID_Tarjeta)
-	VALUES (@numero, @fecha,((SELECT COUNT(*) FROM AEFI.TL_Tarjeta)+1));
+	INSERT INTO AEFI.TL_Tarjeta (Numero, Fecha_vto, ID_Tarjeta, ID_Cliente)
+	VALUES (@numero, @fecha,((SELECT COUNT(*) FROM AEFI.TL_Tarjeta)+1), @id_Cliente);
 	
 SET IDENTITY_INSERT AEFI.TL_Tarjeta OFF
+	
 	
 	END;
 

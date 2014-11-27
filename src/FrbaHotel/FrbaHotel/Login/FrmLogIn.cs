@@ -234,6 +234,13 @@ namespace FrbaHotel.Login
 
         private void cxbRol_SelectedValueChanged(object sender, EventArgs e)
         {
+
+            if (conexion.State == ConnectionState.Closed)
+            {
+
+                conexion.Open();
+            }
+
             String cargarHoteles = "SELECT DISTINCT h.Nombre FROM AEFI.TL_Hotel h, AEFI.TL_Usuario_Por_Hotel uph, AEFI.TL_Usuario u " +
                                     "WHERE h.ID_Hotel = uph.ID_Hotel AND uph.ID_Usuario = u.ID_Usuario "+
                                     "AND u.Username = @Username";
@@ -248,6 +255,8 @@ namespace FrbaHotel.Login
                         while (reader.Read())
                         {
                             hotelCmbBox.Items.Add(reader["Nombre"].ToString());
+                            this.hotelCmbBox.SelectedIndex = 0;
+                            this.hotelCmbBox.Enabled = true;
                         }
                     }
                          else
@@ -257,8 +266,10 @@ namespace FrbaHotel.Login
                         this.Close();
                     }
                     
-            this.hotelCmbBox.SelectedIndex = 0;
-            this.hotelCmbBox.Enabled = true;
+            
+            
+
+            conexion.Close();
         }
 
         }

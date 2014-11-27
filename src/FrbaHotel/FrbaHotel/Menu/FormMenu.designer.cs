@@ -29,155 +29,217 @@
         private void InitializeComponent()
         {
             this.btnListaHoteles = new System.Windows.Forms.Button();
-            this.btnNuevoHotel = new System.Windows.Forms.Button();
-            this.btnNuevaHabitacion = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.gestorDeRolesBtn = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.facturarBtn = new System.Windows.Forms.Button();
-            this.NuevoClienteButton = new System.Windows.Forms.Button();
-            this.GenerarReservaButton = new System.Windows.Forms.Button();
-            this.CancerlarReservaButton = new System.Windows.Forms.Button();
-            this.listadoBtn = new System.Windows.Forms.Button();
+            this.btnGestorHoteles = new System.Windows.Forms.Button();
+            this.btnGestorDeHabitaciones = new System.Windows.Forms.Button();
+            this.btnListadoHabitacion = new System.Windows.Forms.Button();
+            this.btnGestorDeRoles = new System.Windows.Forms.Button();
+            this.btnListadoDeClientes = new System.Windows.Forms.Button();
+            this.btnGestorDeUsuarios = new System.Windows.Forms.Button();
+            this.btnFacturar = new System.Windows.Forms.Button();
+            this.btnGestorDeClientes = new System.Windows.Forms.Button();
+            this.btnGenerarReserva = new System.Windows.Forms.Button();
+            this.btnCancelarReservas = new System.Windows.Forms.Button();
+            this.btnListadoEstadistico = new System.Windows.Forms.Button();
+            this.btnRegistrarEstadia = new System.Windows.Forms.Button();
+            this.btnRegistrarConsumibles = new System.Windows.Forms.Button();
+            this.btnGestorRegimenes = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnListaHoteles
             // 
             this.btnListaHoteles.Location = new System.Drawing.Point(83, 34);
             this.btnListaHoteles.Name = "btnListaHoteles";
-            this.btnListaHoteles.Size = new System.Drawing.Size(109, 23);
+            this.btnListaHoteles.Size = new System.Drawing.Size(179, 23);
             this.btnListaHoteles.TabIndex = 0;
             this.btnListaHoteles.Text = "Listado de Hoteles";
             this.btnListaHoteles.UseVisualStyleBackColor = true;
+            this.btnListaHoteles.Visible = false;
             this.btnListaHoteles.Click += new System.EventHandler(this.btnListaHoteles_Click);
             // 
-            // btnNuevoHotel
+            // btnGestorHoteles
             // 
-            this.btnNuevoHotel.Location = new System.Drawing.Point(83, 63);
-            this.btnNuevoHotel.Name = "btnNuevoHotel";
-            this.btnNuevoHotel.Size = new System.Drawing.Size(109, 23);
-            this.btnNuevoHotel.TabIndex = 1;
-            this.btnNuevoHotel.Text = "Nuevo Hotel";
-            this.btnNuevoHotel.UseVisualStyleBackColor = true;
-            this.btnNuevoHotel.Click += new System.EventHandler(this.btnNuevoHotel_Click);
+            this.btnGestorHoteles.Location = new System.Drawing.Point(83, 63);
+            this.btnGestorHoteles.Name = "btnGestorHoteles";
+            this.btnGestorHoteles.Size = new System.Drawing.Size(179, 23);
+            this.btnGestorHoteles.TabIndex = 1;
+            this.btnGestorHoteles.Text = "Gestor de Hoteles";
+            this.btnGestorHoteles.UseVisualStyleBackColor = true;
+            this.btnGestorHoteles.Visible = false;
+            this.btnGestorHoteles.Click += new System.EventHandler(this.btnGestorHoteles_Click);
             // 
-            // btnNuevaHabitacion
+            // btnGestorDeHabitaciones
             // 
-            this.btnNuevaHabitacion.Location = new System.Drawing.Point(83, 92);
-            this.btnNuevaHabitacion.Name = "btnNuevaHabitacion";
-            this.btnNuevaHabitacion.Size = new System.Drawing.Size(109, 23);
-            this.btnNuevaHabitacion.TabIndex = 2;
-            this.btnNuevaHabitacion.Text = "Nueva Habitacion";
-            this.btnNuevaHabitacion.UseVisualStyleBackColor = true;
-            this.btnNuevaHabitacion.Click += new System.EventHandler(this.btnNuevaHabitacion_Click);
+            this.btnGestorDeHabitaciones.Location = new System.Drawing.Point(83, 92);
+            this.btnGestorDeHabitaciones.Name = "btnGestorDeHabitaciones";
+            this.btnGestorDeHabitaciones.Size = new System.Drawing.Size(179, 23);
+            this.btnGestorDeHabitaciones.TabIndex = 2;
+            this.btnGestorDeHabitaciones.Text = "Gestor de Habitaciones";
+            this.btnGestorDeHabitaciones.UseVisualStyleBackColor = true;
+            this.btnGestorDeHabitaciones.Visible = false;
+            this.btnGestorDeHabitaciones.Click += new System.EventHandler(this.btnGestorDeHabitaciones_Click);
             // 
-            // button1
+            // btnListadoHabitacion
             // 
-            this.button1.Location = new System.Drawing.Point(83, 121);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(109, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Listado Habitacion";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnListadoHabitacion.Location = new System.Drawing.Point(83, 121);
+            this.btnListadoHabitacion.Name = "btnListadoHabitacion";
+            this.btnListadoHabitacion.Size = new System.Drawing.Size(179, 23);
+            this.btnListadoHabitacion.TabIndex = 3;
+            this.btnListadoHabitacion.Text = "Listado Habitacion";
+            this.btnListadoHabitacion.UseVisualStyleBackColor = true;
+            this.btnListadoHabitacion.Visible = false;
+            this.btnListadoHabitacion.Click += new System.EventHandler(this.btnListadoHabitacion_Click);
             // 
-            // gestorDeRolesBtn
+            // btnGestorDeRoles
             // 
-            this.gestorDeRolesBtn.Location = new System.Drawing.Point(83, 150);
-            this.gestorDeRolesBtn.Name = "gestorDeRolesBtn";
-            this.gestorDeRolesBtn.Size = new System.Drawing.Size(109, 27);
-            this.gestorDeRolesBtn.TabIndex = 4;
-            this.gestorDeRolesBtn.Text = "Gestor de Roles";
-            this.gestorDeRolesBtn.UseVisualStyleBackColor = true;
-            this.gestorDeRolesBtn.Click += new System.EventHandler(this.gestorDeRolesBtn_Click);
+            this.btnGestorDeRoles.Location = new System.Drawing.Point(83, 150);
+            this.btnGestorDeRoles.Name = "btnGestorDeRoles";
+            this.btnGestorDeRoles.Size = new System.Drawing.Size(179, 27);
+            this.btnGestorDeRoles.TabIndex = 4;
+            this.btnGestorDeRoles.Text = "Gestor de Roles";
+            this.btnGestorDeRoles.UseVisualStyleBackColor = true;
+            this.btnGestorDeRoles.Visible = false;
+            this.btnGestorDeRoles.Click += new System.EventHandler(this.btnGestorDeRoles_Click);
             // 
-            // button2
+            // btnListadoDeClientes
             // 
-            this.button2.Location = new System.Drawing.Point(83, 183);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(109, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Listado de Clientes";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnListadoDeClientes.Location = new System.Drawing.Point(83, 183);
+            this.btnListadoDeClientes.Name = "btnListadoDeClientes";
+            this.btnListadoDeClientes.Size = new System.Drawing.Size(179, 23);
+            this.btnListadoDeClientes.TabIndex = 5;
+            this.btnListadoDeClientes.Text = "Listado de Clientes";
+            this.btnListadoDeClientes.UseVisualStyleBackColor = true;
+            this.btnListadoDeClientes.Visible = false;
+            this.btnListadoDeClientes.Click += new System.EventHandler(this.btnListadoDeClientes_Click);
             // 
-            // button3
+            // btnGestorDeUsuarios
             // 
-            this.button3.Location = new System.Drawing.Point(83, 213);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(109, 26);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Nuevo Usuario";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnGestorDeUsuarios.Location = new System.Drawing.Point(83, 214);
+            this.btnGestorDeUsuarios.Name = "btnGestorDeUsuarios";
+            this.btnGestorDeUsuarios.Size = new System.Drawing.Size(179, 26);
+            this.btnGestorDeUsuarios.TabIndex = 6;
+            this.btnGestorDeUsuarios.Text = "Gestor de Usuarios";
+            this.btnGestorDeUsuarios.UseVisualStyleBackColor = true;
+            this.btnGestorDeUsuarios.Visible = false;
+            this.btnGestorDeUsuarios.Click += new System.EventHandler(this.btnGestorDeUsuarios_Click);
             // 
-            // facturarBtn
+            // btnFacturar
             // 
-            this.facturarBtn.Location = new System.Drawing.Point(83, 246);
-            this.facturarBtn.Name = "facturarBtn";
-            this.facturarBtn.Size = new System.Drawing.Size(109, 27);
-            this.facturarBtn.TabIndex = 7;
-            this.facturarBtn.Text = "Facturar Estadia";
-            this.facturarBtn.UseVisualStyleBackColor = true;
-            this.facturarBtn.Click += new System.EventHandler(this.facturarBtn_Click);
+            this.btnFacturar.Location = new System.Drawing.Point(83, 246);
+            this.btnFacturar.Name = "btnFacturar";
+            this.btnFacturar.Size = new System.Drawing.Size(179, 27);
+            this.btnFacturar.TabIndex = 7;
+            this.btnFacturar.Text = "Facturar Estadia";
+            this.btnFacturar.UseVisualStyleBackColor = true;
+            this.btnFacturar.Visible = false;
+            this.btnFacturar.Click += new System.EventHandler(this.btnFacturar_Click);
             // 
-            // NuevoClienteButton
+            // btnGestorDeClientes
             // 
-            this.NuevoClienteButton.Location = new System.Drawing.Point(83, 280);
-            this.NuevoClienteButton.Name = "NuevoClienteButton";
-            this.NuevoClienteButton.Size = new System.Drawing.Size(109, 23);
-            this.NuevoClienteButton.TabIndex = 8;
-            this.NuevoClienteButton.Text = "Nuevo Cliente";
-            this.NuevoClienteButton.UseVisualStyleBackColor = true;
-            this.NuevoClienteButton.Click += new System.EventHandler(this.NuevoClienteButton_Click);
+            this.btnGestorDeClientes.Location = new System.Drawing.Point(83, 280);
+            this.btnGestorDeClientes.Name = "btnGestorDeClientes";
+            this.btnGestorDeClientes.Size = new System.Drawing.Size(179, 23);
+            this.btnGestorDeClientes.TabIndex = 8;
+            this.btnGestorDeClientes.Text = "Gestor de Clientes";
+            this.btnGestorDeClientes.UseVisualStyleBackColor = true;
+            this.btnGestorDeClientes.Visible = false;
+            this.btnGestorDeClientes.Click += new System.EventHandler(this.btnGestorDeClientes_Click);
             // 
-            // GenerarReservaButton
+            // btnGenerarReserva
             // 
-            this.GenerarReservaButton.Location = new System.Drawing.Point(83, 310);
-            this.GenerarReservaButton.Name = "GenerarReservaButton";
-            this.GenerarReservaButton.Size = new System.Drawing.Size(109, 23);
-            this.GenerarReservaButton.TabIndex = 9;
-            this.GenerarReservaButton.Text = "Generar Reserva";
-            this.GenerarReservaButton.UseVisualStyleBackColor = true;
-            this.GenerarReservaButton.Click += new System.EventHandler(this.GenerarReservaButton_Click);
+            this.btnGenerarReserva.Location = new System.Drawing.Point(83, 310);
+            this.btnGenerarReserva.Name = "btnGenerarReserva";
+            this.btnGenerarReserva.Size = new System.Drawing.Size(179, 24);
+            this.btnGenerarReserva.TabIndex = 9;
+            this.btnGenerarReserva.Text = "Generar o Modificar Reserva";
+            this.btnGenerarReserva.UseVisualStyleBackColor = true;
+            this.btnGenerarReserva.Visible = false;
+            this.btnGenerarReserva.Click += new System.EventHandler(this.btnGenerarReserva_Click);
             // 
-            // CancerlarReservaButton
+            // btnCancelarReservas
             // 
-            this.CancerlarReservaButton.Location = new System.Drawing.Point(83, 340);
-            this.CancerlarReservaButton.Name = "CancerlarReservaButton";
-            this.CancerlarReservaButton.Size = new System.Drawing.Size(109, 23);
-            this.CancerlarReservaButton.TabIndex = 10;
-            this.CancerlarReservaButton.Text = "Cancelar Reserva";
-            this.CancerlarReservaButton.UseVisualStyleBackColor = true;
-            this.CancerlarReservaButton.Click += new System.EventHandler(this.CancerlarReservaButton_Click);
+            this.btnCancelarReservas.Location = new System.Drawing.Point(83, 340);
+            this.btnCancelarReservas.Name = "btnCancelarReservas";
+            this.btnCancelarReservas.Size = new System.Drawing.Size(179, 23);
+            this.btnCancelarReservas.TabIndex = 10;
+            this.btnCancelarReservas.Text = "Cancelar Reserva";
+            this.btnCancelarReservas.UseVisualStyleBackColor = true;
+            this.btnCancelarReservas.Visible = false;
+            this.btnCancelarReservas.Click += new System.EventHandler(this.btnCancelarReservas_Click);
             // 
-            // listadoBtn
+            // btnListadoEstadistico
             // 
-            this.listadoBtn.Location = new System.Drawing.Point(83, 369);
-            this.listadoBtn.Name = "listadoBtn";
-            this.listadoBtn.Size = new System.Drawing.Size(109, 23);
-            this.listadoBtn.TabIndex = 11;
-            this.listadoBtn.Text = "Listado Estadístico";
-            this.listadoBtn.UseVisualStyleBackColor = true;
-            this.listadoBtn.Click += new System.EventHandler(this.listadoBtn_Click);
+            this.btnListadoEstadistico.Location = new System.Drawing.Point(83, 369);
+            this.btnListadoEstadistico.Name = "btnListadoEstadistico";
+            this.btnListadoEstadistico.Size = new System.Drawing.Size(179, 23);
+            this.btnListadoEstadistico.TabIndex = 11;
+            this.btnListadoEstadistico.Text = "Listado Estadístico";
+            this.btnListadoEstadistico.UseVisualStyleBackColor = true;
+            this.btnListadoEstadistico.Visible = false;
+            this.btnListadoEstadistico.Click += new System.EventHandler(this.btnListadoEstadistico_Click);
+            // 
+            // btnRegistrarEstadia
+            // 
+            this.btnRegistrarEstadia.Location = new System.Drawing.Point(83, 398);
+            this.btnRegistrarEstadia.Name = "btnRegistrarEstadia";
+            this.btnRegistrarEstadia.Size = new System.Drawing.Size(179, 23);
+            this.btnRegistrarEstadia.TabIndex = 12;
+            this.btnRegistrarEstadia.Text = "Registrar Estadía (Check in/out)";
+            this.btnRegistrarEstadia.UseVisualStyleBackColor = true;
+            this.btnRegistrarEstadia.Visible = false;
+            // 
+            // btnRegistrarConsumibles
+            // 
+            this.btnRegistrarConsumibles.Location = new System.Drawing.Point(83, 427);
+            this.btnRegistrarConsumibles.Name = "btnRegistrarConsumibles";
+            this.btnRegistrarConsumibles.Size = new System.Drawing.Size(179, 30);
+            this.btnRegistrarConsumibles.TabIndex = 13;
+            this.btnRegistrarConsumibles.Text = "Registrar Consumibles";
+            this.btnRegistrarConsumibles.UseVisualStyleBackColor = true;
+            this.btnRegistrarConsumibles.Visible = false;
+            this.btnRegistrarConsumibles.Click += new System.EventHandler(this.btnRegistrarConsumibles_Click);
+            // 
+            // btnGestorRegimenes
+            // 
+            this.btnGestorRegimenes.Location = new System.Drawing.Point(83, 463);
+            this.btnGestorRegimenes.Name = "btnGestorRegimenes";
+            this.btnGestorRegimenes.Size = new System.Drawing.Size(179, 30);
+            this.btnGestorRegimenes.TabIndex = 14;
+            this.btnGestorRegimenes.Text = "Gestor de Regimenes";
+            this.btnGestorRegimenes.UseVisualStyleBackColor = true;
+            this.btnGestorRegimenes.Visible = false;
+            this.btnGestorRegimenes.Click += new System.EventHandler(this.btnGestorRegimenes_Click);
+            // 
+            // btnSalir
+            // 
+            this.btnSalir.Location = new System.Drawing.Point(83, 525);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(179, 30);
+            this.btnSalir.TabIndex = 15;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(285, 431);
-            this.Controls.Add(this.listadoBtn);
-            this.Controls.Add(this.CancerlarReservaButton);
-            this.Controls.Add(this.GenerarReservaButton);
-            this.Controls.Add(this.NuevoClienteButton);
-            this.Controls.Add(this.facturarBtn);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.gestorDeRolesBtn);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnNuevaHabitacion);
-            this.Controls.Add(this.btnNuevoHotel);
+            this.ClientSize = new System.Drawing.Size(337, 567);
+            this.Controls.Add(this.btnSalir);
+            this.Controls.Add(this.btnGestorRegimenes);
+            this.Controls.Add(this.btnRegistrarConsumibles);
+            this.Controls.Add(this.btnRegistrarEstadia);
+            this.Controls.Add(this.btnListadoEstadistico);
+            this.Controls.Add(this.btnCancelarReservas);
+            this.Controls.Add(this.btnGenerarReserva);
+            this.Controls.Add(this.btnGestorDeClientes);
+            this.Controls.Add(this.btnFacturar);
+            this.Controls.Add(this.btnGestorDeUsuarios);
+            this.Controls.Add(this.btnListadoDeClientes);
+            this.Controls.Add(this.btnGestorDeRoles);
+            this.Controls.Add(this.btnListadoHabitacion);
+            this.Controls.Add(this.btnGestorDeHabitaciones);
+            this.Controls.Add(this.btnGestorHoteles);
             this.Controls.Add(this.btnListaHoteles);
             this.Name = "FormMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -190,16 +252,20 @@
         #endregion
 
         private System.Windows.Forms.Button btnListaHoteles;
-        private System.Windows.Forms.Button btnNuevoHotel;
-        private System.Windows.Forms.Button btnNuevaHabitacion;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button gestorDeRolesBtn;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button facturarBtn;
-        private System.Windows.Forms.Button NuevoClienteButton;
-        private System.Windows.Forms.Button GenerarReservaButton;
-        private System.Windows.Forms.Button CancerlarReservaButton;
-        private System.Windows.Forms.Button listadoBtn;
+        private System.Windows.Forms.Button btnGestorHoteles;
+        private System.Windows.Forms.Button btnGestorDeHabitaciones;
+        private System.Windows.Forms.Button btnListadoHabitacion;
+        private System.Windows.Forms.Button btnGestorDeRoles;
+        private System.Windows.Forms.Button btnListadoDeClientes;
+        private System.Windows.Forms.Button btnGestorDeUsuarios;
+        private System.Windows.Forms.Button btnFacturar;
+        private System.Windows.Forms.Button btnGestorDeClientes;
+        private System.Windows.Forms.Button btnGenerarReserva;
+        private System.Windows.Forms.Button btnCancelarReservas;
+        private System.Windows.Forms.Button btnListadoEstadistico;
+        private System.Windows.Forms.Button btnRegistrarEstadia;
+        private System.Windows.Forms.Button btnRegistrarConsumibles;
+        private System.Windows.Forms.Button btnGestorRegimenes;
+        private System.Windows.Forms.Button btnSalir;
     }
 }

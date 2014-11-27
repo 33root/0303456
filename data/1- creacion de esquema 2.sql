@@ -208,8 +208,10 @@ CREATE TABLE [AEFI].[TL_Registro_Pago](
 		
 CREATE TABLE [AEFI].[TL_Tarjeta](
 	[ID_Tarjeta] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
-	[Numero] NUMERIC(18,0),
-	[Fecha_Vto] DATETIME
+	[Numero] NUMERIC(18,0) UNIQUE,
+	[Fecha_Vto] DATETIME,
+	[ID_Cliente] NUMERIC(18,0),
+	FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente)
 );
 
 		

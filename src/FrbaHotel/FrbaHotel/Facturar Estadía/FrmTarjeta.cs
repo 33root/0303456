@@ -7,19 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menu;
+using FrbaHotel.Facturar_Estadia;
 using System.Data.SqlClient;
 
 namespace FrbaHotel.Facturar_Estadía
 {
     public partial class FrmTarjeta : Form
     {
-
-
+        int idCliente;
+        FrmFacturar formFacturar;
         SqlConnection conexion = BaseDeDatos.conectar();
 
 
-        public FrmTarjeta()
+        public FrmTarjeta(int cliente, FrmFacturar facturar)
         {
+            idCliente = cliente;
+            formFacturar = facturar;
             InitializeComponent();
         }
 
@@ -47,8 +50,11 @@ namespace FrbaHotel.Facturar_Estadía
 
                     SqlCommand comando = new SqlCommand("AEFI.insertar_nueva_Tarjeta", conexion);
                     comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.Add(new SqlParameter("@numero", Convert.ToInt32(numeroTxtBox.Text)));
+                    int numeroTarjeta = Convert.ToInt32(numeroTxtBox.Text);
+                    formFacturar.setearNumeroTarjeta(numeroTarjeta);
+                    comando.Parameters.Add(new SqlParameter("@numero", numeroTarjeta));
                     comando.Parameters.Add(new SqlParameter("@fecha", vtoCalendar.SelectionStart));
+                    comando.Parameters.Add(new SqlParameter("@id_Cliente", idCliente));
              
                     comando.ExecuteNonQuery();
 
@@ -56,9 +62,9 @@ namespace FrbaHotel.Facturar_Estadía
 
                     MessageBox.Show("La tarjeta ha sido generada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     
-                    this.Close();
 
-      
+                   // this.Close();
+                    this.Hide();
             }
 
            

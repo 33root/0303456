@@ -14,7 +14,7 @@ namespace FrbaHotel.Facturar_Estadia
 {
     public partial class FrmFacturar : Form
     {
-
+       int numeroTarjeta;
         SqlConnection conexion = BaseDeDatos.conectar();
 
         public FrmFacturar()
@@ -84,6 +84,8 @@ namespace FrbaHotel.Facturar_Estadia
                                                  "WHERE ID_Estadia = @id_estadia";
             String asignarFacturaAEstadia = "UPDATE AEFI.TL_Estadia SET ID_Factura = @id_factura WHERE ID_Estadia = @id_estadia";
 
+            String obtenerIdCliente = "SELECT r.ID_Cliente FROM AEFI.TL_Reserva r WHERE r.ID_Reserva = @id_reserva";  
+
             try
             {
                 conexion.Open();
@@ -108,11 +110,21 @@ namespace FrbaHotel.Facturar_Estadia
                         int id_regimen = Convert.ToInt32(reader[0]);
                         reader.Close();
 
+                        //Obtengo id de cliente a quien le voy a cobrar
+                        comando = new SqlCommand(obtenerIdCliente, conexion);
+                        comando.Parameters.Add(new SqlParameter("@id_reserva", id_reserva));
+                        reader = comando.ExecuteReader();
+                        reader.Read();
+                        int idCliente = Convert.ToInt32(reader[0]);
+                        reader.Close();
+
+
                         //Verifico medio de pago seleccionado
                         if (String.Equals(medioDePagoCmbBox.SelectedItem.ToString(), "Tarjeta de Crédito"))
                         {
-                            FrmTarjeta ingreso = new FrmTarjeta();
+                            FrmTarjeta ingreso = new FrmTarjeta(idCliente, this);
                             ingreso.ShowDialog();
+                            
 
 
                         }
@@ -163,16 +175,32 @@ namespace FrbaHotel.Facturar_Estadia
                             comando.Parameters.Add(new SqlParameter("@id_regimen", id_regimen));
                             comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
                             comando.ExecuteNonQuery();
-
-                            //Almaceno el pago dependiendo del tipo .   
-
-
-
-
-
+                                                     
+                            
                          }
-                    
+                        //Almaceno el pago dependiendo del tipo .   
                         
+
+                        if (String.Equals(medioDePagoCmbBox.SelectedItem.ToString(), "Tarjeta de Crédito")){
+
+                            comando = new SqlCommand("AEFI.insertar_Registro_Pago_Con_Tarjeta", conexion);
+                            comando.CommandType = CommandType.StoredProcedure;
+                            comando.Parameters.Add(new SqlParameter("@id_factura", par.Value));
+                            comando.Parameters.Add(new SqlParameter("@fecha", System.DateTime.Today));
+                            comando.Parameters.Add(new SqlParameter("@numeroTarjeta", Convert.ToInt32(this.numeroTarjeta)));
+                            comando.Parameters.Add(new SqlParameter("@id_cliente", idCliente));
+                            comando.ExecuteNonQuery();
+                        
+                        }
+                        else {
+                            comando = new SqlCommand("AEFI.insertar_Registro_Pago_Sin_Tarjeta", conexion);
+                            comando.CommandType = CommandType.StoredProcedure;
+                            comando.Parameters.Add(new SqlParameter("@id_factura", par.Value));
+                            comando.Parameters.Add(new SqlParameter("@fecha", System.DateTime.Today));
+                            comando.Parameters.Add(new SqlParameter("@id_cliente", idCliente));
+                            comando.ExecuteNonQuery();
+                        
+                        }
 
 
                         MessageBox.Show("La factura generada en la Número: " +  par.Value.ToString(), "" , MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -198,6 +226,11 @@ namespace FrbaHotel.Facturar_Estadia
 
 
 
+        }
+
+        public void setearNumeroTarjeta(int numTarjeta) {
+
+            numeroTarjeta = numTarjeta;
         }
     }
 
