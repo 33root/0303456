@@ -45,5 +45,9 @@ INSERT INTO [AEFI].[TL_FormaDePago] (Descripcion)
 VALUES ('Efectivo'), ('Tarjeta de Crédito');
 
 COMMIT
+/* Cargo todos los hoteles a todos los roles del usuario admin*/
+INSERT INTO AEFI.TL_Usuario_Por_Hotel 
+SELECT h.ID_Hotel, 1, r.ID_Rol
+FROM AEFI.TL_Hotel h, AEFI.TL_Rol r
 
 /*FIN DE INSERTS */

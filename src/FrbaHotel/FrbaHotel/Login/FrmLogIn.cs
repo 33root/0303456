@@ -31,10 +31,15 @@ namespace FrbaHotel.Login
         private void entrarBtn_Click(object sender, EventArgs e)
         {
             int rolSeleccionado;
+            int hotelSeleccionado;
             String consulta = "SELECT ID_Rol " +
                                   "FROM AEFI.TL_Rol " +
                                   "WHERE Descripcion = @Descripcion " +
                                   "AND Activo = 1";
+            String consultaHotel = "SELECT ID_Hotel " +
+                                    "FROM AEFI.TL_Hotel h " +
+                                    "WHERE h.Nombre= @Descripcion ";
+
 
             try
             {
@@ -49,6 +54,16 @@ namespace FrbaHotel.Login
 
                 // cargo el rol en la variable global del sistema
                 Program.idRol = rolSeleccionado;
+
+                comando = new SqlCommand(consultaHotel, conexion);
+                comando.Parameters.Add(new SqlParameter("@Descripcion", hotelCmbBox.SelectedItem.ToString()));
+                reader = comando.ExecuteReader();
+                reader.Read();
+                hotelSeleccionado = Convert.ToInt32(reader["ID_Hotel"]);
+                reader.Close();
+
+                //cargo el hotel en la variable global del sistema
+                Program.idHotel = hotelSeleccionado;
 
                 MessageBox.Show("Bienvenido al sistema", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //new de la ventana que se tiene que abrir
@@ -217,8 +232,39 @@ namespace FrbaHotel.Login
         
         }
 
+        private void cxbRol_SelectedValueChanged(object sender, EventArgs e)
+        {
+            String cargarHoteles = "SELECT DISTINCT h.Nombre FROM AEFI.TL_Hotel h, AEFI.TL_Usuario_Por_Hotel uph, AEFI.TL_Usuario u " +
+                                    "WHERE h.ID_Hotel = uph.ID_Hotel AND uph.ID_Usuario = u.ID_Usuario "+
+                                    "AND u.Username = @Username";
+
+            // cargo los hoteles del usuario logeado que puede elegir
+                   SqlCommand comando = new SqlCommand(cargarHoteles, conexion);
+                    comando.Parameters.Add(new SqlParameter("@Username", txbUsuario.Text));
+                    SqlDataReader reader = comando.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            hotelCmbBox.Items.Add(reader["Nombre"].ToString());
+                        }
+                    }
+                         else
+                    {
+                        reader.Close();
+                        MessageBox.Show("No tiene hoteles asignados, contáctese con el administrador", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                    }
+                    
+            this.hotelCmbBox.SelectedIndex = 0;
+            this.hotelCmbBox.Enabled = true;
+        }
+
+        }
+
        
 
 
     }
-}
+

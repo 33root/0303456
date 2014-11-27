@@ -17,6 +17,7 @@ namespace FrbaHotel
         public static int idUsuario = 0;
         public static string usuario = "";
         public static int idRol = 0;
+        public static int idHotel = 0;
         public static string fecha = ConfigurationSettings.AppSettings["fecha"];
         public static string conexion = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
         

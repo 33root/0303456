@@ -38,6 +38,8 @@
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblContraseña = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.hotelCmbBox = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txbUsuario
@@ -73,11 +75,12 @@
             this.cxbRol.Name = "cxbRol";
             this.cxbRol.Size = new System.Drawing.Size(191, 21);
             this.cxbRol.TabIndex = 3;
+            this.cxbRol.SelectedValueChanged += new System.EventHandler(this.cxbRol_SelectedValueChanged);
             // 
             // entrarBtn
             // 
             this.entrarBtn.Enabled = false;
-            this.entrarBtn.Location = new System.Drawing.Point(27, 238);
+            this.entrarBtn.Location = new System.Drawing.Point(16, 283);
             this.entrarBtn.Name = "entrarBtn";
             this.entrarBtn.Size = new System.Drawing.Size(107, 38);
             this.entrarBtn.TabIndex = 4;
@@ -87,7 +90,7 @@
             // 
             // invitadoBtn
             // 
-            this.invitadoBtn.Location = new System.Drawing.Point(193, 237);
+            this.invitadoBtn.Location = new System.Drawing.Point(196, 283);
             this.invitadoBtn.Name = "invitadoBtn";
             this.invitadoBtn.Size = new System.Drawing.Size(99, 41);
             this.invitadoBtn.TabIndex = 5;
@@ -97,7 +100,7 @@
             // 
             // salirBtn
             // 
-            this.salirBtn.Location = new System.Drawing.Point(68, 298);
+            this.salirBtn.Location = new System.Drawing.Point(66, 347);
             this.salirBtn.Name = "salirBtn";
             this.salirBtn.Size = new System.Drawing.Size(166, 23);
             this.salirBtn.TabIndex = 6;
@@ -132,11 +135,31 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Rol";
             // 
+            // hotelCmbBox
+            // 
+            this.hotelCmbBox.Enabled = false;
+            this.hotelCmbBox.FormattingEnabled = true;
+            this.hotelCmbBox.Location = new System.Drawing.Point(81, 233);
+            this.hotelCmbBox.Name = "hotelCmbBox";
+            this.hotelCmbBox.Size = new System.Drawing.Size(191, 21);
+            this.hotelCmbBox.TabIndex = 10;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 241);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Hotel";
+            // 
             // FrmLogIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(315, 333);
+            this.ClientSize = new System.Drawing.Size(323, 402);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.hotelCmbBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblContraseña);
             this.Controls.Add(this.lblUsuario);
@@ -169,5 +192,7 @@
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Label lblContraseña;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox hotelCmbBox;
+        private System.Windows.Forms.Label label2;
     }
 }
