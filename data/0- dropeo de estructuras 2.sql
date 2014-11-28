@@ -5,10 +5,11 @@ DROP PROCEDURE AEFI.top5_diasOcupados;
 DROP PROCEDURE AEFI.top5_diasFueraDeServicio;
 DROP PROCEDURE AEFI.top5_reservasCanceladas;
 DROP PROCEDURE AEFI.top5_consumiblesFacturados;
-DROP PROCEDURE AEFI.insertar_Reserva
+DROP PROCEDURE AEFI.insertar_Reserva;
 DROP PROCEDURE AEFI.insertar_nueva_Tarjeta;
 DROP PROCEDURE AEFI.insertar_Registro_Pago_Sin_Tarjeta;
 DROP PROCEDURE AEFI.insertar_Registro_Pago_Con_Tarjeta;
+DROP PROCEDURE AEFI.insertar_item_precio_diasNoAlojados;
 DROP PROCEDURE AEFI.insertar_item_consumible;
 DROP PROCEDURE AEFI.insertar_item_precio_estadia;
 
@@ -45,7 +46,6 @@ DROP TABLE [AEFI].[TL_Registro_Pago];
 DROP TABLE [AEFI].[TL_Tipo_Documento];
 DROP TABLE [AEFI].[TL_Estadia];
 DROP TABLE [AEFI].[TL_Factura];
-DROP TABLE [AEFI].[TL_FormaDePago];
 DROP TABLE [AEFI].[TL_Consumible];
 DROP TABLE [AEFI].[TL_Cancelacion];
 DROP TABLE [AEFI].[TL_Reserva];

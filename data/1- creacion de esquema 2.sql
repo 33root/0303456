@@ -154,11 +154,6 @@ CREATE TABLE [AEFI].[TL_Consumible](
 		[Precio] NUMERIC(18,2)
 );		
 		
-CREATE TABLE [AEFI].[TL_FormaDePago] (
-	[ID_FormaDePago] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
-	[Descripcion] NVARCHAR(50)
-);
-
 		
 CREATE TABLE [AEFI].[TL_Factura](
 
@@ -166,9 +161,7 @@ CREATE TABLE [AEFI].[TL_Factura](
 		[Numero] NUMERIC(18,0),
 		[Fecha] datetime,
 		[Total] NUMERIC(18,2),
-		[ID_FormaDePago] NUMERIC(18,0),
 		[ID_Cliente] NUMERIC(18,0),
-		FOREIGN KEY (ID_FormaDePago) REFERENCES [AEFI].[TL_FormaDePago] (ID_FormaDePago),
 		FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente)
 		
 );
@@ -200,6 +193,7 @@ CREATE TABLE [AEFI].[TL_Registro_Pago](
 		[ID_Factura] NUMERIC(18,0),
 		[ID_Cliente] NUMERIC(18,0),
 		[Fecha] DATETIME,
+		[FormaDePago] NVARCHAR(55),
 		[ID_Tarjeta] NUMERIC(18,0)
 		PRIMARY KEY (ID_Factura, ID_Cliente),
 		FOREIGN KEY (ID_Factura) REFERENCES [AEFI].[TL_Factura] (ID_Factura),
@@ -242,6 +236,7 @@ CREATE TABLE [AEFI].[TL_Item_Por_Factura](
 	[ID_Factura] NUMERIC(18,0),
 	[ID_Estadia] NUMERIC(18,0),
 	[Monto] NUMERIC(18,2),
+	[Descripcion] NVARCHAR(55),
 	FOREIGN KEY (ID_Factura) REFERENCES [AEFI].[TL_Factura] (ID_Factura),
 	FOREIGN KEY (ID_Consumible) REFERENCES [AEFI].[TL_Consumible] (ID_Consumible),
 	FOREIGN KEY (ID_Estadia) REFERENCES [AEFI].[TL_Estadia](ID_Estadia)

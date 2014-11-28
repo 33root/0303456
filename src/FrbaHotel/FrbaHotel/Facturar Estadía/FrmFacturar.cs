@@ -84,7 +84,8 @@ namespace FrbaHotel.Facturar_Estadia
                                                  "WHERE ID_Estadia = @id_estadia";
             String asignarFacturaAEstadia = "UPDATE AEFI.TL_Estadia SET ID_Factura = @id_factura WHERE ID_Estadia = @id_estadia";
 
-            String obtenerIdCliente = "SELECT r.ID_Cliente FROM AEFI.TL_Reserva r WHERE r.ID_Reserva = @id_reserva";  
+            String obtenerIdCliente = "SELECT r.ID_Cliente FROM AEFI.TL_Reserva r WHERE r.ID_Reserva = @id_reserva";
+            String obtenerFechaFinEstadia = "SELECT DATEADD(DAY, e.cantidad_noches, e.fecha_inicio) FROM AEFI.TL_Estadia e WHERE ID_Estadia = @id_estadia";
 
             try
             {
@@ -118,6 +119,13 @@ namespace FrbaHotel.Facturar_Estadia
                         int idCliente = Convert.ToInt32(reader[0]);
                         reader.Close();
 
+                        //Obtengo fecha de salida
+                        comando = new SqlCommand(obtenerFechaFinEstadia, conexion);
+                        comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
+                        reader = comando.ExecuteReader();
+                        reader.Read();
+                        DateTime fechaSalida = Convert.ToDateTime(reader[0]);
+                        reader.Close();
 
                         //Verifico medio de pago seleccionado
                         if (String.Equals(medioDePagoCmbBox.SelectedItem.ToString(), "Tarjeta de Crédito"))
@@ -132,7 +140,6 @@ namespace FrbaHotel.Facturar_Estadia
                         //Creo la factura
                         comando = new SqlCommand("AEFI.insertar_factura", conexion);
                         comando.CommandType = CommandType.StoredProcedure;
-                        comando.Parameters.Add(new SqlParameter("@forma_pago", medioDePagoCmbBox.SelectedItem.ToString()));
                         comando.Parameters.Add(new SqlParameter("@fecha", Program.fecha));
                         comando.Parameters.Add(new SqlParameter("@id_reserva",id_reserva));
                         SqlParameter par = new SqlParameter("@id_factura", 0);
@@ -152,10 +159,24 @@ namespace FrbaHotel.Facturar_Estadia
                         //cargo el item estadia
                         comando = new SqlCommand("AEFI.insertar_item_precio_estadia", conexion);
                         comando.CommandType = CommandType.StoredProcedure;
-                        comando.Parameters.Add(new SqlParameter("@id_factura", par.Value)); //Item factura;
+                        comando.Parameters.Add(new SqlParameter("@id_factura", par.Value)); 
                         comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
                         comando.Parameters.Add(new SqlParameter("@id_regimen", id_regimen));
+                        comando.Parameters.Add(new SqlParameter("@fechaFacturacion", System.DateTime.Today));
                         comando.ExecuteNonQuery();
+
+
+                        //Verifico si le faltaban dias de estadia. Si le faltan, lo inserto en la factura.
+                        if (fechaSalida < System.DateTime.Today)
+                        {
+                            comando = new SqlCommand("AEFI.insertar_item_precio_diasNoAlojados", conexion);
+                            comando.CommandType = CommandType.StoredProcedure;
+                            comando.Parameters.Add(new SqlParameter("@id_factura", par.Value));
+                            comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
+                            comando.Parameters.Add(new SqlParameter("@id_regimen", id_regimen));
+                            comando.Parameters.Add(new SqlParameter("@fechaFacturacion", System.DateTime.Today));
+                            comando.ExecuteNonQuery();
+                        }
 
                         //cargo los consumibles
                         comando = new SqlCommand(obtenerTodoConsumoDeEstadia, conexion);
