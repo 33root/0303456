@@ -15,7 +15,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     {
 
         SqlConnection conexion = BaseDeDatos.conectar();
-        int cantidadDeEstrellas;
+        string id_habitacion;
 
         public FormGenerarReserva()
         {
@@ -123,7 +123,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Simple")
             {
-                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion"
+                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion "
                                  +"FROM AEFI.TL_Habitacion"
                                  +"WHERE ID_Tipo_Habitacion = 1001";
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
@@ -133,7 +133,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Doble")
             {
-                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion"
+                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion "
                                  + "FROM AEFI.TL_Habitacion"
                                  + "WHERE ID_Tipo_Habitacion = 1002";
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
@@ -143,7 +143,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Triple")
             {
-                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion"
+                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion "
                                  + "FROM AEFI.TL_Habitacion"
                                  + "WHERE ID_Tipo_Habitacion = 1003";
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
@@ -152,7 +152,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Cuadruple")
             {
-                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion"
+                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion "
                                  + "FROM AEFI.TL_Habitacion"
                                  + "WHERE ID_Tipo_Habitacion = 1004";
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
@@ -161,7 +161,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "King")
             {
-                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion"
+                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion "
                                  + "FROM AEFI.TL_Habitacion"
                                  + "WHERE ID_Tipo_Habitacion = 1005";
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
@@ -176,7 +176,33 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             try
             {
-                int costo = Convert.ToInt32(txbCantidadDeHuespedes) * cantidadDeEstrellas;//lo que falta de la cuenta, por el momento no se bien como sacarlo
+                string consulta = "SELECT id_regimen "
+                    +             "FROM AEFI.TL_Regimen "
+                    +             "WHERE Descripcion =" + cbTipoDeRegimen.SelectedItem.ToString();
+
+                SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                SqlDataReader reader = comando2.ExecuteReader();
+
+                string consulta2 = "SELECT h.ID_Tipo_Habitacion, t.Descripcion "
+                                 + "FROM AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion t"
+                                 + "WHERE t.Descripcion =" + cbTipoDeHabitacion.SelectedItem.ToString();
+
+                SqlCommand comando3 = new SqlCommand(consulta2, conexion);
+                SqlDataReader reader2 = comando2.ExecuteReader();
+
+                conexion.Open();
+                SqlCommand comando4 = new SqlCommand("AEFI.calcular_costo_porDia", conexion);
+                comando4.CommandType = CommandType.StoredProcedure;
+                comando4.Parameters.Add(new SqlParameter("@cantidad_huespedes", txbCantidadDeHuespedes));
+                comando4.Parameters.Add(new SqlParameter("@id_habitacion", this.id_habitacion));
+                comando4.Parameters.Add(new SqlParameter("@cantidad_noches", txbCantidadDeNoches));
+                comando4.Parameters.Add(new SqlParameter("@id_regimen", reader[0]));
+                comando4.Parameters.Add(new SqlParameter("@id_tipo_habitacion", reader2[0]));
+
+                //string costoString = (comando4.Parameters("@costo").Value).ToString(); //me dice que no se puede usar Parameters porque el comando4 no es invocable :S
+
+                //MessageBox.Show(costoString);
+
             }
 
             catch { }
