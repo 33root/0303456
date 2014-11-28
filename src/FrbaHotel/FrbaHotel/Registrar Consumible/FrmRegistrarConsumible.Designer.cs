@@ -28,121 +28,156 @@ namespace FrbaHotel.Registrar_Consumible
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbConsumibles = new System.Windows.Forms.ComboBox();
             this.volverBtn = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbHabitacion = new System.Windows.Forms.ComboBox();
-            this.lstConsumibles = new System.Windows.Forms.ListBox();
-            this.AGREGAR = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.lblhabitacion = new System.Windows.Forms.Label();
+            this.habitacionTxtBox = new System.Windows.Forms.TextBox();
+            this.verConsumiblesBtn = new System.Windows.Forms.Button();
+            this.eliminarBtn = new System.Windows.Forms.Button();
+            this.agregarConsBtn = new System.Windows.Forms.Button();
+            this.consumiblesCmbBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cantidadTxtBox = new System.Windows.Forms.TextBox();
+            this.consumiblelbl = new System.Windows.Forms.Label();
+            this.facturarBtn = new System.Windows.Forms.Button();
+            this.consumibleDGV = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.consumibleDGV)).BeginInit();
             this.SuspendLayout();
+            // 
+            // volverBtn
+            // 
+            this.volverBtn.Location = new System.Drawing.Point(362, 303);
+            this.volverBtn.Name = "volverBtn";
+            this.volverBtn.Size = new System.Drawing.Size(100, 23);
+            this.volverBtn.TabIndex = 2;
+            this.volverBtn.Text = "Volver";
+            this.volverBtn.Click += new System.EventHandler(this.volverBtn_Click);
+            // 
+            // lblhabitacion
+            // 
+            this.lblhabitacion.AutoSize = true;
+            this.lblhabitacion.Location = new System.Drawing.Point(31, 20);
+            this.lblhabitacion.Name = "lblhabitacion";
+            this.lblhabitacion.Size = new System.Drawing.Size(61, 13);
+            this.lblhabitacion.TabIndex = 3;
+            this.lblhabitacion.Text = "Habitacion:";
+            // 
+            // habitacionTxtBox
+            // 
+            this.habitacionTxtBox.Location = new System.Drawing.Point(114, 20);
+            this.habitacionTxtBox.Name = "habitacionTxtBox";
+            this.habitacionTxtBox.Size = new System.Drawing.Size(151, 20);
+            this.habitacionTxtBox.TabIndex = 4;
+            this.habitacionTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.habitacionTxtBox_KeyPress);
+            // 
+            // verConsumiblesBtn
+            // 
+            this.verConsumiblesBtn.Location = new System.Drawing.Point(292, 18);
+            this.verConsumiblesBtn.Name = "verConsumiblesBtn";
+            this.verConsumiblesBtn.Size = new System.Drawing.Size(133, 23);
+            this.verConsumiblesBtn.TabIndex = 5;
+            this.verConsumiblesBtn.Text = "Ver Consumibles";
+            this.verConsumiblesBtn.UseVisualStyleBackColor = true;
+            this.verConsumiblesBtn.Click += new System.EventHandler(this.verConsumiblesBtn_Click);
+            // 
+            // eliminarBtn
+            // 
+            this.eliminarBtn.Enabled = false;
+            this.eliminarBtn.Location = new System.Drawing.Point(318, 253);
+            this.eliminarBtn.Name = "eliminarBtn";
+            this.eliminarBtn.Size = new System.Drawing.Size(144, 23);
+            this.eliminarBtn.TabIndex = 8;
+            this.eliminarBtn.Text = "Eliminar";
+            this.eliminarBtn.UseVisualStyleBackColor = true;
+            this.eliminarBtn.Click += new System.EventHandler(this.eliminarBtn_Click);
+            // 
+            // agregarConsBtn
+            // 
+            this.agregarConsBtn.Enabled = false;
+            this.agregarConsBtn.Location = new System.Drawing.Point(114, 83);
+            this.agregarConsBtn.Name = "agregarConsBtn";
+            this.agregarConsBtn.Size = new System.Drawing.Size(139, 27);
+            this.agregarConsBtn.TabIndex = 9;
+            this.agregarConsBtn.Text = "Agregar Consumible";
+            this.agregarConsBtn.UseVisualStyleBackColor = true;
+            this.agregarConsBtn.Click += new System.EventHandler(this.agregarConsBtn_Click);
+            // 
+            // consumiblesCmbBox
+            // 
+            this.consumiblesCmbBox.Enabled = false;
+            this.consumiblesCmbBox.FormattingEnabled = true;
+            this.consumiblesCmbBox.Location = new System.Drawing.Point(114, 47);
+            this.consumiblesCmbBox.Name = "consumiblesCmbBox";
+            this.consumiblesCmbBox.Size = new System.Drawing.Size(151, 21);
+            this.consumiblesCmbBox.TabIndex = 10;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 67);
+            this.label1.Location = new System.Drawing.Point(289, 54);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Consumible";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Cantidad: ";
             // 
-            // cbConsumibles
+            // cantidadTxtBox
             // 
-            this.cbConsumibles.FormattingEnabled = true;
-            this.cbConsumibles.Location = new System.Drawing.Point(155, 59);
-            this.cbConsumibles.Name = "cbConsumibles";
-            this.cbConsumibles.Size = new System.Drawing.Size(121, 21);
-            this.cbConsumibles.TabIndex = 1;
-            this.cbConsumibles.SelectedIndexChanged += new System.EventHandler(this.cbConsumibles_SelectedIndexChanged);
+            this.cantidadTxtBox.Enabled = false;
+            this.cantidadTxtBox.Location = new System.Drawing.Point(362, 48);
+            this.cantidadTxtBox.Name = "cantidadTxtBox";
+            this.cantidadTxtBox.Size = new System.Drawing.Size(100, 20);
+            this.cantidadTxtBox.TabIndex = 12;
+            this.cantidadTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cantidadTxtBox_KeyPress);
             // 
-            // volverBtn
+            // consumiblelbl
             // 
-            this.volverBtn.Location = new System.Drawing.Point(34, 316);
-            this.volverBtn.Name = "volverBtn";
-            this.volverBtn.Size = new System.Drawing.Size(75, 23);
-            this.volverBtn.TabIndex = 2;
-            this.volverBtn.Text = "VOLVER";
-            this.volverBtn.UseVisualStyleBackColor = true;
-            this.volverBtn.Click += new System.EventHandler(this.volverBtn_Click);
+            this.consumiblelbl.AutoSize = true;
+            this.consumiblelbl.Location = new System.Drawing.Point(31, 55);
+            this.consumiblelbl.Name = "consumiblelbl";
+            this.consumiblelbl.Size = new System.Drawing.Size(67, 13);
+            this.consumiblelbl.TabIndex = 13;
+            this.consumiblelbl.Text = "Consumible: ";
             // 
-            // label2
+            // facturarBtn
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 20);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Habitacion";
+            this.facturarBtn.Enabled = false;
+            this.facturarBtn.Location = new System.Drawing.Point(71, 253);
+            this.facturarBtn.Name = "facturarBtn";
+            this.facturarBtn.Size = new System.Drawing.Size(160, 23);
+            this.facturarBtn.TabIndex = 14;
+            this.facturarBtn.Text = "Facturar Consumibles";
+            this.facturarBtn.UseVisualStyleBackColor = true;
+            this.facturarBtn.Click += new System.EventHandler(this.facturarBtn_Click);
             // 
-            // cbHabitacion
+            // consumibleDGV
             // 
-            this.cbHabitacion.FormattingEnabled = true;
-            this.cbHabitacion.Location = new System.Drawing.Point(155, 13);
-            this.cbHabitacion.Name = "cbHabitacion";
-            this.cbHabitacion.Size = new System.Drawing.Size(121, 21);
-            this.cbHabitacion.TabIndex = 4;
-            // 
-            // lstConsumibles
-            // 
-            this.lstConsumibles.DisplayMember = "descripcion";
-            this.lstConsumibles.FormattingEnabled = true;
-            this.lstConsumibles.Location = new System.Drawing.Point(34, 121);
-            this.lstConsumibles.MultiColumn = true;
-            this.lstConsumibles.Name = "lstConsumibles";
-            this.lstConsumibles.Size = new System.Drawing.Size(278, 160);
-            this.lstConsumibles.TabIndex = 11;
-            this.lstConsumibles.ValueMember = "id";
-            this.lstConsumibles.SelectedIndexChanged += new System.EventHandler(this.lstConsumibles_SelectedIndexChanged);
-            // 
-            // AGREGAR
-            // 
-            this.AGREGAR.Location = new System.Drawing.Point(74, 92);
-            this.AGREGAR.Name = "AGREGAR";
-            this.AGREGAR.Size = new System.Drawing.Size(75, 23);
-            this.AGREGAR.TabIndex = 12;
-            this.AGREGAR.Text = "Agregar";
-            this.AGREGAR.UseVisualStyleBackColor = true;
-            this.AGREGAR.Click += new System.EventHandler(this.AGREGAR_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(292, 316);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Registrar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(195, 92);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "Eliminar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.consumibleDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.consumibleDGV.Location = new System.Drawing.Point(71, 116);
+            this.consumibleDGV.Name = "consumibleDGV";
+            this.consumibleDGV.Size = new System.Drawing.Size(391, 113);
+            this.consumibleDGV.TabIndex = 15;
+            this.consumibleDGV.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.consumibleDGV_RowHeaderMouseClick);
             // 
             // FrmRegistrarConsumible
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 338);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.AGREGAR);
-            this.Controls.Add(this.lstConsumibles);
-            this.Controls.Add(this.cbHabitacion);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.volverBtn);
-            this.Controls.Add(this.cbConsumibles);
+            this.ClientSize = new System.Drawing.Size(517, 338);
+            this.Controls.Add(this.consumibleDGV);
+            this.Controls.Add(this.facturarBtn);
+            this.Controls.Add(this.consumiblelbl);
+            this.Controls.Add(this.cantidadTxtBox);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.consumiblesCmbBox);
+            this.Controls.Add(this.agregarConsBtn);
+            this.Controls.Add(this.eliminarBtn);
+            this.Controls.Add(this.verConsumiblesBtn);
+            this.Controls.Add(this.habitacionTxtBox);
+            this.Controls.Add(this.lblhabitacion);
+            this.Controls.Add(this.volverBtn);
             this.Name = "FrmRegistrarConsumible";
-            this.Text = "FrmRegistrarConsumible";
+            this.Text = "Registrar Consumible";
             this.Load += new System.EventHandler(this.FrmRegistrarConsumible_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.consumibleDGV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -150,14 +185,17 @@ namespace FrbaHotel.Registrar_Consumible
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbConsumibles;
         private System.Windows.Forms.Button volverBtn;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbHabitacion;
-        private System.Windows.Forms.ListBox lstConsumibles;
-        private System.Windows.Forms.Button AGREGAR;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label lblhabitacion;
+        private System.Windows.Forms.TextBox habitacionTxtBox;
+        private System.Windows.Forms.Button verConsumiblesBtn;
+        private System.Windows.Forms.Button eliminarBtn;
+        private System.Windows.Forms.Button agregarConsBtn;
+        private System.Windows.Forms.ComboBox consumiblesCmbBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox cantidadTxtBox;
+        private System.Windows.Forms.Label consumiblelbl;
+        private System.Windows.Forms.Button facturarBtn;
+        private System.Windows.Forms.DataGridView consumibleDGV;
     }
 }

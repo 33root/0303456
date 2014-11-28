@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using FrbaHotel.ABM_de_Cliente;
+using FrbaHotel.Menu;
 
 
 namespace FrbaHotel.Registrar_Estadia
@@ -194,6 +195,16 @@ namespace FrbaHotel.Registrar_Estadia
             {
                 e.Handled = true;
             }
+        
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+            FormMenu inicio = new FormMenu();
+            this.Hide();
+            inicio.ShowDialog();
+            this.Close();
         
         }
 

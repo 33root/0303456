@@ -268,6 +268,7 @@ CREATE TABLE [AEFI].[TL_Usuario_Por_Hotel](
 CREATE TABLE [AEFI].[TL_Consumible_Por_Estadia](
 	[ID_Consumible_Por_Estadia] NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,
 	[ID_Consumible] NUMERIC(18,0),
+	[Cantidad] NUMERIC(18,0),
 	[ID_Estadia] NUMERIC(18,0),
 	FOREIGN KEY (ID_Consumible) REFERENCES [AEFI].[TL_Consumible] (ID_Consumible),
 	FOREIGN KEY (ID_Estadia) REFERENCES [AEFI].[TL_Estadia] (ID_Estadia)

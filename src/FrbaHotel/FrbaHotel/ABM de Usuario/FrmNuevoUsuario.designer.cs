@@ -108,6 +108,7 @@
             this.nrodocTxtBox.Name = "nrodocTxtBox";
             this.nrodocTxtBox.Size = new System.Drawing.Size(121, 20);
             this.nrodocTxtBox.TabIndex = 10;
+            this.nrodocTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nrodocTxtBox_KeyPress);
             // 
             // nrodoclbl
             // 
@@ -164,6 +165,7 @@
             this.telefonoTxtBox.Name = "telefonoTxtBox";
             this.telefonoTxtBox.Size = new System.Drawing.Size(121, 20);
             this.telefonoTxtBox.TabIndex = 7;
+            this.telefonoTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.telefonoTxtBox_KeyPress);
             // 
             // label5
             // 
@@ -259,6 +261,7 @@
             this.pisoTxtBox.Name = "pisoTxtBox";
             this.pisoTxtBox.Size = new System.Drawing.Size(100, 20);
             this.pisoTxtBox.TabIndex = 13;
+            this.pisoTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pisoTxtBox_KeyPress);
             // 
             // pisolbl
             // 
@@ -316,6 +319,7 @@
             this.numeroTxtBox.Name = "numeroTxtBox";
             this.numeroTxtBox.Size = new System.Drawing.Size(65, 20);
             this.numeroTxtBox.TabIndex = 12;
+            this.numeroTxtBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeroTxtBox_KeyPress);
             // 
             // checkedListBox
             // 

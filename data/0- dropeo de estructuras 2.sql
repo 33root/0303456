@@ -1,3 +1,6 @@
+
+DROP PROCEDURE AEFI.quitarConsumiblePorEstadia;
+DROP PROCEDURE AEFI.agregarConsumiblePorEstadia;
 DROP PROCEDURE AEFI.generarEgresoEstadia;
 DROP PROCEDURE AEFI.generarIngresoEstadia;
 DROP PROCEDURE AEFI.cancelar_Reserva;

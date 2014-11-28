@@ -280,6 +280,42 @@ namespace FrbaHotel.ABM_de_Usuario
             return textBoxNoVacio;
         }
 
+        private void telefonoTxtBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
+
+        private static void permitirSoloNumeros(KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void nrodocTxtBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
+
+        private void numeroTxtBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
+
+        private void pisoTxtBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
+
 
                 }
 

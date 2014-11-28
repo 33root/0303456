@@ -511,7 +511,7 @@ CREATE PROCEDURE AEFI.insertar_item_consumible
 AS
 BEGIN	
 	INSERT INTO AEFI.TL_Item_Por_Factura (ID_Factura, Monto, Cantidad, ID_Consumible, Descripcion)
-	VALUES (@id_factura, (
+	VALUES (@id_factura,(
 		SELECT Precio
 		FROM AEFI.TL_Consumible
 		WHERE ID_Consumible = @id_consumible), (SELECT COUNT(*) FROM AEFI.TL_Consumible_Por_Estadia cpe
@@ -520,6 +520,19 @@ BEGIN
 	UPDATE AEFI.TL_Factura
 	SET Total = Total + (SELECT Precio_Base FROM AEFI.TL_Regimen WHERE ID_Regimen = @id_regimen)
 	WHERE ID_Factura = @id_factura;
+	
+	IF (@id_regimen = 4) 
+	BEGIN
+	INSERT INTO AEFI.TL_Item_Por_Factura (ID_Factura, Monto, Cantidad, ID_Consumible, Descripcion)
+	VALUES (@id_factura,(
+		SELECT Precio
+		FROM AEFI.TL_Consumible
+		WHERE ID_Consumible = @id_consumible)*(-1), (SELECT COUNT(*) FROM AEFI.TL_Consumible_Por_Estadia cpe
+												WHERE cpe.ID_Estadia = @id_estadia AND cpe.ID_Consumible = @id_consumible
+												group by cpe.ID_Consumible) , @id_consumible, 'Descuento por Regimen All Inclusive');
+	END
+	
+	
 END;
 
 
@@ -837,3 +850,37 @@ BEGIN
 	FROM AEFI.TL_Reserva r
 	WHERE ID_Reserva = @idReserva
 END;
+
+
+GO 
+CREATE PROCEDURE AEFI.agregarConsumiblePorEstadia
+@consumible NVARCHAR(55),
+@idEstadia NUMERIC(18,0),
+@cantidad NUMERIC(18,0)
+
+
+
+AS 
+BEGIN
+	
+	INSERT INTO AEFI.TL_Consumible_Por_Estadia
+	VALUES ((SELECT ID_Consumible FROM AEFI.TL_Consumible WHERE Descripcion = @consumible), @cantidad, @idEstadia)
+	
+	
+	END;
+	
+	GO 
+CREATE PROCEDURE AEFI.quitarConsumiblePorEstadia
+@idConsumiblePorEstadia NUMERIC(18,0)
+
+AS 
+BEGIN
+
+DELETE FROM AEFI.TL_Consumible_Por_Estadia 
+WHERE ID_Consumible_Por_Estadia = @idConsumiblePorEstadia
+	
+	
+	END;
+
+
+

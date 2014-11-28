@@ -98,7 +98,7 @@ AND m.Factura_Total IS NOT NULL;
 
 
 INSERT INTO AEFI.TL_Consumible_Por_Estadia
-SELECT c.ID_Consumible, e.ID_Estadia
+SELECT c.ID_Consumible, m.Item_Factura_Cantidad, e.ID_Estadia
 FROM gd_esquema.Maestra m, AEFI.TL_Consumible c, AEFI.TL_Estadia e
 WHERE m.Consumible_Codigo = c.ID_Consumible AND e.ID_Reserva=m.Reserva_Codigo;
 

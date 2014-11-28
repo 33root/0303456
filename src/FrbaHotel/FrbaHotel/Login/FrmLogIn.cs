@@ -24,7 +24,7 @@ namespace FrbaHotel.Login
 
         private void FrmLogIn_Load(object sender, EventArgs e)
         {
-            SqlConnection conexion = BaseDeDatos.conectar();
+            //SqlConnection conexion = BaseDeDatos.conectar();
 
         }
 
