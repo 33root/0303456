@@ -57,9 +57,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                 if(cbTipoDeRegimen == null){
                     //significa que el usuario no tiene en claro el regimen que desea
-                    string consulta = "SELECT Descripcion, Precio_Base"
-                                     + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p"
-                                     + "WHERE p.ID_Hotel ="+ Program.idHotel +"AND r.ID_Regimen = p.ID_Regimen";
+                    string consulta = "SELECT Descripcion, Precio_Base "
+                                     + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p "
+                                     + "WHERE p.ID_Hotel ="+ Program.idHotel +"AND r.ID_Regimen = p.ID_Regimen ";
                                      
 
                     //cargar la tabla con descripcion y precio base del hotel
@@ -123,9 +123,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Simple")
             {
-                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion "
-                                 +"FROM AEFI.TL_Habitacion"
-                                 +"WHERE ID_Tipo_Habitacion = 1001";
+                string consulta = "SELECT ID_Habitacion "
+                                 +"FROM AEFI.TL_Habitacion "
+                                 +"WHERE ID_Tipo_Habitacion = 1001 ";
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando2.ExecuteReader();
 
@@ -133,9 +133,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Doble")
             {
-                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion "
-                                 + "FROM AEFI.TL_Habitacion"
-                                 + "WHERE ID_Tipo_Habitacion = 1002";
+                string consulta = "SELECT ID_Habitacion "
+                                 + "FROM AEFI.TL_Habitacion "
+                                 + "WHERE ID_Tipo_Habitacion = 1002 ";
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando2.ExecuteReader();
 
@@ -143,27 +143,27 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Triple")
             {
-                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion "
-                                 + "FROM AEFI.TL_Habitacion"
-                                 + "WHERE ID_Tipo_Habitacion = 1003";
+                string consulta = "SELECT ID_Habitacion "
+                                 + "FROM AEFI.TL_Habitacion "
+                                 + "WHERE ID_Tipo_Habitacion = 1003 ";
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando2.ExecuteReader();
                 comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0]));
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Cuadruple")
             {
-                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion "
-                                 + "FROM AEFI.TL_Habitacion"
-                                 + "WHERE ID_Tipo_Habitacion = 1004";
+                string consulta = "SELECT ID_Habitacion "
+                                 + "FROM AEFI.TL_Habitacion "
+                                 + "WHERE ID_Tipo_Habitacion = 1004 ";
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando2.ExecuteReader();
                 comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0]));
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "King")
             {
-                string consulta = "SELECT ID_Habitacion,ID_Tipo_Habitacion "
-                                 + "FROM AEFI.TL_Habitacion"
-                                 + "WHERE ID_Tipo_Habitacion = 1005";
+                string consulta = "SELECT ID_Habitacion "
+                                 + "FROM AEFI.TL_Habitacion "
+                                 + "WHERE ID_Tipo_Habitacion = 1005 ";
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando2.ExecuteReader();
                 comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0]));
@@ -184,7 +184,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 SqlDataReader reader = comando2.ExecuteReader();
 
                 string consulta2 = "SELECT h.ID_Tipo_Habitacion, t.Descripcion "
-                                 + "FROM AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion t"
+                                 + "FROM AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion t "
                                  + "WHERE t.Descripcion =" + cbTipoDeHabitacion.SelectedItem.ToString();
 
                 SqlCommand comando3 = new SqlCommand(consulta2, conexion);
