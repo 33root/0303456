@@ -59,8 +59,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     //significa que el usuario no tiene en claro el regimen que desea
                     string consulta = "SELECT Descripcion, Precio_Base"
                                      + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p"
-                                     + "WHERE p.ID_Hotel = @ID_Hotel AND r.ID_Regimen = p.ID_Regimen";
-                                     //falte ver de donde saco el ID_Hotel
+                                     + "WHERE p.ID_Hotel ="+ Program.idHotel +"AND r.ID_Regimen = p.ID_Regimen";
+                                     
 
                     //cargar la tabla con descripcion y precio base del hotel
                     DataTable tabla = new DataTable();
@@ -227,6 +227,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
         private void txbCantidadDeHuespedes_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbTipoDeHabitacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbTipoDeRegimen_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

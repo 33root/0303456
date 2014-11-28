@@ -48,8 +48,9 @@ namespace FrbaHotel.Cancelar_Reserva
                     SqlCommand comando = new SqlCommand("AEFI.cancelar_Reserva", conexion);
                     comando.CommandType = CommandType.StoredProcedure;
                     comando.Parameters.Add(new SqlParameter("@ID_Reserva", txbNumeroDeReserva));
-                    comando.Parameters.Add(new SqlParameter("@Motivo", txbMotivo));//vamos a tener que agregar un campo en la tabla de reserva para poder guardar el motivo de cancelacion
+                    comando.Parameters.Add(new SqlParameter("@Motivo", txbMotivo));
                     comando.Parameters.Add(new SqlParameter("@FechaDeCancelacion", dtpFechaDeCancelacion));
+                    comando.Parameters.Add(new SqlParameter("@ID_Usuario", Program.idUsuario));
                     //acordarce de cambiar el estado de reserva a "cancelada" en el store procedure
                 }
                 else

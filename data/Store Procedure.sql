@@ -744,4 +744,21 @@ BEGIN
 	ORDER BY PUNTO DESC
 END;
 
+GO
+CREATE PROCEDURE AEFI.cancelar_Reserva
+	@ID_Reserva NUMERIC(18,0),
+	@Motivo varchar(255),
+	@FechaDeCancelacion datetime,
+	@ID_Usuario NUMERIC(18,0)
+
+AS
+BEGIN
+	UPDATE AEFI.TL_Reserva
+	SET Estado = 'Cancelada'
+	WHERE ID_Reserva = @ID_Reserva
+	
+	INSERT INTO AEFI.TL_Cancelacion(Motivo, ID_Reserva, Fecha, ID_Usuario)
+	VALUES (@Motivo,@ID_Reserva,@FechaDeCancelacion,@ID_Usuario);
+		
+END;
 
