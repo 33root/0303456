@@ -457,19 +457,22 @@ CREATE PROCEDURE AEFI.calcular_costo_porDia
 @id_habitacion NUMERIC(18,0),
 @cantidad_noches NUMERIC(18,0),
 @id_regimen NUMERIC(18,0),
-@id_tipo_habitacion NUMERIC(18,0)
+@id_tipo_habitacion NUMERIC(18,0),
+@costo NUMERIC(18,2) OUTPUT
 
 
 
 AS 
 BEGIN
-	SELECT (ho.cantidad_estrellas * ho.recarga_estrellas * reg.Precio_Base * t.Porcentual * @cantidad_noches * @cantidad_huespedes) 
+	set @costo =( SELECT (ho.cantidad_estrellas * ho.recarga_estrellas * reg.Precio_Base * t.Porcentual * @cantidad_noches * @cantidad_huespedes)
 	from AEFI.TL_hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Regimen reg, AEFI.TL_Tipo_Habitacion t
 	WHERE ha.ID_Habitacion = @id_habitacion 
 	AND ha.ID_Hotel = ho.ID_Hotel 
 	AND ho.ID_Hotel = ha.ID_Hotel --recarga estrellas
 	AND reg.ID_Regimen = @id_regimen 
-	AND t.ID_Tipo_Habitacion = @id_tipo_habitacion;
+	AND t.ID_Tipo_Habitacion = @id_tipo_habitacion)
+	
+	return @costo
 	
 END;
 
