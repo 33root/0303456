@@ -10,6 +10,11 @@ SELECT DISTINCT 'Hotel '+ Hotel_Calle, Hotel_Calle, Hotel_Nro_Calle, Hotel_Ciuda
 FROM gd_esquema.Maestra
 
 
+/* Cargo todos los hoteles a todos los roles del usuario admin*/
+INSERT INTO AEFI.TL_Usuario_Por_Hotel 
+SELECT h.ID_Hotel, 1, r.ID_Rol
+FROM AEFI.TL_Hotel h, AEFI.TL_Rol r
+
 SET IDENTITY_INSERT AEFI.TL_Tipo_Habitacion ON
 INSERT INTO AEFI.TL_Tipo_Habitacion(ID_Tipo_Habitacion, Descripcion, Porcentual)
 SELECT DISTINCT m.Habitacion_Tipo_Codigo, m.Habitacion_Tipo_Descripcion, m.Habitacion_Tipo_Porcentual

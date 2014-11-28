@@ -39,10 +39,6 @@ VALUES (2,3),(2,7), (2,8), (2,9), (2,10), (2,11);
 INSERT INTO [AEFI].[TL_Funcionalidad_Rol]
 VALUES (3,1),(3,2),(3,4),(3,5),(3,6),(3,12);
 
-/* Cargo todos los hoteles a todos los roles del usuario admin*/
-INSERT INTO AEFI.TL_Usuario_Por_Hotel 
-SELECT h.ID_Hotel, 1, r.ID_Rol
-FROM AEFI.TL_Hotel h, AEFI.TL_Rol r
 
 /*FIN DE INSERTS */
 COMMIT

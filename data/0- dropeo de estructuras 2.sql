@@ -1,4 +1,5 @@
 
+DROP PROCEDURE AEFI.cancelar_Reserva;
 DROP PROCEDURE AEFI.top5_puntosCliente;
 DROP PROCEDURE AEFI.top5_vecesReservada;
 DROP PROCEDURE AEFI.top5_diasOcupados;
@@ -12,7 +13,6 @@ DROP PROCEDURE AEFI.insertar_Registro_Pago_Con_Tarjeta;
 DROP PROCEDURE AEFI.insertar_item_precio_diasNoAlojados;
 DROP PROCEDURE AEFI.insertar_item_consumible;
 DROP PROCEDURE AEFI.insertar_item_precio_estadia;
-
 
 
 DROP FUNCTION AEFI.calcular_consumibles;
