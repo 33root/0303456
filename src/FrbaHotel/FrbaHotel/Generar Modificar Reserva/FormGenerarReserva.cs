@@ -185,7 +185,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void FormGenerarReserva_Load(object sender, EventArgs e)
         {
             try {
-                string consulta = "SELECT Descripcion"
+                string consulta = "SELECT Descripcion "
                                  +"FROM AEFI.TL_Tipo_Habitacion";
 
                 conexion.Open();
@@ -196,13 +196,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 reader.Close();
                 cbTipoDeHabitacion.SelectedIndex = 0;
 
-                string consulta2 = "SELECT Descripcion"
+                string consulta2 = "SELECT Descripcion "
                                  + "FROM AEFI.TL_Regimen";
 
                 SqlCommand comando2 = new SqlCommand(consulta2, conexion);
                 SqlDataReader reader2 = comando2.ExecuteReader();
                 while (reader2.Read())
-                    cbTipoDeRegimen.Items.Add(reader[0]); //carga los tipos de regimen en el combo box
+                    cbTipoDeRegimen.Items.Add(reader2[0]); //carga los tipos de regimen en el combo box
                 reader.Close();
                 cbTipoDeRegimen.SelectedIndex = 0;
             }
