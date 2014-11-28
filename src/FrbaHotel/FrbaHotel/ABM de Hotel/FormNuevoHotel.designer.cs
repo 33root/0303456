@@ -100,6 +100,7 @@
             this.tbNroCalle.TabIndex = 44;
             this.tbNroCalle.Tag = "";
             this.tbNroCalle.TextChanged += new System.EventHandler(this.tbNroCalle_TextChanged);
+            this.tbNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbNroCalle_KeyPress);
             // 
             // btnCrear
             // 
@@ -153,6 +154,7 @@
             this.tbPais.TabIndex = 37;
             this.tbPais.Tag = "";
             this.tbPais.TextChanged += new System.EventHandler(this.tbPais_TextChanged);
+            this.tbPais.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbPais_KeyPress);
             // 
             // labelCiudad
             // 
@@ -224,6 +226,7 @@
             this.tbCiudad.TabIndex = 30;
             this.tbCiudad.Tag = "";
             this.tbCiudad.TextChanged += new System.EventHandler(this.tbCiudad_TextChanged);
+            this.tbCiudad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbCiudad_KeyPress);
             // 
             // tbCantEstrellas
             // 
@@ -235,6 +238,7 @@
             this.tbCantEstrellas.TabIndex = 29;
             this.tbCantEstrellas.Tag = "";
             this.tbCantEstrellas.TextChanged += new System.EventHandler(this.tbCantEstrellas_TextChanged);
+            this.tbCantEstrellas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbCantEstrellas_KeyPress);
             // 
             // tbCalle
             // 
@@ -257,6 +261,7 @@
             this.tbTelefono.TabIndex = 27;
             this.tbTelefono.Tag = "";
             this.tbTelefono.TextChanged += new System.EventHandler(this.tbTelefono_TextChanged);
+            this.tbTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbTelefono_KeyPress);
             // 
             // tbMail
             // 

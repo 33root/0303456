@@ -141,6 +141,7 @@
             this.tbNumero.Name = "tbNumero";
             this.tbNumero.Size = new System.Drawing.Size(100, 20);
             this.tbNumero.TabIndex = 13;
+            this.tbNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbNumero_KeyPress);
             // 
             // btnDeshabilitar
             // 

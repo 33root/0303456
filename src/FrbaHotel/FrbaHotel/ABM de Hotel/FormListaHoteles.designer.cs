@@ -89,6 +89,7 @@
             this.tbPais.Name = "tbPais";
             this.tbPais.Size = new System.Drawing.Size(100, 20);
             this.tbPais.TabIndex = 5;
+            this.tbPais.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbPais_KeyPress);
             // 
             // tbCiudad
             // 
@@ -96,6 +97,7 @@
             this.tbCiudad.Name = "tbCiudad";
             this.tbCiudad.Size = new System.Drawing.Size(100, 20);
             this.tbCiudad.TabIndex = 6;
+            this.tbCiudad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbCiudad_KeyPress);
             // 
             // tbCantEstrellas
             // 
@@ -103,6 +105,8 @@
             this.tbCantEstrellas.Name = "tbCantEstrellas";
             this.tbCantEstrellas.Size = new System.Drawing.Size(100, 20);
             this.tbCantEstrellas.TabIndex = 7;
+            this.tbCantEstrellas.TextChanged += new System.EventHandler(this.tbCantEstrellas_TextChanged);
+            this.tbCantEstrellas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbCantEstrellas_KeyPress);
             // 
             // label1
             // 

@@ -127,6 +127,7 @@
             this.tbPiso.Size = new System.Drawing.Size(100, 20);
             this.tbPiso.TabIndex = 25;
             this.tbPiso.TextChanged += new System.EventHandler(this.tbPiso_TextChanged);
+            this.tbPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbPiso_KeyPress);
             // 
             // tbNumero
             // 
@@ -135,6 +136,7 @@
             this.tbNumero.Size = new System.Drawing.Size(100, 20);
             this.tbNumero.TabIndex = 24;
             this.tbNumero.TextChanged += new System.EventHandler(this.tbNombre_TextChanged);
+            this.tbNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbNumero_KeyPress);
             // 
             // lbIDHotel
             // 

@@ -75,6 +75,43 @@ namespace FrbaHotel.ABM_de_Habitacion
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
+            
+
+            if (verificarTextBoxNoVacios())
+            {
+                MetodoCrear();
+            }
+            else
+            {
+                MessageBox.Show("Todos los campos deben ser rellenados ", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+
+        private Boolean verificarTextBoxNoVacios()
+        {
+            bool textBoxNoVacio = false;
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    TextBox textBox = c as TextBox;
+                    if (textBox.Text == string.Empty)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        textBoxNoVacio = true;
+                    }
+                }
+
+            }
+            return textBoxNoVacio;
+        }
+
+        private void MetodoCrear()
+        {
             try
             {
                 conexion.Open();
@@ -87,16 +124,16 @@ namespace FrbaHotel.ABM_de_Habitacion
                 else if (x == 1)
                     comando = new SqlCommand("AEFI.actualizar_Habitacion", conexion);
 
-                
+
                 comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIDHotel.Text)); 
+                comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIDHotel.Text));
                 comando.Parameters.Add(new SqlParameter("@ID_Habitacion", lbIDHabitacion.Text));
                 comando.Parameters.Add(new SqlParameter("@Numero", tbNumero.Text));
                 comando.Parameters.Add(new SqlParameter("@Piso", tbPiso.Text));
                 comando.Parameters.Add(new SqlParameter("@Vista", cmbVista.Text));
                 comando.Parameters.Add(new SqlParameter("@Tipo_habitacion", cmbTHabitacion.Text));
-                
-           
+
+
 
 
                 SqlDataReader dr = comando.ExecuteReader();
@@ -119,7 +156,6 @@ namespace FrbaHotel.ABM_de_Habitacion
             {
                 conexion.Close();
             }
-
 
         }
 
@@ -166,6 +202,37 @@ namespace FrbaHotel.ABM_de_Habitacion
 
         }
 
+        private void tbNumero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbPiso_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
     }
 }
 

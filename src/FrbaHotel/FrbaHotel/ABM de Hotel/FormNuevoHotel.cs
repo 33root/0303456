@@ -100,7 +100,44 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-              try
+            
+
+            if (verificarTextBoxNoVacios())
+            {
+                MetodoCrear();
+            }
+            else
+            {
+                MessageBox.Show("Todos los campos deben ser rellenados ", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        
+        }
+
+        private Boolean verificarTextBoxNoVacios()
+        {
+            bool textBoxNoVacio = false;
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    TextBox textBox = c as TextBox;
+                    if (textBox.Text == string.Empty)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        textBoxNoVacio = true;
+                    }
+                }
+
+            }
+            return textBoxNoVacio;
+        }
+
+        private void MetodoCrear()
+        {
+            try
             {
                 conexion.Open();
                 SqlCommand comando = null;
@@ -141,11 +178,10 @@ namespace FrbaHotel.ABM_de_Hotel
                 MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-                        finally
+            finally
             {
                 conexion.Close();
             }
-        
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
@@ -163,6 +199,94 @@ namespace FrbaHotel.ABM_de_Hotel
                 this.Hide();
                 listado.ShowDialog();
                 this.Close();
+            }
+        }
+
+        private void tbTelefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbCantEstrellas_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbNroCalle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbPais_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsSeparator(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbCiudad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsSeparator(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
             }
         }
         }
