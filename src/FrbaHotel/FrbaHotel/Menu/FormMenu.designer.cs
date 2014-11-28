@@ -164,6 +164,7 @@
             this.btnRegistrarEstadia.Text = "Registrar Estadía (Check in/out)";
             this.btnRegistrarEstadia.UseVisualStyleBackColor = true;
             this.btnRegistrarEstadia.Visible = false;
+            this.btnRegistrarEstadia.Click += new System.EventHandler(this.btnRegistrarEstadia_Click);
             // 
             // btnRegistrarConsumibles
             // 

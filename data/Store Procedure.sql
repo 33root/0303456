@@ -800,10 +800,13 @@ CREATE PROCEDURE AEFI.generarIngresoEstadia
 
 AS 
 BEGIN
+IF NOT EXISTS (SELECT ID_Estadia FROM AEFI.TL_Estadia e WHERE e.ID_Reserva = @idReserva)
+BEGIN
 	INSERT INTO AEFI.TL_Estadia
 	SELECT 1, GETDATE(),r.cantidad_noches, @idReserva, @idFactura
 	FROM AEFI.TL_Reserva r
 	WHERE ID_Reserva = @idReserva
+END
 	
 	INSERT INTO AEFI.TL_Registro_Evento
 	SELECT (SELECT MAX(ID_Estadia) FROM AEFI.TL_Estadia), 'Ingreso', @idUsuario, GETDATE()
@@ -827,7 +830,10 @@ BEGIN
 	
 	
 	INSERT INTO AEFI.TL_Registro_Evento
-	SELECT (SELECT ID_Estadia FROM AEFI.TL_Estadia e WHERE e.ID_Reserva = @idReserva), 'Egreso', @idUsuario, GETDATE()
+	SELECT (SELECT ID_Estadia FROM AEFI.TL_Estadia e WHERE e.ID_Reserva = r.ID_Reserva), 'Egreso', @idUsuario, GETDATE()
 	FROM AEFI.TL_Reserva r
 	WHERE ID_Reserva = @idReserva
 END;
+
+
+select * from AEFI.TL_Estadia;

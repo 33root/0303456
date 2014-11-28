@@ -21,7 +21,6 @@ using FrbaHotel.ABM_de_Regimen;
 using FrbaHotel.Registrar_Consumible;
 using FrbaHotel.Login;
 
-
 namespace FrbaHotel.Menu
 {
     public partial class FormMenu : Form
@@ -226,6 +225,15 @@ namespace FrbaHotel.Menu
            this.Hide();
            r.ShowDialog();
            this.Close();
+       }
+
+       private void btnRegistrarEstadia_Click(object sender, EventArgs e)
+       {
+           FormRegistroEstadia r = new FormRegistroEstadia();
+           this.Hide();
+           r.ShowDialog();
+           this.Close();
+
        }
 
 
