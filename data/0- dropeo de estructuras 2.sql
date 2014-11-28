@@ -12,6 +12,7 @@ DROP PROCEDURE AEFI.insertar_Registro_Pago_Sin_Tarjeta;
 DROP PROCEDURE AEFI.insertar_Registro_Pago_Con_Tarjeta;
 DROP PROCEDURE AEFI.insertar_item_precio_diasNoAlojados;
 DROP PROCEDURE AEFI.insertar_item_consumible;
+DROP PROCEDURE AEFI.calcular_costo_porDia;
 DROP PROCEDURE AEFI.insertar_item_precio_estadia;
 
 

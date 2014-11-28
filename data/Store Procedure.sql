@@ -385,7 +385,7 @@ CREATE FUNCTION AEFI.calcular_consumibles
  END;
  
 GO
- CREATE FUNCTION AEFI.calcular_costo_habitacion
+ CREATE FUNCTION AEFI.calcular_costo_habitacion --diario
  (@ID_Estadia NUMERIC(18,0))
  RETURNS NUMERIC(18, 2)
  AS
@@ -436,10 +436,11 @@ CREATE PROCEDURE AEFI.insertar_item_precio_estadia
 AS
 BEGIN	
 	INSERT INTO AEFI.TL_Item_Por_Factura (ID_Factura, Monto, Cantidad, ID_Estadia, Descripcion)
-	VALUES (@id_factura, ((
-		SELECT Precio_Base
-		FROM AEFI.TL_Regimen reg
-		WHERE reg.ID_Regimen = @id_regimen)*(SELECT DATEDIFF(DAY, @fechaFacturacion, e.fecha_inicio) FROM AEFI.TL_Estadia e WHERE e.ID_Estadia = @id_estadia)), 1, @id_estadia, 'Costo Estadía');
+	VALUES (@id_factura, (AEFI.calcular_costo_habitacion(@id_estadia)* --precio base del regimen
+			(SELECT DATEDIFF(DAY, @fechaFacturacion, e.fecha_inicio) FROM AEFI.TL_Estadia e WHERE e.ID_Estadia = @id_estadia)*--dias alojados
+			(SELECT r.Cantidad_Huespedes FROM AEFI.TL_Reserva r, AEFI.TL_Estadia e WHERE r.ID_Reserva = e.ID_Reserva AND e.ID_Estadia = @id_estadia)--huespedes alojados
+			*(SELECT (ho.cantidad_estrellas * ho.recarga_estrellas) from AEFI.TL_hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Reserva re, AEFI.TL_Estadia es  WHERE re.Id_reserva = es.ID_Reserva AND re.ID_Habitacion = ha.ID_Habitacion AND ho.ID_Hotel = ha.ID_Hotel)--recarga estrellas
+			), 1, @id_estadia, 'Costo Estadía');
 	UPDATE AEFI.TL_Factura
 	SET Total = Total + (SELECT Precio_Base FROM AEFI.TL_Regimen WHERE ID_Regimen = @id_regimen)
 	WHERE ID_Factura = @id_factura;
@@ -448,6 +449,31 @@ BEGIN
 	SET Estado = 0
 	WHERE ID_Estadia = @id_estadia
 END;
+
+
+GO 
+CREATE PROCEDURE AEFI.calcular_costo_porDia
+@cantidad_huespedes NUMERIC(18,0),
+@id_habitacion NUMERIC(18,0),
+@cantidad_noches NUMERIC(18,0),
+@id_regimen NUMERIC(18,0),
+@id_tipo_habitacion NUMERIC(18,0)
+
+
+
+AS 
+BEGIN
+	SELECT (ho.cantidad_estrellas * ho.recarga_estrellas * reg.Precio_Base * t.Porcentual * @cantidad_noches * @cantidad_huespedes) 
+	from AEFI.TL_hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Regimen reg, AEFI.TL_Tipo_Habitacion t
+	WHERE ha.ID_Habitacion = @id_habitacion 
+	AND ha.ID_Hotel = ho.ID_Hotel 
+	AND ho.ID_Hotel = ha.ID_Hotel --recarga estrellas
+	AND reg.ID_Regimen = @id_regimen 
+	AND t.ID_Tipo_Habitacion = @id_tipo_habitacion;
+	
+END;
+
+
 
 GO
 CREATE PROCEDURE AEFI.insertar_item_precio_diasNoAlojados
@@ -601,10 +627,10 @@ ELSE
 	Update [AEFI].[TL_Habitacion]
 	Set Disponible = 'Si'
 	
-	/*Hay que ver si cuando se cancela la reserva se elimina el registro de reserva y solo queda el de
-	cancelacion (tendria que haber una fk de reserva a cancelacion? o como esta esta bien?) 
-	- Las reservas no tienen que cambiar la disponibilidad de las habitacions a "NO"??
-	*/
+		/*Hay que ver si cuando se cancela la reserva se elimina el registro de reserva y solo queda el de
+		cancelacion (tendria que haber una fk de reserva a cancelacion? o como esta esta bien?) 
+		- Las reservas no tienen que cambiar la disponibilidad de las habitacions a "NO"??
+		*/
 	
 	
 	
