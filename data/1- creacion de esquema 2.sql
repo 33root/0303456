@@ -284,4 +284,15 @@ CREATE TABLE [AEFI].[TL_Puntos_Por_Factura] (
  
  );
  
+ CREATE TABLE [AEFI].[TL_Registro_Evento](
+ [ID_Registro]  NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+ [ID_Estadia] NUMERIC(18,0),
+ [Descripcion] NVARCHAR(55), 
+ [ID_Usuario] NUMERIC(18,0),
+ [Fecha] DATETIME,
+ FOREIGN KEY (ID_Estadia) REFERENCES [AEFI].[TL_Estadia] (ID_Estadia),
+ FOREIGN KEY (ID_Usuario) REFERENCES [AEFI].[TL_Usuario] (ID_Usuario)
+ 
+ 
+ );
  

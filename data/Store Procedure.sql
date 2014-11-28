@@ -420,9 +420,9 @@ BEGIN
 		SELECT MAX(ID_Factura)
 		FROM AEFI.TL_Factura);
 		
-	UPDATE AEFI.TL_Estadia
-	SET Estado = 0
-	WHERE ID_Reserva = @id_reserva;
+	--UPDATE AEFI.TL_Estadia
+--	SET Estado = 0
+	--WHERE ID_Reserva = @id_reserva;
 		
 END;
 
@@ -789,3 +789,45 @@ BEGIN
 		
 END;
 
+
+GO 
+CREATE PROCEDURE AEFI.generarIngresoEstadia
+@idReserva NUMERIC(18,0),
+@idFactura NUMERIC(18,0),
+@idUsuario NUMERIC(18,0)
+
+
+
+AS 
+BEGIN
+	INSERT INTO AEFI.TL_Estadia
+	SELECT 1, GETDATE(),r.cantidad_noches, @idReserva, @idFactura
+	FROM AEFI.TL_Reserva r
+	WHERE ID_Reserva = @idReserva
+	
+	INSERT INTO AEFI.TL_Registro_Evento
+	SELECT (SELECT MAX(ID_Estadia) FROM AEFI.TL_Estadia), 'Ingreso', @idUsuario, GETDATE()
+	FROM AEFI.TL_Reserva r
+	WHERE ID_Reserva = @idReserva
+	
+END;
+
+GO 
+CREATE PROCEDURE AEFI.generarEgresoEstadia
+@idReserva NUMERIC(18,0),
+@idUsuario NUMERIC(18,0)
+
+
+
+AS 
+BEGIN
+	UPDATE AEFI.TL_Estadia
+	SET Estado =  0
+	WHERE ID_Reserva = @idReserva
+	
+	
+	INSERT INTO AEFI.TL_Registro_Evento
+	SELECT (SELECT ID_Estadia FROM AEFI.TL_Estadia e WHERE e.ID_Reserva = @idReserva), 'Egreso', @idUsuario, GETDATE()
+	FROM AEFI.TL_Reserva r
+	WHERE ID_Reserva = @idReserva
+END;

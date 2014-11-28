@@ -1,4 +1,5 @@
 
+DROP PROCEDURE AEFI.generarIngresoEstadia;
 DROP PROCEDURE AEFI.cancelar_Reserva;
 DROP PROCEDURE AEFI.top5_puntosCliente;
 DROP PROCEDURE AEFI.top5_vecesReservada;
@@ -34,7 +35,7 @@ DROP PROCEDURE AEFI.actualizar_Hotel;
 DROP PROCEDURE AEFI.actualizar_cliente;
 DROP PROCEDURE AEFI.insertar_cliente;
 DROP PROCEDURE AEFI.crear_Hotel;
-
+DROP TABLE [AEFI].[TL_Registro_Evento];
 DROP TABLE [AEFI].[TL_Puntos_Por_Factura];
 DROP TABLE [AEFI].[TL_Consumible_Por_Estadia];
 DROP TABLE [AEFI].[TL_Usuario_Por_Hotel];
