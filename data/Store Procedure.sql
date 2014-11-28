@@ -834,6 +834,3 @@ BEGIN
 	FROM AEFI.TL_Reserva r
 	WHERE ID_Reserva = @idReserva
 END;
-
-
-select * from AEFI.TL_Estadia;

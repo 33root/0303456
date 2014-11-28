@@ -1,4 +1,4 @@
-
+DROP PROCEDURE AEFI.generarEgresoEstadia;
 DROP PROCEDURE AEFI.generarIngresoEstadia;
 DROP PROCEDURE AEFI.cancelar_Reserva;
 DROP PROCEDURE AEFI.top5_puntosCliente;
