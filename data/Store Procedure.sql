@@ -88,6 +88,7 @@ CREATE PROCEDURE AEFI.crear_Habitacion
 
 
 /*por alguna razon si les pongo numeric no puede tranformar nvarchar a numeric, por eso son nvarchar (funciona) */
+		@ID_Hotel nvarchar(10),
 		@ID_Habitacion nvarchar(10),
 		@Numero nvarchar(50),
 		@Piso nvarchar(50),
@@ -100,8 +101,8 @@ BEGIN
 		IF NOT EXISTS (SELECT * FROM AEFI.TL_Habitacion h WHERE Numero = @Numero)	
 	
 	BEGIN
-			INSERT INTO AEFI.TL_Habitacion(Numero, Piso, Vista, Disponible, Estado, ID_Tipo_Habitacion)
-			VALUES (@Numero, @Piso, @Vista, 'Si', 'Habilitado',(SELECT ID_Tipo_Habitacion 
+			INSERT INTO AEFI.TL_Habitacion(ID_Hotel, Numero, Piso, Vista, Disponible, Estado, ID_Tipo_Habitacion)
+			VALUES (@ID_Hotel, @Numero, @Piso, @Vista, 'Si', 'Habilitado',(SELECT ID_Tipo_Habitacion 
 	FROM AEFI.TL_Tipo_Habitacion th
 	WHERE th.Descripcion = @Tipo_Habitacion))
 	END;

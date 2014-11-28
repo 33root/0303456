@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using FrbaHotel.Menu;
 using System.Data.SqlClient;
 
+
 namespace FrbaHotel.ABM_de_Habitacion
 {
     public partial class FormNuevaHabitacion : Form
@@ -22,6 +23,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             InitializeComponent();
             cmbVista.Items.Add("S");
             cmbVista.Items.Add("N");
+            lbIDHotel.Text = Program.idHotel.ToString();
             cmbTHabitacion.Items.Add("");
 
             try
@@ -87,7 +89,7 @@ namespace FrbaHotel.ABM_de_Habitacion
 
                 
                 comando.CommandType = CommandType.StoredProcedure;
-                //comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIDHotel.Text)); /* Esto se habilitaria para el hotel del admin en particular (parte del Login)*/
+                comando.Parameters.Add(new SqlParameter("@ID_Hotel", lbIDHotel.Text)); 
                 comando.Parameters.Add(new SqlParameter("@ID_Habitacion", lbIDHabitacion.Text));
                 comando.Parameters.Add(new SqlParameter("@Numero", tbNumero.Text));
                 comando.Parameters.Add(new SqlParameter("@Piso", tbPiso.Text));
