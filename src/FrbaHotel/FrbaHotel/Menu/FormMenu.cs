@@ -64,7 +64,7 @@ namespace FrbaHotel.Menu
                             break;
                         case 3:
                             btnGestorDeClientes.Visible = true;
-                            btnListadoDeClientes.Visible = true;
+                            //btnListadoDeClientes.Visible = true;
                             break;
                         case 4:
                             btnGestorHoteles.Visible = true;
@@ -197,7 +197,7 @@ namespace FrbaHotel.Menu
 
        private void btnGestorDeClientes_Click(object sender, EventArgs e)
        {
-           FormClienteNuevo c = new FormClienteNuevo();
+           FrmHuesped c = new FrmHuesped();
            this.Hide();
            c.ShowDialog();
            this.Close();

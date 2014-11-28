@@ -33,10 +33,8 @@
             this.btnGestorDeHabitaciones = new System.Windows.Forms.Button();
             this.btnListadoHabitacion = new System.Windows.Forms.Button();
             this.btnGestorDeRoles = new System.Windows.Forms.Button();
-            this.btnListadoDeClientes = new System.Windows.Forms.Button();
             this.btnGestorDeUsuarios = new System.Windows.Forms.Button();
             this.btnFacturar = new System.Windows.Forms.Button();
-            this.btnGestorDeClientes = new System.Windows.Forms.Button();
             this.btnGenerarReserva = new System.Windows.Forms.Button();
             this.btnCancelarReservas = new System.Windows.Forms.Button();
             this.btnListadoEstadistico = new System.Windows.Forms.Button();
@@ -44,6 +42,7 @@
             this.btnRegistrarConsumibles = new System.Windows.Forms.Button();
             this.btnGestorRegimenes = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.btnGestorDeClientes = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnListaHoteles
@@ -101,20 +100,9 @@
             this.btnGestorDeRoles.Visible = false;
             this.btnGestorDeRoles.Click += new System.EventHandler(this.btnGestorDeRoles_Click);
             // 
-            // btnListadoDeClientes
-            // 
-            this.btnListadoDeClientes.Location = new System.Drawing.Point(83, 183);
-            this.btnListadoDeClientes.Name = "btnListadoDeClientes";
-            this.btnListadoDeClientes.Size = new System.Drawing.Size(179, 23);
-            this.btnListadoDeClientes.TabIndex = 5;
-            this.btnListadoDeClientes.Text = "Listado de Clientes";
-            this.btnListadoDeClientes.UseVisualStyleBackColor = true;
-            this.btnListadoDeClientes.Visible = false;
-            this.btnListadoDeClientes.Click += new System.EventHandler(this.btnListadoDeClientes_Click);
-            // 
             // btnGestorDeUsuarios
             // 
-            this.btnGestorDeUsuarios.Location = new System.Drawing.Point(83, 214);
+            this.btnGestorDeUsuarios.Location = new System.Drawing.Point(83, 183);
             this.btnGestorDeUsuarios.Name = "btnGestorDeUsuarios";
             this.btnGestorDeUsuarios.Size = new System.Drawing.Size(179, 26);
             this.btnGestorDeUsuarios.TabIndex = 6;
@@ -125,7 +113,7 @@
             // 
             // btnFacturar
             // 
-            this.btnFacturar.Location = new System.Drawing.Point(83, 246);
+            this.btnFacturar.Location = new System.Drawing.Point(83, 215);
             this.btnFacturar.Name = "btnFacturar";
             this.btnFacturar.Size = new System.Drawing.Size(179, 27);
             this.btnFacturar.TabIndex = 7;
@@ -134,20 +122,9 @@
             this.btnFacturar.Visible = false;
             this.btnFacturar.Click += new System.EventHandler(this.btnFacturar_Click);
             // 
-            // btnGestorDeClientes
-            // 
-            this.btnGestorDeClientes.Location = new System.Drawing.Point(83, 280);
-            this.btnGestorDeClientes.Name = "btnGestorDeClientes";
-            this.btnGestorDeClientes.Size = new System.Drawing.Size(179, 23);
-            this.btnGestorDeClientes.TabIndex = 8;
-            this.btnGestorDeClientes.Text = "Gestor de Clientes";
-            this.btnGestorDeClientes.UseVisualStyleBackColor = true;
-            this.btnGestorDeClientes.Visible = false;
-            this.btnGestorDeClientes.Click += new System.EventHandler(this.btnGestorDeClientes_Click);
-            // 
             // btnGenerarReserva
             // 
-            this.btnGenerarReserva.Location = new System.Drawing.Point(83, 310);
+            this.btnGenerarReserva.Location = new System.Drawing.Point(83, 277);
             this.btnGenerarReserva.Name = "btnGenerarReserva";
             this.btnGenerarReserva.Size = new System.Drawing.Size(179, 24);
             this.btnGenerarReserva.TabIndex = 9;
@@ -158,7 +135,7 @@
             // 
             // btnCancelarReservas
             // 
-            this.btnCancelarReservas.Location = new System.Drawing.Point(83, 340);
+            this.btnCancelarReservas.Location = new System.Drawing.Point(83, 307);
             this.btnCancelarReservas.Name = "btnCancelarReservas";
             this.btnCancelarReservas.Size = new System.Drawing.Size(179, 23);
             this.btnCancelarReservas.TabIndex = 10;
@@ -169,7 +146,7 @@
             // 
             // btnListadoEstadistico
             // 
-            this.btnListadoEstadistico.Location = new System.Drawing.Point(83, 369);
+            this.btnListadoEstadistico.Location = new System.Drawing.Point(83, 336);
             this.btnListadoEstadistico.Name = "btnListadoEstadistico";
             this.btnListadoEstadistico.Size = new System.Drawing.Size(179, 23);
             this.btnListadoEstadistico.TabIndex = 11;
@@ -180,7 +157,7 @@
             // 
             // btnRegistrarEstadia
             // 
-            this.btnRegistrarEstadia.Location = new System.Drawing.Point(83, 398);
+            this.btnRegistrarEstadia.Location = new System.Drawing.Point(83, 365);
             this.btnRegistrarEstadia.Name = "btnRegistrarEstadia";
             this.btnRegistrarEstadia.Size = new System.Drawing.Size(179, 23);
             this.btnRegistrarEstadia.TabIndex = 12;
@@ -190,7 +167,7 @@
             // 
             // btnRegistrarConsumibles
             // 
-            this.btnRegistrarConsumibles.Location = new System.Drawing.Point(83, 427);
+            this.btnRegistrarConsumibles.Location = new System.Drawing.Point(83, 394);
             this.btnRegistrarConsumibles.Name = "btnRegistrarConsumibles";
             this.btnRegistrarConsumibles.Size = new System.Drawing.Size(179, 30);
             this.btnRegistrarConsumibles.TabIndex = 13;
@@ -201,7 +178,7 @@
             // 
             // btnGestorRegimenes
             // 
-            this.btnGestorRegimenes.Location = new System.Drawing.Point(83, 463);
+            this.btnGestorRegimenes.Location = new System.Drawing.Point(83, 430);
             this.btnGestorRegimenes.Name = "btnGestorRegimenes";
             this.btnGestorRegimenes.Size = new System.Drawing.Size(179, 30);
             this.btnGestorRegimenes.TabIndex = 14;
@@ -220,6 +197,17 @@
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
+            // btnGestorDeClientes
+            // 
+            this.btnGestorDeClientes.Location = new System.Drawing.Point(83, 248);
+            this.btnGestorDeClientes.Name = "btnGestorDeClientes";
+            this.btnGestorDeClientes.Size = new System.Drawing.Size(179, 23);
+            this.btnGestorDeClientes.TabIndex = 8;
+            this.btnGestorDeClientes.Text = "Gestor de Clientes";
+            this.btnGestorDeClientes.UseVisualStyleBackColor = true;
+            this.btnGestorDeClientes.Visible = false;
+            this.btnGestorDeClientes.Click += new System.EventHandler(this.btnGestorDeClientes_Click);
+            // 
             // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -235,7 +223,6 @@
             this.Controls.Add(this.btnGestorDeClientes);
             this.Controls.Add(this.btnFacturar);
             this.Controls.Add(this.btnGestorDeUsuarios);
-            this.Controls.Add(this.btnListadoDeClientes);
             this.Controls.Add(this.btnGestorDeRoles);
             this.Controls.Add(this.btnListadoHabitacion);
             this.Controls.Add(this.btnGestorDeHabitaciones);
@@ -256,10 +243,8 @@
         private System.Windows.Forms.Button btnGestorDeHabitaciones;
         private System.Windows.Forms.Button btnListadoHabitacion;
         private System.Windows.Forms.Button btnGestorDeRoles;
-        private System.Windows.Forms.Button btnListadoDeClientes;
         private System.Windows.Forms.Button btnGestorDeUsuarios;
         private System.Windows.Forms.Button btnFacturar;
-        private System.Windows.Forms.Button btnGestorDeClientes;
         private System.Windows.Forms.Button btnGenerarReserva;
         private System.Windows.Forms.Button btnCancelarReservas;
         private System.Windows.Forms.Button btnListadoEstadistico;
@@ -267,5 +252,6 @@
         private System.Windows.Forms.Button btnRegistrarConsumibles;
         private System.Windows.Forms.Button btnGestorRegimenes;
         private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.Button btnGestorDeClientes;
     }
 }
