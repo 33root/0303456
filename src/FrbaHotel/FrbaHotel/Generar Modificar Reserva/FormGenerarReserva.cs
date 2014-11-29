@@ -32,7 +32,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                                                               + "AND Cantidad_Huespedes = @Cantidad_Huespedes "
                                                               + "AND Cantidad_Noches = @Cantidad_Noches "
                                                               + "AND ID_Cliente = @ID_Cliente";
-                                                              //tengo que ver de donde sacar el ID_Habitacion
+                                                              
 
             string consultaCantidadDeHuespedesParaLaHabitacion = "SELECT Cantidad_Huespedes_Total "
                                                                + "FROM AEFI.TL_Tipo_Habitacion "
@@ -42,7 +42,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             {
                 conexion.Open();
                 SqlCommand comando = new SqlCommand(consultaDisponibilidadDeLaReserva, conexion);
-                comando.Parameters.Add(new SqlParameter("@Fecha_Desde", dtpDesde.Value));//esto no me esta dando bien la fecha
+                comando.Parameters.Add(new SqlParameter("@Fecha_Desde", dtpDesde.Value.Date));
                 comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.ToString()));
                 comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.ToString()));
                 comando.Parameters.Add(new SqlParameter("@ID_Cliente", Program.idUsuario));
@@ -57,7 +57,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                 if(cbTipoDeRegimen == null){
                     //significa que el usuario no tiene en claro el regimen que desea
-                    string consulta = "SELECT Descripcion, Precio_Base "
+                    string consulta = "SELECT r.Descripcion, r.Precio_Base "
                                      + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p "
                                      + "WHERE p.ID_Hotel ="+ Program.idHotel +"AND r.ID_Regimen = p.ID_Regimen ";
                                      
@@ -118,7 +118,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         {
                             comando.Parameters.Add(new SqlParameter("@ID_Regimen", 4));
 
-                            if (cbTipoDeRegimen.SelectedItem == null)
+                            if (cbTipoDeRegimen.SelectedItem.ToString() == "")
                             {
                                 //el cliente no tiene en claro el tipo de régimen que desea
                                 comando.Parameters.Add(new SqlParameter("ID_Regimen",null));
@@ -237,6 +237,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 while (reader2.Read())
                     cbTipoDeRegimen.Items.Add(reader2[0]); //carga los tipos de regimen en el combo box
                 reader.Close();
+                cbTipoDeRegimen.Items.Add("");
                 cbTipoDeRegimen.SelectedIndex = 0;
             }
 
