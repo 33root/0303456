@@ -129,7 +129,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando2.ExecuteReader();
 
-                comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0]));
+                comando.Parameters.Add(new SqlParameter("@ID_Habitacion", reader[0].ToString()));//tira error aca, dice que no lee nada y no se porque, en el sql managment la consultas si da respuesta
             }
             if (cbTipoDeHabitacion.SelectedItem.ToString() == "Base Doble")
             {
