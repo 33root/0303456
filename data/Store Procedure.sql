@@ -797,7 +797,7 @@ CREATE PROCEDURE AEFI.cancelar_Reserva
 AS
 BEGIN
 	UPDATE AEFI.TL_Reserva
-	SET Estado = 'Cancelada'
+	SET Estado = 'Cancelada por Usuario'
 	WHERE ID_Reserva = @ID_Reserva
 	
 	INSERT INTO AEFI.TL_Cancelacion(Motivo, ID_Reserva, Fecha, ID_Usuario)
