@@ -53,7 +53,7 @@ FROM  gd_esquema.Maestra
 
 SET IDENTITY_INSERT AEFI.TL_Reserva ON
 INSERT INTO [AEFI].[TL_Reserva] (ID_Reserva, Fecha_Desde, Cantidad_Noches, Cantidad_Huespedes, ID_Cliente, ID_Habitacion, ID_Regimen, Estado)
-SELECT DISTINCT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, x.Cantidad_Huespedes_Total, c.ID_Cliente, h.ID_Habitacion, r.ID_Regimen, 'Efectivizada'
+SELECT DISTINCT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, x.Cantidad_Huespedes_Total, c.ID_Cliente, h.ID_Habitacion, r.ID_Regimen, 'Correcta'
 FROM gd_esquema.Maestra m, AEFI.TL_Tipo_Habitacion x ,AEFI.TL_Cliente c, AEFI.TL_Habitacion  h, AEFI.TL_Regimen r, AEFI.TL_Hotel ho
 WHERE m.Habitacion_Tipo_Codigo= x.ID_Tipo_Habitacion
 AND m.Cliente_Pasaporte_Nro = c.Documento_Nro 
@@ -66,6 +66,7 @@ AND m.Hotel_Nro_Calle = ho.Nro_Calle
 AND h.ID_Hotel = ho.ID_Hotel
 AND m.Regimen_Descripcion = r.Descripcion
 SET IDENTITY_INSERT AEFI.TL_Reserva OFF
+	
 	
 
 --Uso codigos que ya existen
@@ -123,4 +124,15 @@ SElECT ID_Factura, ID_Cliente, Fecha, (SELECT (SUM(ipf.Monto/10) + SUM(ipf1.Mont
 							AND ipf1.ID_Factura = f.ID_Factura)
 FROM AEFI.TL_Factura f;
 
+
+
+UPDATE AEFI.TL_Reserva
+SET ESTADO = 'Efectivizada'
+FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r
+WHERE e.ID_Reserva = r.ID_Reserva	
+ --89603
+
 COMMIT
+
+
+
