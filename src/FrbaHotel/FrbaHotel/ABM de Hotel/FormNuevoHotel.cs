@@ -48,55 +48,7 @@ namespace FrbaHotel.ABM_de_Hotel
         }
 
 
-        private void tbNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbMail_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbTelefono_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void nudRecarga_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbCantEstrellas_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dtpFecha_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbCalle_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbNroCalle_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbCiudad_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbPais_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+      
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
@@ -106,23 +58,23 @@ namespace FrbaHotel.ABM_de_Hotel
             {
                 /*tira error de sintaxis cerca de la "," O.o */
 
-               /* conexion.Open();
-                string consulta = "Select Count(*) From AEFI.TL_Hotel h Where h.Nombre = "+ tbNombre.ToString();
+                conexion.Open();
+                string consulta = "Select Count(*) From AEFI.TL_Hotel h Where h.Nombre = "+ BaseDeDatos.agregarApostrofos(tbNombre.Text.ToString());
 
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando2.ExecuteReader();
 
                 if (reader[0].ToString() == "0")
-                {*/
+                {
 
                     MetodoCrear();
 
-               /* }
+               }
                 else
                 {
                     MessageBox.Show("Ya existe un Hotel con este Nombre ", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 
-                }*/
+                }
             }
             else
             {

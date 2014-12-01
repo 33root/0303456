@@ -59,7 +59,6 @@
             this.nudRecarga.Name = "nudRecarga";
             this.nudRecarga.Size = new System.Drawing.Size(134, 20);
             this.nudRecarga.TabIndex = 48;
-            this.nudRecarga.ValueChanged += new System.EventHandler(this.nudRecarga_ValueChanged);
             // 
             // label4
             // 
@@ -99,7 +98,6 @@
             this.tbNroCalle.Size = new System.Drawing.Size(134, 20);
             this.tbNroCalle.TabIndex = 44;
             this.tbNroCalle.Tag = "";
-            this.tbNroCalle.TextChanged += new System.EventHandler(this.tbNroCalle_TextChanged);
             this.tbNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbNroCalle_KeyPress);
             // 
             // btnCrear
@@ -153,7 +151,6 @@
             this.tbPais.Size = new System.Drawing.Size(134, 20);
             this.tbPais.TabIndex = 37;
             this.tbPais.Tag = "";
-            this.tbPais.TextChanged += new System.EventHandler(this.tbPais_TextChanged);
             this.tbPais.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbPais_KeyPress);
             // 
             // labelCiudad
@@ -225,7 +222,6 @@
             this.tbCiudad.Size = new System.Drawing.Size(134, 20);
             this.tbCiudad.TabIndex = 30;
             this.tbCiudad.Tag = "";
-            this.tbCiudad.TextChanged += new System.EventHandler(this.tbCiudad_TextChanged);
             this.tbCiudad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbCiudad_KeyPress);
             // 
             // tbCantEstrellas
@@ -237,7 +233,6 @@
             this.tbCantEstrellas.Size = new System.Drawing.Size(134, 20);
             this.tbCantEstrellas.TabIndex = 29;
             this.tbCantEstrellas.Tag = "";
-            this.tbCantEstrellas.TextChanged += new System.EventHandler(this.tbCantEstrellas_TextChanged);
             this.tbCantEstrellas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbCantEstrellas_KeyPress);
             // 
             // tbCalle
@@ -249,7 +244,6 @@
             this.tbCalle.Size = new System.Drawing.Size(200, 20);
             this.tbCalle.TabIndex = 28;
             this.tbCalle.Tag = "";
-            this.tbCalle.TextChanged += new System.EventHandler(this.tbCalle_TextChanged);
             // 
             // tbTelefono
             // 
@@ -260,7 +254,6 @@
             this.tbTelefono.Size = new System.Drawing.Size(134, 20);
             this.tbTelefono.TabIndex = 27;
             this.tbTelefono.Tag = "";
-            this.tbTelefono.TextChanged += new System.EventHandler(this.tbTelefono_TextChanged);
             this.tbTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbTelefono_KeyPress);
             // 
             // tbMail
@@ -272,7 +265,6 @@
             this.tbMail.Size = new System.Drawing.Size(134, 20);
             this.tbMail.TabIndex = 26;
             this.tbMail.Tag = "";
-            this.tbMail.TextChanged += new System.EventHandler(this.tbMail_TextChanged);
             // 
             // tbNombre
             // 
@@ -283,7 +275,6 @@
             this.tbNombre.Size = new System.Drawing.Size(134, 20);
             this.tbNombre.TabIndex = 25;
             this.tbNombre.Tag = "";
-            this.tbNombre.TextChanged += new System.EventHandler(this.tbNombre_TextChanged);
             // 
             // FormNuevoHotel
             // 
