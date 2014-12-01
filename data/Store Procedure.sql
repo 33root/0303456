@@ -468,8 +468,7 @@ BEGIN
 	set @costo =( SELECT (ho.cantidad_estrellas * ho.recarga_estrellas * reg.Precio_Base * t.Porcentual * @cantidad_noches * @cantidad_huespedes)
 	from AEFI.TL_hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Regimen reg, AEFI.TL_Tipo_Habitacion t
 	WHERE ha.ID_Habitacion = @id_habitacion 
-	AND ha.ID_Hotel = ho.ID_Hotel 
-	AND ho.ID_Hotel = ha.ID_Hotel --recarga estrellas
+	AND ha.ID_Hotel = ho.ID_Hotel --recarga estrellas
 	AND reg.ID_Regimen = @id_regimen 
 	AND t.ID_Tipo_Habitacion = @id_tipo_habitacion)
 	
@@ -538,9 +537,7 @@ BEGIN
 												group by cpe.ID_Consumible) , @id_consumible, 'Descuento por Regimen All Inclusive');
 	END
 	
-	UPDATE AEFI.TL_Factura
-	SET Total = (SELECT SUM(Monto) FROM AEFI.TL_Item_Por_Factura f WHERE f.ID_Factura = @id_factura) 
-	WHERE ID_Factura = @id_factura;
+	
 	
 	
 END;

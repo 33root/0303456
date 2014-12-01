@@ -87,7 +87,6 @@
             this.txbCantidadDeHuespedes.Name = "txbCantidadDeHuespedes";
             this.txbCantidadDeHuespedes.Size = new System.Drawing.Size(200, 20);
             this.txbCantidadDeHuespedes.TabIndex = 5;
-            this.txbCantidadDeHuespedes.TextChanged += new System.EventHandler(this.txbCantidadDeHuespedes_TextChanged);
             // 
             // label4
             // 
@@ -106,7 +105,6 @@
             this.cbTipoDeHabitacion.Name = "cbTipoDeHabitacion";
             this.cbTipoDeHabitacion.Size = new System.Drawing.Size(200, 21);
             this.cbTipoDeHabitacion.TabIndex = 7;
-            this.cbTipoDeHabitacion.SelectedIndexChanged += new System.EventHandler(this.cbTipoDeHabitacion_SelectedIndexChanged);
             // 
             // checkearDisponibilidadButton
             // 
@@ -135,7 +133,6 @@
             this.cbTipoDeRegimen.Name = "cbTipoDeRegimen";
             this.cbTipoDeRegimen.Size = new System.Drawing.Size(200, 21);
             this.cbTipoDeRegimen.TabIndex = 10;
-            this.cbTipoDeRegimen.SelectedIndexChanged += new System.EventHandler(this.cbTipoDeRegimen_SelectedIndexChanged);
             // 
             // dataGridView1
             // 
