@@ -37,9 +37,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                                                                + "FROM AEFI.TL_Tipo_Habitacion "
                                                                + "WHERE Cantidad_Huespedes_Total >= @Cantidad_Huespedes_Total AND Descripcion = @Descripcion ";
 
+            string consultaDisponibilidadDeLaHabitacion = "SELECT h.ID_Habitacion, h.Disponible, t.Descripcion "
+                                                        + "FROM AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion t "
+                                                        + "WHERE h.ID_Tipo_Habitacion = t.ID_Tipo_Habitacion AND t.ID_Tipo_Habitacion = @ID_Tipo_Habitacion AND h.Disponible = 'Si' ";
+
             try
             {
                 conexion.Open();
+
+                SqlCommand comando5 = new SqlCommand(consultaDisponibilidadDeLaHabitacion, conexion);
+                comando5.Parameters.Add(new SqlParameter("@ID_Tipo_Habitacion", cbTipoDeHabitacion.SelectedItem.ToString()));
+                SqlDataReader reader5 = comando5.ExecuteReader();
 
 
                 SqlCommand comando = new SqlCommand(consultaDisponibilidadDeLaReserva, conexion);
@@ -54,6 +62,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 if (reader.HasRows)
                 {
                     throw new Excepciones("Ya existe una reserva con los mismos datos");
+                }
+
+                if (reader5.HasRows)
+                {
+                    throw new Excepciones("No hay habitaciones disponibles");
                 }
 
                 if(cbTipoDeRegimen == null){
