@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Menu;
 using System.Data.SqlClient;
+using FrbaHotel.ABM_de_Cliente;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
@@ -203,6 +204,29 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
             comando.Parameters.Add(new SqlParameter("@Estado","Correcta"));
             comando.Parameters.Add(new SqlParameter("@ID_Cliente", Program.usuario));
+
+            string consultaSiElUsuarioEsYaCliente = "SELECT ID_Cliente "
+                                                   + "FROM AEFI.TL_Cliente "
+                                                   + "WHERE ID_Cliente = @ID_Cliente ";
+
+            SqlCommand comando2 = new SqlCommand(consultaSiElUsuarioEsYaCliente, conexion);
+            comando2.Parameters.Add("@ID_Cliente",Program.usuario);
+            SqlDataReader reader2 = comando2.ExecuteReader();
+
+            if (reader2.HasRows)
+            {
+                MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else 
+            {
+                MessageBox.Show("Usted no esta registrado como cliente de este hotel, a continuacion ingrese sus datos", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                FormClienteNuevo c = new FormClienteNuevo();
+                this.Hide();
+                c.ShowDialog();
+                this.Close();
+            }
+
         }
 
         private void verCostoButton_Click(object sender, EventArgs e)
