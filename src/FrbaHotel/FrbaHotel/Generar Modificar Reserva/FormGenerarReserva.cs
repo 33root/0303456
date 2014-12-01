@@ -203,6 +203,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                                 + "FROM AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion t "
                                 + "WHERE t.Descripcion =" + BaseDeDatos.agregarApostrofos(cbTipoDeHabitacion.SelectedItem.ToString());
 
+                string consultaIDHabitacion = "SELECT ID_Habitacion "
+                                 + "FROM AEFI.TL_Habitacion "
+                                 + "WHERE ID_Tipo_Habitacion = @idTipoHabitacion";
+
+                
+
                 conexion.Open();
 
                 SqlCommand comando = new SqlCommand(consultaIDRegimen, conexion);
@@ -215,6 +221,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 reader = comando.ExecuteReader();
                 reader.Read();
                 int idTipoHabitacion = Convert.ToInt32(reader[0]);
+                reader.Close();
+
+                comando = new SqlCommand(consultaIDHabitacion, conexion);
+                comando.Parameters.Add(new SqlParameter("@idTipoHabitacion", idTipoHabitacion));
+                reader = comando.ExecuteReader();
+                reader.Read();
+                id_habitacion = Convert.ToInt32(reader[0]);
                 reader.Close();
 
                 comando = new SqlCommand("AEFI.calcular_costo_porDia", conexion);
