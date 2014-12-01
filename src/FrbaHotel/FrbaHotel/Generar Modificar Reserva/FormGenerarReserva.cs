@@ -135,6 +135,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void obtenerIDHabitacion()
         {
+            conexion.Open();
             string consultaIDHabitacion = "SELECT ID_Habitacion "
                                  + "FROM AEFI.TL_Habitacion "
                                  + "WHERE ID_Tipo_Habitacion = @idTipoHabitacion";
@@ -187,7 +188,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void ingresarButton_Click(object sender, EventArgs e)
         {
             //agregar una reserva en la tabla
-            conexion.Open();
+            //conexion.Open(); me dice que ya esta abierta y antes no o.O , capaz se borro sin querer un close en algun lado
             SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
             DateTime fechaAcutal = new DateTime();
             comando.CommandType = CommandType.StoredProcedure;
