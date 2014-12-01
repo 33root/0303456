@@ -71,11 +71,11 @@ namespace FrbaHotel.ABM_de_Hotel
                 Query = Query + " AND h.Pais LIKE " + aux;
             }
 
-
-
-
-            // falta Nombre, Pais...
-
+            if (!String.IsNullOrEmpty(tbNombre.Text))
+            {
+                String aux = BaseDeDatos.agregarApostrofos("%" + tbNombre.Text + "%");
+                Query = Query + " AND h.Nombre LIKE " + aux;
+            }
 
 
 
@@ -124,8 +124,56 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void btnHabilitar_Click(object sender, EventArgs e)
         {
-            /*falta implemetar o no, Se podria implementar un Trigger o algo asi para habilitarlo cuando termine el plazo (hay q ver como lo hacemos )*/
+            
+          try
+            {
+                conexion.Open();
+                foreach (DataGridViewRow row in dgvHoteles.SelectedRows)
+                {
+                    string consulta = "SELECT bh.ID_Hotel FROM AEFI.TL_Baja_Hotel bh " +
+                                      "WHERE DATEDIFF(Day, Fecha_Fin, GETDATE()) = 0 " +
+                                      "AND DATEDIFF(MONTH, Fecha_Fin, GETDATE()) = 0 " +
+                                      "AND DATEDIFF(Year, Fecha_Fin, GETDATE()) = 0 " +
+                                      "AND bh.ID_Hotel = " + BaseDeDatos.agregarApostrofos(row.Cells[0].Value.ToString());
+
+
+
+                    SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                    SqlDataReader reader = comando2.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+
+                        SqlCommand comando = new SqlCommand(consulta, conexion);
+                        SqlDataReader reader2 = comando.ExecuteReader();
+                        reader.Read();
+                        int cod = Convert.ToInt32(reader[0]);
+                        reader.Close();
+                        consulta = "UPDATE AEFI.TL_Hotel SET Estado = 'Habilitado' WHERE ID_Hotel = " + cod;
+                        comando2 = new SqlCommand(consulta, conexion);
+                        comando2.ExecuteNonQuery();
+                        MessageBox.Show("Hotel Habilitada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+
+                        MessageBox.Show("No se Puede Habilitar el Hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                }
+              catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            btnFiltrar_Click(sender, e);
+        
         }
+        
+        
 
         private void tbCantEstrellas_TextChanged(object sender, EventArgs e)
         {
