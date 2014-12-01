@@ -58,7 +58,8 @@ namespace FrbaHotel.ABM_de_Habitacion
                 "th.Descripcion, th.Porcentual, h.Estado, h.Disponible " +
                 "FROM AEFI.TL_Habitacion h " +
                 "JOIN AEFI.TL_Tipo_Habitacion th ON (h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion) " +
-                "WHERE h.Numero IS NOT NULL ";
+                "WHERE h.Numero IS NOT NULL " +
+                "AND h.ID_Hotel = " + BaseDeDatos.agregarApostrofos(Program.idHotel.ToString());
 
             if (!String.IsNullOrEmpty(tbNumero.Text))
             {

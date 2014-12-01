@@ -56,23 +56,24 @@ namespace FrbaHotel.ABM_de_Hotel
 
             if (verificarTextBoxNoVacios())
             {
-                /*tira error de sintaxis cerca de la "," O.o */
-
+               
                 conexion.Open();
-                string consulta = "Select Count(*) From AEFI.TL_Hotel h Where h.Nombre = "+ BaseDeDatos.agregarApostrofos(tbNombre.Text.ToString());
+                string consulta = "Select * From AEFI.TL_Hotel h Where h.Nombre = "+ BaseDeDatos.agregarApostrofos(tbNombre.Text.ToString());
 
                 SqlCommand comando2 = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando2.ExecuteReader();
 
-                if (reader[0].ToString() == "0")
+                if (reader.HasRows)
                 {
 
-                    MetodoCrear();
+                    MessageBox.Show("Ya existe un Hotel con este Nombre ", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    conexion.Close();
 
                }
                 else
                 {
-                    MessageBox.Show("Ya existe un Hotel con este Nombre ", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    MetodoCrear();
                 
                 }
             }
@@ -109,7 +110,7 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             try
             {
-                conexion.Open();
+               
                 SqlCommand comando = null;
 
                 if (x == 0)
