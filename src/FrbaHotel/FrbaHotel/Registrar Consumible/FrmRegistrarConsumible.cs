@@ -35,7 +35,7 @@ namespace FrbaHotel.Registrar_Consumible
         private void verConsumiblesBtn_Click(object sender, EventArgs e)
         {
             String consultarConsumibles = "SELECT * FROM AEFI.TL_Consumible co, AEFI.TL_Consumible_Por_Estadia cpe WHERE cpe.ID_Estadia = @idEstadia AND cpe.ID_Consumible = co.ID_Consumible ";
-            String consultarIdEstadia = "SELECT ID_Estadia FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r, AEFI.TL_Habitacion h WHERE r.ID_Habitacion = h.ID_Habitacion AND e.ID_Reserva = r.ID_Reserva AND h.ID_Habitacion = @idHabitacion ";
+            String consultarIdEstadia = "SELECT ID_Estadia FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r, AEFI.TL_Habitacion h WHERE r.ID_Habitacion = h.ID_Habitacion AND e.ID_Reserva = r.ID_Reserva AND h.numero = @numero AND e.Estado = 1 AND h.ID_Hotel =" + Program.idHotel;
             
             
             consumiblesCmbBox.Enabled = true;
@@ -46,10 +46,23 @@ namespace FrbaHotel.Registrar_Consumible
             {
                 conexion.Open();
                 SqlCommand comando = new SqlCommand(consultarIdEstadia, conexion);
-                comando.Parameters.Add(new SqlParameter("@idHabitacion", habitacionTxtBox.Text));
+                comando.Parameters.Add(new SqlParameter("@numero", habitacionTxtBox.Text));
                 SqlDataReader reader = comando.ExecuteReader();
                 reader.Read();
-                idEstadia = Convert.ToInt32(reader[0]);
+                if (reader.HasRows)
+                {
+                    idEstadia = Convert.ToInt32(reader[0]);
+
+                }
+                else
+                {
+                    MessageBox.Show("La habitación no posee una estadía activa", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    conexion.Close();
+                    this.Hide();
+                    FrmRegistrarConsumible r = new FrmRegistrarConsumible();
+                    r.ShowDialog();
+                    this.Close();
+                }
                 reader.Close();
 
                 comando = new SqlCommand(consultarConsumibles, conexion);

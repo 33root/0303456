@@ -409,9 +409,9 @@ CREATE PROCEDURE AEFI.insertar_factura
 	@id_reserva NUMERIC(18,0)
 AS
 BEGIN	
-	INSERT INTO AEFI.TL_Factura (Numero, Fecha, Total, ID_Cliente)
+	INSERT INTO AEFI.TL_Factura (ID_Factura, Fecha, Total, ID_Cliente)
 	VALUES ((
-		SELECT MAX(Numero) + 1
+		SELECT MAX(ID_Factura) + 1
 		FROM AEFI.TL_Factura), @fecha, 0, 
 			(SELECT ID_Cliente
 			FROM AEFI.TL_Reserva
@@ -420,34 +420,35 @@ BEGIN
 		SELECT MAX(ID_Factura)
 		FROM AEFI.TL_Factura);
 		
-	--UPDATE AEFI.TL_Estadia
---	SET Estado = 0
-	--WHERE ID_Reserva = @id_reserva;
-		
 END;
 
 GO
 CREATE PROCEDURE AEFI.insertar_item_precio_estadia
 	@id_factura NUMERIC(18,0),
 	@id_estadia NUMERIC(18,0),
-	@id_regimen NUMERIC(18,0),
-	@fechaFacturacion DATETIME
+	@id_regimen NUMERIC(18,0)
 	
 AS
 BEGIN	
 	INSERT INTO AEFI.TL_Item_Por_Factura (ID_Factura, Monto, Cantidad, ID_Estadia, Descripcion)
 	VALUES (@id_factura, (AEFI.calcular_costo_habitacion(@id_estadia)* --precio base del regimen
-			(SELECT DATEDIFF(DAY, @fechaFacturacion, e.fecha_inicio) FROM AEFI.TL_Estadia e WHERE e.ID_Estadia = @id_estadia)*--dias alojados
+			(SELECT DATEDIFF(DAY, GETDATE(), e.fecha_inicio) FROM AEFI.TL_Estadia e WHERE e.ID_Estadia = @id_estadia)*--dias alojados
 			(SELECT r.Cantidad_Huespedes FROM AEFI.TL_Reserva r, AEFI.TL_Estadia e WHERE r.ID_Reserva = e.ID_Reserva AND e.ID_Estadia = @id_estadia)--huespedes alojados
-			*(SELECT (ho.cantidad_estrellas * ho.recarga_estrellas) from AEFI.TL_hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Reserva re, AEFI.TL_Estadia es  WHERE re.Id_reserva = es.ID_Reserva AND re.ID_Habitacion = ha.ID_Habitacion AND ho.ID_Hotel = ha.ID_Hotel)--recarga estrellas
-			), 1, @id_estadia, 'Costo Estadía');
+			*(SELECT (ho.cantidad_estrellas * ho.recarga_estrellas) from AEFI.TL_hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Reserva re, AEFI.TL_Estadia es  WHERE re.Id_reserva = es.ID_Reserva AND re.ID_Habitacion = ha.ID_Habitacion AND ho.ID_Hotel = ha.ID_Hotel AND es.ID_Estadia = @id_estadia)--recarga estrellas
+			), 1, @id_estadia, 'Costo Estadía: '++ (SELECT CONVERT(VARCHAR(55), e.fecha_inicio, 104) FROM AEFI.TL_Estadia e WHERE e.ID_Estadia = @id_estadia)++' a '++ CONVERT(VARCHAR(255),GETDATE(), 104) );
 	UPDATE AEFI.TL_Factura
-	SET Total = Total + (SELECT Precio_Base FROM AEFI.TL_Regimen WHERE ID_Regimen = @id_regimen)
+	SET Total = Total + (AEFI.calcular_costo_habitacion(@id_estadia)* --precio base del regimen
+			(SELECT DATEDIFF(DAY, GETDATE(), e.fecha_inicio) FROM AEFI.TL_Estadia e WHERE e.ID_Estadia = @id_estadia)*--dias alojados
+			(SELECT r.Cantidad_Huespedes FROM AEFI.TL_Reserva r, AEFI.TL_Estadia e WHERE r.ID_Reserva = e.ID_Reserva AND e.ID_Estadia = @id_estadia)--huespedes alojados
+			*(SELECT (ho.cantidad_estrellas * ho.recarga_estrellas) from AEFI.TL_hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Reserva re, AEFI.TL_Estadia es  WHERE re.Id_reserva = es.ID_Reserva AND re.ID_Habitacion = ha.ID_Habitacion AND ho.ID_Hotel = ha.ID_Hotel AND es.ID_Estadia = @id_estadia))--recarga estrellas
 	WHERE ID_Factura = @id_factura;
 
 	UPDATE AEFI.TL_Estadia
 	SET Estado = 0
 	WHERE ID_Estadia = @id_estadia
+	
+	
+	
 END;
 
 
@@ -482,8 +483,7 @@ GO
 CREATE PROCEDURE AEFI.insertar_item_precio_diasNoAlojados
 	@id_factura NUMERIC(18,0),
 	@id_estadia NUMERIC(18,0),
-	@id_regimen NUMERIC(18,0),
-	@fechaFacturacion DATETIME
+	@id_regimen NUMERIC(18,0)
 	
 AS
 BEGIN	
@@ -491,9 +491,17 @@ BEGIN
 	VALUES (@id_factura, ((
 		SELECT Precio_Base
 		FROM AEFI.TL_Regimen reg
-		WHERE reg.ID_Regimen = @id_regimen)*(SELECT DATEDIFF(DAY, DATEADD(DAY, e.Cantidad_Noches, e.Fecha_Inicio), @fechaFacturacion) FROM AEFI.TL_Estadia e WHERE e.ID_Estadia = @id_estadia)), 1, @id_estadia, 'Dias no alojados');
+		WHERE reg.ID_Regimen = @id_regimen)*
+		(SELECT DATEDIFF(DAY, DATEADD(DAY, e.Cantidad_Noches, e.Fecha_Inicio), GETDATE()) 
+		FROM AEFI.TL_Estadia e WHERE e.ID_Estadia = @id_estadia))
+		, 1, @id_estadia, 'Dias no alojados: '++ CONVERT(VARCHAR(55), GETDATE(), 104) ++' a '++ (SELECT CONVERT(VARCHAR(55), DATEADD(DAY, e.Cantidad_Noches, e.Fecha_Inicio), 104) FROM AEFI.TL_Estadia e WHERE e.ID_Estadia = @id_estadia));
 	UPDATE AEFI.TL_Factura
-	SET Total = Total + (SELECT Precio_Base FROM AEFI.TL_Regimen WHERE ID_Regimen = @id_regimen)
+	SET Total = Total + ((
+		SELECT Precio_Base
+		FROM AEFI.TL_Regimen reg
+		WHERE reg.ID_Regimen = @id_regimen)*
+		(SELECT DATEDIFF(DAY, DATEADD(DAY, e.Cantidad_Noches, e.Fecha_Inicio), GETDATE()) 
+		FROM AEFI.TL_Estadia e WHERE e.ID_Estadia = @id_estadia))
 	WHERE ID_Factura = @id_factura;
 
 	UPDATE AEFI.TL_Estadia
@@ -517,9 +525,7 @@ BEGIN
 		WHERE ID_Consumible = @id_consumible), (SELECT COUNT(*) FROM AEFI.TL_Consumible_Por_Estadia cpe
 												WHERE cpe.ID_Estadia = @id_estadia AND cpe.ID_Consumible = @id_consumible
 												group by cpe.ID_Consumible) , @id_consumible, (SELECT Descripcion FROM AEFI.TL_Consumible WHERE ID_Consumible = @id_consumible));
-	UPDATE AEFI.TL_Factura
-	SET Total = Total + (SELECT Precio_Base FROM AEFI.TL_Regimen WHERE ID_Regimen = @id_regimen)
-	WHERE ID_Factura = @id_factura;
+	
 	
 	IF (@id_regimen = 4) 
 	BEGIN
@@ -532,6 +538,10 @@ BEGIN
 												group by cpe.ID_Consumible) , @id_consumible, 'Descuento por Regimen All Inclusive');
 	END
 	
+	UPDATE AEFI.TL_Factura
+	SET Total = (SELECT SUM(Monto) FROM AEFI.TL_Item_Por_Factura f WHERE f.ID_Factura = @id_factura) 
+	WHERE ID_Factura = @id_factura;
+	
 	
 END;
 
@@ -539,27 +549,25 @@ END;
 GO
 CREATE PROCEDURE AEFI.insertar_Registro_Pago_Sin_Tarjeta
 	@id_factura NUMERIC(18,0),
-	@fecha DATETIME,
 	@id_cliente NUMERIC(18,0)
 	
 AS
 BEGIN	
 	INSERT INTO AEFI.TL_Registro_Pago (ID_Factura, Fecha, ID_Cliente, FormaDePago)
-	VALUES (@id_factura, @fecha, @id_cliente, 'Efectivo');
+	VALUES (@id_factura, GETDATE(), @id_cliente, 'Efectivo');
 	
 END;
 
 GO
 CREATE PROCEDURE AEFI.insertar_Registro_Pago_Con_Tarjeta
 	@id_factura NUMERIC(18,0),
-	@fecha DATETIME,
 	@numeroTarjeta NUMERIC(18,0),
 	@id_cliente NUMERIC(18,0)
 	
 AS
 BEGIN	
 	INSERT INTO AEFI.TL_Registro_Pago (ID_Factura, Fecha, ID_Tarjeta, ID_Cliente, FormaDePago)
-	VALUES (@id_factura, @fecha, (SELECT ID_Tarjeta FROM AEFI.TL_Tarjeta WHERE Numero = @numeroTarjeta), @id_cliente, 'Tarjeta de Crédito');
+	VALUES (@id_factura, GETDATE(), (SELECT ID_Tarjeta FROM AEFI.TL_Tarjeta WHERE Numero = @numeroTarjeta), @id_cliente, 'Tarjeta de Crédito');
 	
 END;
 

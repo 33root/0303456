@@ -80,20 +80,20 @@ SET IDENTITY_INSERT AEFI.TL_Reserva OFF
 
 
 
-INSERT INTO [AEFI].[TL_Factura](Numero, Fecha, Total, ID_Cliente)
+	SET IDENTITY_INSERT [AEFI].[TL_Factura] ON
+INSERT INTO [AEFI].[TL_Factura](ID_Factura, Fecha, Total, ID_Cliente)
 SELECT DISTINCT m.Factura_Nro, m.Factura_Fecha, m.Factura_Total, x.ID_Cliente
 FROM gd_esquema.Maestra m
-JOIN AEFI.TL_Cliente x ON (x.Documento_Nro = m.Cliente_Pasaporte_Nro)
+JOIN AEFI.TL_Cliente x ON (x.Documento_Nro = m.Cliente_Pasaporte_Nro AND x.Nombre = m.Cliente_Nombre AND x.Apellido = m.Cliente_Apellido)
 WHERE m.Factura_Nro IS NOT NULL;
 
-
-
+	SET IDENTITY_INSERT [AEFI].[TL_Factura] OFF
 
 INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches,Estado, ID_Factura)
 SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, (CASE WHEN (DATEADD(day, m.estadia_cant_noches, m.estadia_fecha_inicio) > GETDATE()) THEN 1 ELSE 0 END) as activa , f.ID_Factura
 FROM gd_esquema.Maestra m, AEFI.TL_Reserva r, AEFI.TL_Factura f
 WHERE r.ID_Reserva = m.Reserva_Codigo
-AND f.Numero = m.Factura_Nro
+AND f.ID_Factura = m.Factura_Nro
 AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL
 AND m.Factura_Total IS NOT NULL;
 
@@ -106,13 +106,13 @@ WHERE m.Consumible_Codigo = c.ID_Consumible AND e.ID_Reserva=m.Reserva_Codigo;
 INSERT INTO AEFI.TL_Item_Por_Factura (ID_Consumible, Cantidad, ID_Factura, Monto)
 SELECT m.Consumible_Codigo, m.Item_Factura_Cantidad, f.ID_Factura, m.Item_Factura_Monto 
 FROM gd_esquema.Maestra m, AEFI.TL_Factura f
-WHERE f.Numero = m.Factura_Nro
+WHERE f.ID_Factura = m.Factura_Nro
 AND m.Consumible_Codigo IS NOT NULL;
 
 INSERT INTO AEFI.TL_Item_Por_Factura (ID_Estadia, Cantidad, ID_Factura, Monto)
 SELECT DISTINCT e.ID_Estadia, m.Item_Factura_Cantidad, f.ID_Factura, m.Item_Factura_Monto 
 FROM gd_esquema.Maestra m, AEFI.TL_Factura f, AEFI.TL_Estadia e
-WHERE f.Numero = m.Factura_Nro
+WHERE f.ID_Factura = m.Factura_Nro
 AND e.ID_Reserva = m.Reserva_Codigo;
 	
 INSERT INTO AEFI.TL_Puntos_Por_Factura
@@ -130,9 +130,10 @@ UPDATE AEFI.TL_Reserva
 SET ESTADO = 'Efectivizada'
 FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r
 WHERE e.ID_Reserva = r.ID_Reserva	
- --89603
+
 
 COMMIT
+
 
 
 

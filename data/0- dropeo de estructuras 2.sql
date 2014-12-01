@@ -18,8 +18,6 @@ DROP PROCEDURE AEFI.insertar_item_precio_diasNoAlojados;
 DROP PROCEDURE AEFI.insertar_item_consumible;
 DROP PROCEDURE AEFI.calcular_costo_porDia;
 DROP PROCEDURE AEFI.insertar_item_precio_estadia;
-
-
 DROP FUNCTION AEFI.calcular_consumibles;
 DROP FUNCTION AEFI.calcular_costo_habitacion;
 DROP PROCEDURE AEFI.insertar_factura;
@@ -38,6 +36,8 @@ DROP PROCEDURE AEFI.actualizar_Hotel;
 DROP PROCEDURE AEFI.actualizar_cliente;
 DROP PROCEDURE AEFI.insertar_cliente;
 DROP PROCEDURE AEFI.crear_Hotel;
+
+
 DROP TABLE [AEFI].[TL_Registro_Evento];
 DROP TABLE [AEFI].[TL_Puntos_Por_Factura];
 DROP TABLE [AEFI].[TL_Consumible_Por_Estadia];

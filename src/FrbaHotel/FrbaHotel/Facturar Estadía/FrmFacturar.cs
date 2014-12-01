@@ -26,7 +26,7 @@ namespace FrbaHotel.Facturar_Estadia
         private void FrmFacturar_Load(object sender, EventArgs e)
         {
 
-            String cargarEstadias = "SELECT ID_Estadia, ID_Reserva, Fecha_Inicio, Cantidad_Noches, ID_Factura FROM AEFI.TL_Estadia WHERE Estado = 1";
+            String cargarEstadias = "SELECT e.ID_Estadia, e.ID_Reserva, e.Fecha_Inicio, e.Cantidad_Noches, e.ID_Factura FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r, AEFI.TL_Habitacion h WHERE e.ID_Reserva = r.ID_Reserva AND h.ID_Habitacion = r.ID_Habitacion AND e.Estado = 1 AND h.ID_Hotel = " + Program.idHotel;
             
             
             try
@@ -151,7 +151,6 @@ namespace FrbaHotel.Facturar_Estadia
                         comando.Parameters.Add(new SqlParameter("@id_factura", idFactura)); 
                         comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
                         comando.Parameters.Add(new SqlParameter("@id_regimen", id_regimen));
-                        comando.Parameters.Add(new SqlParameter("@fechaFacturacion", System.DateTime.Today));
                         comando.ExecuteNonQuery();
 
 
@@ -163,7 +162,6 @@ namespace FrbaHotel.Facturar_Estadia
                             comando.Parameters.Add(new SqlParameter("@id_factura", idFactura));
                             comando.Parameters.Add(new SqlParameter("@id_estadia", row.Cells["id_estadia"].Value));
                             comando.Parameters.Add(new SqlParameter("@id_regimen", id_regimen));
-                            comando.Parameters.Add(new SqlParameter("@fechaFacturacion", System.DateTime.Today));
                             comando.ExecuteNonQuery();
                         }
 
@@ -176,7 +174,6 @@ namespace FrbaHotel.Facturar_Estadia
                             comando = new SqlCommand("AEFI.insertar_Registro_Pago_Con_Tarjeta", conexion);
                             comando.CommandType = CommandType.StoredProcedure;
                             comando.Parameters.Add(new SqlParameter("@id_factura", idFactura));
-                            comando.Parameters.Add(new SqlParameter("@fecha", System.DateTime.Today));
                             comando.Parameters.Add(new SqlParameter("@numeroTarjeta", Convert.ToInt32(this.numeroTarjeta)));
                             comando.Parameters.Add(new SqlParameter("@id_cliente", idCliente));
                             comando.ExecuteNonQuery();
@@ -187,7 +184,6 @@ namespace FrbaHotel.Facturar_Estadia
                             comando = new SqlCommand("AEFI.insertar_Registro_Pago_Sin_Tarjeta", conexion);
                             comando.CommandType = CommandType.StoredProcedure;
                             comando.Parameters.Add(new SqlParameter("@id_factura", idFactura));
-                            comando.Parameters.Add(new SqlParameter("@fecha", System.DateTime.Today));
                             comando.Parameters.Add(new SqlParameter("@id_cliente", idCliente));
                             comando.ExecuteNonQuery();
 

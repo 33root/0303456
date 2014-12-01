@@ -24,8 +24,7 @@ namespace FrbaHotel.Login
 
         private void FrmLogIn_Load(object sender, EventArgs e)
         {
-            //SqlConnection conexion = BaseDeDatos.conectar();
-
+          
         }
 
         private void entrarBtn_Click(object sender, EventArgs e)
@@ -117,7 +116,7 @@ namespace FrbaHotel.Login
                     string usuario = reader["Username"].ToString();
                     string contrasena = reader["Password"].ToString();
                     reader.Close();
-                    cxbRol.Enabled = true;
+                   
 
                     if (!contrasena.Equals(BaseDeDatos.cifrar256(txbContrasena.Text)))
                     {
@@ -164,6 +163,7 @@ namespace FrbaHotel.Login
                         while (reader.Read())
                         {
                             cxbRol.Items.Add(reader["Descripcion"].ToString());
+                            cxbRol.Enabled = true;
                         }
                         reader.Close();
                         cxbRol.SelectedIndex = 0;

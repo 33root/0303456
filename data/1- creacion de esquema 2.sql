@@ -158,7 +158,6 @@ CREATE TABLE [AEFI].[TL_Consumible](
 CREATE TABLE [AEFI].[TL_Factura](
 
 		[ID_Factura] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
-		[Numero] NUMERIC(18,0),
 		[Fecha] datetime,
 		[Total] NUMERIC(18,2),
 		[ID_Cliente] NUMERIC(18,0),
