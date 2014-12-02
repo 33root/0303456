@@ -22,11 +22,13 @@ namespace FrbaHotel.ABM_de_Cliente
         int x = 0; //0 cuando entran directamente al form, 1 cuando entran desde el listado con un seleccionado
         string usu = "";
         string con = "";
+        
 
         public FormClienteNuevo(int cod, DataGridViewCellCollection cells)
         {
             this.x = cod;
             InitializeComponent();
+            
             txbNombre.Text = cells[1].Value.ToString();
             txbApellido.Text = cells[2].Value.ToString();
             cbTipoDeDocumento.Text = cells[3].Value.ToString();
@@ -130,14 +132,21 @@ namespace FrbaHotel.ABM_de_Cliente
     
                 comando.CommandType = CommandType.StoredProcedure;
                 comando.Parameters.Add(new SqlParameter("@ID_Cliente",this.x));//le paso el ID_Cliente que se asigna en la clase
+                /*el ID_Cliente no esta en el Procedure, por esto tira error de demaciados argumentos, ademas se le pasa "this.x" que es un int
+                 * por eso creo que es el problema de convertir nvarchar(que envian los Text) a numeric. Por otro lado si cambias los tipos numeric
+                 * del procedure a nvarchar (no se si es necesario todos) deberia arreglarce, pero no me funciono, sigue el mismo error de conversion de tipos :(
+                 */
                 comando.Parameters.Add(new SqlParameter("@Nombre", txbNombre.Text));
                 comando.Parameters.Add(new SqlParameter("@Apellido", txbApellido.Text));
                 comando.Parameters.Add(new SqlParameter("@ID_Tipo_Documento", cbTipoDeDocumento.Text));
-                comando.Parameters.Add(new SqlParameter("@Documento_Nro", txbDocumentoNumero.Text));
+                comando.Parameters.Add(new SqlParameter("@Documento_Numero", txbDocumentoNumero.Text));
                 comando.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
                 comando.Parameters.Add(new SqlParameter("@Fecha_Nacimiento", dtpFecha.Text));
                 comando.Parameters.Add(new SqlParameter("@Calle", txbDireccion.Text));
                 comando.Parameters.Add(new SqlParameter("@Calle_Nro", txbCalle.Text));
+                comando.Parameters.Add(new SqlParameter("@PaisOrigen", txbNacionalidad.Text));
+                //falta el Codigo Postal?? no esta ni en el Procedure
+                
 
                 if (!String.IsNullOrEmpty(txbPiso.Text))
                     comando.Parameters.Add(new SqlParameter("@Piso", txbPiso.Text));
@@ -149,7 +158,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 {
                     if (x != 1)
                     {
-                        SqlCommand comandoTelefono = new SqlCommand("SELECT * FROM AEFI.clientes " +
+                        SqlCommand comandoTelefono = new SqlCommand("SELECT * FROM AEFI.TL_cliente " +
                                         "WHERE Telefono = @telefono", conexion);
                         comandoTelefono.Parameters.Add(new SqlParameter("@Telefono", txbTelefono.Text));
                         SqlDataReader reader = comandoTelefono.ExecuteReader();

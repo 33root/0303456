@@ -640,6 +640,7 @@ END;
 GO
 
 CREATE PROCEDURE AEFI.insertar_cliente
+	-- Faltaria el ID_Cliente para que no de el error de Demaciados Argumentos
     @Nombre NVARCHAR(255),
     @Apellido NVARCHAR(255),
     @ID_Tipo_Documento NVARCHAR(255),
