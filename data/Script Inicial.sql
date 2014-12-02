@@ -1,3 +1,482 @@
+CREATE SCHEMA AEFI AUTHORIZATION gd;
+
+GO
+
+
+CREATE TABLE [AEFI].[TL_Usuario](
+	[ID_Usuario] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+	[Username] NVARCHAR(255) NOT NULL UNIQUE,
+	[Password] NVARCHAR(64) NOT NULL,
+	[Pass_Temporal] bit DEFAULT 1, /*1 VERDADERO, 0 FALSO */
+	[Habilitado] bit DEFAULT 1,
+		[Nombre] NVARCHAR(255),
+		[Apellido] NVARCHAR(255),
+		[ID_Tipo_Documento] nvarchar(255),
+		[Documento_Nro] NUMERIC(18,0),	
+		[Mail] nvarchar(255) UNIQUE, 
+		[Telefono]nvarchar(20),		
+		[Calle] NVARCHAR (255),
+		[Calle_Nro] NUMERIC(18,0),
+		[Piso] NUMERIC(18,0),
+		[Dpto] NVARCHAR(50),
+		[Fecha_Nacimiento] datetime
+
+);
+
+
+
+		
+CREATE TABLE [AEFI].[TL_Cliente](
+	
+		[ID_Cliente] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+		[Nombre] NVARCHAR(255),
+		[Apellido] NVARCHAR(255),
+		[ID_Tipo_Documento] nvarchar(255),
+		[Documento_Nro] NUMERIC(18,0),
+		[Mail] nvarchar(255), /*UNIQUE: QUITE ESTO PORQUE HAY MAILS REPETIDOS Y NO PODEMOS PERDER DATOS */
+		[Calle] NVARCHAR (255),
+		[Calle_Nro] NUMERIC(18,0),
+		[Piso] NUMERIC(18,0),
+		[Dpto] NVARCHAR(50),
+		[Telefono] nvarchar(20),		
+		[Fecha_Nacimiento] datetime,
+		[Nacionalidad] NVARCHAR(255),
+		[Localidad] NVARCHAR(255), 
+		[PaisOrigen] NVARCHAR(255)
+		);
+	
+
+
+CREATE TABLE [AEFI].[TL_Rol](
+	[ID_Rol] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+	[Descripcion] nvarchar (255) UNIQUE NOT NULL,
+	[Activo] bit NOT NULL DEFAULT 1
+
+);	
+
+
+
+CREATE TABLE [AEFI].[TL_Funcionalidad](
+	[ID_Funcionalidad] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+	[Descripcion] nvarchar (255) UNIQUE NOT NULL,
+	[Restriccion] int DEFAULT NULL, /*si esta en NULL no hay restriccion, si tiene un numero es el numero del rol al que puede ser asignado*/
+);
+
+CREATE TABLE [AEFI].[TL_Regimen] (
+		[ID_Regimen] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+		[Descripcion] NVARCHAR(255),
+		[Precio_Base] NUMERIC(18,2),
+		[Estado] bit DEFAULT 1 /*1 activo 0 no activo */
+);		
+
+CREATE TABLE [AEFI].[TL_Hotel](
+		[ID_Hotel] NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,
+		[Nombre] nvarchar(55),	
+		[Mail] nvarchar(255),	
+		[Telefono] nvarchar(20),
+		[Calle] nvarchar(255),
+		[Nro_Calle] NUMERIC(18,0),
+		[Cantidad_Estrellas] NUMERIC(18,0),
+		[Recarga_Estrellas] NUMERIC(18,0),
+		[Ciudad] nvarchar(255),
+		[Pais] nvarchar(255),
+		[Fecha_Creacion] datetime,
+		[Estado] varchar(50)
+		
+		);
+		
+CREATE TABLE [AEFI].[TL_Habitacion](
+
+		[ID_Habitacion] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+		[ID_Tipo_Habitacion] NUMERIC(18,0),
+		[Numero] numeric(18,0),
+		[Piso] numeric (18,0),
+		[Vista] nvarchar(50),
+		[Estado] varchar(255),
+		[Disponible] nvarchar(2),
+		[ID_Hotel] NUMERIC(18,0),
+		FOREIGN KEY (ID_Hotel) REFERENCES [AEFI].[TL_Hotel] (ID_Hotel)
+		);
+
+
+CREATE TABLE [AEFI].[TL_Tipo_Habitacion](
+		[ID_Tipo_Habitacion] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY, /*EX TIPO_CODIGO DE HABITACION*/
+		[Descripcion] NVARCHAR(255),
+		[Porcentual] NUMERIC(18,2),
+		[Cantidad_Huespedes_Total] NUMERIC(18,0),
+		);
+
+CREATE TABLE [AEFI].[TL_Baja_Hotel](
+		[ID_Baja] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY, /* Nueva tabla para las bajas de hoteles */
+		[Fecha_Inicio] datetime,
+		[Fecha_Fin] datetime,
+		[Descripcion] varchar(255),
+		[ID_Hotel] NUMERIC (18,0),
+		FOREIGN KEY (ID_Hotel) REFERENCES [AEFI].[TL_Hotel] (ID_Hotel)
+		);
+		
+		
+		
+CREATE TABLE [AEFI].[TL_Reserva](
+
+		[ID_Reserva] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY, /*EX RESERVA CODIGO*/
+		[Fecha_Reserva] datetime,
+		[Fecha_Desde] datetime,
+		[Cantidad_Huespedes] NUMERIC(18,0),
+		[Cantidad_Noches] NUMERIC(18,0), 
+		[ID_Regimen] NUMERIC(18,0) NOT NULL,
+		[ID_Habitacion] NUMERIC(18,0) NOT NULL,
+		[ID_Cliente] NUMERIC(18,0) NOT NULL,
+		[Estado] varchar(255),
+		FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente),
+		FOREIGN KEY (ID_Habitacion) REFERENCES [AEFI].[TL_Habitacion] (ID_Habitacion),
+		FOREIGN KEY (ID_Regimen) REFERENCES [AEFI].[TL_Regimen] (ID_Regimen)	
+		
+);
+
+		
+		
+CREATE TABLE [AEFI].[TL_Cancelacion](
+		
+		[ID_Cancelacion] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY, /*ver bien que tipo es*/
+		[Motivo] nvarchar(255),
+		[ID_Reserva] NUMERIC(18,0),
+		[Fecha] datetime,
+		[ID_Usuario] NUMERIC(18,0),		
+		FOREIGN KEY (ID_Usuario) REFERENCES [AEFI].[TL_Usuario] (ID_Usuario), /*Usuario que hizo la cancelación*/
+		FOREIGN KEY (ID_Reserva) REFERENCES [AEFI].[TL_Reserva] (ID_Reserva)
+);
+
+CREATE TABLE [AEFI].[TL_Consumible](
+
+		[ID_Consumible] NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,/*ex codigo*/
+		[Descripcion] NVARCHAR(255),
+		[Precio] NUMERIC(18,2)
+);		
+		
+		
+CREATE TABLE [AEFI].[TL_Factura](
+
+		[ID_Factura] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+		[Fecha] datetime,
+		[Total] NUMERIC(18,2),
+		[ID_Cliente] NUMERIC(18,0),
+		FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente)
+		
+);
+	
+
+
+CREATE TABLE [AEFI].[TL_Estadia](
+		
+		[ID_Estadia] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+		[Estado] bit, /*1 activo, 0 finalizado*/
+		[Fecha_Inicio] datetime,
+		[Cantidad_Noches] NUMERIC(18,0),
+		[ID_Reserva] NUMERIC(18,0),
+		[ID_Factura] NUMERIC(18,0),
+		FOREIGN KEY (ID_Reserva) REFERENCES [AEFI].[TL_Reserva](ID_Reserva),
+		FOREIGN KEY (ID_Factura) REFERENCES [AEFI].[TL_Factura](ID_Factura)
+				);
+
+
+
+
+CREATE TABLE [AEFI].[TL_Tipo_Documento](
+		[ID_Tipo_Documento] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+		[Descripcion] NVARCHAR(40)
+);
+
+
+CREATE TABLE [AEFI].[TL_Registro_Pago](
+		[ID_Factura] NUMERIC(18,0),
+		[ID_Cliente] NUMERIC(18,0),
+		[Fecha] DATETIME,
+		[FormaDePago] NVARCHAR(55),
+		[ID_Tarjeta] NUMERIC(18,0)
+		PRIMARY KEY (ID_Factura, ID_Cliente),
+		FOREIGN KEY (ID_Factura) REFERENCES [AEFI].[TL_Factura] (ID_Factura),
+		FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente)
+);
+		
+CREATE TABLE [AEFI].[TL_Tarjeta](
+	[ID_Tarjeta] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+	[Numero] NUMERIC(18,0) UNIQUE,
+	[Fecha_Vto] DATETIME,
+	[ID_Cliente] NUMERIC(18,0),
+	FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente)
+);
+
+		
+/* TABLA MUCHOS A MUCHOS*/
+CREATE TABLE [AEFI].[TL_Funcionalidad_Rol] (
+	[ID_Rol] NUMERIC(18,0),
+	[ID_Funcionalidad] NUMERIC(18,0),
+	PRIMARY KEY (ID_Rol, ID_Funcionalidad),
+	FOREIGN KEY (ID_Rol) REFERENCES [AEFI].[TL_ROL] (ID_Rol),
+	FOREIGN KEY (ID_Funcionalidad) REFERENCES [AEFI].[TL_Funcionalidad] (ID_Funcionalidad)
+);
+	
+/*TABLA MUCHOS A MUCHOS*/	
+CREATE TABLE [AEFI].[TL_Usuario_Por_Rol](
+
+		[ID_Rol] NUMERIC(18,0),
+		[ID_Usuario] NUMERIC(18,0),
+		PRIMARY KEY (ID_Usuario, ID_Rol),
+		FOREIGN KEY (ID_Usuario) REFERENCES [AEFI].[TL_Usuario] (ID_Usuario),
+		FOREIGN KEY (ID_Rol) REFERENCES [AEFI].[TL_Rol] (Id_Rol)
+);
+		
+/*TABLA MUCHOS A MUCHOS */
+CREATE TABLE [AEFI].[TL_Item_Por_Factura](
+	[ID_Item_Por_Factura] NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+	[ID_Consumible] NUMERIC(18,0),
+	[Cantidad] NUMERIC(18,0),
+	[ID_Factura] NUMERIC(18,0),
+	[ID_Estadia] NUMERIC(18,0),
+	[Monto] NUMERIC(18,2),
+	[Descripcion] NVARCHAR(55),
+	FOREIGN KEY (ID_Factura) REFERENCES [AEFI].[TL_Factura] (ID_Factura),
+	FOREIGN KEY (ID_Consumible) REFERENCES [AEFI].[TL_Consumible] (ID_Consumible),
+	FOREIGN KEY (ID_Estadia) REFERENCES [AEFI].[TL_Estadia](ID_Estadia)
+	
+);
+
+/*TABLA MUCHOS A MUCHOS */
+CREATE TABLE [AEFI].[TL_Regimen_Por_Hotel](
+	[ID_Hotel] NUMERIC(18,0),
+	[ID_Regimen] NUMERIC(18,0),
+	PRIMARY KEY (ID_Hotel, ID_Regimen),
+	FOREIGN KEY (ID_Hotel) REFERENCES [AEFI].[TL_Hotel] (ID_Hotel),
+	FOREIGN KEY (ID_Regimen) REFERENCES [AEFI].[TL_Regimen] (ID_Regimen)
+);
+
+/*TABLA MUCHOS A MUCHOS */
+CREATE TABLE [AEFI].[TL_Usuario_Por_Hotel](
+	[ID_Usuario_Hotel] NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,
+	[ID_Hotel] NUMERIC(18,0),
+	[ID_Usuario] NUMERIC(18,0),
+	[ID_Rol] NUMERIC(18,0),
+	FOREIGN KEY (ID_Hotel) REFERENCES [AEFI].[TL_Hotel] (ID_Hotel),
+	FOREIGN KEY (ID_Usuario) REFERENCES [AEFI].[TL_Usuario] (ID_Usuario),
+	FOREIGN KEY (ID_Rol) REFERENCES [AEFI].[TL_Rol] (ID_Rol)
+	
+);
+  
+/*TABLA MUCHOS A MUCHOS */
+CREATE TABLE [AEFI].[TL_Consumible_Por_Estadia](
+	[ID_Consumible_Por_Estadia] NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,
+	[ID_Consumible] NUMERIC(18,0),
+	[Cantidad] NUMERIC(18,0),
+	[ID_Estadia] NUMERIC(18,0),
+	FOREIGN KEY (ID_Consumible) REFERENCES [AEFI].[TL_Consumible] (ID_Consumible),
+	FOREIGN KEY (ID_Estadia) REFERENCES [AEFI].[TL_Estadia] (ID_Estadia)
+);
+
+CREATE TABLE [AEFI].[TL_Puntos_Por_Factura] (
+ [ID_Factura] NUMERIC(18,0),
+ [ID_Cliente] NUMERIC(18,0),
+ [Fecha] DATETIME,
+ [Puntos] NUMERIC(18,0), 
+ PRIMARY KEY (ID_Factura, ID_Cliente), 
+ FOREIGN KEY (ID_Factura) REFERENCES [AEFI].[TL_Factura] (ID_Factura),
+ FOREIGN KEY (ID_Cliente) REFERENCES [AEFI].[TL_Cliente] (ID_Cliente)
+ 
+ );
+ 
+ CREATE TABLE [AEFI].[TL_Registro_Evento](
+ [ID_Registro]  NUMERIC(18,0) IDENTITY (1,1) PRIMARY KEY,
+ [ID_Estadia] NUMERIC(18,0),
+ [Descripcion] NVARCHAR(55), 
+ [ID_Usuario] NUMERIC(18,0),
+ [Fecha] DATETIME,
+ FOREIGN KEY (ID_Estadia) REFERENCES [AEFI].[TL_Estadia] (ID_Estadia),
+ FOREIGN KEY (ID_Usuario) REFERENCES [AEFI].[TL_Usuario] (ID_Usuario)
+ 
+ 
+ );
+ /*Comienzo de INSERTS */
+
+BEGIN TRANSACTION
+
+INSERT INTO [AEFI].[TL_Tipo_Documento] (Descripcion)
+VALUES ('DNI'), ('PA'), ('CUIL'), ('LE');
+
+INSERT INTO [AEFI].[TL_Usuario](Username, Password) 
+VALUES ('admin','E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7')
+
+INSERT INTO [AEFI].[TL_Rol] (Descripcion) 
+VALUES ('Guest'),('Recepcionista'),('Administrador');;
+
+INSERT INTO [AEFI].[TL_Funcionalidad] (Descripcion)
+VALUES ('ABM de Rol'), ('ABM de Usuario'), ('ABM de Cliente (Huespedes)'), ('ABM de Hotel'), ('ABM de Habitacion'), ('ABM de Regimen de Estadia'),
+	('Generar o Modificar una Reserva'), ('Cancelar Reserva'), ('Registrar Estadía (check-in/check-out)'), ('Registrar Consumibles'), ('Facturar Estadia'), ('Listado Estadistico');
+
+INSERT INTO AEFI.TL_Usuario_Por_Rol(ID_Rol, ID_Usuario)
+SELECT r.ID_Rol,  u.ID_Usuario
+FROM AEFI.TL_Rol r, AEFI.TL_Usuario u
+WHERE u.Username = 'admin';
+
+UPDATE AEFI.TL_Funcionalidad
+SET Restriccion = x.ID_Rol
+FROM AEFI.TL_Rol x, AEFI.TL_Funcionalidad r
+WHERE r.Descripcion = 'ABM de Usuario'
+AND x.Descripcion = 'Administrador';
+
+
+/* FUNCIONALIDADES DE GUEST */
+INSERT INTO [AEFI].[TL_Funcionalidad_Rol](ID_Rol, ID_Funcionalidad)
+VALUES (1,7),(1,8);
+
+/*FUNCIONALIDADES DE RECEPCIONISTA*/
+INSERT INTO [AEFI].[TL_Funcionalidad_Rol]
+VALUES (2,3),(2,7), (2,8), (2,9), (2,10), (2,11);
+
+/*FUNCIONALIDAD DE ADMINISTRADOR*/
+INSERT INTO [AEFI].[TL_Funcionalidad_Rol]
+VALUES (3,1),(3,2),(3,4),(3,5),(3,6),(3,12);
+
+
+/*FIN DE INSERTS */
+COMMIT
+BEGIN TRANSACTION
+
+INSERT INTO AEFI.TL_Cliente(Nombre,Apellido,ID_Tipo_Documento,Documento_Nro,Mail,Calle,Calle_Nro,Piso,Dpto,Fecha_Nacimiento,Nacionalidad,Localidad,PaisOrigen)
+SELECT DISTINCT m.Cliente_Nombre, m.Cliente_Apellido ,2, m.Cliente_Pasaporte_Nro, m.Cliente_Mail, m.Cliente_Dom_Calle, m.Cliente_Nro_Calle, m.Cliente_Piso, m.Cliente_Depto, m.Cliente_Fecha_Nac, m.Cliente_Nacionalidad,'CABA','Argentina' 
+FROM gd_esquema.Maestra m
+WHERE Cliente_Apellido IS NOT NULL AND Cliente_Nombre IS NOT NULL
+
+INSERT INTO [AEFI].[TL_Hotel](Nombre, Calle, Nro_Calle,Ciudad,Cantidad_Estrellas,Recarga_Estrellas, Pais, Estado)
+SELECT DISTINCT 'Hotel '+ Hotel_Calle, Hotel_Calle, Hotel_Nro_Calle, Hotel_Ciudad, Hotel_CantEstrella, Hotel_Recarga_Estrella, 'Argentina', 'Habilitado'
+FROM gd_esquema.Maestra
+
+
+/* Cargo todos los hoteles a todos los roles del usuario admin*/
+INSERT INTO AEFI.TL_Usuario_Por_Hotel 
+SELECT h.ID_Hotel, 1, r.ID_Rol
+FROM AEFI.TL_Hotel h, AEFI.TL_Rol r
+
+SET IDENTITY_INSERT AEFI.TL_Tipo_Habitacion ON
+INSERT INTO AEFI.TL_Tipo_Habitacion(ID_Tipo_Habitacion, Descripcion, Porcentual)
+SELECT DISTINCT m.Habitacion_Tipo_Codigo, m.Habitacion_Tipo_Descripcion, m.Habitacion_Tipo_Porcentual
+FROM gd_esquema.Maestra m
+SET IDENTITY_INSERT AEFI.TL_Tipo_Habitacion OFF
+
+
+UPDATE AEFI.TL_Tipo_Habitacion 
+SET Cantidad_Huespedes_Total = 2
+WHERE Descripcion = 'Base Doble' OR Descripcion = 'King'
+
+UPDATE AEFI.TL_Tipo_Habitacion
+SET Cantidad_Huespedes_Total = 3
+WHERE Descripcion = 'Base Triple'
+
+UPDATE AEFI.TL_Tipo_Habitacion 
+SET Cantidad_Huespedes_Total = 4
+WHERE Descripcion = 'Base Cuadruple'
+
+UPDATE AEFI.TL_Tipo_Habitacion
+SET Cantidad_Huespedes_Total = 1
+WHERE Descripcion = 'Base Simple'
+
+
+INSERT INTO [AEFI].[TL_Habitacion] (ID_Tipo_Habitacion, Numero, Piso, Vista, ID_Hotel, Estado, Disponible)
+SELECT DISTINCT t.ID_Tipo_Habitacion, m.Habitacion_Numero, m.Habitacion_Piso, m.Habitacion_Frente, h.ID_Hotel, 'Habilitado', 'Si'
+FROM gd_esquema.Maestra m
+JOIN AEFI.TL_Tipo_Habitacion t ON (m.Habitacion_Tipo_Codigo = t.ID_Tipo_Habitacion)
+JOIN AEFI.TL_Hotel h ON (h.Calle = m.Hotel_Calle AND h.Nro_Calle=m.Hotel_Nro_Calle)
+
+
+INSERT INTO [AEFI].[TL_Regimen] (Descripcion,Precio_Base, Estado)
+SELECT DISTINCT Regimen_Descripcion, Regimen_Precio, 1
+FROM  gd_esquema.Maestra
+
+
+SET IDENTITY_INSERT AEFI.TL_Reserva ON
+INSERT INTO [AEFI].[TL_Reserva] (ID_Reserva, Fecha_Desde, Cantidad_Noches, Cantidad_Huespedes, ID_Cliente, ID_Habitacion, ID_Regimen, Estado)
+SELECT DISTINCT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, x.Cantidad_Huespedes_Total, c.ID_Cliente, h.ID_Habitacion, r.ID_Regimen, 'Correcta'
+FROM gd_esquema.Maestra m, AEFI.TL_Tipo_Habitacion x ,AEFI.TL_Cliente c, AEFI.TL_Habitacion  h, AEFI.TL_Regimen r, AEFI.TL_Hotel ho
+WHERE m.Habitacion_Tipo_Codigo= x.ID_Tipo_Habitacion
+AND m.Cliente_Pasaporte_Nro = c.Documento_Nro 
+AND m.Cliente_Apellido= c.Apellido 
+AND m.Cliente_Nombre= c.Nombre
+AND m.Habitacion_Numero = h.Numero
+AND m.Hotel_Calle = ho.Calle
+AND m.Hotel_Ciudad = ho.Ciudad
+AND m.Hotel_Nro_Calle = ho.Nro_Calle
+AND h.ID_Hotel = ho.ID_Hotel
+AND m.Regimen_Descripcion = r.Descripcion
+SET IDENTITY_INSERT AEFI.TL_Reserva OFF
+	
+	
+
+	SET IDENTITY_INSERT [AEFI].[TL_Consumible] ON
+	INSERT INTO [AEFI].[TL_Consumible](ID_Consumible, Descripcion, Precio)
+	SELECT DISTINCT Consumible_Codigo, Consumible_Descripcion, Consumible_Precio
+	FROM gd_esquema.Maestra 
+	WHERE Consumible_Codigo IS NOT NULL
+	SET IDENTITY_INSERT [AEFI].[TL_Consumible] OFF
+
+
+
+
+	SET IDENTITY_INSERT [AEFI].[TL_Factura] ON
+INSERT INTO [AEFI].[TL_Factura](ID_Factura, Fecha, Total, ID_Cliente)
+SELECT DISTINCT m.Factura_Nro, m.Factura_Fecha, m.Factura_Total, x.ID_Cliente
+FROM gd_esquema.Maestra m
+JOIN AEFI.TL_Cliente x ON (x.Documento_Nro = m.Cliente_Pasaporte_Nro AND x.Nombre = m.Cliente_Nombre AND x.Apellido = m.Cliente_Apellido)
+WHERE m.Factura_Nro IS NOT NULL;
+
+	SET IDENTITY_INSERT [AEFI].[TL_Factura] OFF
+
+INSERT INTO [AEFI].[TL_Estadia](ID_Reserva, Fecha_Inicio, Cantidad_Noches,Estado, ID_Factura)
+SELECT DISTINCT r.ID_Reserva, m.Estadia_Fecha_Inicio, m.Estadia_Cant_Noches, (CASE WHEN (DATEADD(day, m.estadia_cant_noches, m.estadia_fecha_inicio) > GETDATE()) THEN 1 ELSE 0 END) as activa , f.ID_Factura
+FROM gd_esquema.Maestra m, AEFI.TL_Reserva r, AEFI.TL_Factura f
+WHERE r.ID_Reserva = m.Reserva_Codigo
+AND f.ID_Factura = m.Factura_Nro
+AND m.Estadia_Cant_Noches IS NOT NULL AND m.Estadia_Fecha_Inicio IS NOT NULL
+AND m.Factura_Total IS NOT NULL;
+
+
+INSERT INTO AEFI.TL_Consumible_Por_Estadia
+SELECT c.ID_Consumible, m.Item_Factura_Cantidad, e.ID_Estadia
+FROM gd_esquema.Maestra m, AEFI.TL_Consumible c, AEFI.TL_Estadia e
+WHERE m.Consumible_Codigo = c.ID_Consumible AND e.ID_Reserva=m.Reserva_Codigo;
+
+INSERT INTO AEFI.TL_Item_Por_Factura (ID_Consumible, Cantidad, ID_Factura, Monto)
+SELECT m.Consumible_Codigo, m.Item_Factura_Cantidad, f.ID_Factura, m.Item_Factura_Monto 
+FROM gd_esquema.Maestra m, AEFI.TL_Factura f
+WHERE f.ID_Factura = m.Factura_Nro
+AND m.Consumible_Codigo IS NOT NULL;
+
+INSERT INTO AEFI.TL_Item_Por_Factura (ID_Estadia, Cantidad, ID_Factura, Monto)
+SELECT DISTINCT e.ID_Estadia, m.Item_Factura_Cantidad, f.ID_Factura, m.Item_Factura_Monto 
+FROM gd_esquema.Maestra m, AEFI.TL_Factura f, AEFI.TL_Estadia e
+WHERE f.ID_Factura = m.Factura_Nro
+AND e.ID_Reserva = m.Reserva_Codigo;
+	
+INSERT INTO AEFI.TL_Puntos_Por_Factura
+SElECT ID_Factura, ID_Cliente, Fecha, (SELECT (SUM(ipf.Monto/10) + SUM(ipf1.Monto/5))
+							FROM AEFI.TL_Item_Por_Factura ipf, AEFI.TL_Item_Por_Factura ipf1
+							WHERE ipf.ID_Estadia IS NOT NULL 
+							AND ipf1.ID_Consumible IS NOT NULL
+							AND ipf.ID_Factura = f.ID_Factura
+							AND ipf1.ID_Factura = f.ID_Factura)
+FROM AEFI.TL_Factura f;
+
+
+
+UPDATE AEFI.TL_Reserva
+SET ESTADO = 'Efectivizada'
+FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r
+WHERE e.ID_Reserva = r.ID_Reserva	
+
+
+COMMIT
+
+
+
+
 GO
 
 CREATE PROCEDURE AEFI.crear_Hotel
@@ -57,7 +536,6 @@ END;
 
 GO
 
-/* Se podria implementar un Trigger o algo asi para habilitarlo cuando termine el plazo (hay q ver ) */
 CREATE PROCEDURE AEFI.baja_Hotel
 
 		@ID_Hotel numeric(18,0),
@@ -67,17 +545,26 @@ CREATE PROCEDURE AEFI.baja_Hotel
 
 AS
 
-/* Falta realizar la validacion de estadia de hoteles, si esta vacio y todo eso */
 
 BEGIN
-										
+	IF (NOT EXISTS (SELECT * FROM AEFI.TL_Reserva re, AEFI.TL_Habitacion ha WHERE ha.ID_Hotel = @ID_Hotel AND re.ID_Habitacion = ha.ID_Habitacion AND re.Fecha_Desde BETWEEN @Fecha_Inicio AND @Fecha_Fin) AND NOT EXISTS 
+	(SELECT * 
+	FROM AEFI.TL_Estadia es, AEFI.TL_Reserva re, AEFI.TL_Habitacion ha 
+	WHERE es.ID_Reserva = re.ID_Reserva
+	AND re.ID_Habitacion = ha.ID_Habitacion
+	AND ha.ID_Hotel = @ID_Hotel
+	AND es.Fecha_Inicio BETWEEN @Fecha_Inicio AND @Fecha_Fin))
+	BEGIN 
 	INSERT INTO AEFI.TL_Baja_Hotel (Fecha_Inicio, Fecha_Fin, Descripcion, ID_Hotel)
 	VALUES (@Fecha_Inicio, @Fecha_Fin, @Descripcion, @ID_Hotel)
 	
 	UPDATE AEFI.TL_Hotel
 	SET Estado = 'Deshabilitado'
 	WHERE @ID_Hotel = ID_Hotel
+END
+ELSE
 
+RAISERROR('No se puede dar de baja el hotel, verifique que no haya reservas ni estadias en el intervalo', 1, 1)
 	
 END;
 	
@@ -87,7 +574,6 @@ GO
 CREATE PROCEDURE AEFI.crear_Habitacion
 
 
-/*por alguna razon si les pongo numeric no puede tranformar nvarchar a numeric, por eso son nvarchar (funciona) */
 		@ID_Hotel nvarchar(10),
 		@ID_Habitacion nvarchar(10),
 		@Numero nvarchar(50),
@@ -616,51 +1102,6 @@ BEGIN
  
 END;
 
-/*CREATE PROCEDURE AEFI.registrarEstadia
-
-		@ID_Reserva numeric(18,0)
-		
-AS
-
-begin transaction
-
-IF(GETDATE() = (Select Fecha_Desde from AEFI.TL_Reserva r where r.ID_Reserva = @id_reserva))
-
-begin 
-
-/*Se deberia agregar la cantidad de huespedes que realmente se hospedan?? */
-
-INSERT INTO AEFI.TL_Estadia (Estado, Fecha_Inicio, Cantidad_Noches)
-SELECT '1', GETDATE(), r.Cantidad_Noches 
-from AEFI.TL_Reserva r
-where r.ID_Reserva = @ID_Reserva
-
-
-end
-
-ELSE 
-
-	begin transaction
-	
-	INSERT INTO [AEFI].[TL_Cancelacion](Motivo, Fecha, ID_Usuario)
-	Select 'La fecha de reserva expiro', GETDATE(), (Select id_Cliente FROM [AEFI].[TL_Reserva] r 
-														where r.ID_Cliente = @ID_Reserva)
-														
-	Update [AEFI].[TL_Habitacion]
-	Set Disponible = 'Si'
-	
-		/*Hay que ver si cuando se cancela la reserva se elimina el registro de reserva y solo queda el de
-		cancelacion (tendria que haber una fk de reserva a cancelacion? o como esta esta bien?) 
-		- Las reservas no tienen que cambiar la disponibilidad de las habitacions a "NO"??
-		*/
-	
-	
-	
-	
-	end
-end
-*/
-
 		
 GO		
 CREATE PROCEDURE AEFI.top5_consumiblesFacturados
@@ -772,9 +1213,6 @@ BEGIN
 		ORDER BY CANTIDAD DESC
 END;
 
-/*Cliente con mayor cantidad de puntos, donde cada $10 en estadías vale 1 puntos y cada $5 de consumibles es 1 punto, 
-de la sumatoria de todas las facturaciones que haya tenido dentro de un periodo independientemente del Hotel. 
-Tener en cuenta que la facturación siempre es a quien haya realizado la reserva.*/
 
 
 GO		
@@ -887,6 +1325,4 @@ WHERE ID_Consumible_Por_Estadia = @idConsumiblePorEstadia
 	
 	
 	END;
-
-
 
