@@ -53,9 +53,7 @@
             this.VolverButton = new System.Windows.Forms.Button();
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.txbNumero = new System.Windows.Forms.TextBox();
             this.txbPiso = new System.Windows.Forms.TextBox();
             this.txbDpto = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -164,7 +162,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 193);
+            this.label7.Location = new System.Drawing.Point(12, 225);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(52, 13);
             this.label7.TabIndex = 12;
@@ -173,7 +171,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 222);
+            this.label8.Location = new System.Drawing.Point(13, 196);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(30, 13);
             this.label8.TabIndex = 13;
@@ -271,15 +269,6 @@
             this.label12.TabIndex = 26;
             this.label12.Text = "Piso";
             // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(319, 193);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(44, 13);
-            this.label13.TabIndex = 27;
-            this.label13.Text = "Numero";
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -288,13 +277,6 @@
             this.label14.Size = new System.Drawing.Size(30, 13);
             this.label14.TabIndex = 28;
             this.label14.Text = "Dpto";
-            // 
-            // txbNumero
-            // 
-            this.txbNumero.Location = new System.Drawing.Point(370, 192);
-            this.txbNumero.Name = "txbNumero";
-            this.txbNumero.Size = new System.Drawing.Size(144, 20);
-            this.txbNumero.TabIndex = 29;
             // 
             // txbPiso
             // 
@@ -346,9 +328,7 @@
             this.Controls.Add(this.label15);
             this.Controls.Add(this.txbDpto);
             this.Controls.Add(this.txbPiso);
-            this.Controls.Add(this.txbNumero);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.dtpFecha);
             this.Controls.Add(this.VolverButton);
@@ -409,9 +389,7 @@
         private System.Windows.Forms.Button VolverButton;
         private System.Windows.Forms.DateTimePicker dtpFecha;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox txbNumero;
         private System.Windows.Forms.TextBox txbPiso;
         private System.Windows.Forms.TextBox txbDpto;
         private System.Windows.Forms.Label label15;

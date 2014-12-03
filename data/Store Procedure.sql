@@ -192,26 +192,15 @@ BEGIN
 			VALUES (@Calle, @Calle_Nro, @Piso, @Dpto, NULL);
 	END;
 	
-	IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario WHERE Username = @Nombre + '_' + @Apellido)
-	BEGIN
-		INSERT INTO AEFI.TL_Usuario (Username, Password)
-		VALUES (@Nombre + '_' + @Apellido, '03AC674216F3E15C761EE1A5E255F067953623C8B388B4459E13F978D7C846F4'); /* 1234 */
-		INSERT INTO AEFI.TL_Usuario_Por_Rol(ID_Usuario, ID_Rol)
-		VALUES ((SELECT ID_Usuario FROM AEFI.TL_Usuario WHERE Username = @Nombre + '_' + @Apellido), 1);
-	END;
-	
 	IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Nombre = @Nombre AND Apellido = @Apellido)
-		INSERT INTO AEFI.TL_Cliente (Documento_Nro, Nombre, Apellido, Telefono, Mail, Fecha_Nacimiento, ID_Tipo_Documento, Calle, ID_Cliente)
+		INSERT INTO AEFI.TL_Cliente (Documento_Nro, Nombre, Apellido, Telefono, Mail, Fecha_Nacimiento, ID_Tipo_Documento, Calle)
 		VALUES (@Documento_Numero, @Nombre, @Apellido, @Telefono, @Mail, @Fecha_Nacimiento, (
 			SELECT ID_Tipo_Documento
 			FROM AEFI.TL_Tipo_Documento
 			WHERE Descripcion = @ID_Tipo_Documento), (
 			SELECT Calle
 			FROM AEFI.TL_Cliente
-			WHERE Calle = @Calle AND Calle_Nro = @Calle_Nro), (
-			SELECT ID_Usuario
-			FROM AEFI.TL_Usuario
-			WHERE Username = @Nombre + '_' + @Apellido));
+			WHERE Calle = @Calle AND Calle_Nro = @Calle_Nro));
 END;
 
 GO

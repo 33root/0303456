@@ -131,11 +131,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     comando = new SqlCommand("AEFI.actualizar_cliente", conexion);
     
                 comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.Add(new SqlParameter("@ID_Cliente",this.x));//le paso el ID_Cliente que se asigna en la clase
-                /*el ID_Cliente no esta en el Procedure, por esto tira error de demaciados argumentos, ademas se le pasa "this.x" que es un int
-                 * por eso creo que es el problema de convertir nvarchar(que envian los Text) a numeric. Por otro lado si cambias los tipos numeric
-                 * del procedure a nvarchar (no se si es necesario todos) deberia arreglarce, pero no me funciono, sigue el mismo error de conversion de tipos :(
-                 */
+               
                 comando.Parameters.Add(new SqlParameter("@Nombre", txbNombre.Text));
                 comando.Parameters.Add(new SqlParameter("@Apellido", txbApellido.Text));
                 comando.Parameters.Add(new SqlParameter("@ID_Tipo_Documento", cbTipoDeDocumento.Text));
@@ -145,9 +141,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 comando.Parameters.Add(new SqlParameter("@Calle", txbDireccion.Text));
                 comando.Parameters.Add(new SqlParameter("@Calle_Nro", txbCalle.Text));
                 comando.Parameters.Add(new SqlParameter("@PaisOrigen", txbNacionalidad.Text));
-                //falta el Codigo Postal?? no esta ni en el Procedure
                 
-
                 if (!String.IsNullOrEmpty(txbPiso.Text))
                     comando.Parameters.Add(new SqlParameter("@Piso", txbPiso.Text));
                 if (!String.IsNullOrEmpty(txbDpto.Text))
