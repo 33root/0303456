@@ -90,17 +90,16 @@ namespace FrbaHotel.ABM_de_Cliente
         {//BUSCAR
             String consulta = "SELECT c.ID_Cliente, c.Nombre, c.Apellido, t.Descripcion, c.Documento_Nro, " +
                                      "c.Mail, c.Telefono, c.Fecha_Nacimiento, c.Calle, c.Calle_Nro, c.Piso, c.Dpto, " +
-                                     "c.Localidad, u.Habilitado " + //la tabla clientes no tiene la codigo postal
+                                     "c.Localidad " + //la tabla clientes no tiene la codigo postal
                               "FROM AEFI.TL_Cliente c " +
                               "JOIN AEFI.TL_Tipo_Documento t ON (c.ID_Tipo_Documento = t.ID_Tipo_Documento) " +
-                              "JOIN AEFI.TL_Usuario u ON (c.ID_Cliente = u.ID_Usuario)" +
                               "WHERE c.ID_Cliente > 0 ";
 
 
             //Se castean los tipos para que se puedan mostrar y/o ingresar en los campos, ademas de para poder buscar cuando algunos son null
             if (!String.IsNullOrEmpty(cbTipoDeDocumento.SelectedItem.ToString()))
             {
-                consulta = consulta + "AND t.Descripcion = @Tipo_Documento ";
+                consulta = consulta + " AND t.Descripcion = @Tipo_Documento ";
             }
             if (!String.IsNullOrEmpty(txbNombre.Text))
             {
@@ -116,7 +115,7 @@ namespace FrbaHotel.ABM_de_Cliente
             }
             if (!String.IsNullOrEmpty(txbDocumento.Text))
             {
-                consulta = consulta + " AND c.Documento_Nro = @Documento_Nro";
+                consulta = consulta + " AND c.Documento_Nro = @Documento_Nro ";
             }
 
             try

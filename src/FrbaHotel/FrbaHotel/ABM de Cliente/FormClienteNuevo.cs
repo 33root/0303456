@@ -40,8 +40,8 @@ namespace FrbaHotel.ABM_de_Cliente
             txbNumero.Text = cells[9].Value.ToString();
             txbPiso.Text = cells[10].Value.ToString();
             txbDpto.Text = cells[11].Value.ToString();
-            txbCodigoPostal.Text = cells[12].Value.ToString();
-            txbLocalidad.Text = cells[13].Value.ToString();
+            //txbCodigoPostal.Text = cells[12].Value.ToString();
+            txbLocalidad.Text = cells[12].Value.ToString();
             CrearButton.Text = "Actualizar";
         }
 
