@@ -22,12 +22,15 @@ namespace FrbaHotel.ABM_de_Cliente
         int x = 0; //0 cuando entran directamente al form, 1 cuando entran desde el listado con un seleccionado
         string usu = "";
         string con = "";
+        string id_cliente;
         
 
         public FormClienteNuevo(int cod, DataGridViewCellCollection cells)
         {
             this.x = cod;
             InitializeComponent();
+
+            id_cliente = cells[0].Value.ToString();
             
             txbNombre.Text = cells[1].Value.ToString();
             txbApellido.Text = cells[2].Value.ToString();
@@ -37,7 +40,7 @@ namespace FrbaHotel.ABM_de_Cliente
             txbTelefono.Text = cells[6].Value.ToString();
             dtpFecha.Text = cells[7].Value.ToString();
             txbDireccion.Text = cells[8].Value.ToString();
-            txbNumero.Text = cells[9].Value.ToString();
+            //txbNumero.Text = cells[9].Value.ToString();
             txbPiso.Text = cells[10].Value.ToString();
             txbDpto.Text = cells[11].Value.ToString();
             //txbCodigoPostal.Text = cells[12].Value.ToString();
@@ -106,10 +109,10 @@ namespace FrbaHotel.ABM_de_Cliente
             txbMail.Clear();
             txbTelefono.Clear();
             txbDireccion.Clear();
-            txbNumero.Clear();
+            //txbNumero.Clear();
             txbPiso.Clear();
             txbDpto.Clear();
-            txbCodigoPostal.Clear();
+            //txbCodigoPostal.Clear();
             txbLocalidad.Clear();
             cbTipoDeDocumento.SelectedIndex = 0;
             dtpFecha.Text = DateTime.Today.ToString();
@@ -131,7 +134,12 @@ namespace FrbaHotel.ABM_de_Cliente
                     comando = new SqlCommand("AEFI.actualizar_cliente", conexion);
     
                 comando.CommandType = CommandType.StoredProcedure;
-               
+
+                if (x == 1)
+                {
+                    comando.Parameters.Add(new SqlParameter("@ID_Cliente", id_cliente));
+                }
+
                 comando.Parameters.Add(new SqlParameter("@Nombre", txbNombre.Text));
                 comando.Parameters.Add(new SqlParameter("@Apellido", txbApellido.Text));
                 comando.Parameters.Add(new SqlParameter("@ID_Tipo_Documento", cbTipoDeDocumento.Text));

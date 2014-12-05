@@ -56,8 +56,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.txbPiso = new System.Windows.Forms.TextBox();
             this.txbDpto = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.txbCodigoPostal = new System.Windows.Forms.TextBox();
             this.LimpiarButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -292,22 +290,6 @@
             this.txbDpto.Size = new System.Drawing.Size(144, 20);
             this.txbDpto.TabIndex = 31;
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(13, 310);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(72, 13);
-            this.label15.TabIndex = 32;
-            this.label15.Text = "Codigo Postal";
-            // 
-            // txbCodigoPostal
-            // 
-            this.txbCodigoPostal.Location = new System.Drawing.Point(89, 307);
-            this.txbCodigoPostal.Name = "txbCodigoPostal";
-            this.txbCodigoPostal.Size = new System.Drawing.Size(208, 20);
-            this.txbCodigoPostal.TabIndex = 33;
-            // 
             // LimpiarButton
             // 
             this.LimpiarButton.Location = new System.Drawing.Point(358, 340);
@@ -324,8 +306,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(540, 384);
             this.Controls.Add(this.LimpiarButton);
-            this.Controls.Add(this.txbCodigoPostal);
-            this.Controls.Add(this.label15);
             this.Controls.Add(this.txbDpto);
             this.Controls.Add(this.txbPiso);
             this.Controls.Add(this.label14);
@@ -392,8 +372,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txbPiso;
         private System.Windows.Forms.TextBox txbDpto;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox txbCodigoPostal;
         private System.Windows.Forms.Button LimpiarButton;
     }
 }

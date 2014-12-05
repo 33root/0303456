@@ -222,15 +222,15 @@ CREATE PROCEDURE AEFI.actualizar_cliente
     @PaisOrigen NVARCHAR(255)
 AS
 BEGIN
-	IF @localidad IS NOT NULL
+	/*IF @localidad IS NOT NULL
 	BEGIN
-		IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Localidad = @Localidad)
+		IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Localidad = @Localidad )
 			INSERT INTO AEFI.TL_Cliente(Localidad)
 			VALUES (@Localidad);
 	END;
 
 	IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Calle = @Calle
-		AND Calle_Nro = @Calle_Nro AND Piso = @Piso AND Dpto = @Dpto)
+		AND Calle_Nro = @Calle_Nro AND Piso = @Piso AND Dpto = @Dpto )
 	BEGIN
 		IF @Localidad IS NOT NULL
 			INSERT INTO AEFI.TL_Cliente(Calle, Calle_Nro, Piso, Dpto, Localidad)
@@ -238,18 +238,21 @@ BEGIN
 			(
 				SELECT Localidad
 				FROM AEFI.TL_Cliente
-				WHERE Localidad = @localidad AND ID_Cliente = @ID_Cliente)
+				WHERE Localidad = @localidad )
 			);
 		ELSE
 			INSERT INTO AEFI.TL_Cliente(Calle, Calle_Nro, Piso, Dpto,  Localidad)
 			VALUES (@Calle, @Calle_Nro, @Piso, @Dpto, NULL);
-	END;
-	
+	END;*/
+	IF EXISTS(SELECT ID_Cliente FROM AEFI.TL_Cliente WHERE ID_Cliente = @ID_Cliente)
+	BEGIN
 	UPDATE AEFI.TL_Cliente
 	SET ID_Tipo_Documento = (
 		SELECT ID_Tipo_Documento
 		FROM AEFI.TL_Tipo_Documento
-		WHERE Descripcion = @ID_Tipo_Documento), Documento_Nro = @Documento_Numero, Mail = @Mail, Telefono = @Telefono, Fecha_Nacimiento = @Fecha_Nacimiento, Calle = @Calle	
+		WHERE Descripcion = @ID_Tipo_Documento), Documento_Nro = @Documento_Numero, Mail = @Mail, Telefono = @Telefono, Fecha_Nacimiento = @Fecha_Nacimiento, Calle = @Calle, Nombre = @Nombre, Apellido = @Apellido, Calle_Nro = @Calle_Nro, Localidad = @Localidad
+	WHERE ID_Cliente = @ID_Cliente
+	END
 END;
 
 GO
