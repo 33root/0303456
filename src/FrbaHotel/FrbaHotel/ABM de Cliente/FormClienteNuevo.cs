@@ -144,7 +144,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 comando.Parameters.Add(new SqlParameter("@Apellido", txbApellido.Text));
                 comando.Parameters.Add(new SqlParameter("@ID_Tipo_Documento", cbTipoDeDocumento.Text));
                 comando.Parameters.Add(new SqlParameter("@Documento_Numero", txbDocumentoNumero.Text));
-                comando.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
+                comando.Parameters.Add(new SqlParameter("@Telefono", txbTelefono.Text));
                 comando.Parameters.Add(new SqlParameter("@Fecha_Nacimiento", dtpFecha.Text));
                 comando.Parameters.Add(new SqlParameter("@Calle", txbDireccion.Text));
                 comando.Parameters.Add(new SqlParameter("@Calle_Nro", txbCalle.Text));
@@ -161,17 +161,17 @@ namespace FrbaHotel.ABM_de_Cliente
                     if (x != 1)
                     {
                         SqlCommand comandoTelefono = new SqlCommand("SELECT * FROM AEFI.TL_cliente " +
-                                        "WHERE Telefono = @telefono", conexion);
-                        comandoTelefono.Parameters.Add(new SqlParameter("@Telefono", txbTelefono.Text));
+                                        "WHERE Mail = @Mail", conexion);
+                        comandoTelefono.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
                         SqlDataReader reader = comandoTelefono.ExecuteReader();
                         if (reader.HasRows)
-                            throw new Excepciones("El telefono ya existe");
+                            throw new Excepciones("El mail ya existe");
                         reader.Close();
                     }
-                    comando.Parameters.Add(new SqlParameter("@Telefono", txbTelefono.Text));
+                    comando.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
                 }
                 else
-                    throw new Excepciones("No se ingreso ningun telefono");
+                    throw new Excepciones("No se ingreso ningun mail");
 
                 comando.ExecuteNonQuery();
                 MessageBox.Show("Operacion Completada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -170,7 +170,7 @@ CREATE PROCEDURE AEFI.insertar_cliente
 		
 AS
 BEGIN
-	IF @localidad IS NOT NULL
+	IF @Localidad IS NOT NULL
 	BEGIN
 		IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Localidad = @Localidad)
 			INSERT INTO AEFI.TL_Cliente(Localidad)
@@ -179,28 +179,20 @@ BEGIN
 	
 	IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Calle = @Calle AND Calle_Nro = @Calle_Nro)
 	BEGIN
-		IF @localidad IS NOT NULL
+		IF @Localidad IS NOT NULL
 			INSERT INTO AEFI.TL_Cliente(Calle, Calle_Nro, Piso, Dpto, Localidad)
-			VALUES (@Calle, @Calle_Nro, @Piso, @Dpto,
-			(
-				SELECT Localidad
-				FROM AEFI.TL_Cliente
-				WHERE Localidad = @Localidad)
-			);
+			VALUES (@Calle, @Calle_Nro, @Piso, @Dpto, @Localidad);
 		ELSE
 			INSERT INTO AEFI.TL_Cliente(Calle, Calle_Nro, Piso, Dpto, Localidad)
 			VALUES (@Calle, @Calle_Nro, @Piso, @Dpto, NULL);
 	END;
 	
 	IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Nombre = @Nombre AND Apellido = @Apellido)
-		INSERT INTO AEFI.TL_Cliente (Documento_Nro, Nombre, Apellido, Telefono, Mail, Fecha_Nacimiento, ID_Tipo_Documento, Calle)
+		INSERT INTO AEFI.TL_Cliente (Documento_Nro, Nombre, Apellido, Telefono, Mail, Fecha_Nacimiento, ID_Tipo_Documento )
 		VALUES (@Documento_Numero, @Nombre, @Apellido, @Telefono, @Mail, @Fecha_Nacimiento, (
 			SELECT ID_Tipo_Documento
 			FROM AEFI.TL_Tipo_Documento
-			WHERE Descripcion = @ID_Tipo_Documento), (
-			SELECT Calle
-			FROM AEFI.TL_Cliente
-			WHERE Calle = @Calle AND Calle_Nro = @Calle_Nro));
+			WHERE Descripcion = @ID_Tipo_Documento));
 END;
 
 GO
