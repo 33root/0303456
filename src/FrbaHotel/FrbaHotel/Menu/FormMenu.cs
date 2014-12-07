@@ -129,9 +129,9 @@ namespace FrbaHotel.Menu
 
        private void btnGestorDeUsuarios_Click(object sender, EventArgs e)
        {
-           FrmNuevoUsuario b = new FrmNuevoUsuario();
+           FrmAbmDeUsuario r = new FrmAbmDeUsuario();
            this.Hide();
-           b.ShowDialog();
+           r.ShowDialog();
            this.Close();
        }
 
