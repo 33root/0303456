@@ -262,17 +262,22 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     comando.Parameters.Add(new SqlParameter("@Estado", "Correcta"));
                     comando.Parameters.Add(new SqlParameter("@ID_Cliente", this.idCliente));
                 }
+
+                
             }
             catch (Excepciones exc)
             {
                 MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+              
             }
             catch (SqlException exc)
             {
                 MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
             }
             finally
             {
+                Console.WriteLine("Pase por el finally");
                 conexion.Close();
             }
         }
