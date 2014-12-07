@@ -83,9 +83,9 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void cancelarBtn_Click(object sender, EventArgs e)
         {
-            FormMenu inicio = new FormMenu();
+            FrmAbmDeUsuario r = new FrmAbmDeUsuario();
             this.Hide();
-            inicio.ShowDialog();
+            r.ShowDialog();
             this.Close();
         }
 
