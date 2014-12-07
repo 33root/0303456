@@ -13,7 +13,7 @@ namespace FrbaHotel
     using FrbaHotel.Login;
     static class Program
     {
-
+        public static string mailUsuario = "";
         public static int idUsuario = 0;
         public static string usuario = "";
         public static int idRol = 0;
