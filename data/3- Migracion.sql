@@ -103,17 +103,20 @@ SELECT c.ID_Consumible, m.Item_Factura_Cantidad, e.ID_Estadia
 FROM gd_esquema.Maestra m, AEFI.TL_Consumible c, AEFI.TL_Estadia e
 WHERE m.Consumible_Codigo = c.ID_Consumible AND e.ID_Reserva=m.Reserva_Codigo;
 
-INSERT INTO AEFI.TL_Item_Por_Factura (ID_Consumible, Cantidad, ID_Factura, Monto)
+INSERT INTO AEFI.TL_Item_Por_Factura (ID_Consumible, Cantidad, ID_Factura, Monto) --268809 consumibles
 SELECT m.Consumible_Codigo, m.Item_Factura_Cantidad, f.ID_Factura, m.Item_Factura_Monto 
 FROM gd_esquema.Maestra m, AEFI.TL_Factura f
 WHERE f.ID_Factura = m.Factura_Nro
 AND m.Consumible_Codigo IS NOT NULL;
 
-INSERT INTO AEFI.TL_Item_Por_Factura (ID_Estadia, Cantidad, ID_Factura, Monto)
+
+INSERT INTO AEFI.TL_Item_Por_Factura (ID_Estadia, Cantidad, ID_Factura, Monto)--89603 estadias
 SELECT DISTINCT e.ID_Estadia, m.Item_Factura_Cantidad, f.ID_Factura, m.Item_Factura_Monto 
 FROM gd_esquema.Maestra m, AEFI.TL_Factura f, AEFI.TL_Estadia e
 WHERE f.ID_Factura = m.Factura_Nro
-AND e.ID_Reserva = m.Reserva_Codigo;
+AND e.ID_Reserva = m.Reserva_Codigo
+AND m.Consumible_Codigo IS NULL;
+
 	
 INSERT INTO AEFI.TL_Puntos_Por_Factura
 SElECT ID_Factura, ID_Cliente, Fecha, (SELECT (SUM(ipf.Monto/10) + SUM(ipf1.Monto/5))
