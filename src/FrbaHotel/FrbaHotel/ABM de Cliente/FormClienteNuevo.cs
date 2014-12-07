@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using FrbaHotel.Menu;
+using FrbaHotel.Generar_Modificar_Reserva;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
@@ -53,6 +54,14 @@ namespace FrbaHotel.ABM_de_Cliente
             this.x = id;
             this.usu = u;
             this.con = c;
+            InitializeComponent();
+            this.ControlBox = false;
+            VolverButton.Enabled = false;
+        }
+
+        public FormClienteNuevo(int bandera)
+        {
+            this.x = bandera;
             InitializeComponent();
             this.ControlBox = false;
             VolverButton.Enabled = false;
@@ -132,6 +141,8 @@ namespace FrbaHotel.ABM_de_Cliente
                     comando = new SqlCommand("AEFI.insertar_cliente", conexion);
                 else if (x == 1)
                     comando = new SqlCommand("AEFI.actualizar_cliente", conexion);
+                else if ( x == 2)
+                    comando = new SqlCommand("AEFI.insertar_cliente", conexion);
     
                 comando.CommandType = CommandType.StoredProcedure;
 
@@ -169,6 +180,28 @@ namespace FrbaHotel.ABM_de_Cliente
                         reader.Close();
                     }
                     comando.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
+
+                    if (x == 2) 
+                    {
+                        string consultaID = "SELECT ID_Cliente "
+                                          + "FROM AEFI.TL_Cliente "
+                                          + "WHERE Mail = " + txbMail.ToString();//ya que no hay 2 mails iguales
+
+                        SqlCommand comandoId = new SqlCommand(consultaID,conexion);
+                        /*SqlDataReader reader2 = comandoId.ExecuteReader();
+                        string id = reader2.ToString();*/
+                        
+                        SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
+                        string id = adapter2.ToString();
+
+                        //conexion.Close();
+
+                        FormGenerarReserva r = new FormGenerarReserva(id);
+                        this.Hide();
+                        r.ShowDialog();
+                        this.Close();
+                    }
+
                 }
                 else
                     throw new Excepciones("No se ingreso ningun mail");

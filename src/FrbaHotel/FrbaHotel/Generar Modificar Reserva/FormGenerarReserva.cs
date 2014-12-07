@@ -18,10 +18,19 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         SqlConnection conexion = BaseDeDatos.conectar();
         int id_habitacion;
         int idTipoHabitacion;
+        string idCliente;
+        string flag;
 
         public FormGenerarReserva()
         {
             InitializeComponent();
+        }
+
+        public FormGenerarReserva(string i)
+        {
+            InitializeComponent();
+            idCliente = i;
+            flag = "TeAbrieronDespuesDeCrearUnCliente";
         }
 
      
@@ -136,7 +145,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void obtenerIDHabitacion()
         {
+            if (flag != "TeAbrieronDespuesDeCrearUnCliente")
+            {
             conexion.Open();
+            }
             string consultaIDHabitacion = "SELECT ID_Habitacion "
                                  + "FROM AEFI.TL_Habitacion "
                                  + "WHERE ID_Tipo_Habitacion = @idTipoHabitacion";
@@ -188,46 +200,83 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void ingresarButton_Click(object sender, EventArgs e)
         {
-            //agregar una reserva en la tabla
-            //conexion.Open(); me dice que ya esta abierta y antes no o.O , capaz se borro sin querer un close en algun lado
-            SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
-            DateTime fechaAcutal = new DateTime();
-            comando.CommandType = CommandType.StoredProcedure;
-            comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
-            comando.Parameters.Add(new SqlParameter("@Fecha_Desde",dtpDesde.Value));
-            comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes",txbCantidadDeHuespedes.ToString()));
-            comando.Parameters.Add(new SqlParameter("@Cantidad_Noches",txbCantidadDeNoches.ToString()));
-
-             
-            this.aniadirParametroRegimen(comando);
-            this.obtenerIDHabitacion();
-            comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
-            comando.Parameters.Add(new SqlParameter("@Estado","Correcta"));
-            comando.Parameters.Add(new SqlParameter("@ID_Cliente", Program.usuario));
-
-            string consultaSiElUsuarioEsYaCliente = "SELECT ID_Cliente "
-                                                   + "FROM AEFI.TL_Cliente "
-                                                   + "WHERE ID_Cliente = @ID_Cliente ";
-
-            SqlCommand comando2 = new SqlCommand(consultaSiElUsuarioEsYaCliente, conexion);
-            comando2.Parameters.Add("@ID_Cliente",Program.usuario);
-            SqlDataReader reader2 = comando2.ExecuteReader();
-
-            if (reader2.HasRows)
+           
+            try
             {
-                MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                conexion.Open();
+                
+                if (flag != "TeAbrieronDespuesDeCrearUnCliente")
+                {
+                    string consultaSiElUsuarioEsYaCliente = "SELECT ID_Cliente "
+                                                           + "FROM AEFI.TL_Cliente "
+                                                           + "WHERE ID_Cliente = @ID_Cliente ";
+
+                    SqlCommand comando2 = new SqlCommand(consultaSiElUsuarioEsYaCliente, conexion);
+                    comando2.Parameters.Add("@ID_Cliente", Program.usuario);
+                    SqlDataReader reader2 = comando2.ExecuteReader();
+
+                    if (reader2.HasRows)
+                    {
+                        SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
+                        DateTime fechaAcutal = new DateTime();
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
+                        comando.Parameters.Add(new SqlParameter("@Fecha_Desde", dtpDesde.Value));
+                        comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.ToString()));
+                        comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.ToString()));
+
+
+                        this.aniadirParametroRegimen(comando);
+                        this.obtenerIDHabitacion();
+                        comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
+                        comando.Parameters.Add(new SqlParameter("@Estado", "Correcta"));
+                        comando.Parameters.Add(new SqlParameter("@ID_Cliente", Program.usuario));
+
+                        MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usted no esta registrado como cliente de este hotel, a continuacion ingrese sus datos para luego efectuar la reserva", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        FormClienteNuevo c = new FormClienteNuevo(2);
+                        this.Hide();
+                        c.ShowDialog();
+                        this.Close();
+                    }
+
+                }
+                else
+                {
+                    SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
+                    DateTime fechaAcutal = new DateTime();
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
+                    comando.Parameters.Add(new SqlParameter("@Fecha_Desde", dtpDesde.Value));
+                    comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.ToString()));
+                    comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.ToString()));
+
+
+                    this.aniadirParametroRegimen(comando);
+                    this.obtenerIDHabitacion();
+                    comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
+                    comando.Parameters.Add(new SqlParameter("@Estado", "Correcta"));
+                    comando.Parameters.Add(new SqlParameter("@ID_Cliente", this.idCliente));
+                }
             }
-            else 
+            catch (Excepciones exc)
             {
-                MessageBox.Show("Usted no esta registrado como cliente de este hotel, a continuacion ingrese sus datos", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                FormClienteNuevo c = new FormClienteNuevo();
-                this.Hide();
-                c.ShowDialog();
-                this.Close();
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
         }
+
 
         private void verCostoButton_Click(object sender, EventArgs e)
         {
