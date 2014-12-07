@@ -52,36 +52,50 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            
+
 
             if (verificarTextBoxNoVacios())
             {
-               
+
                 conexion.Open();
-                string consulta = "Select * From AEFI.TL_Hotel h Where h.Nombre = "+ BaseDeDatos.agregarApostrofos(tbNombre.Text.ToString());
 
-                SqlCommand comando2 = new SqlCommand(consulta, conexion);
-                SqlDataReader reader = comando2.ExecuteReader();
-
-                if (reader.HasRows)
+                if (x == 0)
                 {
+                    string consulta = "Select * From AEFI.TL_Hotel h Where h.Nombre = " + BaseDeDatos.agregarApostrofos(tbNombre.Text.ToString());
 
-                    MessageBox.Show("Ya existe un Hotel con este Nombre ", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    conexion.Close();
+                    SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                    SqlDataReader reader = comando2.ExecuteReader();
 
-               }
+                    if (reader.HasRows)
+                    {
+
+                        MessageBox.Show("Ya existe un Hotel con este Nombre ", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        conexion.Close();
+
+                    }
+                    else
+                    {
+
+                        MetodoCrear();
+
+                    }
+                }
                 else
                 {
-
-                    MetodoCrear();
-                
+                    if (x == 1)
+                    {
+                        MetodoCrear();
+                    }
                 }
             }
             else
             {
                 MessageBox.Show("Todos los campos deben ser rellenados ", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        
+
+             
+            
+            
         }
 
         private Boolean verificarTextBoxNoVacios()

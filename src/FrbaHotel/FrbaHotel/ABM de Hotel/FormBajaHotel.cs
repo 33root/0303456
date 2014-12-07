@@ -72,8 +72,20 @@ namespace FrbaHotel.ABM_de_Hotel
             }
             catch (SqlException exc)
             {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (exc.Number == 61111)
+                {
+                    MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+                
+            
+            
+
+                
+                
+            /*{
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }*/
             finally
             {
                 conexion.Close();

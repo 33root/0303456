@@ -516,6 +516,7 @@ CREATE PROCEDURE AEFI.actualizar_Hotel
 		@Cantidad_Estrellas numeric(18,0),
 		@Recarga_Estrellas numeric(18,0),
 		@Ciudad nvarchar(255),
+		@Fecha_Creacion datetime,
 		@Pais nvarchar(255),
 		@NroCalle numeric(18,0)
 
@@ -530,8 +531,7 @@ BEGIN
 						
 	END;	
 			
-END;	
-	
+END;		
 	
 
 GO
@@ -547,7 +547,7 @@ AS
 
 
 BEGIN
-	IF (NOT EXISTS (SELECT * FROM AEFI.TL_Reserva re, AEFI.TL_Habitacion ha WHERE ha.ID_Hotel = @ID_Hotel AND re.ID_Habitacion = ha.ID_Habitacion AND re.Fecha_Desde BETWEEN @Fecha_Inicio AND @Fecha_Fin) AND NOT EXISTS 
+	IF (NOT EXISTS (SELECT * FROM AEFI.TL_Reserva re, AEFI.TL_Habitacion ha WHERE ha.ID_Hotel = @ID_Hotel AND re.ID_Habitacion = ha.ID_Habitacion AND re.Fecha_Desde BETWEEN @Fecha_Inicio AND @Fecha_Fin AND @ID_Hotel = ha.ID_Hotel) AND NOT EXISTS 
 	(SELECT * 
 	FROM AEFI.TL_Estadia es, AEFI.TL_Reserva re, AEFI.TL_Habitacion ha 
 	WHERE es.ID_Reserva = re.ID_Reserva
@@ -604,6 +604,7 @@ CREATE PROCEDURE AEFI.actualizar_Habitacion
 		@ID_Habitacion numeric(18,0),
 		@Numero numeric(18,0),
 		@Piso numeric(18,0),
+		@Tipo_habitacion nvarchar(50),
 		@Vista nvarchar (50)
 		
 

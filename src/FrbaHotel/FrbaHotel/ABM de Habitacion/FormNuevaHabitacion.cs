@@ -81,23 +81,33 @@ namespace FrbaHotel.ABM_de_Habitacion
             {
 
                 conexion.Open();
-                string consulta = "Select * From AEFI.TL_Habitacion h Where h.Numero = " + BaseDeDatos.agregarApostrofos(tbNumero.Text.ToString());
-
-                SqlCommand comando2 = new SqlCommand(consulta, conexion);
-                SqlDataReader reader = comando2.ExecuteReader();
-
-                if (reader.HasRows)
+                if (x == 0)
                 {
+                    string consulta = "Select * From AEFI.TL_Habitacion h Where h.Numero = " + BaseDeDatos.agregarApostrofos(tbNumero.Text.ToString());
 
-                    MessageBox.Show("Ya existe una Habitacion con este Numero ", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    conexion.Close();
+                    SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                    SqlDataReader reader = comando2.ExecuteReader();
 
+                    if (reader.HasRows)
+                    {
+
+                        MessageBox.Show("Ya existe una Habitacion con este Numero ", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        conexion.Close();
+
+                    }
+                    else
+                    {
+
+                        MetodoCrear();
+
+                    }
                 }
                 else
                 {
-
-                    MetodoCrear();
-
+                    if (x == 1)
+                    {
+                        MetodoCrear();
+                    }
                 }
 
                 
