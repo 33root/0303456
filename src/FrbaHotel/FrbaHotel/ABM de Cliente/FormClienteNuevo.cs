@@ -188,11 +188,12 @@ namespace FrbaHotel.ABM_de_Cliente
                                           + "WHERE Mail = " + txbMail.ToString();//ya que no hay 2 mails iguales
 
                         SqlCommand comandoId = new SqlCommand(consultaID,conexion);
-                        /*SqlDataReader reader2 = comandoId.ExecuteReader();
-                        string id = reader2.ToString();*/
+                        SqlDataReader reader2 = comandoId.ExecuteReader();
+                        reader2.Read();
+                        string id = Convert.ToString(reader2["ID_Cliente"]);
                         
-                        SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
-                        string id = adapter2.ToString();
+                       /* SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
+                        string id = adapter2.ToString();*/
 
                         //conexion.Close();
 

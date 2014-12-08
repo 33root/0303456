@@ -226,7 +226,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                         SqlCommand comandoId = new SqlCommand(consultaID, conexion);
                         SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
-                        string id = adapter2.ToString();
+                        string id = adapter2.ToString();// me parece que esto no esta bien, pero lo de abajo me dice que no se pudo enlazar el mail
+                        /*SqlDataReader readerId = comandoId.ExecuteReader();
+                        readerId.Read();
+                        string id = Convert.ToString(readerId["ID_Cliente"]);*/
 
                         SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
                         DateTime fechaAcutal = new DateTime();
