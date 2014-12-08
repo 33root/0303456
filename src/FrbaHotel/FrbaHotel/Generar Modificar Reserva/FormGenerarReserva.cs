@@ -217,6 +217,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                     if (reader2.HasRows)
                     {
+
+                        string mail = Convert.ToString(reader2["Mail"]);
+                        string consultaID = "SELECT ID_Cliente "
+                                          + "FROM AEFI.TL_Cliente "
+                                          + "WHERE Mail = " + mail;
+
+                        SqlCommand comandoId = new SqlCommand(consultaID, conexion);
+                        SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
+                        string id = adapter2.ToString();
+
                         SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
                         DateTime fechaAcutal = new DateTime();
                         comando.CommandType = CommandType.StoredProcedure;
@@ -230,7 +240,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         this.obtenerIDHabitacion();
                         comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
                         comando.Parameters.Add(new SqlParameter("@Estado", "Correcta"));
-                        comando.Parameters.Add(new SqlParameter("@ID_Cliente", Program.usuario));
+                        comando.Parameters.Add(new SqlParameter("@ID_Cliente", id));
 
                         MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
