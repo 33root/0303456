@@ -212,7 +212,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     comando2.Parameters.Add("@Mail", Program.mailUsuario); //ESTO SE TIENE QUE CARGAR EN EL LOGIN, ya que en los clientes el Mail es lo que no se repite, comparar por ID no tiene sentido
                     SqlDataReader reader2 = comando2.ExecuteReader();
                     reader2.Read();
-                    string mail = Convert.ToString(reader2["Mail"]);
+                    string mail = Convert.ToString(reader2["Mail"]);//cuando entro con un usuario creado esto funciona, pero cuando entro con el admin no
+                                                                    //creia que era porque el admin no tiene mail tiene null, entonces le agregue un mail admin@gmail.com
+                                                                    //pero me sigue diciendo que aca no lee nada... Help!
                     
                     
                     if (reader2.HasRows)
