@@ -145,10 +145,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void obtenerIDHabitacion()
         {
-            if (flag != "TeAbrieronDespuesDeCrearUnCliente")
-            {
-            conexion.Open();
-            }
+            
             string consultaIDHabitacion = "SELECT ID_Habitacion "
                                  + "FROM AEFI.TL_Habitacion "
                                  + "WHERE ID_Tipo_Habitacion = @idTipoHabitacion";
@@ -207,18 +204,22 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 
                 if (flag != "TeAbrieronDespuesDeCrearUnCliente")
                 {
-                    string consultaSiElUsuarioEsYaCliente = "SELECT Mail "
+                    string consultaSiElUsuarioEsYaCliente =  "SELECT Mail "
                                                            + "FROM AEFI.TL_Cliente "
                                                            + "WHERE Mail = @Mail ";
 
                     SqlCommand comando2 = new SqlCommand(consultaSiElUsuarioEsYaCliente, conexion);
                     comando2.Parameters.Add("@Mail", Program.mailUsuario); //ESTO SE TIENE QUE CARGAR EN EL LOGIN, ya que en los clientes el Mail es lo que no se repite, comparar por ID no tiene sentido
                     SqlDataReader reader2 = comando2.ExecuteReader();
-
+                    reader2.Read();
+                    string mail = Convert.ToString(reader2["Mail"]);
+                    
+                    
                     if (reader2.HasRows)
                     {
 
-                        string mail = Convert.ToString(reader2["Mail"]);
+                        reader2.Close();
+
                         string consultaID = "SELECT ID_Cliente "
                                           + "FROM AEFI.TL_Cliente "
                                           + "WHERE Mail = " + mail;

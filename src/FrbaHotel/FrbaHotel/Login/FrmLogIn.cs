@@ -31,6 +31,7 @@ namespace FrbaHotel.Login
         {
             int rolSeleccionado;
             int hotelSeleccionado;
+            string mail;
             String consulta = "SELECT ID_Rol " +
                                   "FROM AEFI.TL_Rol " +
                                   "WHERE Descripcion = @Descripcion " +
@@ -38,6 +39,9 @@ namespace FrbaHotel.Login
             String consultaHotel = "SELECT ID_Hotel " +
                                     "FROM AEFI.TL_Hotel h " +
                                     "WHERE h.Nombre= @Descripcion ";
+            string consultaMail = "SELECT Mail " +
+                                  "FROM AEFI.TL_Usuario " +
+                                  "WHERE Username = @Username ";
 
 
             try
@@ -63,6 +67,16 @@ namespace FrbaHotel.Login
 
                 //cargo el hotel en la variable global del sistema
                 Program.idHotel = hotelSeleccionado;
+
+                comando = new SqlCommand(consultaMail, conexion);
+                comando.Parameters.Add(new SqlParameter("@Username",txbUsuario.Text));
+                reader = comando.ExecuteReader();
+                reader.Read();
+                mail = Convert.ToString(reader["Mail"]);
+                reader.Close();
+
+                //cargo el mail del usuario en la variable global del sistema
+                Program.mailUsuario = mail;
 
                 MessageBox.Show("Bienvenido al sistema", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //new de la ventana que se tiene que abrir
