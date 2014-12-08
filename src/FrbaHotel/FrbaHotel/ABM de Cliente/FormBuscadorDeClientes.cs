@@ -62,15 +62,15 @@ namespace FrbaHotel.ABM_de_Cliente
             try
             {
                 conexion.Open();
-                string consulta = "SELECT ID_Usuario FROM AEFI.TL_Cliente " +
-                                  "WHERE Documento_Nro = " + dataGridView1.SelectedCells[0].Value; //[0] porque el ID_Cliente es la primer columna
+                string consulta = "SELECT Mail FROM AEFI.TL_Cliente " +
+                                  "WHERE Mail = " + dataGridView1.SelectedCells[5].Value.ToString(); //[0] porque el ID_Cliente es la primer columna
                 SqlCommand comando = new SqlCommand(consulta, conexion);
                 SqlDataReader reader = comando.ExecuteReader();
                 reader.Read();
-                int id = Convert.ToInt32(reader[0]);
+                String mail = Convert.ToString(reader["Mail"]);
                 reader.Close();
 
-                consulta = "UPDATE AEFI.TL_Usuario SET Habilitado = 1 WHERE ID_Usuario = " + id;
+                consulta = "UPDATE AEFI.TL_Usuario SET Habilitado = 1 WHERE Mail = " + mail;
                 comando = new SqlCommand(consulta, conexion);
                 comando.ExecuteNonQuery();
                 MessageBox.Show("Usuario Habilitado", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -145,13 +145,32 @@ namespace FrbaHotel.ABM_de_Cliente
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-            dataGridView1.DataSource = null;
-            txbApellido.Clear();
-            txbDocumento.Clear();
-            txbMail.Clear();
-            txbNombre.Clear();
-            cbTipoDeDocumento.SelectedIndex = 0;
+        {//Eliminar
+            try
+            {
+                conexion.Open();
+                string consulta = "SELECT Mail FROM AEFI.TL_Cliente " +
+                                  "WHERE Mail = " + dataGridView1.SelectedCells[5].Value.ToString(); //[0] porque el ID_Cliente es la primer columna
+                SqlCommand comando = new SqlCommand(consulta, conexion);
+                SqlDataReader reader = comando.ExecuteReader();
+                reader.Read();
+                String mail = Convert.ToString(reader[0]);
+                reader.Close();
+
+                consulta = "UPDATE AEFI.TL_Usuario SET Habilitado = 0 WHERE Mail = " + mail;
+                comando = new SqlCommand(consulta, conexion);
+                comando.ExecuteNonQuery();
+                MessageBox.Show("Usuario Deshabilitado", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            button3_Click(sender, e); 
         }
 
         private void modificarButton_Click(object sender, EventArgs e)
