@@ -216,10 +216,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                     if(Program.idUsuario != 1 /*osea no es el admin*/)
                     {//si es el admin la lectura de arriba no va a traer ningun mail, entonces esto rompia por eso
-                    mail = Convert.ToString(reader2["Mail"]);
-                        //cuando entro con un usuario creado esto funciona, pero cuando entro con el admin no
-                        //creia que era porque el admin no tiene mail tiene null, entonces le agregue un mail admin@gmail.com
-                        //pero me sigue diciendo que aca no lee nada... Help!
+                        mail = Convert.ToString(reader2["Mail"]);
                     }
                     
                     
@@ -244,14 +241,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         comando.CommandType = CommandType.StoredProcedure;
                         comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
                         comando.Parameters.Add(new SqlParameter("@Fecha_Desde", dtpDesde.Value));
-                        comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.ToString()));
-                        comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.ToString()));
+                        comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.Text));
+                        comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.Text));
 
 
                         this.aniadirParametroRegimen(comando);
                         this.obtenerIDHabitacion();
                         comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
-                        comando.Parameters.Add(new SqlParameter("@Estado", "Correcta"));
+                        comando.Parameters.Add(new SqlParameter("@Estado", BaseDeDatos.agregarApostrofos("Correcta")));
                         comando.Parameters.Add(new SqlParameter("@ID_Cliente", id));
 
                         MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);

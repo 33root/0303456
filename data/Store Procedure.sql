@@ -593,7 +593,7 @@ CREATE PROCEDURE AEFI.insertar_Reserva
 
 AS
 BEGIN
- IF NOT EXISTS (SELECT * FROM AEFI.TL_Reserva r WHERE Fecha_Reserva = @Fecha_Reserva AND Fecha_Desde = @Fecha_Desde AND Cantidad_Huespedes = @Cantidad_Huespedes AND Cantidad_Noches = @Cantidad_Noches AND ID_Regimen = @ID_Regimen AND ID_Habitacion = @ID_Habitacion AND Estado = @Estado AND ID_Cliente = @ID_Cliente)
+ IF NOT EXISTS (SELECT * FROM AEFI.TL_Reserva WHERE Fecha_Reserva = @Fecha_Reserva AND Fecha_Desde = @Fecha_Desde AND Cantidad_Huespedes = @Cantidad_Huespedes AND Cantidad_Noches = @Cantidad_Noches AND ID_Regimen = @ID_Regimen AND ID_Habitacion = @ID_Habitacion AND Estado = @Estado AND ID_Cliente = @ID_Cliente)
  BEGIN
  INSERT INTO AEFI.TL_Reserva(Fecha_Reserva,Fecha_Desde,Cantidad_Huespedes,Cantidad_Noches,ID_Regimen,ID_Habitacion,Estado,ID_Cliente)
  VALUES (@Fecha_Reserva, @Fecha_Desde, @Cantidad_Huespedes, @Cantidad_Noches, @ID_Regimen, @ID_Habitacion, @Estado, @ID_Cliente)
