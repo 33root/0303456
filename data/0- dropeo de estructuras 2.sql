@@ -1,4 +1,7 @@
 
+DROP PROCEDURE AEFI.deshabilitarUsuario;
+DROP PROCEDURE AEFI.insertar_Hotel_Usuario;
+DROP PROCEDURE AEFI.eliminar_Hotel_Usuario;
 DROP PROCEDURE AEFI.quitarConsumiblePorEstadia;
 DROP PROCEDURE AEFI.agregarConsumiblePorEstadia;
 DROP PROCEDURE AEFI.generarEgresoEstadia;

@@ -47,7 +47,6 @@
             this.rolesBox.Name = "rolesBox";
             this.rolesBox.Size = new System.Drawing.Size(176, 21);
             this.rolesBox.TabIndex = 0;
-            this.rolesBox.SelectedIndexChanged += new System.EventHandler(this.rolesBox_SelectedIndexChanged);
             // 
             // confirmarBtn
             // 

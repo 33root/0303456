@@ -319,6 +319,7 @@ BEGIN
  
 END;
 
+
 GO
 CREATE PROCEDURE AEFI.crear_usuario_por_rol
 
@@ -871,6 +872,61 @@ WHERE ID_Consumible_Por_Estadia = @idConsumiblePorEstadia
 	
 	
 	END;
+	
+	
+GO
+
+CREATE PROCEDURE AEFI.eliminar_Hotel_Usuario
+    @IdUser NUMERIC(18,0),
+    @IDHotel NUMERIC(18,0),
+    @IDRol NUMERIC(18,0)
+		
+AS
+BEGIN
+	IF EXISTS (SELECT * FROM AEFI.TL_Usuario_Por_Hotel WHERE ID_Hotel = @IDHotel AND ID_Usuario = @IdUser AND ID_Rol = @IDRol)
+	BEGIN
+		DELETE AEFI.TL_Usuario_Por_Hotel
+		WHERE ID_Hotel = @IDHotel
+		AND ID_Rol = @IDRol
+		AND ID_Usuario = @IdUser
+	END
+END;
+
+GO
+
+CREATE PROCEDURE AEFI.insertar_Hotel_Usuario
+    @IdUser NUMERIC(18,0),
+    @IDHotel NUMERIC(18,0),
+    @IDRol NUMERIC(18,0)
+		
+AS
+BEGIN
+	IF NOT EXISTS (SELECT * FROM AEFI.TL_Usuario_Por_Hotel WHERE ID_Hotel = @IDHotel AND ID_Usuario = @IdUser AND ID_Rol = @IDRol)
+	BEGIN
+		INSERT INTO AEFI.TL_Usuario_Por_Hotel
+		VALUES (@IDHotel, @IDRol, @IdUser);
+	END
+END;
+
+GO
+
+CREATE PROCEDURE AEFI.deshabilitarUsuario
+    @IdUser NUMERIC(18,0)
+AS
+BEGIN
+	IF EXISTS (SELECT * FROM AEFI.TL_Usuario WHERE ID_Usuario = @IdUser)
+	BEGIN
+		UPDATE AEFI.TL_Usuario
+		SET Habilitado = 0
+		WHERE ID_Usuario = @IdUser
+		
+	END
+END;
+
+
+
+
+
 
 
 

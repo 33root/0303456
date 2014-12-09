@@ -46,11 +46,7 @@ namespace FrbaHotel.ABM_de_Rol
 
         }
 
-        private void rolesBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+    
         private void confirmarBtn_Click_1(object sender, EventArgs e)
         {
 
