@@ -45,6 +45,7 @@ namespace FrbaHotel.Login
                     comando.Parameters.Add(new SqlParameter("@usuario", this.usuario));
                     comando.Parameters.Add(new SqlParameter("@contrasena", BaseDeDatos.cifrar256(claveTxtBox.Text)));
                     comando.ExecuteNonQuery();
+                    MessageBox.Show("Clave modificada exitosamente", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 catch (SqlException exc)
@@ -54,12 +55,14 @@ namespace FrbaHotel.Login
                 finally
                 {
                     conexion.Close();
-                    this.Close();
+
+                    this.cancelarBtn_Click(this,e);
                 }
                 
             }
-            else {
-                throw new Excepciones("Las Claves NO Coinciden");
+            else
+            {
+                MessageBox.Show("Las claves NO coiciden", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

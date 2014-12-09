@@ -95,6 +95,10 @@ namespace FrbaHotel.Menu
                             btnListadoEstadistico.Visible = true;
                             break;                   
                     }
+                    if (Program.idUsuario != 0)
+                    {
+                        btnNuevaClave.Visible = true;
+                    }
                 }
                 reader.Close();
             }
@@ -108,6 +112,8 @@ namespace FrbaHotel.Menu
             }
         }
 
+
+ 
     
 
        private void btnRegistrarConsumibles_Click(object sender, EventArgs e)
@@ -234,6 +240,14 @@ namespace FrbaHotel.Menu
            r.ShowDialog();
            this.Close();
 
+       }
+
+       private void btnNuevaClave_Click(object sender, EventArgs e)
+       {
+           NuevaClave i = new NuevaClave(Convert.ToString(Program.idUsuario));
+           this.Hide();
+           i.ShowDialog();
+           this.Close();
        }
 
 

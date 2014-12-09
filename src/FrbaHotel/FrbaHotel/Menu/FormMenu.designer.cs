@@ -43,6 +43,7 @@
             this.btnGestorRegimenes = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnGestorDeClientes = new System.Windows.Forms.Button();
+            this.btnNuevaClave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnListaHoteles
@@ -209,11 +210,23 @@
             this.btnGestorDeClientes.Visible = false;
             this.btnGestorDeClientes.Click += new System.EventHandler(this.btnGestorDeClientes_Click);
             // 
+            // btnNuevaClave
+            // 
+            this.btnNuevaClave.Location = new System.Drawing.Point(83, 466);
+            this.btnNuevaClave.Name = "btnNuevaClave";
+            this.btnNuevaClave.Size = new System.Drawing.Size(179, 23);
+            this.btnNuevaClave.TabIndex = 16;
+            this.btnNuevaClave.Text = "Cambiar Clave";
+            this.btnNuevaClave.UseVisualStyleBackColor = true;
+            this.btnNuevaClave.Visible = false;
+            this.btnNuevaClave.Click += new System.EventHandler(this.btnNuevaClave_Click);
+            // 
             // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(337, 567);
+            this.Controls.Add(this.btnNuevaClave);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnGestorRegimenes);
             this.Controls.Add(this.btnRegistrarConsumibles);
@@ -254,5 +267,6 @@
         private System.Windows.Forms.Button btnGestorRegimenes;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Button btnGestorDeClientes;
+        private System.Windows.Forms.Button btnNuevaClave;
     }
 }
