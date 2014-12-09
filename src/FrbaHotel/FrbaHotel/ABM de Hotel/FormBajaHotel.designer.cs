@@ -153,6 +153,7 @@
             this.Controls.Add(this.dtpFin);
             this.Controls.Add(this.dtpInicio);
             this.Name = "FormBajaHotel";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BajaHotel";
             this.Load += new System.EventHandler(this.BajaHotel_Load);
             this.ResumeLayout(false);

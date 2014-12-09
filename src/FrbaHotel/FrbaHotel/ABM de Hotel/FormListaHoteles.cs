@@ -156,8 +156,34 @@ namespace FrbaHotel.ABM_de_Hotel
                     }
                     else
                     {
+                        string consulta2 = "select Year(bh.Fecha_Fin) " +
+                                           "from AEFI.TL_Baja_Hotel bh " +
+                                            "where bh.ID_Hotel = " + BaseDeDatos.agregarApostrofos(row.Cells[0].Value.ToString());
 
-                        MessageBox.Show("No se Puede Habilitar el Hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        string consulta3 = "select MONTH(bh.Fecha_Fin) " +
+                                           "from AEFI.TL_Baja_Hotel bh " +
+                                            "where bh.ID_Hotel = " + BaseDeDatos.agregarApostrofos(row.Cells[0].Value.ToString());
+
+                        string consulta4 = "select DAY(bh.Fecha_Fin) " +
+                                           "from AEFI.TL_Baja_Hotel bh " +
+                                            "where bh.ID_Hotel = " + BaseDeDatos.agregarApostrofos(row.Cells[0].Value.ToString());
+                    SqlCommand comand = new SqlCommand(consulta2, conexion);
+                    SqlDataReader reader3 = comand.ExecuteReader();
+
+                         SqlCommand comand2 = new SqlCommand(consulta3, conexion);
+                    SqlDataReader reader4 = comand2.ExecuteReader();
+
+                         SqlCommand comand3 = new SqlCommand(consulta4, conexion);
+                    SqlDataReader reader5 = comand3.ExecuteReader();
+
+                    reader3.Read();
+                    reader4.Read();
+                    reader5.Read();
+
+                        MessageBox.Show("No se puede Habilitar el Hotel, la fecha estipulada de reahabilitacion es: " + reader3[0].ToString() + "/" + reader4[0].ToString() + "/" + reader5[0].ToString() , "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        reader3.Close();
+                        reader4.Close();
+                        reader5.Close();
                     }
                 }
                 }

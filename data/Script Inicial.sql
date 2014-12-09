@@ -535,7 +535,6 @@ END;
 	
 
 GO
-
 CREATE PROCEDURE AEFI.baja_Hotel
 
 		@ID_Hotel numeric(18,0),
@@ -564,7 +563,7 @@ BEGIN
 END
 ELSE
 
-RAISERROR('No se puede dar de baja el hotel, verifique que no haya reservas ni estadias en el intervalo', 1, 1)
+RAISERROR(61111, 1, 1)
 	
 END;
 	
