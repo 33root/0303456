@@ -167,7 +167,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     comando.Parameters.Add(new SqlParameter("@Dpto", txbDpto.Text));
                 if (!String.IsNullOrEmpty(txbLocalidad.Text))
                     comando.Parameters.Add(new SqlParameter("@Localidad", txbLocalidad.Text));
-                if (!String.IsNullOrEmpty(txbTelefono.Text))
+                if (!String.IsNullOrEmpty(txbMail.Text))
                 {
                     if (x != 1)
                     {
