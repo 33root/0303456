@@ -190,7 +190,7 @@ namespace FrbaHotel.ABM_de_Cliente
                         SqlCommand comandoId = new SqlCommand(consultaID,conexion);
                         SqlDataReader reader2 = comandoId.ExecuteReader();
                         reader2.Read();
-                        string id = Convert.ToString(reader2["ID_Cliente"]);
+                        int id = Convert.ToInt32(reader2["ID_Cliente"]);
                         
                        /* SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
                         string id = adapter2.ToString();*/
