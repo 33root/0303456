@@ -53,14 +53,16 @@
             this.dptolbl = new System.Windows.Forms.Label();
             this.dptoTxtBox = new System.Windows.Forms.TextBox();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
-            this.rolesBox = new System.Windows.Forms.ComboBox();
-            this.rollbl = new System.Windows.Forms.Label();
+            this.aniadirCmbBox = new System.Windows.Forms.ComboBox();
+            this.aniadirlbl = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.passwordTxtBox = new System.Windows.Forms.TextBox();
             this.nombreTxtBox = new System.Windows.Forms.TextBox();
             this.nombrelbl = new System.Windows.Forms.Label();
             this.modiBtn = new System.Windows.Forms.Button();
             this.volverBtn = new System.Windows.Forms.Button();
+            this.quitarlbl = new System.Windows.Forms.Label();
+            this.quitarcmbBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.usuariosDGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -193,7 +195,7 @@
             // 
             this.nrodoclbl.AccessibleName = "grupo";
             this.nrodoclbl.AutoSize = true;
-            this.nrodoclbl.Location = new System.Drawing.Point(11, 391);
+            this.nrodoclbl.Location = new System.Drawing.Point(11, 409);
             this.nrodoclbl.Name = "nrodoclbl";
             this.nrodoclbl.Size = new System.Drawing.Size(120, 13);
             this.nrodoclbl.TabIndex = 68;
@@ -203,7 +205,7 @@
             // nrodocTxtBox
             // 
             this.nrodocTxtBox.AccessibleName = "grupo";
-            this.nrodocTxtBox.Location = new System.Drawing.Point(143, 393);
+            this.nrodocTxtBox.Location = new System.Drawing.Point(143, 411);
             this.nrodocTxtBox.Name = "nrodocTxtBox";
             this.nrodocTxtBox.Size = new System.Drawing.Size(121, 20);
             this.nrodocTxtBox.TabIndex = 57;
@@ -214,7 +216,7 @@
             // 
             this.tipoDocCmbBox.AccessibleName = "grupo";
             this.tipoDocCmbBox.FormattingEnabled = true;
-            this.tipoDocCmbBox.Location = new System.Drawing.Point(143, 363);
+            this.tipoDocCmbBox.Location = new System.Drawing.Point(143, 381);
             this.tipoDocCmbBox.Name = "tipoDocCmbBox";
             this.tipoDocCmbBox.Size = new System.Drawing.Size(121, 21);
             this.tipoDocCmbBox.TabIndex = 56;
@@ -224,7 +226,7 @@
             // 
             this.tipolbl.AccessibleName = "grupo";
             this.tipolbl.AutoSize = true;
-            this.tipolbl.Location = new System.Drawing.Point(14, 361);
+            this.tipolbl.Location = new System.Drawing.Point(14, 379);
             this.tipolbl.Name = "tipolbl";
             this.tipolbl.Size = new System.Drawing.Size(104, 13);
             this.tipolbl.TabIndex = 70;
@@ -325,32 +327,32 @@
             this.checkedListBox.TabIndex = 62;
             this.checkedListBox.Visible = false;
             // 
-            // rolesBox
+            // aniadirCmbBox
             // 
-            this.rolesBox.AccessibleName = "grupo";
-            this.rolesBox.FormattingEnabled = true;
-            this.rolesBox.Location = new System.Drawing.Point(140, 326);
-            this.rolesBox.Name = "rolesBox";
-            this.rolesBox.Size = new System.Drawing.Size(121, 21);
-            this.rolesBox.TabIndex = 78;
-            this.rolesBox.Visible = false;
+            this.aniadirCmbBox.AccessibleName = "grupo";
+            this.aniadirCmbBox.FormattingEnabled = true;
+            this.aniadirCmbBox.Location = new System.Drawing.Point(140, 344);
+            this.aniadirCmbBox.Name = "aniadirCmbBox";
+            this.aniadirCmbBox.Size = new System.Drawing.Size(121, 21);
+            this.aniadirCmbBox.TabIndex = 78;
+            this.aniadirCmbBox.Visible = false;
             // 
-            // rollbl
+            // aniadirlbl
             // 
-            this.rollbl.AccessibleName = "grupo";
-            this.rollbl.AutoSize = true;
-            this.rollbl.Location = new System.Drawing.Point(43, 329);
-            this.rollbl.Name = "rollbl";
-            this.rollbl.Size = new System.Drawing.Size(26, 13);
-            this.rollbl.TabIndex = 83;
-            this.rollbl.Text = "Rol:";
-            this.rollbl.Visible = false;
+            this.aniadirlbl.AccessibleName = "grupo";
+            this.aniadirlbl.AutoSize = true;
+            this.aniadirlbl.Location = new System.Drawing.Point(43, 347);
+            this.aniadirlbl.Name = "aniadirlbl";
+            this.aniadirlbl.Size = new System.Drawing.Size(59, 13);
+            this.aniadirlbl.TabIndex = 83;
+            this.aniadirlbl.Text = "Añadir Rol:";
+            this.aniadirlbl.Visible = false;
             // 
             // label2
             // 
             this.label2.AccessibleName = "grupo";
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(43, 286);
+            this.label2.Location = new System.Drawing.Point(46, 279);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 13);
             this.label2.TabIndex = 82;
@@ -361,7 +363,7 @@
             // passwordTxtBox
             // 
             this.passwordTxtBox.AccessibleName = "grupo";
-            this.passwordTxtBox.Location = new System.Drawing.Point(140, 286);
+            this.passwordTxtBox.Location = new System.Drawing.Point(143, 279);
             this.passwordTxtBox.Name = "passwordTxtBox";
             this.passwordTxtBox.PasswordChar = '*';
             this.passwordTxtBox.Size = new System.Drawing.Size(121, 20);
@@ -410,15 +412,38 @@
             this.volverBtn.UseVisualStyleBackColor = true;
             this.volverBtn.Click += new System.EventHandler(this.volverBtn_Click);
             // 
+            // quitarlbl
+            // 
+            this.quitarlbl.AccessibleName = "grupo";
+            this.quitarlbl.AutoSize = true;
+            this.quitarlbl.Location = new System.Drawing.Point(40, 316);
+            this.quitarlbl.Name = "quitarlbl";
+            this.quitarlbl.Size = new System.Drawing.Size(57, 13);
+            this.quitarlbl.TabIndex = 86;
+            this.quitarlbl.Text = "Quitar Rol:";
+            this.quitarlbl.Visible = false;
+            // 
+            // quitarcmbBox
+            // 
+            this.quitarcmbBox.AccessibleName = "grupo";
+            this.quitarcmbBox.FormattingEnabled = true;
+            this.quitarcmbBox.Location = new System.Drawing.Point(140, 312);
+            this.quitarcmbBox.Name = "quitarcmbBox";
+            this.quitarcmbBox.Size = new System.Drawing.Size(121, 21);
+            this.quitarcmbBox.TabIndex = 87;
+            this.quitarcmbBox.Visible = false;
+            // 
             // FrmModificarOBajaUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(700, 706);
+            this.Controls.Add(this.quitarcmbBox);
+            this.Controls.Add(this.quitarlbl);
             this.Controls.Add(this.volverBtn);
             this.Controls.Add(this.modiBtn);
-            this.Controls.Add(this.rolesBox);
-            this.Controls.Add(this.rollbl);
+            this.Controls.Add(this.aniadirCmbBox);
+            this.Controls.Add(this.aniadirlbl);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.passwordTxtBox);
             this.Controls.Add(this.nombreTxtBox);
@@ -484,13 +509,15 @@
         private System.Windows.Forms.Label dptolbl;
         private System.Windows.Forms.TextBox dptoTxtBox;
         private System.Windows.Forms.CheckedListBox checkedListBox;
-        private System.Windows.Forms.ComboBox rolesBox;
-        private System.Windows.Forms.Label rollbl;
+        private System.Windows.Forms.ComboBox aniadirCmbBox;
+        private System.Windows.Forms.Label aniadirlbl;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox passwordTxtBox;
         private System.Windows.Forms.TextBox nombreTxtBox;
         private System.Windows.Forms.Label nombrelbl;
         private System.Windows.Forms.Button modiBtn;
         private System.Windows.Forms.Button volverBtn;
+        private System.Windows.Forms.Label quitarlbl;
+        private System.Windows.Forms.ComboBox quitarcmbBox;
     }
 }

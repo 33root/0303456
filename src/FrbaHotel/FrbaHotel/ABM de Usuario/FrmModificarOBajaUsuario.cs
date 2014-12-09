@@ -78,7 +78,7 @@ namespace FrbaHotel.ABM_de_Usuario
             loadCmbBox();
 
             label2.Visible = true;
-            rollbl.Visible = true;
+            aniadirlbl.Visible = true;
             tipolbl.Visible = true;
             nrodoclbl.Visible = true;
             nombrelbl.Visible = true;
@@ -96,7 +96,8 @@ namespace FrbaHotel.ABM_de_Usuario
             passwordTxtBox.Visible = true;
             tipoDocCmbBox.Visible = true;
 
-            rolesBox.Visible = true;
+            aniadirCmbBox.Visible = true;
+            quitarcmbBox.Visible = true;
             nrodocTxtBox.Visible = true;
             nrodocTxtBox.Text = Convert.ToString(row.Cells["Documento_Nro"].Value);
             nombreTxtBox.Visible = true;
@@ -159,10 +160,10 @@ namespace FrbaHotel.ABM_de_Usuario
                 SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
-                    rolesBox.Items.Add(reader["Descripcion"].ToString());
+                    aniadirCmbBox.Items.Add(reader["Descripcion"].ToString());
                 }
 
-                rolesBox.SelectedIndex = 0;
+                aniadirCmbBox.SelectedIndex = 0;
 
 
                 //Cargo los tipos de documento
@@ -262,7 +263,7 @@ namespace FrbaHotel.ABM_de_Usuario
                         reader.Close();
 
                         comando = new SqlCommand(consultaIDRol, conexion);
-                        comando.Parameters.Add(new SqlParameter("@descripcion", Convert.ToString(rolesBox.SelectedItem.ToString())));
+                        comando.Parameters.Add(new SqlParameter("@descripcion", Convert.ToString(aniadirCmbBox.SelectedItem.ToString())));
                         reader = comando.ExecuteReader();
                         reader.Read();
                         int IDRol = Convert.ToInt32(reader["ID_Rol"]);

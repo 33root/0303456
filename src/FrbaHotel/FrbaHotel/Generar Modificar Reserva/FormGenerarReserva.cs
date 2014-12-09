@@ -252,6 +252,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         comando.Parameters.Add(new SqlParameter("@ID_Cliente", id));
 
                         MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.CancelarButton_Click(this, e);
                     }
                     else
                     {
@@ -267,12 +268,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 else
                 {
                     SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
-                    DateTime fechaAcutal = new DateTime();
                     comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
-                    comando.Parameters.Add(new SqlParameter("@Fecha_Desde", dtpDesde.Value));
-                    comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.ToString()));
-                    comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.ToString()));
+                    comando.Parameters.Add(new SqlParameter("@Fecha_Desde", Convert.ToDateTime(dtpDesde.Value)));
+                    comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.Text));
+                    comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.Text));
 
 
                     this.aniadirParametroRegimen(comando);
@@ -280,15 +279,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
                     comando.Parameters.Add(new SqlParameter("@Estado", "Correcta"));
                     comando.Parameters.Add(new SqlParameter("@ID_Cliente", this.idCliente));
+                    comando.ExecuteNonQuery();
+
+                    MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.CancelarButton_Click(this, e);
                 }
 
                 
             }
-            catch (Excepciones exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-              
-            }
+        
             catch (SqlException exc)
             {
                 MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);

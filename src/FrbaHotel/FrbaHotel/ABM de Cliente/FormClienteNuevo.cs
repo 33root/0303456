@@ -56,7 +56,7 @@ namespace FrbaHotel.ABM_de_Cliente
             this.con = c;
             InitializeComponent();
             this.ControlBox = false;
-            VolverButton.Enabled = false;
+            VolverButton.Enabled = true;
         }
 
         public FormClienteNuevo(int bandera)
@@ -189,15 +189,10 @@ namespace FrbaHotel.ABM_de_Cliente
 
                 comando.ExecuteNonQuery();
                 MessageBox.Show("Operacion Completada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LimpiarButton_Click(sender, e);
-                VolverButton.Enabled = true;
+                
 
             }
             catch (Excepciones exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (SqlException exc)
             {
                 MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

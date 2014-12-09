@@ -581,8 +581,6 @@ END;
 
 GO
 CREATE PROCEDURE AEFI.insertar_Reserva
-
-  @Fecha_Reserva datetime,
   @Fecha_Desde datetime,
   @Cantidad_Huespedes NUMERIC(18,0),
   @Cantidad_Noches NUMERIC(18,0),
@@ -593,10 +591,10 @@ CREATE PROCEDURE AEFI.insertar_Reserva
 
 AS
 BEGIN
- IF NOT EXISTS (SELECT * FROM AEFI.TL_Reserva WHERE Fecha_Reserva = @Fecha_Reserva AND Fecha_Desde = @Fecha_Desde AND Cantidad_Huespedes = @Cantidad_Huespedes AND Cantidad_Noches = @Cantidad_Noches AND ID_Regimen = @ID_Regimen AND ID_Habitacion = @ID_Habitacion AND Estado = @Estado AND ID_Cliente = @ID_Cliente)
+ IF NOT EXISTS (SELECT * FROM AEFI.TL_Reserva WHERE Fecha_Reserva = GETDATE() AND Fecha_Desde = @Fecha_Desde AND Cantidad_Huespedes = @Cantidad_Huespedes AND Cantidad_Noches = @Cantidad_Noches AND ID_Regimen = @ID_Regimen AND ID_Habitacion = @ID_Habitacion AND Estado = @Estado AND ID_Cliente = @ID_Cliente)
  BEGIN
  INSERT INTO AEFI.TL_Reserva(Fecha_Reserva,Fecha_Desde,Cantidad_Huespedes,Cantidad_Noches,ID_Regimen,ID_Habitacion,Estado,ID_Cliente)
- VALUES (@Fecha_Reserva, @Fecha_Desde, @Cantidad_Huespedes, @Cantidad_Noches, @ID_Regimen, @ID_Habitacion, @Estado, @ID_Cliente)
+ VALUES (GETDATE(), @Fecha_Desde, @Cantidad_Huespedes, @Cantidad_Noches, @ID_Regimen, @ID_Habitacion, @Estado, @ID_Cliente)
  END;
  
 END;
