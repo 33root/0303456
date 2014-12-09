@@ -181,27 +181,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     }
                     comando.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
 
-                    if (x == 2) 
-                    {
-                        string consultaID = "SELECT ID_Cliente "
-                                          + "FROM AEFI.TL_Cliente "
-                                          + "WHERE Mail = " + txbMail.ToString();//ya que no hay 2 mails iguales
-
-                        SqlCommand comandoId = new SqlCommand(consultaID,conexion);
-                        SqlDataReader reader2 = comandoId.ExecuteReader();
-                        reader2.Read();
-                        int id = Convert.ToInt32(reader2["ID_Cliente"]);
-                        
-                       /* SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
-                        string id = adapter2.ToString();*/
-
-                        //conexion.Close();
-
-                        FormGenerarReserva r = new FormGenerarReserva(id);
-                        this.Hide();
-                        r.ShowDialog();
-                        this.Close();
-                    }
+                    
 
                 }
                 else
@@ -224,6 +204,30 @@ namespace FrbaHotel.ABM_de_Cliente
             finally
             {
                 conexion.Close();
+
+                if (x == 2)
+                {
+                    conexion.Open();
+
+                    string consultaID = "SELECT ID_Cliente "
+                                      + "FROM AEFI.TL_Cliente "
+                                      + "WHERE Mail = " + BaseDeDatos.agregarApostrofos(txbMail.Text);//ya que no hay 2 mails iguales
+
+                    SqlCommand comandoId = new SqlCommand(consultaID, conexion);
+                    SqlDataReader readerId = comandoId.ExecuteReader();
+                    readerId.Read();
+                    int id = Convert.ToInt32(readerId["ID_Cliente"]);
+
+                    /* SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
+                     string id = adapter2.ToString();*/
+
+                    //conexion.Close();
+
+                    FormGenerarReserva r = new FormGenerarReserva(id);
+                    this.Hide();
+                    r.ShowDialog();
+                    this.Close();
+                }
             }
         }
     }
