@@ -74,6 +74,7 @@
             this.txbNombre.Name = "txbNombre";
             this.txbNombre.Size = new System.Drawing.Size(208, 20);
             this.txbNombre.TabIndex = 1;
+            this.txbNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbNombre_KeyPress);
             // 
             // label2
             // 
@@ -90,6 +91,7 @@
             this.txbApellido.Name = "txbApellido";
             this.txbApellido.Size = new System.Drawing.Size(208, 20);
             this.txbApellido.TabIndex = 3;
+            this.txbApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbApellido_KeyPress);
             // 
             // label3
             // 
@@ -156,6 +158,7 @@
             this.txbTelefono.Name = "txbTelefono";
             this.txbTelefono.Size = new System.Drawing.Size(208, 20);
             this.txbTelefono.TabIndex = 11;
+            this.txbTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbTelefono_KeyPress);
             // 
             // label7
             // 
@@ -199,6 +202,7 @@
             this.txbDireccion.Name = "txbDireccion";
             this.txbDireccion.Size = new System.Drawing.Size(208, 20);
             this.txbDireccion.TabIndex = 16;
+            this.txbDireccion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbDireccion_KeyPress);
             // 
             // txbCalle
             // 
@@ -206,6 +210,7 @@
             this.txbCalle.Name = "txbCalle";
             this.txbCalle.Size = new System.Drawing.Size(208, 20);
             this.txbCalle.TabIndex = 17;
+            this.txbCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbCalle_KeyPress);
             // 
             // txbLocalidad
             // 
@@ -213,6 +218,7 @@
             this.txbLocalidad.Name = "txbLocalidad";
             this.txbLocalidad.Size = new System.Drawing.Size(208, 20);
             this.txbLocalidad.TabIndex = 18;
+            this.txbLocalidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbLocalidad_KeyPress);
             // 
             // txbNacionalidad
             // 
@@ -220,6 +226,7 @@
             this.txbNacionalidad.Name = "txbNacionalidad";
             this.txbNacionalidad.Size = new System.Drawing.Size(208, 20);
             this.txbNacionalidad.TabIndex = 19;
+            this.txbNacionalidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbNacionalidad_KeyPress);
             // 
             // label11
             // 
@@ -282,6 +289,7 @@
             this.txbPiso.Name = "txbPiso";
             this.txbPiso.Size = new System.Drawing.Size(144, 20);
             this.txbPiso.TabIndex = 30;
+            this.txbPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbPiso_KeyPress);
             // 
             // txbDpto
             // 

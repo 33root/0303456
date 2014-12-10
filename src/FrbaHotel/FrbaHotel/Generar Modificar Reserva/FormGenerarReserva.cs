@@ -240,7 +240,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         DateTime fechaAcutal = new DateTime();
                         comando.CommandType = CommandType.StoredProcedure;
                         comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
-                        comando.Parameters.Add(new SqlParameter("@Fecha_Desde", dtpDesde.Value));
+                        comando.Parameters.Add(new SqlParameter("@Fecha_Desde", dtpDesde.Value.Date));
                         comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.Text));
                         comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.Text));
 

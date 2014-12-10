@@ -161,11 +161,11 @@ namespace FrbaHotel.ABM_de_Cliente
                 comando.Parameters.Add(new SqlParameter("@Calle_Nro", txbCalle.Text));
                 comando.Parameters.Add(new SqlParameter("@PaisOrigen", txbNacionalidad.Text));
                 
-                if (!String.IsNullOrEmpty(txbPiso.Text))
+                if (!(String.IsNullOrEmpty(txbPiso.Text)))
                     comando.Parameters.Add(new SqlParameter("@Piso", txbPiso.Text));
-                if (!String.IsNullOrEmpty(txbDpto.Text))
+                if (!(String.IsNullOrEmpty(txbDpto.Text)))
                     comando.Parameters.Add(new SqlParameter("@Dpto", txbDpto.Text));
-                if (!String.IsNullOrEmpty(txbLocalidad.Text))
+                if (!(String.IsNullOrEmpty(txbLocalidad.Text)))
                     comando.Parameters.Add(new SqlParameter("@Localidad", txbLocalidad.Text));
                 if (!String.IsNullOrEmpty(txbMail.Text))
                 {
@@ -225,5 +225,82 @@ namespace FrbaHotel.ABM_de_Cliente
                 }
             }
         }
+
+        private void txbTelefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
+
+        private void txbCalle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
+
+        private void txbPiso_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
+
+        private void txbNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloLetras(e);
+        }
+
+        private void txbApellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloLetras(e);
+        }
+
+        private void txbDireccion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloLetras(e);
+        }
+
+        private void txbLocalidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloLetras(e);
+        }
+
+        private void txbNacionalidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloLetras(e);
+        }
+
+        private static void permitirSoloNumeros(KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private static void permitirSoloLetras(KeyPressEventArgs e) 
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsSeparator(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+    
     }
 }
