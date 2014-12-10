@@ -285,8 +285,9 @@ namespace FrbaHotel.Login
 
 
 
-                conexion.Close();
+                
             }
+            conexion.Close();
         }
 
         }
