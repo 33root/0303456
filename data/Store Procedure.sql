@@ -581,6 +581,8 @@ BEGIN
  VALUES (GETDATE(), @Fecha_Desde, @Cantidad_Huespedes, @Cantidad_Noches, @ID_Regimen, @ID_Habitacion, @Estado, @ID_Cliente)
  END;
  
+ UPDATE AEFI.TL_Habitacion SET Disponible = 'No' WHERE ID_Habitacion = @ID_Habitacion
+ 
 END;
 
 /*CREATE PROCEDURE AEFI.registrarEstadia
