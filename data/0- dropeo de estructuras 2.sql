@@ -1,3 +1,4 @@
+DROP PROCEDURE AEFI.modificar_nombre_rol
 DROP PROCEDURE AEFI.quitar_Rol_Usuario;
 DROP PROCEDURE AEFI.insertar_Rol_Usuario;
 DROP PROCEDURE AEFI.deshabilitarUsuario;

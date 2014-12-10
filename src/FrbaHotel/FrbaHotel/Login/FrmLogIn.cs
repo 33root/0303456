@@ -155,8 +155,11 @@ namespace FrbaHotel.Login
 
                     if (primerIngreso)
                     {
+                        MessageBox.Show("Primer Ingreso. Modifique su contraseña", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         NuevaClave ingreso = new NuevaClave(usuario);
+                        this.Hide();
                         ingreso.ShowDialog();
+                        this.Close();
                     }
 
                     txbContrasena.Enabled = false;

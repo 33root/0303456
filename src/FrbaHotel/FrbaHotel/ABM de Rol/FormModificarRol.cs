@@ -90,8 +90,8 @@ namespace FrbaHotel.ABM_de_Rol
                 rolSeleccionado = Convert.ToInt32(reader["ID_Rol"]);
                 reader.Close();
 
-
                 nombreRolBox.Visible = true;
+                nombreRolBox.Text = Convert.ToString(rolesBox.SelectedItem);
                 aplicarCambiosBtn.Visible = true;
                 checkedListBox.Visible = true;
                 estadoChkBox.Visible = true;
@@ -215,7 +215,15 @@ namespace FrbaHotel.ABM_de_Rol
                         comando.ExecuteNonQuery();
                     }
 
+                    if (!String.Equals(Convert.ToString(nombreRolBox.Text), Convert.ToString(rolesBox.SelectedItem)) || !String.Equals(Convert.ToString(nombreRolBox.Text), ""))
+                    {
+                        comando = new SqlCommand("AEFI.modificar_nombre_rol", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.Add(new SqlParameter("@ID_Rol", rolSeleccionado));
+                        comando.Parameters.Add(new SqlParameter("@nombre", nombreRolBox.Text));
+                        comando.ExecuteNonQuery();
 
+                    }
                     
                 }
                 MessageBox.Show("Rol Modificado Exitósamente", "", MessageBoxButtons.OK, MessageBoxIcon.Information);

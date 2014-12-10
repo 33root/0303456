@@ -78,7 +78,6 @@
             this.checkedListBox.TabIndex = 25;
             this.checkedListBox.ThreeDCheckBoxes = true;
             this.checkedListBox.Visible = false;
-            //this.checkedListBox.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_SelectedIndexChanged);
             // 
             // funcionalidadeslbl
             // 
@@ -132,7 +131,6 @@
             this.estadoChkBox.Text = "Estado Activo";
             this.estadoChkBox.UseVisualStyleBackColor = true;
             this.estadoChkBox.Visible = false;
-            //this.estadoChkBox.CheckedChanged += new System.EventHandler(this.estadoChkBox_CheckedChanged);
             // 
             // cancelarBtn
             // 
@@ -161,7 +159,6 @@
             this.Controls.Add(this.rolesBox);
             this.Name = "FormModificarRol";
             this.Text = "Modificar Rol";
-           // this.Load += new System.EventHandler(this.FormModificarRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

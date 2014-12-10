@@ -137,66 +137,100 @@ namespace FrbaHotel.ABM_de_Cliente
         
         }
 
+        private Boolean verificarTextBoxNoVacios()
+        {
+            bool textBoxNoVacio = false;
+
+            foreach (Control c in this.Controls)
+            {
+
+                if (c is TextBox)
+                {
+                    TextBox textBox = c as TextBox;
+                    if (textBox.Text == string.Empty)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        textBoxNoVacio = true;
+                    }
+
+                }
+
+
+            }
+
+            return textBoxNoVacio;
+        }
         private void CrearButton_Click(object sender, EventArgs e)
         {
-            //en construccion, aca tengo que usar un sp y estoy medio verde en eso :S
-            //it is done
-            try
+            if (verificarTextBoxNoVacios())
             {
-                conexion.Open();
-                SqlCommand comando = null;
-
-                if (x == 0)
+                //en construccion, aca tengo que usar un sp y estoy medio verde en eso :S
+                //it is done
+                try
                 {
+                    conexion.Open();
+                    SqlCommand comando = null;
 
-                    comando = new SqlCommand("AEFI.insertar_cliente", conexion);
-                    aniadirParametros(comando);
+                    if (x == 0)
+                    {
+
+                        comando = new SqlCommand("AEFI.insertar_cliente", conexion);
+                        aniadirParametros(comando);
+                    }
+                    else if (x == 1)
+                    {
+                        comando = new SqlCommand("AEFI.actualizar_cliente", conexion);
+                        comando.Parameters.Add(new SqlParameter("@ID_Cliente", id_cliente));
+                        aniadirParametros(comando);
+                    }
+                    else if (x == 2)
+                    {
+                        comando = new SqlCommand("AEFI.insertar_cliente", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        aniadirParametros(comando);
+
+                        string consultaID = "SELECT ID_Cliente "
+                                          + "FROM AEFI.TL_Cliente "
+                                          + "WHERE Mail = " + BaseDeDatos.agregarApostrofos(txbMail.Text);//ya que no hay 2 mails iguales
+
+                        SqlCommand comandoId = new SqlCommand(consultaID, conexion);
+                        SqlDataReader readerId = comandoId.ExecuteReader();
+                        readerId.Read();
+                        int id = Convert.ToInt32(readerId[0]);
+                        readerId.Close();
+                        conexion.Close();
+
+                        //significa que si se ingreso un cliente
+                        FormGenerarReserva r = new FormGenerarReserva(id);
+                        this.Hide();
+                        r.ShowDialog();
+                        this.Close();
+                    }
+
                 }
-                else if (x == 1)
+                catch (Excepciones exc)
                 {
-                    comando = new SqlCommand("AEFI.actualizar_cliente", conexion);
-                    comando.Parameters.Add(new SqlParameter("@ID_Cliente", id_cliente));
-                    aniadirParametros(comando);
+                    MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else if (x == 2)
+                finally
                 {
-                    comando = new SqlCommand("AEFI.insertar_cliente", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    aniadirParametros(comando);
-
-                    string consultaID = "SELECT ID_Cliente "
-                                      + "FROM AEFI.TL_Cliente "
-                                      + "WHERE Mail = " + BaseDeDatos.agregarApostrofos(txbMail.Text);//ya que no hay 2 mails iguales
-
-                    SqlCommand comandoId = new SqlCommand(consultaID, conexion);
-                    SqlDataReader readerId = comandoId.ExecuteReader();
-                    readerId.Read();
-                    int id = Convert.ToInt32(readerId[0]);
-                    readerId.Close();
                     conexion.Close();
 
-                    //significa que si se ingreso un cliente
-                    FormGenerarReserva r = new FormGenerarReserva(id);
+                    FormMenu m = new FormMenu();
                     this.Hide();
-                    r.ShowDialog();
+                    m.ShowDialog();
                     this.Close();
-                }
 
-            }
-            catch (Excepciones exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conexion.Close();
-
-                        FormMenu m = new FormMenu();
-                        this.Hide();
-                        m.ShowDialog();
-                        this.Close();
-                    
                 }
+            }
+            else
+            {
+                MessageBox.Show("Debe completar todos los campos", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private void aniadirParametros(SqlCommand comando)
