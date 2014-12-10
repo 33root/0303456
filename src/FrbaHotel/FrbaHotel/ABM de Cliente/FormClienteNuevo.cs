@@ -211,7 +211,7 @@ namespace FrbaHotel.ABM_de_Cliente
                     SqlCommand comandoId = new SqlCommand(consultaID, conexion);
                     SqlDataReader readerId = comandoId.ExecuteReader();
                     readerId.Read();
-                    int id = Convert.ToInt32(readerId["ID_Cliente"]);
+                    int id = Convert.ToInt32(readerId[0]);
 
                     /* SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
                      string id = adapter2.ToString();*/
