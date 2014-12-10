@@ -15,6 +15,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     {
         SqlConnection conexion = BaseDeDatos.conectar();
 
+        int idCliente;
+
         public FormModificarReserva()
         {
             InitializeComponent();
@@ -54,12 +56,23 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void modificarButton_Click(object sender, EventArgs e)
         {
+            conexion.Open();
+
+            string id = "SELECT ID_Cliente " +
+                        "FROM AEFI.TL_Reserva " +
+                        "WHERE ID_Reserva = " + BaseDeDatos.agregarApostrofos(txbCodigoReserva.Text);
+            SqlCommand comando = new SqlCommand(id, conexion);
+            SqlDataReader reader = comando.ExecuteReader();
+            reader.Read();
+            idCliente = Convert.ToInt32(reader[0]);
+
+            conexion.Close();
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
-                /*FormGenerarReserva alta = new FormGenerarReserva(1, row.Cells);// la otra clase no esta terminada :P
+                FormGenerarReserva alta = new FormGenerarReserva(idCliente,Convert.ToInt32(txbCodigoReserva.Text) ,row.Cells);
                 this.Hide();
                 alta.ShowDialog();
-                this.Close();*/
+                this.Close();
             }
         }
 

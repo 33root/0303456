@@ -21,6 +21,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         int idCliente;
         string flag;
         string mail;
+        int idReservaAModificar;
 
         public FormGenerarReserva()
         {
@@ -33,6 +34,21 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             idCliente = i;
             flag = "TeAbrieronDespuesDeCrearUnCliente";
         }
+
+        public FormGenerarReserva(int idCliente2,int id, DataGridViewCellCollection cells) 
+        {
+            InitializeComponent();
+            flag = "TeAbrieronDesdeModificarReserva";
+            idReservaAModificar = id;
+            idCliente = idCliente2;
+            dtpDesde.Value = Convert.ToDateTime(cells[0].Value);
+            txbCantidadDeHuespedes.Text = cells[1].Value.ToString();
+            txbCantidadDeNoches.Text = cells[2].Value.ToString();
+
+            ingresarButton.Text = "Modificar";
+        }
+
+
 
      
 
@@ -241,8 +257,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                             SqlDataReader readerId = comandoId.ExecuteReader();
                             readerId.Read();
                             int id = Convert.ToInt32(readerId["ID_Cliente"]);
+                            SqlCommand comando = null;
 
-                            SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
+                            if (flag != "TeAbrieronDesdeModificarReserva")
+                            {
+                                comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
+                            }
+                            else 
+                            {
+                                comando = new SqlCommand("AEFI.modificar_Reserva",conexion);
+                            }
+                            
                             //DateTime fechaAcutal = new DateTime();
                             comando.CommandType = CommandType.StoredProcedure;
                             //comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
@@ -254,11 +279,39 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                             this.aniadirParametroRegimen(comando);
                             this.obtenerIDHabitacion();
                             comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
-                            comando.Parameters.Add(new SqlParameter("@Estado", BaseDeDatos.agregarApostrofos("Correcta")));
-                            comando.Parameters.Add(new SqlParameter("@ID_Cliente", id));
+                            
+
+                            if (flag != "TeAbrieronDesdeModificarReserva")
+                            {
+                                comando.Parameters.Add(new SqlParameter("@Estado", BaseDeDatos.agregarApostrofos("Correcta")));
+                            }
+                            else
+                            {
+                                comando.Parameters.Add(new SqlParameter("@Estado", BaseDeDatos.agregarApostrofos("Modificada")));
+                            }
+
+                            if (flag != "TeAbrieronDesdeModificarReserva")
+                            {
+                                comando.Parameters.Add(new SqlParameter("@ID_Cliente", id));
+                            }
+                            else
+                            {
+                                comando.Parameters.Add(new SqlParameter("@ID_Cliente", idCliente));
+                                comando.Parameters.Add(new SqlParameter("@ID_Reserva",idReservaAModificar));
+                            }
+                            
+                            
                             comando.ExecuteNonQuery();
 
-                            MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            if (flag != "TeAbrieronDesdeModificarReserva")
+                            {
+                                MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Reserva Modificada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        
                             this.CancelarButton_Click(this, e);
                         }
                         else

@@ -967,3 +967,20 @@ BEGIN
 	WHERE ID_Reserva = @IDReserva
 	END
 END;
+
+GO
+CREATE PROCEDURE AEFI.modificar_Reserva
+@Fecha_Desde datetime,
+@Cantidad_Huespedes NUMERIC(18,0),
+@Cantidad_Noches NUMERIC(18,0),
+@ID_Regimen NUMERIC(18,0),
+@ID_Habitacion NUMERIC(18,0),
+@Estado varchar(255),
+@ID_Cliente NUMERIC(18,0),
+@ID_Reserva NUMERIC(18,0)
+AS
+BEGIN
+	UPDATE AEFI.TL_Reserva
+	SET Fecha_Desde = @Fecha_Desde, Cantidad_Huespedes = @Cantidad_Huespedes, Cantidad_Noches = @Cantidad_Noches, ID_Regimen = @ID_Regimen, ID_Habitacion = @ID_Habitacion, Estado = @Estado, Fecha_Reserva = GETDATE()
+	WHERE ID_Reserva = @ID_Reserva
+END;
