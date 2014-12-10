@@ -166,9 +166,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 225);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(52, 13);
+            this.label7.Size = new System.Drawing.Size(44, 13);
             this.label7.TabIndex = 12;
-            this.label7.Text = "Direccion";
+            this.label7.Text = "Numero";
             // 
             // label8
             // 
