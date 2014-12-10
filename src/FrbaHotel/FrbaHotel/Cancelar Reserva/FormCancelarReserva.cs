@@ -45,24 +45,95 @@ namespace FrbaHotel.Cancelar_Reserva
                 SqlDataReader reader = comando.ExecuteReader();
                 reader.Read();
                 DateTime fechaInicioReserva = Convert.ToDateTime(reader["Fecha_Desde"]);
-                reader.Close();
+                //reader.Close();
 
+                string obtenerIdDelHotelDelUsuarioLogueado = "SELECT ID_Hotel " +
+                                                             "FROM AEFI.TL_Usuario_Por_Hotel " +
+                                                             "WHERE ID_Hotel = " + BaseDeDatos.agregarApostrofos(Program.idHotel.ToString()) + "AND ID_Usuario = " + BaseDeDatos.agregarApostrofos(Program.idUsuario.ToString());
 
-                if (1 <= (fechaInicioReserva -DateTime.Now).TotalDays )
+                comando = new SqlCommand(obtenerIdDelHotelDelUsuarioLogueado, conexion);
+                reader = comando.ExecuteReader();
+                reader.Read();
+                int idHotel = Convert.ToInt32(reader[0]);
+                //reader.Close();
+
+                string obtenerIdDelHotelDeLaReserva = "SELECT h.ID_Hotel " +
+                                                      "FROM AEFI.TL_Regimen_Por_Hotel h, AEFI.TL_Reserva r " +
+                                                      "WHERE h.ID_Regimen = r.ID_Regimen AND r.ID_Reserva = " + BaseDeDatos.agregarApostrofos(txbNumeroDeReserva.Text);
+
+                comando = new SqlCommand(obtenerIdDelHotelDeLaReserva, conexion);
+                reader = comando.ExecuteReader();
+                reader.Read();
+                int idHotelDeReserva = Convert.ToInt32(reader[0]);
+                //reader.Close();
+
+                string elIdDeLaReservaDelTxbExiste = "SELECT ID_Reserva " +
+                                                     "FROM AEFI.TL_Reserva " +
+                                                     "WHERE ID_Reserva = " + BaseDeDatos.agregarApostrofos(txbNumeroDeReserva.Text);
+                comando = new SqlCommand(elIdDeLaReservaDelTxbExiste, conexion);
+                SqlDataReader reader2 = comando.ExecuteReader();
+                reader2.Read();
+                reader2.Close();
+
+                string laReservaNoTieneEstadia = "SELECT ID_Reserva " +
+                                                 "FROM AEFI.TL_Estadia " +
+                                                 "WHERE ID_Reserva = " + BaseDeDatos.agregarApostrofos(txbNumeroDeReserva.Text);
+                comando = new SqlCommand(laReservaNoTieneEstadia,conexion);
+                reader = comando.ExecuteReader();
+                reader.Read();
+
+                string laReservaYaFueCancelada = "SELECT ID_Reserva " +
+                                                 "FROM AEFI.TL_Estadia " +
+                                                 "WHERE Estado LIKE 'Cancelada' AND ID_Reserva = " + BaseDeDatos.agregarApostrofos(txbNumeroDeReserva.Text);
+                comando = new SqlCommand(laReservaYaFueCancelada, conexion);
+                SqlDataReader reader3 = comando.ExecuteReader();
+                reader3.Read();
+                reader3.Close();
+
+                if (!reader3.HasRows)
                 {
-                    comando = new SqlCommand("AEFI.cancelar_Reserva", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.Add(new SqlParameter("@ID_Reserva", txbNumeroDeReserva.Text));
-                    comando.Parameters.Add(new SqlParameter("@Motivo", txbMotivo.Text));;
-                    comando.Parameters.Add(new SqlParameter("@ID_Usuario", Program.idUsuario));
-                    MessageBox.Show("Reserva Cancelada Correctamente", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (!reader.HasRows)
+                    {
+                        if (reader2.HasRows)
+                        {
+                            if (idHotel == idHotelDeReserva)
+                            {
+                                if (1 <= (fechaInicioReserva - DateTime.Now).TotalDays)
+                                {
+                                    comando = new SqlCommand("AEFI.cancelar_Reserva", conexion);
+                                    comando.CommandType = CommandType.StoredProcedure;
+                                    comando.Parameters.Add(new SqlParameter("@ID_Reserva", txbNumeroDeReserva.Text));
+                                    comando.Parameters.Add(new SqlParameter("@Motivo", txbMotivo.Text)); ;
+                                    comando.Parameters.Add(new SqlParameter("@ID_Usuario", Program.idUsuario));
+                                    MessageBox.Show("Reserva Cancelada Correctamente", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                else
+                                {
+                                    throw new Excepciones("No puede cancelar la reserva en esta fecha");
+                                }
+                            }
+                            else
+                            {
+                                throw new Excepciones("La reserva seleccionada no pertenece al hotel logueado");
+                            }
+                        }
+                        else
+                        {
+                            throw new Excepciones("El codigo de reserva elegido no pertenece a una reserva existente");
+                        }
+                    }
+                    else
+                    {
+                        throw new Excepciones("La reserva tiene ya tiene una estadia");
+                    }
                 }
-                else
+                else 
                 {
-                    throw new Excepciones("No puede cancelar la reserva en esta fecha");
+                    throw new Excepciones("La reserva ya fue cancelada");
                 }
             }
-            catch(SqlException exc)
+
+            catch (SqlException exc)
             {
                 MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
