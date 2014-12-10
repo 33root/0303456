@@ -80,19 +80,22 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     throw new Excepciones("No hay habitaciones disponibles");
                 }
 
-                if(cbTipoDeRegimen == null){
+                if ((cbTipoDeRegimen.SelectedItem.ToString() != "Pension Completa") || (cbTipoDeRegimen.SelectedItem.ToString() != "Media Pensión")
+                    || (cbTipoDeRegimen.SelectedItem.ToString() != "All Inclusive moderado") || (cbTipoDeRegimen.SelectedItem.ToString() != "All inclusive"))
+                {
                     //significa que el usuario no tiene en claro el regimen que desea
                     string consulta = "SELECT r.Descripcion, r.Precio_Base "
                                      + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p "
-                                     + "WHERE p.ID_Hotel ="+ Program.idHotel +" AND r.ID_Regimen = p.ID_Regimen ";
+                                     + "WHERE p.ID_Hotel = "+ BaseDeDatos.agregarApostrofos(Program.idHotel.ToString()) +" AND r.ID_Regimen = p.ID_Regimen ";
                                      
 
                     //cargar la tabla con descripcion y precio base del hotel
                     DataTable tabla = new DataTable();
                     SqlCommand comando2 = new SqlCommand(consulta, conexion);
-                    SqlDataAdapter adapter = new SqlDataAdapter(comando);
+                    SqlDataAdapter adapter = new SqlDataAdapter(comando2);
                     adapter.Fill(tabla);
                     dataGridView1.DataSource = tabla;
+
                 }
 
                 comando = new SqlCommand(consultaCantidadDeHuespedesParaLaHabitacion, conexion);
