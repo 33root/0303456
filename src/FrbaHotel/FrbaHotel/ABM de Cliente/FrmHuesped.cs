@@ -11,17 +11,35 @@ namespace FrbaHotel.ABM_de_Cliente
 {
     public partial class FrmHuesped : Form
     {
+        int i;
         public FrmHuesped()
         {
+            
             InitializeComponent();
         }
+        public FrmHuesped(int num)
+        {
+            InitializeComponent();
+            i = num;
+        }
+
 
         private void buscarHuespedButton_Click(object sender, EventArgs e)
         {
-            FormBuscadorDeClientes b = new FormBuscadorDeClientes();
-            this.Hide();
-            b.ShowDialog();
-            this.Close();
+            if (i == 1)
+            {
+                FormBuscadorDeClientes b = new FormBuscadorDeClientes(1);
+                this.Hide();
+                b.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                FormBuscadorDeClientes b = new FormBuscadorDeClientes();
+                this.Hide();
+                b.ShowDialog();
+                this.Close();
+            }
         }
 
         private void nuevoHuespedButton_Click(object sender, EventArgs e)

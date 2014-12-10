@@ -39,12 +39,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txbMail = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.eliminarBtn = new System.Windows.Forms.Button();
+            this.limpiarBtn = new System.Windows.Forms.Button();
             this.buscarButton = new System.Windows.Forms.Button();
             this.modificarButton = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.habilitarBtn = new System.Windows.Forms.Button();
+            this.volverBtn = new System.Windows.Forms.Button();
+            this.seleccionarClienteBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,7 +73,6 @@
             this.txbNombre.Name = "txbNombre";
             this.txbNombre.Size = new System.Drawing.Size(183, 20);
             this.txbNombre.TabIndex = 2;
-            this.txbNombre.TextChanged += new System.EventHandler(this.txbNombre_TextChanged);
             // 
             // txbApellido
             // 
@@ -80,7 +80,6 @@
             this.txbApellido.Name = "txbApellido";
             this.txbApellido.Size = new System.Drawing.Size(206, 20);
             this.txbApellido.TabIndex = 3;
-            this.txbApellido.TextChanged += new System.EventHandler(this.txbApellido_TextChanged);
             // 
             // label3
             // 
@@ -97,7 +96,6 @@
             this.txbDocumento.Name = "txbDocumento";
             this.txbDocumento.Size = new System.Drawing.Size(165, 20);
             this.txbDocumento.TabIndex = 5;
-            this.txbDocumento.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label4
             // 
@@ -115,8 +113,6 @@
             this.cbTipoDeDocumento.Name = "cbTipoDeDocumento";
             this.cbTipoDeDocumento.Size = new System.Drawing.Size(206, 21);
             this.cbTipoDeDocumento.TabIndex = 7;
-            this.cbTipoDeDocumento.SelectedIndexChanged += new System.EventHandler(this.cbTipoDeDocumento_SelectedIndexChanged);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -132,7 +128,6 @@
             this.txbMail.Name = "txbMail";
             this.txbMail.Size = new System.Drawing.Size(183, 20);
             this.txbMail.TabIndex = 9;
-            this.txbMail.TextChanged += new System.EventHandler(this.txbMail_TextChanged);
             // 
             // dataGridView1
             // 
@@ -148,25 +143,25 @@
             this.dataGridView1.Size = new System.Drawing.Size(564, 240);
             this.dataGridView1.TabIndex = 9;
             // 
-            // button1
+            // eliminarBtn
             // 
-            this.button1.Location = new System.Drawing.Point(410, 362);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Eliminar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.eliminarBtn.Location = new System.Drawing.Point(410, 362);
+            this.eliminarBtn.Name = "eliminarBtn";
+            this.eliminarBtn.Size = new System.Drawing.Size(75, 23);
+            this.eliminarBtn.TabIndex = 11;
+            this.eliminarBtn.Text = "Eliminar";
+            this.eliminarBtn.UseVisualStyleBackColor = true;
+            this.eliminarBtn.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // limpiarBtn
             // 
-            this.button2.Location = new System.Drawing.Point(313, 362);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 12;
-            this.button2.Text = "Limpiar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.limpiarBtn.Location = new System.Drawing.Point(313, 362);
+            this.limpiarBtn.Name = "limpiarBtn";
+            this.limpiarBtn.Size = new System.Drawing.Size(75, 23);
+            this.limpiarBtn.TabIndex = 12;
+            this.limpiarBtn.Text = "Limpiar";
+            this.limpiarBtn.UseVisualStyleBackColor = true;
+            this.limpiarBtn.Click += new System.EventHandler(this.button2_Click);
             // 
             // buscarButton
             // 
@@ -188,37 +183,49 @@
             this.modificarButton.UseVisualStyleBackColor = true;
             this.modificarButton.Click += new System.EventHandler(this.modificarButton_Click);
             // 
-            // button5
+            // habilitarBtn
             // 
-            this.button5.Location = new System.Drawing.Point(113, 362);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 15;
-            this.button5.Text = "Habilitar";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.habilitarBtn.Location = new System.Drawing.Point(113, 362);
+            this.habilitarBtn.Name = "habilitarBtn";
+            this.habilitarBtn.Size = new System.Drawing.Size(75, 23);
+            this.habilitarBtn.TabIndex = 15;
+            this.habilitarBtn.Text = "Habilitar";
+            this.habilitarBtn.UseVisualStyleBackColor = true;
+            this.habilitarBtn.Click += new System.EventHandler(this.button5_Click);
             // 
-            // button6
+            // volverBtn
             // 
-            this.button6.Location = new System.Drawing.Point(12, 362);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 16;
-            this.button6.Text = "Volver";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.volverBtn.Location = new System.Drawing.Point(12, 362);
+            this.volverBtn.Name = "volverBtn";
+            this.volverBtn.Size = new System.Drawing.Size(75, 23);
+            this.volverBtn.TabIndex = 16;
+            this.volverBtn.Text = "Volver";
+            this.volverBtn.UseVisualStyleBackColor = true;
+            this.volverBtn.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // seleccionarClienteBtn
+            // 
+            this.seleccionarClienteBtn.Location = new System.Drawing.Point(364, 83);
+            this.seleccionarClienteBtn.Name = "seleccionarClienteBtn";
+            this.seleccionarClienteBtn.Size = new System.Drawing.Size(212, 23);
+            this.seleccionarClienteBtn.TabIndex = 17;
+            this.seleccionarClienteBtn.Text = "Seleccionar Cliente";
+            this.seleccionarClienteBtn.UseVisualStyleBackColor = true;
+            this.seleccionarClienteBtn.Visible = false;
+            this.seleccionarClienteBtn.Click += new System.EventHandler(this.seleccionarBtn_Click);
             // 
             // FormBuscadorDeClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 397);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
+            this.ClientSize = new System.Drawing.Size(588, 392);
+            this.Controls.Add(this.seleccionarClienteBtn);
+            this.Controls.Add(this.volverBtn);
+            this.Controls.Add(this.habilitarBtn);
             this.Controls.Add(this.modificarButton);
             this.Controls.Add(this.buscarButton);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.limpiarBtn);
+            this.Controls.Add(this.eliminarBtn);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.txbMail);
             this.Controls.Add(this.label5);
@@ -252,11 +259,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txbMail;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button eliminarBtn;
+        private System.Windows.Forms.Button limpiarBtn;
         private System.Windows.Forms.Button buscarButton;
         private System.Windows.Forms.Button modificarButton;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button habilitarBtn;
+        private System.Windows.Forms.Button volverBtn;
+        private System.Windows.Forms.Button seleccionarClienteBtn;
     }
 }

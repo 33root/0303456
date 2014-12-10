@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using FrbaHotel.ABM_de_Cliente;
 using FrbaHotel.Menu;
+using FrbaHotel.Generar_Modificar_Reserva;
 
 
 namespace FrbaHotel.Registrar_Estadia
@@ -32,15 +33,36 @@ namespace FrbaHotel.Registrar_Estadia
                                                    "AND r.Estado = 'Correcta' "+
                                                    "AND uph.ID_Usuario = @idUsuario AND uph.ID_Rol = 2 AND uph.ID_Rol = @idRol AND r.ID_Reserva = @idReserva " +
                                                    "AND NOT EXISTS(SELECT re.ID_Estadia FROM AEFI.TL_Registro_Evento re, AEFI.TL_Estadia e WHERE e.ID_Reserva = @idReserva AND e.ID_Estadia = re.ID_Estadia AND re.Descripcion ='Ingreso')";
+
+            String verificarFechaDeIngresoHoy = " SELECT * FROM AEFI.TL_Reserva r WHERE MONTH(r.Fecha_Desde) = MONTH(GETDATE()) AND YEAR(r.fecha_desde) = YEAR(GETDATE()) AND DAY(r.Fecha_Desde) = DAY(GETDATE()) AND r.Estado = 'Correcta' AND r.ID_Reserva = " + reservaTxtBox.Text;
+
+
             try
             {
                 conexion.Open();
 
+                
+                    
+
                 if (verificarRecepcionistaHabilitado(recepcionistaHabilitadoReservaCheckIn))
                 {
-                    SqlCommand comando = new SqlCommand(obtenerCantidadDeHospedados, conexion);
-                    comando.Parameters.Add(new SqlParameter("@idReserva", reservaTxtBox.Text));
+                    SqlCommand comando = new SqlCommand(verificarFechaDeIngresoHoy, conexion);
                     SqlDataReader reader = comando.ExecuteReader();
+                    if (!reader.HasRows)
+                    {
+                        comando = new SqlCommand("AEFI.cancelarReserva", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.Add(new SqlParameter("@IDReserva", reservaTxtBox.Text));
+                        comando.ExecuteNonQuery();
+
+                        MessageBox.Show("La reserva no corresponde al día corriente. Realice una nueva reserva", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        button3_Click(this, e);
+
+                    }
+
+                    comando = new SqlCommand(obtenerCantidadDeHospedados, conexion);
+                    comando.Parameters.Add(new SqlParameter("@idReserva", reservaTxtBox.Text));
+                    reader = comando.ExecuteReader();
                     reader.Read();
                     int numeroHospedados = Convert.ToInt32(reader[0]);
                     reader.Close();
@@ -50,7 +72,7 @@ namespace FrbaHotel.Registrar_Estadia
                         int j = i;
                         MessageBox.Show("Ingrese el huesped número: " + (++j), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                          FrmHuesped huesped = new FrmHuesped();
+                          FrmHuesped huesped = new FrmHuesped(1);
                           huesped.ShowDialog();
 
                     }

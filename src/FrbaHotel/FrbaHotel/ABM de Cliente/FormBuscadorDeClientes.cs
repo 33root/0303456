@@ -14,10 +14,22 @@ namespace FrbaHotel.ABM_de_Cliente
     public partial class FormBuscadorDeClientes : Form
     {
         SqlConnection conexion = BaseDeDatos.conectar();
+        int i;
 
         public FormBuscadorDeClientes()
         {
             InitializeComponent();
+        }
+
+        public FormBuscadorDeClientes(int num)
+        {   //Si entra aca es porque viene de registrar un check in
+            InitializeComponent();
+            i = num;
+            volverBtn.Visible = false;
+            habilitarBtn.Visible = false;
+            modificarButton.Visible = false;
+            eliminarBtn.Visible = false;
+            seleccionarClienteBtn.Visible = true;
         }
 
         private void FormBuscadorDeClientes_Load(object sender, EventArgs e)
@@ -30,8 +42,8 @@ namespace FrbaHotel.ABM_de_Cliente
                 SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                     cbTipoDeDocumento.Items.Add(reader[0]); //carga los tipos de documentos en el combo box
-                    reader.Close();
-                    cbTipoDeDocumento.SelectedIndex = 0;
+                reader.Close();
+                cbTipoDeDocumento.SelectedIndex = 0;
             }
             catch (SqlException exc)
             {
@@ -44,14 +56,9 @@ namespace FrbaHotel.ABM_de_Cliente
             cbTipoDeDocumento.SelectedIndex = 0;
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void button6_Click(object sender, EventArgs e)
         {   //Volver
-            FormMenu inicio = new FormMenu();               
+            FormMenu inicio = new FormMenu();
             this.Hide();
             inicio.ShowDialog();
             this.Close();
@@ -170,7 +177,7 @@ namespace FrbaHotel.ABM_de_Cliente
             {
                 conexion.Close();
             }
-            button3_Click(sender, e); 
+            button3_Click(sender, e);
         }
 
         private void modificarButton_Click(object sender, EventArgs e)
@@ -184,20 +191,6 @@ namespace FrbaHotel.ABM_de_Cliente
             }
         }
 
-        private void txbNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txbMail_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txbApellido_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -210,9 +203,19 @@ namespace FrbaHotel.ABM_de_Cliente
             cbTipoDeDocumento.SelectedIndex = 0;
         }
 
-        private void cbTipoDeDocumento_SelectedIndexChanged(object sender, EventArgs e)
+        private void seleccionarBtn_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.SelectedRows.Count == 1)
+            {
+                MessageBox.Show("Cliente seleccionado correctamente", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Hide();
+                this.Close();
 
-        }      
-    }
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un cliente", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+    }
+}

@@ -376,6 +376,7 @@ CREATE PROCEDURE AEFI.insertar_factura
 	@id_reserva NUMERIC(18,0)
 AS
 BEGIN	
+	SET IDENTITY_INSERT [AEFI].[TL_Factura] ON
 	INSERT INTO AEFI.TL_Factura (ID_Factura, Fecha, Total, ID_Cliente)
 	VALUES ((
 		SELECT MAX(ID_Factura) + 1
@@ -383,6 +384,7 @@ BEGIN
 			(SELECT ID_Cliente
 			FROM AEFI.TL_Reserva
 			WHERE ID_Reserva = @id_reserva));
+			SET IDENTITY_INSERT [AEFI].[TL_Factura] OFF
 	SET @id_factura = (
 		SELECT MAX(ID_Factura)
 		FROM AEFI.TL_Factura);
@@ -798,6 +800,10 @@ END
 	FROM AEFI.TL_Reserva r
 	WHERE ID_Reserva = @idReserva
 	
+	UPDATE AEFI.TL_Reserva
+	SET Estado = 'Efectivizada'
+	WHERE ID_Reserva = @idReserva
+	
 END;
 
 GO 
@@ -947,4 +953,17 @@ BEGIN
 		SET Descripcion = @nombre
 		WHERE ID_Rol = @ID_Rol
 		
+END;
+
+GO 
+CREATE PROCEDURE AEFI.cancelarReserva
+@IDReserva NUMERIC(18,0)
+AS 
+BEGIN
+	IF EXISTS (SELECT * FROM AEFI.TL_Reserva r WHERE r.Fecha_Desde < GETDATE() AND r.Estado = 'Correcta' AND r.ID_Reserva = @IDReserva)
+	BEGIN
+	UPDATE AEFI.TL_Reserva
+	SET Estado = 'Cancelada por No-Show'
+	WHERE ID_Reserva = @IDReserva
+	END
 END;
