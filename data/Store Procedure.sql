@@ -909,8 +909,37 @@ END;
 
 
 
+GO
+CREATE PROCEDURE AEFI.insertar_Rol_Usuario
+@user NUMERIC(18,0),
+@Descripcion NVARCHAR(55)
+
+AS
+BEGIN
+		IF NOT EXISTS(SELECT upr.ID_Rol, upr.ID_Usuario FROM AEFI.TL_Usuario_Por_Rol upr, AEFI.TL_Rol r WHERE upr.ID_Usuario = @user AND r.ID_Rol = upr.ID_Rol AND r.Descripcion = @Descripcion)
+		BEGIN
+			INSERT INTO AEFI.TL_Usuario_Por_Rol
+			VALUES ((SELECT ID_Rol FROM AEFI.TL_Rol WHERE Descripcion = @Descripcion), @user)
+			
+			END
+END;
 
 
+GO
+CREATE PROCEDURE AEFI.quitar_Rol_Usuario
+@user NUMERIC(18,0),
+@Descripcion NVARCHAR(55)
 
-
+AS
+BEGIN
+		IF EXISTS(SELECT upr.ID_Rol FROM AEFI.TL_Usuario_Por_Rol upr, AEFI.TL_Rol r WHERE upr.ID_Usuario = @user AND r.ID_Rol = upr.ID_Rol AND r.Descripcion = @Descripcion)
+		BEGIN
+			DELETE AEFI.TL_Usuario_Por_Rol
+			WHERE ID_Usuario = @user AND ID_Rol = (SELECT ID_Rol FROM AEFI.TL_Rol WHERE Descripcion = @Descripcion);
+			
+			DELETE AEFI.TL_Usuario_Por_Hotel
+			WHERE ID_Usuario = @user AND ID_Rol = (SELECT ID_Rol FROM AEFI.TL_Rol WHERE Descripcion = @Descripcion);
+			
+			END
+END;
 

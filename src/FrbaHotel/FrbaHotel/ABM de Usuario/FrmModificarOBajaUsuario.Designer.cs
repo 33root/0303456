@@ -63,6 +63,8 @@
             this.volverBtn = new System.Windows.Forms.Button();
             this.quitarlbl = new System.Windows.Forms.Label();
             this.quitarcmbBox = new System.Windows.Forms.ComboBox();
+            this.hotelesDelRolCmbBox = new System.Windows.Forms.ComboBox();
+            this.hotelesDelRolLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.usuariosDGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,7 +163,7 @@
             // 
             this.hotelesLbl.AccessibleName = "grupo";
             this.hotelesLbl.AutoSize = true;
-            this.hotelesLbl.Location = new System.Drawing.Point(160, 566);
+            this.hotelesLbl.Location = new System.Drawing.Point(165, 591);
             this.hotelesLbl.Name = "hotelesLbl";
             this.hotelesLbl.Size = new System.Drawing.Size(101, 13);
             this.hotelesLbl.TabIndex = 75;
@@ -195,7 +197,7 @@
             // 
             this.nrodoclbl.AccessibleName = "grupo";
             this.nrodoclbl.AutoSize = true;
-            this.nrodoclbl.Location = new System.Drawing.Point(11, 409);
+            this.nrodoclbl.Location = new System.Drawing.Point(16, 431);
             this.nrodoclbl.Name = "nrodoclbl";
             this.nrodoclbl.Size = new System.Drawing.Size(120, 13);
             this.nrodoclbl.TabIndex = 68;
@@ -205,7 +207,7 @@
             // nrodocTxtBox
             // 
             this.nrodocTxtBox.AccessibleName = "grupo";
-            this.nrodocTxtBox.Location = new System.Drawing.Point(143, 411);
+            this.nrodocTxtBox.Location = new System.Drawing.Point(148, 433);
             this.nrodocTxtBox.Name = "nrodocTxtBox";
             this.nrodocTxtBox.Size = new System.Drawing.Size(121, 20);
             this.nrodocTxtBox.TabIndex = 57;
@@ -216,7 +218,7 @@
             // 
             this.tipoDocCmbBox.AccessibleName = "grupo";
             this.tipoDocCmbBox.FormattingEnabled = true;
-            this.tipoDocCmbBox.Location = new System.Drawing.Point(143, 381);
+            this.tipoDocCmbBox.Location = new System.Drawing.Point(148, 403);
             this.tipoDocCmbBox.Name = "tipoDocCmbBox";
             this.tipoDocCmbBox.Size = new System.Drawing.Size(121, 21);
             this.tipoDocCmbBox.TabIndex = 56;
@@ -226,7 +228,7 @@
             // 
             this.tipolbl.AccessibleName = "grupo";
             this.tipolbl.AutoSize = true;
-            this.tipolbl.Location = new System.Drawing.Point(14, 379);
+            this.tipolbl.Location = new System.Drawing.Point(19, 401);
             this.tipolbl.Name = "tipolbl";
             this.tipolbl.Size = new System.Drawing.Size(104, 13);
             this.tipolbl.TabIndex = 70;
@@ -321,7 +323,7 @@
             this.checkedListBox.CheckOnClick = true;
             this.checkedListBox.FormattingEnabled = true;
             this.checkedListBox.HorizontalScrollbar = true;
-            this.checkedListBox.Location = new System.Drawing.Point(287, 566);
+            this.checkedListBox.Location = new System.Drawing.Point(292, 591);
             this.checkedListBox.Name = "checkedListBox";
             this.checkedListBox.Size = new System.Drawing.Size(191, 64);
             this.checkedListBox.TabIndex = 62;
@@ -331,7 +333,7 @@
             // 
             this.aniadirCmbBox.AccessibleName = "grupo";
             this.aniadirCmbBox.FormattingEnabled = true;
-            this.aniadirCmbBox.Location = new System.Drawing.Point(140, 344);
+            this.aniadirCmbBox.Location = new System.Drawing.Point(145, 366);
             this.aniadirCmbBox.Name = "aniadirCmbBox";
             this.aniadirCmbBox.Size = new System.Drawing.Size(121, 21);
             this.aniadirCmbBox.TabIndex = 78;
@@ -341,7 +343,7 @@
             // 
             this.aniadirlbl.AccessibleName = "grupo";
             this.aniadirlbl.AutoSize = true;
-            this.aniadirlbl.Location = new System.Drawing.Point(43, 347);
+            this.aniadirlbl.Location = new System.Drawing.Point(48, 369);
             this.aniadirlbl.Name = "aniadirlbl";
             this.aniadirlbl.Size = new System.Drawing.Size(59, 13);
             this.aniadirlbl.TabIndex = 83;
@@ -352,7 +354,7 @@
             // 
             this.label2.AccessibleName = "grupo";
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(46, 279);
+            this.label2.Location = new System.Drawing.Point(48, 269);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 13);
             this.label2.TabIndex = 82;
@@ -363,7 +365,7 @@
             // passwordTxtBox
             // 
             this.passwordTxtBox.AccessibleName = "grupo";
-            this.passwordTxtBox.Location = new System.Drawing.Point(143, 279);
+            this.passwordTxtBox.Location = new System.Drawing.Point(145, 269);
             this.passwordTxtBox.Name = "passwordTxtBox";
             this.passwordTxtBox.PasswordChar = '*';
             this.passwordTxtBox.Size = new System.Drawing.Size(121, 20);
@@ -393,7 +395,7 @@
             // modiBtn
             // 
             this.modiBtn.AccessibleName = "grupo";
-            this.modiBtn.Location = new System.Drawing.Point(21, 659);
+            this.modiBtn.Location = new System.Drawing.Point(12, 680);
             this.modiBtn.Name = "modiBtn";
             this.modiBtn.Size = new System.Drawing.Size(204, 33);
             this.modiBtn.TabIndex = 84;
@@ -404,7 +406,7 @@
             // 
             // volverBtn
             // 
-            this.volverBtn.Location = new System.Drawing.Point(457, 659);
+            this.volverBtn.Location = new System.Drawing.Point(486, 680);
             this.volverBtn.Name = "volverBtn";
             this.volverBtn.Size = new System.Drawing.Size(204, 33);
             this.volverBtn.TabIndex = 85;
@@ -416,7 +418,7 @@
             // 
             this.quitarlbl.AccessibleName = "grupo";
             this.quitarlbl.AutoSize = true;
-            this.quitarlbl.Location = new System.Drawing.Point(40, 316);
+            this.quitarlbl.Location = new System.Drawing.Point(45, 338);
             this.quitarlbl.Name = "quitarlbl";
             this.quitarlbl.Size = new System.Drawing.Size(57, 13);
             this.quitarlbl.TabIndex = 86;
@@ -427,17 +429,40 @@
             // 
             this.quitarcmbBox.AccessibleName = "grupo";
             this.quitarcmbBox.FormattingEnabled = true;
-            this.quitarcmbBox.Location = new System.Drawing.Point(140, 312);
+            this.quitarcmbBox.Location = new System.Drawing.Point(145, 334);
             this.quitarcmbBox.Name = "quitarcmbBox";
             this.quitarcmbBox.Size = new System.Drawing.Size(121, 21);
             this.quitarcmbBox.TabIndex = 87;
             this.quitarcmbBox.Visible = false;
             // 
+            // hotelesDelRolCmbBox
+            // 
+            this.hotelesDelRolCmbBox.AccessibleName = "grupo";
+            this.hotelesDelRolCmbBox.FormattingEnabled = true;
+            this.hotelesDelRolCmbBox.Location = new System.Drawing.Point(292, 564);
+            this.hotelesDelRolCmbBox.Name = "hotelesDelRolCmbBox";
+            this.hotelesDelRolCmbBox.Size = new System.Drawing.Size(191, 21);
+            this.hotelesDelRolCmbBox.TabIndex = 89;
+            this.hotelesDelRolCmbBox.Visible = false;
+            // 
+            // hotelesDelRolLbl
+            // 
+            this.hotelesDelRolLbl.AccessibleName = "grupo";
+            this.hotelesDelRolLbl.AutoSize = true;
+            this.hotelesDelRolLbl.Location = new System.Drawing.Point(184, 567);
+            this.hotelesDelRolLbl.Name = "hotelesDelRolLbl";
+            this.hotelesDelRolLbl.Size = new System.Drawing.Size(82, 13);
+            this.hotelesDelRolLbl.TabIndex = 88;
+            this.hotelesDelRolLbl.Text = "Hoteles del Rol:";
+            this.hotelesDelRolLbl.Visible = false;
+            // 
             // FrmModificarOBajaUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 706);
+            this.ClientSize = new System.Drawing.Size(709, 734);
+            this.Controls.Add(this.hotelesDelRolCmbBox);
+            this.Controls.Add(this.hotelesDelRolLbl);
             this.Controls.Add(this.quitarcmbBox);
             this.Controls.Add(this.quitarlbl);
             this.Controls.Add(this.volverBtn);
@@ -519,5 +544,7 @@
         private System.Windows.Forms.Button volverBtn;
         private System.Windows.Forms.Label quitarlbl;
         private System.Windows.Forms.ComboBox quitarcmbBox;
+        private System.Windows.Forms.ComboBox hotelesDelRolCmbBox;
+        private System.Windows.Forms.Label hotelesDelRolLbl;
     }
 }

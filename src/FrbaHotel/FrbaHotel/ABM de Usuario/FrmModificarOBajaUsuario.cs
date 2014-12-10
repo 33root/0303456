@@ -15,6 +15,7 @@ namespace FrbaHotel.ABM_de_Usuario
     {
         SqlConnection conexion = BaseDeDatos.conectar();
         int idUser;
+        string pass;
 
         public FrmModificarOBajaUsuario()
         {
@@ -29,15 +30,15 @@ namespace FrbaHotel.ABM_de_Usuario
                                  " AND u.ID_Usuario = uph.ID_Usuario AND uph.ID_Hotel =" + Program.idHotel +
                                     " AND u.ID_Usuario != " + Program.idUsuario;
 
+            
             try
             {
-                //Cargo las estadias
+                //Cargo los usuarios
                 conexion.Open();
                 SqlDataAdapter adapter = new SqlDataAdapter(cargarUsuarios, conexion);
                 DataTable tabla = new DataTable();
                 adapter.Fill(tabla);
                 usuariosDGV.DataSource = tabla;
-
 
 
                 conexion.Close();
@@ -61,6 +62,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 foreach (DataGridViewRow row in usuariosDGV.SelectedRows)
                 {
                     idUser = Convert.ToInt32(row.Cells["id_usuario"].Value);
+                    pass = Convert.ToString(row.Cells["Password"].Value);
                     cargarDatos(row);
                 }
             }
@@ -75,6 +77,7 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void cargarDatos(DataGridViewRow row)
         {
+           
             loadCmbBox();
 
             label2.Visible = true;
@@ -83,6 +86,8 @@ namespace FrbaHotel.ABM_de_Usuario
             nrodoclbl.Visible = true;
             nombrelbl.Visible = true;
             apellidolbl.Visible = true;
+            hotelesDelRolCmbBox.Visible = true;
+            hotelesDelRolLbl.Visible = true;
             mailbl.Visible = true;
             telefonolbl.Visible = true;
             fechalbl.Visible = true;
@@ -92,12 +97,13 @@ namespace FrbaHotel.ABM_de_Usuario
             dptolbl.Visible = true;
             hotelesLbl.Visible = true;
             modiBtn.Visible = true;
-
+            quitarlbl.Visible = true;
             passwordTxtBox.Visible = true;
             tipoDocCmbBox.Visible = true;
-
             aniadirCmbBox.Visible = true;
-            quitarcmbBox.Visible = true;
+            quitarcmbBox.Visible = true;      
+            
+
             nrodocTxtBox.Visible = true;
             nrodocTxtBox.Text = Convert.ToString(row.Cells["Documento_Nro"].Value);
             nombreTxtBox.Visible = true;
@@ -142,9 +148,11 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void loadCmbBox()
         {
-            String cargarRoles = "SELECT Descripcion " +
-                                   "FROM AEFI.TL_Rol r " +
-                                   "WHERE r.Descripcion != 'Guest' ";
+
+            String cargarAniadirRoles = "SELECT DISTINCT r.Descripcion FROM AEFI.TL_Rol r, AEFI.TL_Usuario_Por_Rol upr WHERE upr.ID_Rol != r.ID_Rol AND (upr.ID_Usuario = @user OR NOT EXISTS (SELECT * FROM AEFI.TL_Usuario_Por_Rol WHERE ID_Usuario = @user)) ";
+
+            String cargarQuitarRoles = "SELECT DISTINCT r.Descripcion FROM AEFI.TL_Rol r, AEFI.TL_Usuario_Por_Rol upr WHERE upr.ID_Rol = r.ID_Rol AND upr.ID_Usuario = @user ";
+
 
             String cargarHoteles = "SELECT Nombre " +
                                     "FROM AEFI.TL_Hotel h ";
@@ -155,20 +163,10 @@ namespace FrbaHotel.ABM_de_Usuario
             try
             {
                 conexion.Open();
-                //Cargo los roles
-                SqlCommand comando = new SqlCommand(cargarRoles, conexion);
-                SqlDataReader reader = comando.ExecuteReader();
-                while (reader.Read())
-                {
-                    aniadirCmbBox.Items.Add(reader["Descripcion"].ToString());
-                }
-
-                aniadirCmbBox.SelectedIndex = 0;
-
-
+               
                 //Cargo los tipos de documento
-                comando = new SqlCommand(cargarTipoDocumento, conexion);
-                reader = comando.ExecuteReader();
+               SqlCommand comando = new SqlCommand(cargarTipoDocumento, conexion);
+                SqlDataReader reader = comando.ExecuteReader();
                 while (reader.Read())
                 {
                     tipoDocCmbBox.Items.Add(reader["Descripcion"].ToString());
@@ -185,9 +183,32 @@ namespace FrbaHotel.ABM_de_Usuario
                 while (reader.Read())
                 {
                     checkedListBox.Items.Add(Convert.ToString(reader["Nombre"]));
+
                 }
                 reader.Close();
 
+                //Cargo los roles que tiene asignados
+                comando = new SqlCommand(cargarQuitarRoles, conexion);
+                comando.Parameters.Add(new SqlParameter("@user", idUser));
+                reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    quitarcmbBox.Items.Add(reader["Descripcion"].ToString());
+                    hotelesDelRolCmbBox.Items.Add(reader["Descripcion"].ToString());
+                    hotelesDelRolCmbBox.SelectedIndex = 0;
+                }
+
+
+                //Cargo los roles que aun no tiene asignados
+                comando = new SqlCommand(cargarAniadirRoles, conexion);
+                comando.Parameters.Add(new SqlParameter("@user", idUser));
+
+                reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    aniadirCmbBox.Items.Add(reader["Descripcion"].ToString());
+                   
+                }
 
             }
 
@@ -205,7 +226,7 @@ namespace FrbaHotel.ABM_de_Usuario
             foreach (Control c in this.Controls)
             {
 
-                if (c is TextBox)
+                if (c is TextBox && c != passwordTxtBox)
                 {
                     TextBox textBox = c as TextBox;
                     if (textBox.Text == string.Empty)
@@ -237,7 +258,15 @@ namespace FrbaHotel.ABM_de_Usuario
                         "SET Password = @pass, Nombre = @nombre, Apellido = @apellido, Mail = @mail, Fecha_Nacimiento = @fecha " +
                         ", Telefono = @telefono, Calle = @calle, Piso = @piso, Dpto= @dpto, Calle_Nro = @calleNro WHERE ID_Usuario = " + idUser;
                     SqlCommand comando = new SqlCommand(modificarUsuario, conexion);
+
+                    if(passwordTxtBox.Text == string.Empty)
+                    {
+
+                        comando.Parameters.Add(new SqlParameter("@Pass", pass));
+                    }
+                    else{
                     comando.Parameters.Add(new SqlParameter("@pass", BaseDeDatos.cifrar256(passwordTxtBox.Text)));
+                    }
                     comando.Parameters.Add(new SqlParameter("@nombre", nombreTxtBox.Text));
                     comando.Parameters.Add(new SqlParameter("@apellido", apellidoTxtBox.Text));
                     comando.Parameters.Add(new SqlParameter("@mail", mailTxtBox.Text));
@@ -262,39 +291,62 @@ namespace FrbaHotel.ABM_de_Usuario
                         int IDHotel = Convert.ToInt32(reader["ID_Hotel"]);
                         reader.Close();
 
-                        comando = new SqlCommand(consultaIDRol, conexion);
-                        comando.Parameters.Add(new SqlParameter("@descripcion", Convert.ToString(aniadirCmbBox.SelectedItem.ToString())));
-                        reader = comando.ExecuteReader();
-                        reader.Read();
-                        int IDRol = Convert.ToInt32(reader["ID_Rol"]);
-                        reader.Close();
-
-
-
-                        if (checkedListBox.GetItemCheckState(i) == CheckState.Unchecked)
-                        { // todas las no seleccionadas
-
-
-
-                            comando = new SqlCommand("AEFI.eliminar_Hotel_Usuario", conexion);
-                            comando.CommandType = CommandType.StoredProcedure;
-                            comando.Parameters.Add(new SqlParameter("@IDHotel", IDHotel));
-                            comando.Parameters.Add(new SqlParameter("@IDRol", IDRol));
-                            comando.Parameters.Add(new SqlParameter("@IDUser", idUser));
-                            comando.ExecuteNonQuery();
-
-
-                        }
-                        else
+                        if (hotelesDelRolCmbBox.SelectedIndex != -1)
                         {
-                            comando = new SqlCommand("AEFI.insertar_Hotel_Usuario", conexion);
-                            comando.CommandType = CommandType.StoredProcedure;
-                            comando.Parameters.Add(new SqlParameter("@IDHotel", IDHotel));
-                            comando.Parameters.Add(new SqlParameter("@IDRol", IDRol));
-                            comando.Parameters.Add(new SqlParameter("@IDUser", idUser));
-                            comando.ExecuteNonQuery();
+                            comando = new SqlCommand(consultaIDRol, conexion);
+                            comando.Parameters.Add(new SqlParameter("@descripcion", Convert.ToString(hotelesDelRolCmbBox.SelectedItem.ToString())));
+                            reader = comando.ExecuteReader();
+                            reader.Read();
+                            int IDRol = Convert.ToInt32(reader["ID_Rol"]);
+                            reader.Close();
+
+
+
+                            if (checkedListBox.GetItemCheckState(i) == CheckState.Unchecked)
+                            { // todas las no seleccionadas
+
+
+
+                                comando = new SqlCommand("AEFI.eliminar_Hotel_Usuario", conexion);
+                                comando.CommandType = CommandType.StoredProcedure;
+                                comando.Parameters.Add(new SqlParameter("@IDHotel", IDHotel));
+                                comando.Parameters.Add(new SqlParameter("@IDRol", IDRol));
+                                comando.Parameters.Add(new SqlParameter("@IDUser", idUser));
+                                comando.ExecuteNonQuery();
+
+
+                            }
+                            else
+                            {
+                                comando = new SqlCommand("AEFI.insertar_Hotel_Usuario", conexion);
+                                comando.CommandType = CommandType.StoredProcedure;
+                                comando.Parameters.Add(new SqlParameter("@IDHotel", IDHotel));
+                                comando.Parameters.Add(new SqlParameter("@IDRol", IDRol));
+                                comando.Parameters.Add(new SqlParameter("@IDUser", idUser));
+                                comando.ExecuteNonQuery();
+                            }
                         }
 
+                                            
+                        }
+
+                    if (aniadirCmbBox.SelectedIndex != -1)
+                    {
+                        comando = new SqlCommand("AEFI.insertar_Rol_Usuario", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.Add(new SqlParameter("@Descripcion", aniadirCmbBox.SelectedItem.ToString()));
+                        comando.Parameters.Add(new SqlParameter("@user", idUser));
+                        comando.ExecuteNonQuery();
+
+                    }
+
+                    if (quitarcmbBox.SelectedIndex != -1)
+                    {
+                        comando = new SqlCommand("AEFI.quitar_Rol_Usuario", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.Add(new SqlParameter("@Descripcion", quitarcmbBox.SelectedItem.ToString()));
+                        comando.Parameters.Add(new SqlParameter("@user", idUser));
+                        comando.ExecuteNonQuery();
 
 
                     }
@@ -310,6 +362,11 @@ namespace FrbaHotel.ABM_de_Usuario
 
                     conexion.Close();
                 }
+
+            }
+            else
+            {
+                MessageBox.Show("Complete todo los campos para proseguir", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
 

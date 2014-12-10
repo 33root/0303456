@@ -1,4 +1,5 @@
-
+DROP PROCEDURE AEFI.quitar_Rol_Usuario;
+DROP PROCEDURE AEFI.insertar_Rol_Usuario;
 DROP PROCEDURE AEFI.deshabilitarUsuario;
 DROP PROCEDURE AEFI.insertar_Hotel_Usuario;
 DROP PROCEDURE AEFI.eliminar_Hotel_Usuario;
