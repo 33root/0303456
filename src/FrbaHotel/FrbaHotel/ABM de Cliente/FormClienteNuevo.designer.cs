@@ -108,6 +108,7 @@
             this.txbDocumentoNumero.Name = "txbDocumentoNumero";
             this.txbDocumentoNumero.Size = new System.Drawing.Size(208, 20);
             this.txbDocumentoNumero.TabIndex = 5;
+            this.txbDocumentoNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbDocumentoNumero_KeyPress);
             // 
             // label4
             // 

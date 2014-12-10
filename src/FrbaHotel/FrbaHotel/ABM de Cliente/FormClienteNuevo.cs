@@ -241,6 +241,11 @@ namespace FrbaHotel.ABM_de_Cliente
             permitirSoloNumeros(e);
         }
 
+        private void txbDocumentoNumero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
+
         private void txbNombre_KeyPress(object sender, KeyPressEventArgs e)
         {
             permitirSoloLetras(e);

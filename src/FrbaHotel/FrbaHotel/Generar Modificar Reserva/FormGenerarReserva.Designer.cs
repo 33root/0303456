@@ -87,6 +87,7 @@
             this.txbCantidadDeHuespedes.Name = "txbCantidadDeHuespedes";
             this.txbCantidadDeHuespedes.Size = new System.Drawing.Size(200, 20);
             this.txbCantidadDeHuespedes.TabIndex = 5;
+            this.txbCantidadDeHuespedes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbCantidadDeHuespedes_KeyPress);
             // 
             // label4
             // 
@@ -168,6 +169,7 @@
             this.txbCantidadDeNoches.Name = "txbCantidadDeNoches";
             this.txbCantidadDeNoches.Size = new System.Drawing.Size(200, 20);
             this.txbCantidadDeNoches.TabIndex = 14;
+            this.txbCantidadDeNoches.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbCantidadDeNoches_KeyPress);
             // 
             // CancelarButton
             // 

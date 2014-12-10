@@ -417,6 +417,31 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.Close();
         }
 
+        private static void permitirSoloNumeros(KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txbCantidadDeHuespedes_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
+
+        private void txbCantidadDeNoches_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
      
     }
 }
