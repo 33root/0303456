@@ -81,8 +81,12 @@
             // 
             // dtpFechaDeCancelacion
             // 
+            this.dtpFechaDeCancelacion.Checked = false;
+            this.dtpFechaDeCancelacion.Enabled = false;
             this.dtpFechaDeCancelacion.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaDeCancelacion.Location = new System.Drawing.Point(371, 13);
+            this.dtpFechaDeCancelacion.MaxDate = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
+            this.dtpFechaDeCancelacion.MinDate = new System.DateTime(2014, 12, 10, 0, 0, 0, 0);
             this.dtpFechaDeCancelacion.Name = "dtpFechaDeCancelacion";
             this.dtpFechaDeCancelacion.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaDeCancelacion.TabIndex = 5;

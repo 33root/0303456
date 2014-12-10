@@ -57,7 +57,6 @@ END;
 
 GO
 
-/* Se podria implementar un Trigger o algo asi para habilitarlo cuando termine el plazo (hay q ver ) */
 CREATE PROCEDURE AEFI.baja_Hotel
 
 		@ID_Hotel numeric(18,0),
@@ -67,7 +66,6 @@ CREATE PROCEDURE AEFI.baja_Hotel
 
 AS
 
-/* Falta realizar la validacion de estadia de hoteles, si esta vacio y todo eso */
 
 BEGIN
 										
@@ -87,7 +85,6 @@ GO
 CREATE PROCEDURE AEFI.crear_Habitacion
 
 
-/*por alguna razon si les pongo numeric no puede tranformar nvarchar a numeric, por eso son nvarchar (funciona) */
 		@ID_Hotel nvarchar(10),
 		@ID_Habitacion nvarchar(10),
 		@Numero nvarchar(50),
@@ -172,11 +169,12 @@ AS
 BEGIN
 	
 	IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Mail = @Mail)
-		INSERT INTO AEFI.TL_Cliente (Documento_Nro, Nombre, Apellido, Telefono, Mail, Fecha_Nacimiento, ID_Tipo_Documento )
-		VALUES (@Documento_Numero, @Nombre, @Apellido, @Telefono, @Mail, @Fecha_Nacimiento, (
+		INSERT INTO AEFI.TL_Cliente
+		VALUES ( @Nombre,@Apellido, (
 			SELECT ID_Tipo_Documento
 			FROM AEFI.TL_Tipo_Documento
-			WHERE Descripcion = @ID_Tipo_Documento));
+			WHERE Descripcion = @ID_Tipo_Documento), 
+			@Documento_Numero,@Mail, @Calle, @Calle_Nro, @Piso, @Dpto, @Telefono, @Fecha_Nacimiento,@PaisOrigen, @Localidad, @PaisOrigen);
 END;
 
 GO
@@ -423,7 +421,6 @@ END;
 
 GO 
 CREATE PROCEDURE AEFI.calcular_costo_porDia
-@cantidad_huespedes NUMERIC(18,0),
 @id_habitacion NUMERIC(18,0),
 @cantidad_noches NUMERIC(18,0),
 @id_regimen NUMERIC(18,0),
@@ -434,7 +431,7 @@ CREATE PROCEDURE AEFI.calcular_costo_porDia
 
 AS 
 BEGIN
-	set @costo =( SELECT (ho.cantidad_estrellas * ho.recarga_estrellas * reg.Precio_Base * t.Porcentual * @cantidad_noches * @cantidad_huespedes)
+	set @costo =( SELECT (ho.cantidad_estrellas * ho.recarga_estrellas + reg.Precio_Base * t.Porcentual * @cantidad_noches )
 	from AEFI.TL_hotel ho, AEFI.TL_Habitacion ha, AEFI.TL_Regimen reg, AEFI.TL_Tipo_Habitacion t
 	WHERE ha.ID_Habitacion = @id_habitacion 
 	AND ha.ID_Hotel = ho.ID_Hotel --recarga estrellas
@@ -444,8 +441,6 @@ BEGIN
 	return @costo
 	
 END;
-
-
 
 
 GO
@@ -766,7 +761,6 @@ GO
 CREATE PROCEDURE AEFI.cancelar_Reserva
 	@ID_Reserva NUMERIC(18,0),
 	@Motivo varchar(255),
-	@FechaDeCancelacion datetime,
 	@ID_Usuario NUMERIC(18,0)
 
 AS
@@ -776,7 +770,7 @@ BEGIN
 	WHERE ID_Reserva = @ID_Reserva
 	
 	INSERT INTO AEFI.TL_Cancelacion(Motivo, ID_Reserva, Fecha, ID_Usuario)
-	VALUES (@Motivo,@ID_Reserva,@FechaDeCancelacion,@ID_Usuario);
+	VALUES (@Motivo,@ID_Reserva,GETDATE(),@ID_Usuario);
 		
 END;
 

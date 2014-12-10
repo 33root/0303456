@@ -131,33 +131,32 @@ namespace FrbaHotel.ABM_de_Usuario
             String obtenerIdRol = "SELECT ID_Rol " +
                                    "FROM AEFI.TL_Rol r " +
                                    "WHERE r.Descripcion = @Descripcion";
-
-            try
+            if (verificarTextBoxNoVacios())
             {
-
-
-                SqlCommand comando = new SqlCommand(obtenerIdTipoDocumento, conexion);
-                comando.Parameters.Add(new SqlParameter("@Descripcion", tipoDocCmbBox.SelectedItem.ToString()));
-                SqlDataReader reader = comando.ExecuteReader();
-
-                reader.Read();
-                id_tipo_doc = Convert.ToInt32(reader["ID_Tipo_Documento"]);
-                reader.Close();
-
-                comando = new SqlCommand(obtenerIdRol, conexion);
-                comando.Parameters.Add(new SqlParameter("Descripcion", rolesBox.SelectedItem.ToString()));
-                reader = comando.ExecuteReader();
-
-                reader.Read();
-                id_rol = Convert.ToInt32(reader["ID_Rol"]);
-                reader.Close();
-
-                comando = new SqlCommand(verificarUsernameNoUsado, conexion);
-                comando.Parameters.Add(new SqlParameter("@Username", userTxtBox.Text));
-                reader = comando.ExecuteReader();
-
                 try
                 {
+
+
+                    SqlCommand comando = new SqlCommand(obtenerIdTipoDocumento, conexion);
+                    comando.Parameters.Add(new SqlParameter("@Descripcion", tipoDocCmbBox.SelectedItem.ToString()));
+                    SqlDataReader reader = comando.ExecuteReader();
+
+                    reader.Read();
+                    id_tipo_doc = Convert.ToInt32(reader["ID_Tipo_Documento"]);
+                    reader.Close();
+
+                    comando = new SqlCommand(obtenerIdRol, conexion);
+                    comando.Parameters.Add(new SqlParameter("Descripcion", rolesBox.SelectedItem.ToString()));
+                    reader = comando.ExecuteReader();
+
+                    reader.Read();
+                    id_rol = Convert.ToInt32(reader["ID_Rol"]);
+                    reader.Close();
+
+                    comando = new SqlCommand(verificarUsernameNoUsado, conexion);
+                    comando.Parameters.Add(new SqlParameter("@Username", userTxtBox.Text));
+                    reader = comando.ExecuteReader();
+
 
                     if (!reader.HasRows)
                     {
@@ -177,9 +176,7 @@ namespace FrbaHotel.ABM_de_Usuario
                         comando.Parameters.Add(new SqlParameter("@fecha_nacimiento", dateTimePicker1.Value.Date));
                         comando.Parameters.Add(new SqlParameter("@documento_nro", Convert.ToInt64(nrodocTxtBox.Text)));
                         comando.Parameters.Add(new SqlParameter("@id_tipo_documento", id_tipo_doc));
-
-                        reader = comando.ExecuteReader();
-
+                        comando.ExecuteNonQuery();
 
                         comando = new SqlCommand(obtenerIdUsuarioCreado, conexion);
                         comando.Parameters.Add(new SqlParameter("@Username", userTxtBox.Text));
@@ -243,14 +240,20 @@ namespace FrbaHotel.ABM_de_Usuario
                     MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
+
+
+                finally
+                {
+                    conexion.Close();
+                    cancelarBtn_Click(this, e);
+                }
             }
-
-
-            finally
+            else
             {
-                conexion.Close();
-                cancelarBtn_Click(this, e);
+                MessageBox.Show("Debe completar todos los campos", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+
         }
 
         private Boolean verificarTextBoxNoVacios()

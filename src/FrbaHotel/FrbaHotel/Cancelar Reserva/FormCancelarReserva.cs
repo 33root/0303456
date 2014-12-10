@@ -15,7 +15,6 @@ namespace FrbaHotel.Cancelar_Reserva
     public partial class FormCancelarReserva : Form
     {
         SqlConnection conexion = BaseDeDatos.conectar();
-        DateTimePicker f;
        
 
         public FormCancelarReserva()
@@ -40,18 +39,23 @@ namespace FrbaHotel.Cancelar_Reserva
         {
             try
             {
-                f = dtpFechaDeCancelacion;
-                
-                if (0 > DateTime.Compare(f.Value, DateTime.Now))
+                conexion.Open();
+                string obtenerDiaDeReserva = "SELECT Fecha_Desde FROM AEFI.TL_Reserva WHERE ID_Reserva = " + Convert.ToInt32(txbNumeroDeReserva.Text);
+                SqlCommand comando = new SqlCommand(obtenerDiaDeReserva, conexion);
+                SqlDataReader reader = comando.ExecuteReader();
+                reader.Read();
+                DateTime fechaInicioReserva = Convert.ToDateTime(reader["Fecha_Desde"]);
+                reader.Close();
+
+
+                if (1 <= (fechaInicioReserva -DateTime.Now).TotalDays )
                 {
-                    conexion.Open();
-                    SqlCommand comando = new SqlCommand("AEFI.cancelar_Reserva", conexion);
+                    comando = new SqlCommand("AEFI.cancelar_Reserva", conexion);
                     comando.CommandType = CommandType.StoredProcedure;
                     comando.Parameters.Add(new SqlParameter("@ID_Reserva", txbNumeroDeReserva.Text));
-                    comando.Parameters.Add(new SqlParameter("@Motivo", txbMotivo.Text));
-                    comando.Parameters.Add(new SqlParameter("@FechaDeCancelacion", dtpFechaDeCancelacion.Value.Date));
+                    comando.Parameters.Add(new SqlParameter("@Motivo", txbMotivo.Text));;
                     comando.Parameters.Add(new SqlParameter("@ID_Usuario", Program.idUsuario));
-                    //acordarce de cambiar el estado de reserva a "cancelada" en el store procedure
+                    MessageBox.Show("Reserva Cancelada Correctamente", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -66,6 +70,7 @@ namespace FrbaHotel.Cancelar_Reserva
             {
 
                 conexion.Close();
+                this.VolverButton_Click(this, e);
             }
         }
     }

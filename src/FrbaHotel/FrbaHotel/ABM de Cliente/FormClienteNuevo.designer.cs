@@ -45,9 +45,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.txbDireccion = new System.Windows.Forms.TextBox();
-            this.txbCalle = new System.Windows.Forms.TextBox();
+            this.txbNumero = new System.Windows.Forms.TextBox();
             this.txbLocalidad = new System.Windows.Forms.TextBox();
-            this.txbNacionalidad = new System.Windows.Forms.TextBox();
+            this.txbPaisOrigen = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.CrearButton = new System.Windows.Forms.Button();
             this.VolverButton = new System.Windows.Forms.Button();
@@ -205,13 +205,13 @@
             this.txbDireccion.TabIndex = 16;
             this.txbDireccion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbDireccion_KeyPress);
             // 
-            // txbCalle
+            // txbNumero
             // 
-            this.txbCalle.Location = new System.Drawing.Point(89, 222);
-            this.txbCalle.Name = "txbCalle";
-            this.txbCalle.Size = new System.Drawing.Size(208, 20);
-            this.txbCalle.TabIndex = 17;
-            this.txbCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbCalle_KeyPress);
+            this.txbNumero.Location = new System.Drawing.Point(89, 222);
+            this.txbNumero.Name = "txbNumero";
+            this.txbNumero.Size = new System.Drawing.Size(208, 20);
+            this.txbNumero.TabIndex = 17;
+            this.txbNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbCalle_KeyPress);
             // 
             // txbLocalidad
             // 
@@ -221,13 +221,13 @@
             this.txbLocalidad.TabIndex = 18;
             this.txbLocalidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbLocalidad_KeyPress);
             // 
-            // txbNacionalidad
+            // txbPaisOrigen
             // 
-            this.txbNacionalidad.Location = new System.Drawing.Point(89, 276);
-            this.txbNacionalidad.Name = "txbNacionalidad";
-            this.txbNacionalidad.Size = new System.Drawing.Size(208, 20);
-            this.txbNacionalidad.TabIndex = 19;
-            this.txbNacionalidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbNacionalidad_KeyPress);
+            this.txbPaisOrigen.Location = new System.Drawing.Point(89, 276);
+            this.txbPaisOrigen.Name = "txbPaisOrigen";
+            this.txbPaisOrigen.Size = new System.Drawing.Size(208, 20);
+            this.txbPaisOrigen.TabIndex = 19;
+            this.txbPaisOrigen.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbNacionalidad_KeyPress);
             // 
             // label11
             // 
@@ -323,9 +323,9 @@
             this.Controls.Add(this.VolverButton);
             this.Controls.Add(this.CrearButton);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.txbNacionalidad);
+            this.Controls.Add(this.txbPaisOrigen);
             this.Controls.Add(this.txbLocalidad);
-            this.Controls.Add(this.txbCalle);
+            this.Controls.Add(this.txbNumero);
             this.Controls.Add(this.txbDireccion);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -370,9 +370,9 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txbDireccion;
-        private System.Windows.Forms.TextBox txbCalle;
+        private System.Windows.Forms.TextBox txbNumero;
         private System.Windows.Forms.TextBox txbLocalidad;
-        private System.Windows.Forms.TextBox txbNacionalidad;
+        private System.Windows.Forms.TextBox txbPaisOrigen;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button CrearButton;
         private System.Windows.Forms.Button VolverButton;

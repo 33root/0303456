@@ -127,11 +127,11 @@ namespace FrbaHotel.ABM_de_Cliente
             txbMail.Clear();
             txbTelefono.Clear();
             txbDireccion.Clear();
-            //txbNumero.Clear();
+            txbNumero.Clear();
             txbPiso.Clear();
             txbDpto.Clear();
-            //txbCodigoPostal.Clear();
             txbLocalidad.Clear();
+            txbPaisOrigen.Clear();
             cbTipoDeDocumento.SelectedIndex = 0;
             dtpFecha.Text = DateTime.Today.ToString();
         
@@ -147,56 +147,40 @@ namespace FrbaHotel.ABM_de_Cliente
                 SqlCommand comando = null;
 
                 if (x == 0)
+                {
+
                     comando = new SqlCommand("AEFI.insertar_cliente", conexion);
+                    aniadirParametros(comando);
+                }
                 else if (x == 1)
+                {
                     comando = new SqlCommand("AEFI.actualizar_cliente", conexion);
-                else if ( x == 2)
-                    comando = new SqlCommand("AEFI.insertar_cliente", conexion);
-    
-                comando.CommandType = CommandType.StoredProcedure;
-
-                if (x == 1)
-                {
                     comando.Parameters.Add(new SqlParameter("@ID_Cliente", id_cliente));
+                    aniadirParametros(comando);
                 }
-
-                comando.Parameters.Add(new SqlParameter("@Nombre", txbNombre.Text));
-                comando.Parameters.Add(new SqlParameter("@Apellido", txbApellido.Text));
-                comando.Parameters.Add(new SqlParameter("@ID_Tipo_Documento", cbTipoDeDocumento.Text));
-                comando.Parameters.Add(new SqlParameter("@Documento_Numero", txbDocumentoNumero.Text));
-                comando.Parameters.Add(new SqlParameter("@Telefono", txbTelefono.Text));
-                comando.Parameters.Add(new SqlParameter("@Fecha_Nacimiento", dtpFecha.Text));
-                comando.Parameters.Add(new SqlParameter("@Calle", txbDireccion.Text));
-                comando.Parameters.Add(new SqlParameter("@Calle_Nro", txbCalle.Text));
-                comando.Parameters.Add(new SqlParameter("@PaisOrigen", txbNacionalidad.Text));
-                
-                if (!(String.IsNullOrEmpty(txbPiso.Text)))
-                    comando.Parameters.Add(new SqlParameter("@Piso", txbPiso.Text));
-                if (!(String.IsNullOrEmpty(txbDpto.Text)))
-                    comando.Parameters.Add(new SqlParameter("@Dpto", txbDpto.Text));
-                if (!(String.IsNullOrEmpty(txbLocalidad.Text)))
-                    comando.Parameters.Add(new SqlParameter("@Localidad", txbLocalidad.Text));
-                if (!String.IsNullOrEmpty(txbMail.Text))
+                else if (x == 2)
                 {
-                    if (x != 1)
-                    {
-                        SqlCommand comandoTelefono = new SqlCommand("SELECT * FROM AEFI.TL_cliente " +
-                                        "WHERE Mail = @Mail", conexion);
-                        comandoTelefono.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
-                        SqlDataReader reader = comandoTelefono.ExecuteReader();
-                        if (reader.HasRows)
-                            throw new Excepciones("El mail ya existe");
-                        reader.Close();
-                    }
-                    comando.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
+                    comando = new SqlCommand("AEFI.insertar_cliente", conexion);
+                    comando.CommandType = CommandType.StoredProcedure;
+                    aniadirParametros(comando);
 
+                    string consultaID = "SELECT ID_Cliente "
+                                      + "FROM AEFI.TL_Cliente "
+                                      + "WHERE Mail = " + BaseDeDatos.agregarApostrofos(txbMail.Text);//ya que no hay 2 mails iguales
+
+                    SqlCommand comandoId = new SqlCommand(consultaID, conexion);
+                    SqlDataReader readerId = comandoId.ExecuteReader();
+                    readerId.Read();
+                    int id = Convert.ToInt32(readerId[0]);
+                    readerId.Close();
+                    conexion.Close();
+
+                    //significa que si se ingreso un cliente
+                    FormGenerarReserva r = new FormGenerarReserva(id);
+                    this.Hide();
+                    r.ShowDialog();
+                    this.Close();
                 }
-                else
-                    throw new Excepciones("No se ingreso ningun mail");
-
-                comando.ExecuteNonQuery();
-                MessageBox.Show("Operacion Completada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
 
             }
             catch (Excepciones exc)
@@ -207,45 +191,53 @@ namespace FrbaHotel.ABM_de_Cliente
             {
                 conexion.Close();
 
-                if (x == 2)
-                {
-                    conexion.Open();
-
-                    string consultaID = "SELECT ID_Cliente "
-                                      + "FROM AEFI.TL_Cliente "
-                                      + "WHERE Mail = " + BaseDeDatos.agregarApostrofos(txbMail.Text);//ya que no hay 2 mails iguales
-
-                    SqlCommand comandoId = new SqlCommand(consultaID, conexion);
-                    SqlDataReader readerId = comandoId.ExecuteReader();
-                    readerId.Read();
-                    int id = Convert.ToInt32(readerId[0]);
-
-                    string cantidadDeClientes = "SELECT COUNT(ID_Cliente) " +
-                                                "FROM AEFI.TL_Cliente ";
-
-                    //perdon Esme la costumbre gana, tengo que crear otro commando :P
-
-                    SqlCommand comandoCant = new SqlCommand(cantidadDeClientes,conexion);
-                    SqlDataReader readerCant = comandoCant.ExecuteReader();
-                    readerCant.Read();
-                    int cantDeClientesDespues = Convert.ToInt32(readerCant[0]);
-
-                    if (cantDeClientesAntes != cantDeClientesDespues)
-                    {//significa que si se ingreso un cliente
-                        FormGenerarReserva r = new FormGenerarReserva(id);
-                        this.Hide();
-                        r.ShowDialog();
-                        this.Close();
-                    }
-                    else 
-                    {
                         FormMenu m = new FormMenu();
                         this.Hide();
                         m.ShowDialog();
                         this.Close();
-                    }
+                    
                 }
+        }
+
+        private void aniadirParametros(SqlCommand comando)
+        {
+
+            comando.Parameters.Add(new SqlParameter("@Nombre", txbNombre.Text));
+            comando.Parameters.Add(new SqlParameter("@Apellido", txbApellido.Text));
+            comando.Parameters.Add(new SqlParameter("@ID_Tipo_Documento", cbTipoDeDocumento.Text));
+            comando.Parameters.Add(new SqlParameter("@Documento_Numero", txbDocumentoNumero.Text));
+            comando.Parameters.Add(new SqlParameter("@Telefono", txbTelefono.Text));
+            comando.Parameters.Add(new SqlParameter("@Fecha_Nacimiento", dtpFecha.Text));
+            comando.Parameters.Add(new SqlParameter("@Calle", txbDireccion.Text));
+            comando.Parameters.Add(new SqlParameter("@Calle_Nro", txbNumero.Text));
+            comando.Parameters.Add(new SqlParameter("@PaisOrigen", txbPaisOrigen.Text));
+
+            if (!(String.IsNullOrEmpty(txbPiso.Text)))
+                comando.Parameters.Add(new SqlParameter("@Piso", txbPiso.Text));
+            if (!(String.IsNullOrEmpty(txbDpto.Text)))
+                comando.Parameters.Add(new SqlParameter("@Dpto", txbDpto.Text));
+            if (!(String.IsNullOrEmpty(txbLocalidad.Text)))
+                comando.Parameters.Add(new SqlParameter("@Localidad", txbLocalidad.Text));
+            if (!String.IsNullOrEmpty(txbMail.Text))
+            {
+                if (x != 1)
+                {
+                    SqlCommand comandoTelefono = new SqlCommand("SELECT * FROM AEFI.TL_cliente " +
+                                    "WHERE Mail = @Mail", conexion);
+                    comandoTelefono.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
+                    SqlDataReader reader = comandoTelefono.ExecuteReader();
+                    if (reader.HasRows)
+                        throw new Excepciones("El mail ya existe");
+                    reader.Close();
+                }
+                comando.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
+
             }
+            else
+                throw new Excepciones("No se ingreso ningun mail");
+
+            comando.ExecuteNonQuery();
+            MessageBox.Show("Operacion Completada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void txbTelefono_KeyPress(object sender, KeyPressEventArgs e)

@@ -84,9 +84,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     || (cbTipoDeRegimen.SelectedItem.ToString() != "All Inclusive moderado") || (cbTipoDeRegimen.SelectedItem.ToString() != "All inclusive"))
                 {
                     //significa que el usuario no tiene en claro el regimen que desea
-                    string consulta = "SELECT r.Descripcion, r.Precio_Base "
-                                     + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p "
-                                     + "WHERE p.ID_Hotel = "+ BaseDeDatos.agregarApostrofos(Program.idHotel.ToString()) +" AND r.ID_Regimen = p.ID_Regimen ";
+                    string consulta = "SELECT h.ID_Habitacion, h.Numero, r.Descripcion, r.Precio_Base "
+                                     + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p, AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion th "
+                                     + "WHERE p.ID_Hotel = "+ BaseDeDatos.agregarApostrofos(Program.idHotel.ToString()) +" AND r.ID_Regimen = p.ID_Regimen "
+                                     + " AND h.ID_Hotel = p.ID_Hotel AND h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion AND th.Descripcion = " + BaseDeDatos.agregarApostrofos(cbTipoDeHabitacion.SelectedItem.ToString());
                                      
 
                     //cargar la tabla con descripcion y precio base del hotel
@@ -201,48 +202,80 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void ingresarButton_Click(object sender, EventArgs e)
         {
-           
-            try
+            if (verificarTextBoxNoVacios())
             {
-                conexion.Open();
-                
-                if (flag != "TeAbrieronDespuesDeCrearUnCliente")
+
+                try
                 {
-                    string consultaSiElUsuarioEsYaCliente =  "SELECT Mail "
-                                                           + "FROM AEFI.TL_Cliente "
-                                                           + "WHERE Mail = @Mail ";
+                    conexion.Open();
 
-                    SqlCommand comando2 = new SqlCommand(consultaSiElUsuarioEsYaCliente, conexion);
-                    comando2.Parameters.Add("@Mail", Program.mailUsuario); //ESTO SE TIENE QUE CARGAR EN EL LOGIN, ya que en los clientes el Mail es lo que no se repite, comparar por ID no tiene sentido
-                    SqlDataReader reader2 = comando2.ExecuteReader();
-                    reader2.Read();
-
-                    if(Program.idUsuario != 1 /*osea no es el admin*/)
-                    {//si es el admin la lectura de arriba no va a traer ningun mail, entonces esto rompia por eso
-                        mail = Convert.ToString(reader2["Mail"]);
-                    }
-                    
-                    
-                    if (reader2.HasRows)
+                    if (flag != "TeAbrieronDespuesDeCrearUnCliente")
                     {
+                        string consultaSiElUsuarioEsYaCliente = "SELECT Mail "
+                                                               + "FROM AEFI.TL_Cliente "
+                                                               + "WHERE Mail = @Mail ";
 
-                        reader2.Close();
+                        SqlCommand comando2 = new SqlCommand(consultaSiElUsuarioEsYaCliente, conexion);
+                        comando2.Parameters.Add("@Mail", Program.mailUsuario); //ESTO SE TIENE QUE CARGAR EN EL LOGIN, ya que en los clientes el Mail es lo que no se repite, comparar por ID no tiene sentido
+                        SqlDataReader reader2 = comando2.ExecuteReader();
+                        reader2.Read();
 
-                        string consultaID = "SELECT ID_Cliente "
-                                          + "FROM AEFI.TL_Cliente "
-                                          + "WHERE Mail = " + BaseDeDatos.agregarApostrofos(mail);
+                        if (Program.idUsuario != 1 /*osea no es el admin*/)
+                        {
+                            mail = Convert.ToString(reader2["Mail"]);
+                        }
 
-                        SqlCommand comandoId = new SqlCommand(consultaID, conexion);
-                        SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
-                        //string id = adapter2.ToString();// me parece que esto no esta bien, pero lo de abajo me dice que no se pudo enlazar el mail
-                        SqlDataReader readerId = comandoId.ExecuteReader();
-                        readerId.Read();
-                        int id = Convert.ToInt32(readerId["ID_Cliente"]);
 
+                        if (reader2.HasRows)
+                        {
+
+                            reader2.Close();
+
+                            string consultaID = "SELECT ID_Cliente "
+                                              + "FROM AEFI.TL_Cliente "
+                                              + "WHERE Mail = " + BaseDeDatos.agregarApostrofos(mail);
+
+                            SqlCommand comandoId = new SqlCommand(consultaID, conexion);
+                            SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
+                            //string id = adapter2.ToString();// me parece que esto no esta bien, pero lo de abajo me dice que no se pudo enlazar el mail
+                            SqlDataReader readerId = comandoId.ExecuteReader();
+                            readerId.Read();
+                            int id = Convert.ToInt32(readerId["ID_Cliente"]);
+
+                            SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
+                            //DateTime fechaAcutal = new DateTime();
+                            comando.CommandType = CommandType.StoredProcedure;
+                            //comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
+                            comando.Parameters.Add(new SqlParameter("@Fecha_Desde", Convert.ToDateTime(dtpDesde.Value)));
+                            comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.Text));
+                            comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.Text));
+
+
+                            this.aniadirParametroRegimen(comando);
+                            this.obtenerIDHabitacion();
+                            comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
+                            comando.Parameters.Add(new SqlParameter("@Estado", BaseDeDatos.agregarApostrofos("Correcta")));
+                            comando.Parameters.Add(new SqlParameter("@ID_Cliente", id));
+                            comando.ExecuteNonQuery();
+
+                            MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.CancelarButton_Click(this, e);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Usted no esta registrado como cliente de este hotel, a continuacion ingrese sus datos para luego efectuar la reserva", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            FormClienteNuevo c = new FormClienteNuevo(2);
+                            this.Hide();
+                            c.ShowDialog();
+                            this.Close();
+                        }
+
+                    }
+                    else
+                    {
                         SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
-                        //DateTime fechaAcutal = new DateTime();
                         comando.CommandType = CommandType.StoredProcedure;
-                        //comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
                         comando.Parameters.Add(new SqlParameter("@Fecha_Desde", Convert.ToDateTime(dtpDesde.Value)));
                         comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.Text));
                         comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.Text));
@@ -251,166 +284,175 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         this.aniadirParametroRegimen(comando);
                         this.obtenerIDHabitacion();
                         comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
-                        comando.Parameters.Add(new SqlParameter("@Estado", BaseDeDatos.agregarApostrofos("Correcta")));
-                        comando.Parameters.Add(new SqlParameter("@ID_Cliente", id));
+                        comando.Parameters.Add(new SqlParameter("@Estado", "Correcta"));
+                        comando.Parameters.Add(new SqlParameter("@ID_Cliente", this.idCliente));
                         comando.ExecuteNonQuery();
 
                         MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         this.CancelarButton_Click(this, e);
                     }
-                    else
-                    {
-                        MessageBox.Show("Usted no esta registrado como cliente de este hotel, a continuacion ingrese sus datos para luego efectuar la reserva", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        FormClienteNuevo c = new FormClienteNuevo(2);
-                        this.Hide();
-                        c.ShowDialog();
-                        this.Close();
-                    }
 
                 }
-                else
+
+                catch (SqlException exc)
                 {
-                    SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.Add(new SqlParameter("@Fecha_Desde", Convert.ToDateTime(dtpDesde.Value)));
-                    comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.Text));
-                    comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.Text));
+                    MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-
-                    this.aniadirParametroRegimen(comando);
-                    this.obtenerIDHabitacion();
-                    comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
-                    comando.Parameters.Add(new SqlParameter("@Estado", "Correcta"));
-                    comando.Parameters.Add(new SqlParameter("@ID_Cliente", this.idCliente));
-                    comando.ExecuteNonQuery();
-
-                    MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    this.CancelarButton_Click(this, e);
                 }
+                finally
+                {
+                    conexion.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe completar todos los campos", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-                
-            }
-        
-            catch (SqlException exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
-            }
-            finally
-            {
-                Console.WriteLine("Pase por el finally");
-                conexion.Close();
-            }
         }
 
 
         private void verCostoButton_Click(object sender, EventArgs e)
         {
-            try
+            if (verificarTextBoxNoVacios())
             {
-                string consultaIDRegimen = "SELECT id_regimen "
-                    +             "FROM AEFI.TL_Regimen "
-                    +             "WHERE Descripcion = " + BaseDeDatos.agregarApostrofos(cbTipoDeRegimen.SelectedItem.ToString());
+                try
+                {
+                    string consultaIDRegimen = "SELECT id_regimen "
+                        + "FROM AEFI.TL_Regimen "
+                        + "WHERE Descripcion = " + BaseDeDatos.agregarApostrofos(cbTipoDeRegimen.SelectedItem.ToString());
 
-                string consultaTipoHabitacion = "SELECT h.ID_Tipo_Habitacion "
-                                + "FROM AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion t "
-                                + "WHERE t.Descripcion =" + BaseDeDatos.agregarApostrofos(cbTipoDeHabitacion.SelectedItem.ToString());
+                    string consultaTipoHabitacion = "SELECT h.ID_Tipo_Habitacion "
+                                    + "FROM AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion t "
+                                    + "WHERE t.Descripcion =" + BaseDeDatos.agregarApostrofos(cbTipoDeHabitacion.SelectedItem.ToString())
+                                    + " AND h.ID_Tipo_Habitacion = t.ID_Tipo_Habitacion ";
 
-                string consultaIDHabitacion = "SELECT ID_Habitacion "
-                                 + "FROM AEFI.TL_Habitacion "
-                                 + "WHERE ID_Tipo_Habitacion = @idTipoHabitacion";
+                    string consultaIDHabitacion = "SELECT ID_Habitacion "
+                                     + "FROM AEFI.TL_Habitacion "
+                                     + "WHERE ID_Tipo_Habitacion = @idTipoHabitacion";
 
-                
 
-                conexion.Open();
 
-                SqlCommand comando = new SqlCommand(consultaIDRegimen, conexion);
-                SqlDataReader reader = comando.ExecuteReader();
-                reader.Read();
-                int idRegimen = Convert.ToInt32(reader[0]);
-                reader.Close();
+                    conexion.Open();
 
-                comando = new SqlCommand(consultaTipoHabitacion, conexion);
-                reader = comando.ExecuteReader();
-                reader.Read();
-                int idTipoHabitacion = Convert.ToInt32(reader[0]);
-                reader.Close();
+                    SqlCommand comando = new SqlCommand(consultaIDRegimen, conexion);
+                    SqlDataReader reader = comando.ExecuteReader();
+                    reader.Read();
+                    int idRegimen = Convert.ToInt32(reader[0]);
+                    reader.Close();
 
-                comando = new SqlCommand(consultaIDHabitacion, conexion);
-                comando.Parameters.Add(new SqlParameter("@idTipoHabitacion", idTipoHabitacion));
-                reader = comando.ExecuteReader();
-                reader.Read();
-                id_habitacion = Convert.ToInt32(reader[0]);
-                reader.Close();
+                    comando = new SqlCommand(consultaTipoHabitacion, conexion);
+                    reader = comando.ExecuteReader();
+                    reader.Read();
+                    int idTipoHabitacion = Convert.ToInt32(reader[0]);
+                    reader.Close();
 
-                comando = new SqlCommand("AEFI.calcular_costo_porDia", conexion);
-                comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.Add(new SqlParameter("@cantidad_huespedes", txbCantidadDeHuespedes.Text));
-                comando.Parameters.Add(new SqlParameter("@id_habitacion", id_habitacion));
-                comando.Parameters.Add(new SqlParameter("@cantidad_noches", txbCantidadDeNoches.Text));
-                comando.Parameters.Add(new SqlParameter("@id_regimen", idRegimen));
-                comando.Parameters.Add(new SqlParameter("@id_tipo_habitacion", idTipoHabitacion));
-                SqlParameter par = new SqlParameter("@costo", 0);
-                par.Direction = ParameterDirection.Output;
-                comando.Parameters.Add(par);
-                comando.ExecuteNonQuery();
+                    comando = new SqlCommand(consultaIDHabitacion, conexion);
+                    comando.Parameters.Add(new SqlParameter("@idTipoHabitacion", idTipoHabitacion));
+                    reader = comando.ExecuteReader();
+                    reader.Read();
+                    id_habitacion = Convert.ToInt32(reader[0]);
+                    reader.Close();
 
-                MessageBox.Show("El costo es de : U$S"+ par.Value , "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    comando = new SqlCommand("AEFI.calcular_costo_porDia", conexion);
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.Add(new SqlParameter("@id_habitacion", id_habitacion));
+                    comando.Parameters.Add(new SqlParameter("@cantidad_noches", txbCantidadDeNoches.Text));
+                    comando.Parameters.Add(new SqlParameter("@id_regimen", idRegimen));
+                    comando.Parameters.Add(new SqlParameter("@id_tipo_habitacion", idTipoHabitacion));
+                    SqlParameter par = new SqlParameter("@costo", 0);
+                    par.Direction = ParameterDirection.Output;
+                    comando.Parameters.Add(par);
+                    comando.ExecuteNonQuery();
+                    double valor = Convert.ToDouble(par.Value);
+
+                    MessageBox.Show("El costo es de : U$S" + valor, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-            
 
-           catch (SqlException exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                catch (SqlException exc)
+                {
+                    MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+                finally
+                {
+                    conexion.Close();
+                }
 
             }
-            finally
+            else
             {
-                conexion.Close();
+                MessageBox.Show("Debe completar todos los campos", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
 
         }
 
+        private Boolean verificarTextBoxNoVacios()
+        {
+            bool textBoxNoVacio = false;
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    TextBox textBox = c as TextBox;
+                    if (textBox.Text == string.Empty)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        textBoxNoVacio = true;
+                    }
+                }               
+            }
+            return textBoxNoVacio;
+        }
+
+
         private void FormGenerarReserva_Load(object sender, EventArgs e)
         {
-            try {
-                string consulta = "SELECT Descripcion "
-                                 +"FROM AEFI.TL_Tipo_Habitacion";
+            
+                try
+                {
+                    string consulta = "SELECT Descripcion "
+                                     + "FROM AEFI.TL_Tipo_Habitacion";
 
-                conexion.Open();
-                SqlCommand comando = new SqlCommand(consulta, conexion);
-                SqlDataReader reader = comando.ExecuteReader();
-                while (reader.Read())
-                    cbTipoDeHabitacion.Items.Add(reader[0]); //carga los tipos de habitacion en el combo box
-                reader.Close();
-                cbTipoDeHabitacion.SelectedIndex = 0;
+                    conexion.Open();
+                    SqlCommand comando = new SqlCommand(consulta, conexion);
+                    SqlDataReader reader = comando.ExecuteReader();
+                    while (reader.Read())
+                        cbTipoDeHabitacion.Items.Add(reader[0]); //carga los tipos de habitacion en el combo box
+                    reader.Close();
+                    cbTipoDeHabitacion.SelectedIndex = 0;
 
-                string consulta2 = "SELECT Descripcion "
-                                 + "FROM AEFI.TL_Regimen";
+                    string consulta2 = "SELECT Descripcion "
+                                     + "FROM AEFI.TL_Regimen";
 
-                SqlCommand comando2 = new SqlCommand(consulta2, conexion);
-                SqlDataReader reader2 = comando2.ExecuteReader();
-                while (reader2.Read())
-                    cbTipoDeRegimen.Items.Add(reader2[0]); //carga los tipos de regimen en el combo box
-                reader.Close();
-                cbTipoDeRegimen.Items.Add("");
-                cbTipoDeRegimen.SelectedIndex = 0;
-            }
+                    SqlCommand comando2 = new SqlCommand(consulta2, conexion);
+                    SqlDataReader reader2 = comando2.ExecuteReader();
+                    while (reader2.Read())
+                        cbTipoDeRegimen.Items.Add(reader2[0]); //carga los tipos de regimen en el combo box
+                    reader.Close();
+                    cbTipoDeRegimen.Items.Add("");
+                    cbTipoDeRegimen.SelectedIndex = 0;
+                }
 
-            catch (SqlException exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                catch (SqlException exc)
+                {
+                    MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
-            finally
-            {
-                conexion.Close();
-            }
+                finally
+                {
+                    conexion.Close();
+                }
+           
+            
+
         }
 
         private void CancelarButton_Click(object sender, EventArgs e)

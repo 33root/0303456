@@ -24,7 +24,11 @@ SET IDENTITY_INSERT AEFI.TL_Tipo_Habitacion OFF
 
 UPDATE AEFI.TL_Tipo_Habitacion 
 SET Cantidad_Huespedes_Total = 2
-WHERE Descripcion = 'Base Doble' OR Descripcion = 'King'
+WHERE Descripcion = 'Base Doble' 
+
+UPDATE AEFI.TL_Tipo_Habitacion
+SET Cantidad_Huespedes_Total = 5
+WHERE Descripcion = 'King'
 
 UPDATE AEFI.TL_Tipo_Habitacion
 SET Cantidad_Huespedes_Total = 3
