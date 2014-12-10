@@ -16,22 +16,12 @@ CREATE PROCEDURE AEFI.crear_Hotel
 
 AS
 BEGIN
-		IF NOT EXISTS (SELECT * FROM AEFI.TL_Hotel h WHERE Nombre = @Nombre AND Mail = @Mail)
+		IF NOT EXISTS (SELECT * FROM AEFI.TL_Hotel h WHERE Nombre = @Nombre AND Nro_Calle = @NroCalle)
 	BEGIN
 			INSERT INTO AEFI.TL_Hotel(Nombre, Mail, Telefono, Calle, Cantidad_Estrellas, Ciudad, Pais, Fecha_Creacion, Nro_Calle, Recarga_Estrellas, Estado)
 			VALUES (@Nombre, @Mail, @Telefono, @Calle, @Cantidad_Estrellas, @Ciudad, @Pais, @Fecha_Creacion, @NroCalle, @Recarga_Estrellas, 'Habilitado')
-			
-			INSERT INTO AEFI.TL_Usuario_Por_Hotel(ID_Hotel, ID_Usuario, ID_Rol)
-			Select h.ID_Hotel, 1, 1 FROM AEFI.TL_Hotel h Where @Nombre = h.Nombre AND @Mail = h.Mail
-			
-			INSERT INTO AEFI.TL_Usuario_Por_Hotel(ID_Hotel, ID_Usuario, ID_Rol)
-			Select h.ID_Hotel, 1, 1 FROM AEFI.TL_Hotel h Where @Nombre = h.Nombre AND @Mail = h.Mail
-			
-			INSERT INTO AEFI.TL_Usuario_Por_Hotel(ID_Hotel, ID_Usuario, ID_Rol)
-			Select h.ID_Hotel, 1, 1 FROM AEFI.TL_Hotel h Where @Nombre = h.Nombre AND @Mail = h.Mail
-	
 	END;
-	
+
 END;
 
 
@@ -47,7 +37,6 @@ CREATE PROCEDURE AEFI.actualizar_Hotel
 		@Cantidad_Estrellas numeric(18,0),
 		@Recarga_Estrellas numeric(18,0),
 		@Ciudad nvarchar(255),
-		@Fecha_Creacion datetime,
 		@Pais nvarchar(255),
 		@NroCalle numeric(18,0)
 
@@ -62,10 +51,12 @@ BEGIN
 						
 	END;	
 			
-END;		
+END;	
+	
 	
 
 GO
+
 CREATE PROCEDURE AEFI.baja_Hotel
 
 		@ID_Hotel numeric(18,0),
@@ -77,24 +68,14 @@ AS
 
 
 BEGIN
-	IF (NOT EXISTS (SELECT * FROM AEFI.TL_Reserva re, AEFI.TL_Habitacion ha WHERE ha.ID_Hotel = @ID_Hotel AND re.ID_Habitacion = ha.ID_Habitacion AND re.Fecha_Desde BETWEEN @Fecha_Inicio AND @Fecha_Fin AND @ID_Hotel = ha.ID_Hotel) AND NOT EXISTS 
-	(SELECT * 
-	FROM AEFI.TL_Estadia es, AEFI.TL_Reserva re, AEFI.TL_Habitacion ha 
-	WHERE es.ID_Reserva = re.ID_Reserva
-	AND re.ID_Habitacion = ha.ID_Habitacion
-	AND ha.ID_Hotel = @ID_Hotel
-	AND es.Fecha_Inicio BETWEEN @Fecha_Inicio AND @Fecha_Fin))
-	BEGIN 
+										
 	INSERT INTO AEFI.TL_Baja_Hotel (Fecha_Inicio, Fecha_Fin, Descripcion, ID_Hotel)
 	VALUES (@Fecha_Inicio, @Fecha_Fin, @Descripcion, @ID_Hotel)
 	
 	UPDATE AEFI.TL_Hotel
 	SET Estado = 'Deshabilitado'
 	WHERE @ID_Hotel = ID_Hotel
-END
-ELSE
 
-RAISERROR(61111, 1, 1)
 	
 END;
 	
@@ -134,7 +115,6 @@ CREATE PROCEDURE AEFI.actualizar_Habitacion
 		@ID_Habitacion numeric(18,0),
 		@Numero numeric(18,0),
 		@Piso numeric(18,0),
-		@Tipo_habitacion nvarchar(50),
 		@Vista nvarchar (50)
 		
 
@@ -957,3 +937,14 @@ BEGIN
 			END
 END;
 
+GO
+CREATE PROCEDURE AEFI.modificar_nombre_rol
+@ID_Rol NUMERIC(18,0),
+@nombre NVARCHAR(55)
+AS
+BEGIN 
+		UPDATE AEFI.TL_Rol
+		SET Descripcion = @nombre
+		WHERE ID_Rol = @ID_Rol
+		
+END;
