@@ -52,6 +52,7 @@
             this.txbCodigoReserva.Name = "txbCodigoReserva";
             this.txbCodigoReserva.Size = new System.Drawing.Size(171, 20);
             this.txbCodigoReserva.TabIndex = 1;
+            this.txbCodigoReserva.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbCodigoReserva_KeyPress);
             // 
             // BuscarButton
             // 

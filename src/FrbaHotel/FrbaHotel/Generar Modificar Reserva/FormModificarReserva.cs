@@ -83,5 +83,26 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             inicio.ShowDialog();
             this.Close();
         }
+
+        private static void permitirSoloNumeros(KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txbCodigoReserva_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
     }
 }
