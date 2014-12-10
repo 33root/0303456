@@ -73,7 +73,7 @@ namespace FrbaHotel.Cancelar_Reserva
                 comando = new SqlCommand(elIdDeLaReservaDelTxbExiste, conexion);
                 SqlDataReader reader2 = comando.ExecuteReader();
                 reader2.Read();
-                reader2.Close();
+                
 
                 string laReservaNoTieneEstadia = "SELECT ID_Reserva " +
                                                  "FROM AEFI.TL_Estadia " +
@@ -88,7 +88,7 @@ namespace FrbaHotel.Cancelar_Reserva
                 comando = new SqlCommand(laReservaYaFueCancelada, conexion);
                 SqlDataReader reader3 = comando.ExecuteReader();
                 reader3.Read();
-                reader3.Close();
+                
 
                 if (!reader3.HasRows)
                 {
@@ -134,6 +134,10 @@ namespace FrbaHotel.Cancelar_Reserva
             }
 
             catch (SqlException exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Excepciones exc)
             {
                 MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
