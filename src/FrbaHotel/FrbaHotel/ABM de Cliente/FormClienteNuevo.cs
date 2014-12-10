@@ -24,6 +24,7 @@ namespace FrbaHotel.ABM_de_Cliente
         string usu = "";
         string con = "";
         string id_cliente;
+        int cantDeClientesAntes;
         
 
         public FormClienteNuevo(int cod, DataGridViewCellCollection cells)
@@ -97,6 +98,14 @@ namespace FrbaHotel.ABM_de_Cliente
                     cbTipoDeDocumento.Items.Add(reader[0]);
                 reader.Close();
                 cbTipoDeDocumento.SelectedIndex = 0;
+
+                string cantidadDeClientes = "SELECT COUNT(ID_Cliente) " +
+                                                "FROM AEFI.TL_Cliente ";
+
+                SqlCommand comandoCantidad = new SqlCommand(cantidadDeClientes, conexion);
+                SqlDataReader readerCantidad = comandoCantidad.ExecuteReader();
+                readerCantidad.Read();
+                cantDeClientesAntes = Convert.ToInt32(readerCantidad[0]);
             }
             catch (SqlException exc)
             {
@@ -181,8 +190,6 @@ namespace FrbaHotel.ABM_de_Cliente
                     }
                     comando.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
 
-                    
-
                 }
                 else
                     throw new Excepciones("No se ingreso ningun mail");
@@ -213,15 +220,30 @@ namespace FrbaHotel.ABM_de_Cliente
                     readerId.Read();
                     int id = Convert.ToInt32(readerId[0]);
 
-                    /* SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
-                     string id = adapter2.ToString();*/
+                    string cantidadDeClientes = "SELECT COUNT(ID_Cliente) " +
+                                                "FROM AEFI.TL_Cliente ";
 
-                    //conexion.Close();
+                    //perdon Esme la costumbre gana, tengo que crear otro commando :P
 
-                    FormGenerarReserva r = new FormGenerarReserva(id);
-                    this.Hide();
-                    r.ShowDialog();
-                    this.Close();
+                    SqlCommand comandoCant = new SqlCommand(cantidadDeClientes,conexion);
+                    SqlDataReader readerCant = comandoCant.ExecuteReader();
+                    readerCant.Read();
+                    int cantDeClientesDespues = Convert.ToInt32(readerCant[0]);
+
+                    if (cantDeClientesAntes != cantDeClientesDespues)
+                    {//significa que si se ingreso un cliente
+                        FormGenerarReserva r = new FormGenerarReserva(id);
+                        this.Hide();
+                        r.ShowDialog();
+                        this.Close();
+                    }
+                    else 
+                    {
+                        FormMenu m = new FormMenu();
+                        this.Hide();
+                        m.ShowDialog();
+                        this.Close();
+                    }
                 }
             }
         }
