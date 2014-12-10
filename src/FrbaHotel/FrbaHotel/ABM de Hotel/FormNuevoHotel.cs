@@ -62,9 +62,12 @@ namespace FrbaHotel.ABM_de_Hotel
                 if (x == 0)
                 {
                     string consulta = "Select * From AEFI.TL_Hotel h Where h.Nombre = " + BaseDeDatos.agregarApostrofos(tbNombre.Text.ToString());
+                    string consultaMail = "Select * From AEFI.TL_Hotel h Where h.Mail = " + BaseDeDatos.agregarApostrofos(tbMail.Text.ToString());                 
 
                     SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                    SqlCommand comandoMail = new SqlCommand(consultaMail, conexion);
                     SqlDataReader reader = comando2.ExecuteReader();
+                    SqlDataReader readerMail = comandoMail.ExecuteReader();
 
                     if (reader.HasRows)
                     {
@@ -75,8 +78,15 @@ namespace FrbaHotel.ABM_de_Hotel
                     }
                     else
                     {
-
-                        MetodoCrear();
+                        if (readerMail.HasRows)
+                        {
+                            MessageBox.Show("Ya existe un Hotel con este Mail ", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            conexion.Close();
+                        }
+                        else
+                        {
+                            MetodoCrear();
+                        }
 
                     }
                 }
