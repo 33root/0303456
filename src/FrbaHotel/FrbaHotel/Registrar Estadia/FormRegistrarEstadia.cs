@@ -41,8 +41,8 @@ namespace FrbaHotel.Registrar_Estadia
             {
                 conexion.Open();
 
-                
-                    
+
+
 
                 if (verificarRecepcionistaHabilitado(recepcionistaHabilitadoReservaCheckIn))
                 {
@@ -59,47 +59,48 @@ namespace FrbaHotel.Registrar_Estadia
                         button3_Click(this, e);
 
                     }
-
-                    comando = new SqlCommand(obtenerCantidadDeHospedados, conexion);
-                    comando.Parameters.Add(new SqlParameter("@idReserva", reservaTxtBox.Text));
-                    reader = comando.ExecuteReader();
-                    reader.Read();
-                    int numeroHospedados = Convert.ToInt32(reader[0]);
-                    reader.Close();
-
-                    for (int i = 0; i < numeroHospedados; i++)
+                    else
                     {
-                        int j = i;
-                        MessageBox.Show("Ingrese el huesped número: " + (++j), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        comando = new SqlCommand(obtenerCantidadDeHospedados, conexion);
+                        comando.Parameters.Add(new SqlParameter("@idReserva", reservaTxtBox.Text));
+                        reader = comando.ExecuteReader();
+                        reader.Read();
+                        int numeroHospedados = Convert.ToInt32(reader[0]);
+                        reader.Close();
 
-                          FrmHuesped huesped = new FrmHuesped(1);
-                          huesped.ShowDialog();
+                        for (int i = 0; i < numeroHospedados; i++)
+                        {
+                            int j = i;
+                            MessageBox.Show("Ingrese el huesped número: " + (++j), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                            FrmHuesped huesped = new FrmHuesped(1);
+                            huesped.ShowDialog();
+
+                        }
+
+                        //Creo la factura
+                        comando = new SqlCommand("AEFI.insertar_factura", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.Add(new SqlParameter("@fecha", Program.fecha));
+                        comando.Parameters.Add(new SqlParameter("@id_reserva", reservaTxtBox.Text));
+                        SqlParameter par = new SqlParameter("@id_factura", 0);
+                        par.Direction = ParameterDirection.Output;
+                        comando.Parameters.Add(par);
+                        comando.ExecuteNonQuery();
+                        int idFactura = Convert.ToInt32(par.Value);
+
+
+                        //Genero el ingreso
+                        comando = new SqlCommand("AEFI.generarIngresoEstadia", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.Add(new SqlParameter("@idFactura", idFactura));
+                        comando.Parameters.Add(new SqlParameter("@idReserva", reservaTxtBox.Text));
+                        comando.Parameters.Add(new SqlParameter("@idUsuario", Program.idUsuario));
+                        comando.ExecuteNonQuery();
+
+                        MessageBox.Show("El check in de la estadía fue correctamente procesado", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-
-                    //Creo la factura
-                    comando = new SqlCommand("AEFI.insertar_factura", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.Add(new SqlParameter("@fecha", Program.fecha));
-                    comando.Parameters.Add(new SqlParameter("@id_reserva", reservaTxtBox.Text));
-                    SqlParameter par = new SqlParameter("@id_factura", 0);
-                    par.Direction = ParameterDirection.Output;
-                    comando.Parameters.Add(par);
-                    comando.ExecuteNonQuery();
-                    int idFactura = Convert.ToInt32(par.Value);
-
-
-                    //Genero el ingreso
-                    comando = new SqlCommand("AEFI.generarIngresoEstadia", conexion);
-                    comando.CommandType = CommandType.StoredProcedure;
-                    comando.Parameters.Add(new SqlParameter("@idFactura", idFactura));
-                    comando.Parameters.Add(new SqlParameter("@idReserva", reservaTxtBox.Text));
-                    comando.Parameters.Add(new SqlParameter("@idUsuario", Program.idUsuario));
-                    comando.ExecuteNonQuery();
-
-                    MessageBox.Show("El check in de la estadía fue correctamente procesado", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
             }
 
             catch (SqlException exc)

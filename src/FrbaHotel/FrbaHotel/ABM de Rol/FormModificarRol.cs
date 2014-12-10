@@ -291,6 +291,7 @@ namespace FrbaHotel.ABM_de_Rol
             finally
             {
                 conexion.Close();
+                this.Close();
             }
 
         }
