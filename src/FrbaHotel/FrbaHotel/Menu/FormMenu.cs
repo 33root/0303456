@@ -210,7 +210,7 @@ namespace FrbaHotel.Menu
 
        private void btnGenerarReserva_Click(object sender, EventArgs e)
        {
-           FormGenerarReserva r = new FormGenerarReserva();
+           FormGenerarOModificarReserva r = new FormGenerarOModificarReserva();
            this.Hide();
            r.ShowDialog();
            this.Close();
