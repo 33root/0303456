@@ -149,7 +149,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             
             string consultaIDHabitacion = "SELECT ID_Habitacion "
                                  + "FROM AEFI.TL_Habitacion "
-                                 + "WHERE ID_Tipo_Habitacion = @idTipoHabitacion";
+                                 + "WHERE ID_Tipo_Habitacion = @idTipoHabitacion AND Disponible = 'Si' ";
 
             SqlCommand comando = new SqlCommand(consultaIDHabitacion, conexion);
           
@@ -237,10 +237,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         int id = Convert.ToInt32(readerId["ID_Cliente"]);
 
                         SqlCommand comando = new SqlCommand("AEFI.insertar_Reserva", conexion);
-                        DateTime fechaAcutal = new DateTime();
+                        //DateTime fechaAcutal = new DateTime();
                         comando.CommandType = CommandType.StoredProcedure;
-                        comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
-                        comando.Parameters.Add(new SqlParameter("@Fecha_Desde", dtpDesde.Value.Date));
+                        //comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
+                        comando.Parameters.Add(new SqlParameter("@Fecha_Desde", Convert.ToDateTime(dtpDesde.Value)));
                         comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.Text));
                         comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.Text));
 
@@ -250,6 +250,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         comando.Parameters.Add(new SqlParameter("@ID_Habitacion", id_habitacion));
                         comando.Parameters.Add(new SqlParameter("@Estado", BaseDeDatos.agregarApostrofos("Correcta")));
                         comando.Parameters.Add(new SqlParameter("@ID_Cliente", id));
+                        comando.ExecuteNonQuery();
 
                         MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.CancelarButton_Click(this, e);
