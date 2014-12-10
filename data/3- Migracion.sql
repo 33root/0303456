@@ -135,6 +135,13 @@ FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r
 WHERE e.ID_Reserva = r.ID_Reserva	
 
 
+INSERT INTO AEFI.TL_Regimen_Por_Hotel
+SELECT DISTINCT h.ID_Hotel, r.ID_Regimen
+FROM gd_esquema.Maestra m, AEFI.TL_Hotel h, AEFI.TL_Regimen r
+WHERE h.Nro_Calle = m.Hotel_Nro_Calle AND h.Calle = m.Hotel_Calle AND h.Ciudad = m.Hotel_Ciudad
+AND r.Descripcion = m.Regimen_Descripcion;
+
+
 COMMIT
 
 
