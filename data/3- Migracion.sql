@@ -1,7 +1,7 @@
 BEGIN TRANSACTION
 
 INSERT INTO AEFI.TL_Cliente(Nombre,Apellido,ID_Tipo_Documento,Documento_Nro,Mail,Calle,Calle_Nro,Piso,Dpto,Fecha_Nacimiento,Nacionalidad,Localidad,PaisOrigen)
-SELECT DISTINCT SUBSTRING(UPPER (m.Cliente_Nombre), 1, 1) + SUBSTRING (LOWER (m.Cliente_Nombre), 2,10), m.Cliente_Apellido ,2, m.Cliente_Pasaporte_Nro, m.Cliente_Mail, m.Cliente_Dom_Calle, m.Cliente_Nro_Calle, m.Cliente_Piso, m.Cliente_Depto, m.Cliente_Fecha_Nac, m.Cliente_Nacionalidad,'CABA','Argentina' 
+SELECT DISTINCT SUBSTRING(UPPER (m.Cliente_Nombre), 1, 1) + SUBSTRING (LOWER (m.Cliente_Nombre), 2,10), m.Cliente_Apellido ,2, m.Cliente_Pasaporte_Nro, LOWER(m.Cliente_Mail), m.Cliente_Dom_Calle, m.Cliente_Nro_Calle, m.Cliente_Piso, m.Cliente_Depto, m.Cliente_Fecha_Nac, m.Cliente_Nacionalidad,'CABA','Argentina' 
 FROM gd_esquema.Maestra m
 WHERE Cliente_Apellido IS NOT NULL AND Cliente_Nombre IS NOT NULL
 
