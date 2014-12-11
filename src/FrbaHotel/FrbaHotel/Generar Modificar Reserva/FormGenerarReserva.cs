@@ -283,11 +283,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                             if (flag != "TeAbrieronDesdeModificarReserva")
                             {
-                                comando.Parameters.Add(new SqlParameter("@Estado", BaseDeDatos.agregarApostrofos("Correcta")));
+                                comando.Parameters.Add(new SqlParameter("@Estado", /*BaseDeDatos.agregarApostrofos(*/"Correcta"/*)*/));
                             }
                             else
                             {
-                                comando.Parameters.Add(new SqlParameter("@Estado", BaseDeDatos.agregarApostrofos("Modificada")));
+                                comando.Parameters.Add(new SqlParameter("@Estado", /*BaseDeDatos.agregarApostrofos(*/"Modificada"/*)*/));
                             }
 
                             if (flag != "TeAbrieronDesdeModificarReserva")
