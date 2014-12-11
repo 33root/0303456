@@ -172,23 +172,24 @@ namespace FrbaHotel.ABM_de_Cliente
                 try
                 {
                     conexion.Open();
-                    SqlCommand comando = null;
 
                     if (x == 0)
                     {
 
-                        comando = new SqlCommand("AEFI.insertar_cliente", conexion);
+                       SqlCommand comando = new SqlCommand("AEFI.insertar_cliente", conexion);
+                       comando.CommandType = CommandType.StoredProcedure;
                         aniadirParametros(comando);
                     }
                     else if (x == 1)
                     {
-                        comando = new SqlCommand("AEFI.actualizar_cliente", conexion);
+                        SqlCommand comando = new SqlCommand("AEFI.actualizar_cliente", conexion);
+                        comando.CommandType = CommandType.StoredProcedure;
                         comando.Parameters.Add(new SqlParameter("@ID_Cliente", id_cliente));
                         aniadirParametros(comando);
                     }
                     else if (x == 2)
                     {
-                        comando = new SqlCommand("AEFI.insertar_cliente", conexion);
+                     SqlCommand comando = new SqlCommand("AEFI.insertar_cliente", conexion);
                         comando.CommandType = CommandType.StoredProcedure;
                         aniadirParametros(comando);
 
@@ -235,25 +236,24 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void aniadirParametros(SqlCommand comando)
         {
-
-            comando.Parameters.Add(new SqlParameter("@Nombre", txbNombre.Text));
-            comando.Parameters.Add(new SqlParameter("@Apellido", txbApellido.Text));
-            comando.Parameters.Add(new SqlParameter("@ID_Tipo_Documento", cbTipoDeDocumento.Text));
-            comando.Parameters.Add(new SqlParameter("@Documento_Numero", txbDocumentoNumero.Text));
-            comando.Parameters.Add(new SqlParameter("@Telefono", txbTelefono.Text));
-            comando.Parameters.Add(new SqlParameter("@Fecha_Nacimiento", dtpFecha.Text));
-            comando.Parameters.Add(new SqlParameter("@Calle", txbDireccion.Text));
-            comando.Parameters.Add(new SqlParameter("@Calle_Nro", txbNumero.Text));
-            comando.Parameters.Add(new SqlParameter("@PaisOrigen", txbPaisOrigen.Text));
-
-            if (!(String.IsNullOrEmpty(txbPiso.Text)))
-                comando.Parameters.Add(new SqlParameter("@Piso", txbPiso.Text));
-            if (!(String.IsNullOrEmpty(txbDpto.Text)))
-                comando.Parameters.Add(new SqlParameter("@Dpto", txbDpto.Text));
-            if (!(String.IsNullOrEmpty(txbLocalidad.Text)))
-                comando.Parameters.Add(new SqlParameter("@Localidad", txbLocalidad.Text));
-            if (!String.IsNullOrEmpty(txbMail.Text))
+            try
             {
+                comando.Parameters.Add(new SqlParameter("@Nombre", txbNombre.Text));
+                comando.Parameters.Add(new SqlParameter("@Apellido", txbApellido.Text));
+                comando.Parameters.Add(new SqlParameter("@ID_Tipo_Documento", Convert.ToString(cbTipoDeDocumento.Text)));
+                comando.Parameters.Add(new SqlParameter("@Documento_Numero", Convert.ToInt32(txbDocumentoNumero.Text)));
+                comando.Parameters.Add(new SqlParameter("@Telefono", txbTelefono.Text));
+                comando.Parameters.Add(new SqlParameter("@Fecha_Nacimiento", dtpFecha.Text));
+                comando.Parameters.Add(new SqlParameter("@Calle", txbDireccion.Text));
+                comando.Parameters.Add(new SqlParameter("@Calle_Nro", txbNumero.Text));
+                comando.Parameters.Add(new SqlParameter("@PaisOrigen", txbPaisOrigen.Text));
+
+                comando.Parameters.Add(new SqlParameter("@Piso", txbPiso.Text));
+
+                comando.Parameters.Add(new SqlParameter("@Dpto", txbDpto.Text));
+
+                comando.Parameters.Add(new SqlParameter("@Localidad", txbLocalidad.Text));
+
                 if (x != 1)
                 {
                     SqlCommand comandoTelefono = new SqlCommand("SELECT * FROM AEFI.TL_cliente " +
@@ -265,13 +265,15 @@ namespace FrbaHotel.ABM_de_Cliente
                     reader.Close();
                 }
                 comando.Parameters.Add(new SqlParameter("@Mail", txbMail.Text));
-
+                comando.ExecuteNonQuery();
+                MessageBox.Show("Operacion Completada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else
-                throw new Excepciones("No se ingreso ningun mail");
+            catch (Excepciones exc)
+            {
+                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-            comando.ExecuteNonQuery();
-            MessageBox.Show("Operacion Completada", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         private void txbTelefono_KeyPress(object sender, KeyPressEventArgs e)

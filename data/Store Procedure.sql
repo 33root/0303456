@@ -170,7 +170,7 @@ BEGIN
 	
 	IF NOT EXISTS (SELECT * FROM AEFI.TL_Cliente WHERE Mail = @Mail)
 		INSERT INTO AEFI.TL_Cliente
-		VALUES ( @Nombre,@Apellido, (
+		VALUES (@Nombre, @Apellido, (
 			SELECT ID_Tipo_Documento
 			FROM AEFI.TL_Tipo_Documento
 			WHERE Descripcion = @ID_Tipo_Documento), 
@@ -750,7 +750,7 @@ CREATE PROCEDURE AEFI.top5_puntosCliente
 	@fin_trimestre int
 AS
 BEGIN
-	SELECT DISTINCT TOP 5 c.ID_Cliente, c.nombre, c.apellido, (SELECT SUM(Puntos) from AEFI.TL_Puntos_Por_Factura p1 WHERE p1.ID_Cliente = p.ID_Cliente)AS PUNTO
+	SELECT DISTINCT TOP 5 c.ID_Cliente, c.nombre, c.apellido, (SELECT SUM(Puntos) from AEFI.TL_Puntos_Por_Factura p1 WHERE p1.ID_Cliente = p.ID_Cliente)AS Puntos
 	FROM AEFI.TL_Cliente c, AEFI.TL_Puntos_Por_Factura p
 	WHERE p.ID_Cliente = c.ID_Cliente
 	AND YEAR(p.Fecha) = @ano
