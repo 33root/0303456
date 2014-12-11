@@ -169,8 +169,14 @@ namespace FrbaHotel.ABM_de_Habitacion
 
                 SqlDataReader dr = comando.ExecuteReader();
 
-                MessageBox.Show("La Habitacion se creo satisfactoriamente", "Habitacion Creada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                if (x == 0)
+                {
+                    MessageBox.Show("La Habitacion se creo satisfactoriamente", "Habitacion Creada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (x == 1)
+                {
+                    MessageBox.Show("La Habitacion se actualizo correctamente", "Habitacion Creada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
             }
             catch (Excepciones exc)

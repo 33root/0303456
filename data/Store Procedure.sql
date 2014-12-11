@@ -115,6 +115,7 @@ CREATE PROCEDURE AEFI.actualizar_Habitacion
 		@ID_Habitacion numeric(18,0),
 		@Numero numeric(18,0),
 		@Piso numeric(18,0),
+		@Tipo_Habitacion nvarchar(50),
 		@Vista nvarchar (50)
 		
 
