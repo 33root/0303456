@@ -59,7 +59,7 @@ namespace FrbaHotel.Cancelar_Reserva
 
                 string obtenerIdDelHotelDeLaReserva = "SELECT h.ID_Hotel " +
                                                       "FROM AEFI.TL_Regimen_Por_Hotel h, AEFI.TL_Reserva r " +
-                                                      "WHERE h.ID_Regimen = r.ID_Regimen AND r.ID_Reserva = " + BaseDeDatos.agregarApostrofos(txbNumeroDeReserva.Text);
+                                                      "WHERE h.ID_Regimen = r.ID_Regimen AND r.ID_Reserva = " + BaseDeDatos.agregarApostrofos(txbNumeroDeReserva.Text) +" AND h.ID_Hotel = " + BaseDeDatos.agregarApostrofos(Program.idHotel.ToString()) ;
 
                 comando = new SqlCommand(obtenerIdDelHotelDeLaReserva, conexion);
                 reader = comando.ExecuteReader();
@@ -124,7 +124,7 @@ namespace FrbaHotel.Cancelar_Reserva
                     }
                     else
                     {
-                        throw new Excepciones("La reserva tiene ya tiene una estadia");
+                        throw new Excepciones("La reserva ya tiene una estadia");
                     }
                 }
                 else 
