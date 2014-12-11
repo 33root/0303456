@@ -482,8 +482,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     reader.Close();
                     cbTipoDeHabitacion.SelectedIndex = 0;
 
-                    string consulta2 = "SELECT Descripcion "
-                                     + "FROM AEFI.TL_Regimen";
+                    string consulta2 = "SELECT r.Descripcion "
+                                     + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel h "
+                                     + "WHERE r.ID_Regimen = h.ID_Regimen AND h.ID_Hotel = " + BaseDeDatos.agregarApostrofos(Program.idHotel.ToString());
 
                     SqlCommand comando2 = new SqlCommand(consulta2, conexion);
                     SqlDataReader reader2 = comando2.ExecuteReader();
