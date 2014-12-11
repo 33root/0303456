@@ -96,7 +96,7 @@ namespace FrbaHotel.Cancelar_Reserva
                     {
                         if (reader2.HasRows)
                         {
-                            if (idHotel == idHotelDeReserva)
+                            if (/*idHotel*/ Program.idHotel == idHotelDeReserva)
                             {
                                 if (1 <= (fechaInicioReserva - DateTime.Now).TotalDays)
                                 {
@@ -147,6 +147,52 @@ namespace FrbaHotel.Cancelar_Reserva
                 conexion.Close();
                 this.VolverButton_Click(this, e);
             }
+        }
+
+        private static void permitirSoloNumeros(KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private static void permitirSoloLetras(KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else if (Char.IsSeparator(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txbNumeroDeReserva_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloNumeros(e);
+        }
+
+        private void txbMotivo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            permitirSoloLetras(e);
         }
     }
 }

@@ -71,6 +71,7 @@
             this.txbNumeroDeReserva.Name = "txbNumeroDeReserva";
             this.txbNumeroDeReserva.Size = new System.Drawing.Size(129, 20);
             this.txbNumeroDeReserva.TabIndex = 3;
+            this.txbNumeroDeReserva.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbNumeroDeReserva_KeyPress);
             // 
             // txbMotivo
             // 
@@ -78,6 +79,7 @@
             this.txbMotivo.Name = "txbMotivo";
             this.txbMotivo.Size = new System.Drawing.Size(514, 20);
             this.txbMotivo.TabIndex = 4;
+            this.txbMotivo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbMotivo_KeyPress);
             // 
             // dtpFechaDeCancelacion
             // 
