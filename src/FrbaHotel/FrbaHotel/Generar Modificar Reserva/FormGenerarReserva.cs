@@ -238,7 +238,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                         if (Program.idUsuario != 1 /*osea no es el admin*/)
                         {
-                            mail = Convert.ToString(reader2["Mail"]);
+                            if (Program.idUsuario != 0/*osea es guest y no tiene mail*/)
+                            {
+                                mail = Convert.ToString(reader2["Mail"]);
+                            }
                         }
 
 
@@ -481,12 +484,23 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         cbTipoDeHabitacion.Items.Add(reader[0]); //carga los tipos de habitacion en el combo box
                     reader.Close();
                     cbTipoDeHabitacion.SelectedIndex = 0;
+                    SqlCommand comando2 = null;
+                    if (Program.idUsuario != 0)
+                    {//si no se entro como invitado
+                        string consulta2 = "SELECT r.Descripcion "
+                                         + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel h "
+                                         + "WHERE r.ID_Regimen = h.ID_Regimen AND h.ID_Hotel = " + BaseDeDatos.agregarApostrofos(Program.idHotel.ToString());
+                        comando2 = new SqlCommand(consulta2, conexion);
+                    }
+                    else 
+                    {//si se entro como invitado, no se conoce el hotel logueado asi que la consulta de arriba no generaba regimenes
+                        string consulta2 = "SELECT DISTINCT r.Descripcion "
+                                         + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel h "
+                                         + "WHERE r.ID_Regimen = h.ID_Regimen ";
+                        comando2 = new SqlCommand(consulta2, conexion);
+                    }
 
-                    string consulta2 = "SELECT r.Descripcion "
-                                     + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel h "
-                                     + "WHERE r.ID_Regimen = h.ID_Regimen AND h.ID_Hotel = " + BaseDeDatos.agregarApostrofos(Program.idHotel.ToString());
-
-                    SqlCommand comando2 = new SqlCommand(consulta2, conexion);
+                    
                     SqlDataReader reader2 = comando2.ExecuteReader();
                     while (reader2.Read())
                         cbTipoDeRegimen.Items.Add(reader2[0]); //carga los tipos de regimen en el combo box
