@@ -105,6 +105,7 @@ namespace FrbaHotel.Cancelar_Reserva
                                     comando.Parameters.Add(new SqlParameter("@ID_Reserva", txbNumeroDeReserva.Text));
                                     comando.Parameters.Add(new SqlParameter("@Motivo", txbMotivo.Text)); ;
                                     comando.Parameters.Add(new SqlParameter("@ID_Usuario", Program.idUsuario));
+                                    comando.ExecuteNonQuery();
                                     MessageBox.Show("Reserva Cancelada Correctamente", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                                 else
