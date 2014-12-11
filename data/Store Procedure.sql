@@ -756,7 +756,7 @@ BEGIN
 	AND YEAR(p.Fecha) = @ano
 	AND MONTH(p.Fecha) BETWEEN @inicio_trimestre AND @fin_trimestre
 	GROUP BY c.ID_Cliente,p.ID_Cliente, c.Nombre, c.Apellido
-	ORDER BY PUNTO DESC
+	
 END;
 
 GO
