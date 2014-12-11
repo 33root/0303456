@@ -43,7 +43,7 @@ DROP PROCEDURE AEFI.actualizar_Hotel;
 DROP PROCEDURE AEFI.actualizar_cliente;
 DROP PROCEDURE AEFI.insertar_cliente;
 DROP PROCEDURE AEFI.crear_Hotel;
-
+DROP PROCEDURE AEFI.modificar_Reserva
 
 DROP TABLE [AEFI].[TL_Registro_Evento];
 DROP TABLE [AEFI].[TL_Puntos_Por_Factura];
