@@ -99,19 +99,38 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 if ((cbTipoDeRegimen.SelectedItem.ToString() != "Pension Completa") || (cbTipoDeRegimen.SelectedItem.ToString() != "Media Pensión")
                     || (cbTipoDeRegimen.SelectedItem.ToString() != "All Inclusive moderado") || (cbTipoDeRegimen.SelectedItem.ToString() != "All inclusive"))
                 {
-                    //significa que el usuario no tiene en claro el regimen que desea
-                    string consulta = "SELECT h.ID_Habitacion, h.Numero, r.Descripcion, r.Precio_Base "
-                                     + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p, AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion th "
-                                     + "WHERE p.ID_Hotel = "+ BaseDeDatos.agregarApostrofos(Program.idHotel.ToString()) +" AND r.ID_Regimen = p.ID_Regimen "
-                                     + " AND h.ID_Hotel = p.ID_Hotel AND h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion AND th.Descripcion = " + BaseDeDatos.agregarApostrofos(cbTipoDeHabitacion.SelectedItem.ToString());
-                                     
+                    if (Program.idUsuario != 0)
+                    {
+                        //significa que el usuario no tiene en claro el regimen que desea
+                        string consulta = "SELECT h.ID_Habitacion, h.Numero, r.Descripcion, r.Precio_Base "
+                                         + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p, AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion th "
+                                         + "WHERE p.ID_Hotel = " + BaseDeDatos.agregarApostrofos(Program.idHotel.ToString()) + " AND r.ID_Regimen = p.ID_Regimen "
+                                         + " AND h.ID_Hotel = p.ID_Hotel AND h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion AND th.Descripcion = " + BaseDeDatos.agregarApostrofos(cbTipoDeHabitacion.SelectedItem.ToString());
 
-                    //cargar la tabla con descripcion y precio base del hotel
-                    DataTable tabla = new DataTable();
-                    SqlCommand comando2 = new SqlCommand(consulta, conexion);
-                    SqlDataAdapter adapter = new SqlDataAdapter(comando2);
-                    adapter.Fill(tabla);
-                    dataGridView1.DataSource = tabla;
+
+                        //cargar la tabla con descripcion y precio base del hotel
+                        DataTable tabla = new DataTable();
+                        SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                        SqlDataAdapter adapter = new SqlDataAdapter(comando2);
+                        adapter.Fill(tabla);
+                        dataGridView1.DataSource = tabla;
+                    }
+                    else 
+                    {
+                        //significa que el usuario no tiene en claro el regimen que desea
+                        string consulta = "SELECT o.Nombre, h.ID_Habitacion, h.Numero, r.Descripcion, r.Precio_Base "
+                                         + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p, AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion th, AEFI.TL_Hotel o "
+                                         + "WHERE p.ID_Hotel = o.ID_Hotel AND r.ID_Regimen = p.ID_Regimen "
+                                         + " AND h.ID_Hotel = p.ID_Hotel AND h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion AND th.Descripcion = " + BaseDeDatos.agregarApostrofos(cbTipoDeHabitacion.SelectedItem.ToString());
+
+
+                        //cargar la tabla con descripcion y precio base del hotel
+                        DataTable tabla = new DataTable();
+                        SqlCommand comando2 = new SqlCommand(consulta, conexion);
+                        SqlDataAdapter adapter = new SqlDataAdapter(comando2);
+                        adapter.Fill(tabla);
+                        dataGridView1.DataSource = tabla;
+                    }
 
                 }
 
