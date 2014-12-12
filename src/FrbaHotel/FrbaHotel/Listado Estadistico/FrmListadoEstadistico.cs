@@ -129,10 +129,7 @@ namespace FrbaHotel.Listado_Estadistico
             {
                 MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (SqlException exc)
-            {
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+           
             finally
             {
                 conexion.Close();
