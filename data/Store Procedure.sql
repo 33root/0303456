@@ -384,12 +384,13 @@ GO
  AS
  BEGIN
 	declare @RESULTADO NUMERIC(18,2)
-	set @RESULTADO = (SELECT DISTINCT m.Habitacion_Tipo_Porcentual * m.Regimen_Precio
-						FROM gd_esquema.Maestra m, AEFI.TL_Estadia e
-						WHERE e.ID_Estadia = @ID_Estadia 
-						AND m.Reserva_Codigo = e.ID_Reserva
-						AND m.Habitacion_Tipo_Porcentual IS NOT NULL
-						AND m.Regimen_Precio IS NOT NULL
+	set @RESULTADO = (SELECT  th.Porcentual * r.Precio_Base
+						FROM AEFI.TL_Tipo_Habitacion th, AEFI.TL_Regimen r, AEFI.TL_Estadia e, AEFI.TL_Reserva re, AEFI.TL_Habitacion h
+						WHERE e.ID_Estadia = @ID_Estadia
+						AND e.ID_Reserva = re.ID_Reserva
+						AND re.ID_Regimen = r.ID_regimen
+						AND re.ID_Habitacion = h.ID_Habitacion
+						AND h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion
 						)
 	RETURN @RESULTADO
 	END;
