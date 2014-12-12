@@ -14,7 +14,12 @@ namespace FrbaHotel.Facturar_Estadia
 {
     public partial class FrmFacturar : Form
     {
+        DataSet set; 
+        SqlDataAdapter adapter;
        int numeroTarjeta;
+       int filas = 30;
+       int indice = 0;
+       int filasTotal = 0;
         SqlConnection conexion = BaseDeDatos.conectar();
 
         public FrmFacturar()
@@ -26,17 +31,26 @@ namespace FrbaHotel.Facturar_Estadia
         private void FrmFacturar_Load(object sender, EventArgs e)
         {
 
-            String cargarEstadias = "SELECT e.ID_Estadia, e.ID_Reserva, e.Fecha_Inicio, e.Cantidad_Noches, e.ID_Factura FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r, AEFI.TL_Habitacion h WHERE e.ID_Reserva = r.ID_Reserva  AND e.Estado = 0 AND h.ID_Habitacion = r.ID_Habitacion AND h.ID_Hotel = " + Program.idHotel;
+            String cargarEstadias = "SELECT e.ID_Estadia, e.ID_Reserva, e.Fecha_Inicio, e.Cantidad_Noches, e.ID_Factura FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r, AEFI.TL_Habitacion h WHERE e.ID_Reserva = r.ID_Reserva  AND e.Estado = 0 AND h.ID_Habitacion = r.ID_Habitacion AND h.ID_Hotel = " + Program.idHotel + " ORDER BY e.ID_Reserva";
             
             
             try
             {
                 //Cargo las estadias
                 conexion.Open();
-                SqlDataAdapter adapter = new SqlDataAdapter(cargarEstadias, conexion);
-                DataTable tabla = new DataTable();
-                adapter.Fill(tabla);
-                estadiaDGV.DataSource = tabla;
+                SqlCommand comando = new SqlCommand(cargarEstadias, conexion);
+                DataSet setAux = new DataSet();
+                adapter = new SqlDataAdapter(comando);
+                adapter.Fill(setAux);
+                filasTotal = setAux.Tables[0].Rows.Count;
+
+                set = new DataSet();
+                adapter = new SqlDataAdapter(comando);
+                adapter.Fill(set, 0, filas, "Estadias");
+                estadiaDGV.DataSource = set;
+                estadiaDGV.DataMember = "Estadias";
+
+                buttonSig.Enabled = true;
 
 
                 //Cargo los medios de pago
@@ -60,6 +74,33 @@ namespace FrbaHotel.Facturar_Estadia
 
         }
 
+         private void buttonSig_Click(object sender, EventArgs e)
+        {
+            indice += filas;
+            set.Tables["Estadias"].Rows.Clear();
+            adapter.Fill(set, indice, filas, "Estadias");
+            buttonAnt.Enabled = true;
+            if (indice + filas >= filasTotal)
+            {
+                buttonSig.Enabled = false;
+            }
+        }
+
+        private void buttonAnt_Click(object sender, EventArgs e)
+        {
+            indice -= filas;
+            if (indice < 0)
+                indice = 0;
+            set.Tables["Estadias"].Rows.Clear();
+            adapter.Fill(set, indice, filas, "Estadias");
+            buttonSig.Enabled = true;
+            if (indice == 0)
+            {
+                buttonAnt.Enabled = false;
+            }
+        }
+
+     
         private void volverBtn_Click(object sender, EventArgs e)
         {
             FormMenu inicio = new FormMenu();
@@ -242,6 +283,11 @@ namespace FrbaHotel.Facturar_Estadia
         public void setearNumeroTarjeta(int numTarjeta) {
 
             numeroTarjeta = numTarjeta;
+        }
+
+        private void buttonSig_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 

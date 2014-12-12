@@ -44,10 +44,20 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void nuevoHuespedButton_Click(object sender, EventArgs e)
         {
-            FormClienteNuevo c = new FormClienteNuevo();
-            this.Hide();
-            c.ShowDialog();
-            this.Close();
+            if (i == 1)
+            {
+                FormClienteNuevo c = new FormClienteNuevo(1);
+                this.Hide();
+                c.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                FormClienteNuevo c = new FormClienteNuevo();
+                this.Hide();
+                c.ShowDialog();
+                this.Close();
+            }
         }
 
        

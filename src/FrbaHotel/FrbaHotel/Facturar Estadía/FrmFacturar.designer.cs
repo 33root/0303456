@@ -33,6 +33,8 @@
             this.medioDePagoLbl = new System.Windows.Forms.Label();
             this.medioDePagoCmbBox = new System.Windows.Forms.ComboBox();
             this.estadiaDGV = new System.Windows.Forms.DataGridView();
+            this.buttonSig = new System.Windows.Forms.Button();
+            this.buttonAnt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.estadiaDGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,11 +84,36 @@
             this.estadiaDGV.Size = new System.Drawing.Size(731, 297);
             this.estadiaDGV.TabIndex = 1;
             // 
+            // buttonSig
+            // 
+            this.buttonSig.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSig.Cursor = System.Windows.Forms.Cursors.Default;
+            this.buttonSig.Enabled = false;
+            this.buttonSig.Location = new System.Drawing.Point(683, 314);
+            this.buttonSig.Name = "buttonSig";
+            this.buttonSig.Size = new System.Drawing.Size(23, 23);
+            this.buttonSig.TabIndex = 31;
+            this.buttonSig.Text = ">";
+            this.buttonSig.UseVisualStyleBackColor = true;
+            this.buttonSig.Click += new System.EventHandler(this.buttonSig_Click);
+            // 
+            // buttonAnt
+            // 
+            this.buttonAnt.Location = new System.Drawing.Point(648, 314);
+            this.buttonAnt.Name = "buttonAnt";
+            this.buttonAnt.Size = new System.Drawing.Size(29, 23);
+            this.buttonAnt.TabIndex = 8;
+            this.buttonAnt.Text = "<";
+            this.buttonAnt.UseVisualStyleBackColor = true;
+            this.buttonAnt.Click += new System.EventHandler(this.buttonAnt_Click);
+            // 
             // FrmFacturar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(759, 410);
+            this.Controls.Add(this.buttonAnt);
+            this.Controls.Add(this.buttonSig);
             this.Controls.Add(this.estadiaDGV);
             this.Controls.Add(this.medioDePagoCmbBox);
             this.Controls.Add(this.medioDePagoLbl);
@@ -108,5 +135,7 @@
         private System.Windows.Forms.Label medioDePagoLbl;
         private System.Windows.Forms.ComboBox medioDePagoCmbBox;
         private System.Windows.Forms.DataGridView estadiaDGV;
+        private System.Windows.Forms.Button buttonSig;
+        private System.Windows.Forms.Button buttonAnt;
     }
 }
