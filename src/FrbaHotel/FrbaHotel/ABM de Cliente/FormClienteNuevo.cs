@@ -201,13 +201,31 @@ namespace FrbaHotel.ABM_de_Cliente
                         readerId.Read();
                         int id = Convert.ToInt32(readerId[0]);
                         readerId.Close();
-                        conexion.Close();
+                        
 
-                        //significa que si se ingreso un cliente
-                        FormGenerarReserva r = new FormGenerarReserva(id);
-                        this.Hide();
-                        r.ShowDialog();
-                        this.Close();
+                        string cantidadDeClientes = "SELECT COUNT(ID_Cliente) " +
+                                                    "FROM AEFI.TL_Cliente ";
+                        
+                        //perdon Esme la costumbre gana, tengo que crear otro commando :P
+                        SqlCommand comandoCant = new SqlCommand(cantidadDeClientes, conexion);
+                        SqlDataReader readerCant = comandoCant.ExecuteReader();
+                        readerCant.Read();
+                        int cantDeClientesDespues = Convert.ToInt32(readerCant[0]);
+                        
+                        if (cantDeClientesAntes != cantDeClientesDespues)
+                        {//significa que si se ingreso un cliente
+                            FormGenerarReserva r = new FormGenerarReserva(id);
+                            this.Hide();
+                            r.ShowDialog();
+                            this.Close();
+                        }
+                        else
+                        {
+                            FormMenu m = new FormMenu();
+                            this.Hide();
+                            m.ShowDialog();
+                            this.Close();
+                        }
                     }
 
                 }
