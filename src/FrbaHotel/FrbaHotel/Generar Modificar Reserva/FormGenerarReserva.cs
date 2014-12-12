@@ -82,10 +82,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.ToString()));
                 comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.ToString()));
                 comando.Parameters.Add(new SqlParameter("@ID_Cliente", Program.idUsuario));
-                //falta que ivan agregue el campu reservada en la tabla de habitaciones, para checkear hay habitaciones del tipo pedido sin reserva
+                
                 SqlDataReader reader = comando.ExecuteReader();
 
-                // chequeo que no exista otra reserva igual
+                
                 if (reader.HasRows)
                 {
                     throw new Excepciones("Ya existe una reserva con los mismos datos");
@@ -101,14 +101,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 {
                     if (Program.idUsuario != 0)
                     {
-                        //significa que el usuario no tiene en claro el regimen que desea
+                        
                         string consulta = "SELECT h.ID_Habitacion, h.Numero, r.Descripcion, r.Precio_Base "
                                          + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p, AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion th "
                                          + "WHERE p.ID_Hotel = " + BaseDeDatos.agregarApostrofos(Program.idHotel.ToString()) + " AND r.ID_Regimen = p.ID_Regimen "
                                          + " AND h.ID_Hotel = p.ID_Hotel AND h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion AND th.Descripcion = " + BaseDeDatos.agregarApostrofos(cbTipoDeHabitacion.SelectedItem.ToString());
 
 
-                        //cargar la tabla con descripcion y precio base del hotel
+                        
                         DataTable tabla = new DataTable();
                         SqlCommand comando2 = new SqlCommand(consulta, conexion);
                         SqlDataAdapter adapter = new SqlDataAdapter(comando2);
@@ -117,14 +117,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     }
                     else 
                     {
-                        //significa que el usuario no tiene en claro el regimen que desea
+                        
                         string consulta = "SELECT o.Nombre, h.ID_Habitacion, h.Numero, r.Descripcion, r.Precio_Base "
                                          + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel p, AEFI.TL_Habitacion h, AEFI.TL_Tipo_Habitacion th, AEFI.TL_Hotel o "
                                          + "WHERE p.ID_Hotel = o.ID_Hotel AND r.ID_Regimen = p.ID_Regimen "
                                          + " AND h.ID_Hotel = p.ID_Hotel AND h.ID_Tipo_Habitacion = th.ID_Tipo_Habitacion AND th.Descripcion = " + BaseDeDatos.agregarApostrofos(cbTipoDeHabitacion.SelectedItem.ToString());
 
 
-                        //cargar la tabla con descripcion y precio base del hotel
+                        
                         DataTable tabla = new DataTable();
                         SqlCommand comando2 = new SqlCommand(consulta, conexion);
                         SqlDataAdapter adapter = new SqlDataAdapter(comando2);
@@ -140,7 +140,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 reader = comando.ExecuteReader();
 
                 if(!(reader.HasRows)){
-                    //si no encontro ninguna coincidencia
+                    
                     throw new Excepciones("El tipo de habitacion elegido no tiene la capacidad que usted eligio de huespedes");
                 } else
                     {
@@ -251,7 +251,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                                                                + "WHERE Mail = @Mail ";
 
                         SqlCommand comando2 = new SqlCommand(consultaSiElUsuarioEsYaCliente, conexion);
-                        comando2.Parameters.Add("@Mail", Program.mailUsuario); //ESTO SE TIENE QUE CARGAR EN EL LOGIN, ya que en los clientes el Mail es lo que no se repite, comparar por ID no tiene sentido
+                        comando2.Parameters.Add("@Mail", Program.mailUsuario);
                         SqlDataReader reader2 = comando2.ExecuteReader();
                         reader2.Read();
 
@@ -275,7 +275,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                             SqlCommand comandoId = new SqlCommand(consultaID, conexion);
                             SqlDataAdapter adapter2 = new SqlDataAdapter(comandoId);
-                            //string id = adapter2.ToString();// me parece que esto no esta bien, pero lo de abajo me dice que no se pudo enlazar el mail
+                            
                             SqlDataReader readerId = comandoId.ExecuteReader();
                             readerId.Read();
                             int id = Convert.ToInt32(readerId["ID_Cliente"]);
@@ -290,9 +290,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                                 comando = new SqlCommand("AEFI.modificar_Reserva",conexion);
                             }
                             
-                            //DateTime fechaAcutal = new DateTime();
+                            
                             comando.CommandType = CommandType.StoredProcedure;
-                            //comando.Parameters.Add(new SqlParameter("@Fecha_Reserva", fechaAcutal.Date));
+                            
                             comando.Parameters.Add(new SqlParameter("@Fecha_Desde", Convert.ToDateTime(dtpDesde.Value)));
                             comando.Parameters.Add(new SqlParameter("@Cantidad_Huespedes", txbCantidadDeHuespedes.Text));
                             comando.Parameters.Add(new SqlParameter("@Cantidad_Noches", txbCantidadDeNoches.Text));
@@ -305,11 +305,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                             if (flag != "TeAbrieronDesdeModificarReserva")
                             {
-                                comando.Parameters.Add(new SqlParameter("@Estado", /*BaseDeDatos.agregarApostrofos(*/"Correcta"/*)*/));
+                                comando.Parameters.Add(new SqlParameter("@Estado", "Correcta"));
                             }
                             else
                             {
-                                comando.Parameters.Add(new SqlParameter("@Estado", /*BaseDeDatos.agregarApostrofos(*/"Modificada"/*)*/));
+                                comando.Parameters.Add(new SqlParameter("@Estado", "Modificada"));
                             }
 
                             if (flag != "TeAbrieronDesdeModificarReserva")
@@ -327,7 +327,18 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                             if (flag != "TeAbrieronDesdeModificarReserva")
                             {
-                                MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                string idReservaCreada = "SELECT ID_Reserva " +
+                                                         "FROM AEFI.TL_Reserva " +
+                                                         "WHERE ID_Cliente = " + BaseDeDatos.agregarApostrofos(id.ToString()) + " AND Cantidad_Huespedes = " + 
+                                                         BaseDeDatos.agregarApostrofos(txbCantidadDeHuespedes.Text) + 
+                                                         " AND Cantidad_Noches = " + BaseDeDatos.agregarApostrofos(txbCantidadDeNoches.Text) ;
+
+                                SqlCommand comandoIdReservaCreada = new SqlCommand(idReservaCreada,conexion);
+                                SqlDataReader readerIdReservaCreada = comandoIdReservaCreada.ExecuteReader();
+                                readerIdReservaCreada.Read();
+                                int idDeLaReservaRecienCreada = Convert.ToInt32(readerIdReservaCreada[0]);
+
+                                MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel. El codigo de la reserva es:" + idDeLaReservaRecienCreada.ToString(), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             else
                             {
@@ -363,8 +374,18 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         comando.Parameters.Add(new SqlParameter("@ID_Cliente", this.idCliente));
                         comando.ExecuteNonQuery();
 
-                        MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        string idReservaCreada = "SELECT ID_Reserva " +
+                                                         "FROM AEFI.TL_Reserva " +
+                                                         "WHERE ID_Cliente = " + BaseDeDatos.agregarApostrofos(this.idCliente.ToString()) + " AND Cantidad_Huespedes = " +
+                                                         BaseDeDatos.agregarApostrofos(txbCantidadDeHuespedes.Text) +
+                                                         " AND Cantidad_Noches = " + BaseDeDatos.agregarApostrofos(txbCantidadDeNoches.Text);
 
+                        SqlCommand comandoIdReservaCreada = new SqlCommand(idReservaCreada, conexion);
+                        SqlDataReader readerIdReservaCreada = comandoIdReservaCreada.ExecuteReader();
+                        readerIdReservaCreada.Read();
+                        int idDeLaReservaRecienCreada = Convert.ToInt32(readerIdReservaCreada[0]);
+
+                        MessageBox.Show("Reserva Ingresada. Usted ya es cliente de este hotel. El codigo de la reserva es:" + idDeLaReservaRecienCreada.ToString(), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.CancelarButton_Click(this, e);
                     }
 
@@ -500,19 +521,19 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     SqlCommand comando = new SqlCommand(consulta, conexion);
                     SqlDataReader reader = comando.ExecuteReader();
                     while (reader.Read())
-                        cbTipoDeHabitacion.Items.Add(reader[0]); //carga los tipos de habitacion en el combo box
+                        cbTipoDeHabitacion.Items.Add(reader[0]); 
                     reader.Close();
                     cbTipoDeHabitacion.SelectedIndex = 0;
                     SqlCommand comando2 = null;
                     if (Program.idUsuario != 0)
-                    {//si no se entro como invitado
+                    {
                         string consulta2 = "SELECT r.Descripcion "
                                          + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel h "
                                          + "WHERE r.ID_Regimen = h.ID_Regimen AND h.ID_Hotel = " + BaseDeDatos.agregarApostrofos(Program.idHotel.ToString());
                         comando2 = new SqlCommand(consulta2, conexion);
                     }
                     else 
-                    {//si se entro como invitado, no se conoce el hotel logueado asi que la consulta de arriba no generaba regimenes
+                    {
                         string consulta2 = "SELECT DISTINCT r.Descripcion "
                                          + "FROM AEFI.TL_Regimen r, AEFI.TL_Regimen_Por_Hotel h "
                                          + "WHERE r.ID_Regimen = h.ID_Regimen ";
@@ -522,7 +543,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     
                     SqlDataReader reader2 = comando2.ExecuteReader();
                     while (reader2.Read())
-                        cbTipoDeRegimen.Items.Add(reader2[0]); //carga los tipos de regimen en el combo box
+                        cbTipoDeRegimen.Items.Add(reader2[0]);
                     reader.Close();
                     cbTipoDeRegimen.Items.Add("");
                     cbTipoDeRegimen.SelectedIndex = 0;

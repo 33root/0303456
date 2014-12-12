@@ -97,13 +97,13 @@ namespace FrbaHotel.ABM_de_Cliente
         {//BUSCAR
             String consulta = "SELECT c.ID_Cliente, c.Nombre, c.Apellido, t.Descripcion, c.Documento_Nro, " +
                                      "c.Mail, c.Telefono, c.Fecha_Nacimiento, c.Calle, c.Calle_Nro, c.Piso, c.Dpto, " +
-                                     "c.Localidad " + //la tabla clientes no tiene la codigo postal
+                                     "c.Localidad " + 
                               "FROM AEFI.TL_Cliente c " +
                               "JOIN AEFI.TL_Tipo_Documento t ON (c.ID_Tipo_Documento = t.ID_Tipo_Documento) " +
                               "WHERE c.ID_Cliente > 0 ";
 
 
-            //Se castean los tipos para que se puedan mostrar y/o ingresar en los campos, ademas de para poder buscar cuando algunos son null
+            
             if (!String.IsNullOrEmpty(cbTipoDeDocumento.SelectedItem.ToString()))
             {
                 consulta = consulta + " AND t.Descripcion = @Tipo_Documento ";
@@ -184,7 +184,7 @@ namespace FrbaHotel.ABM_de_Cliente
         {
             foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             {
-                FormClienteNuevo alta = new FormClienteNuevo(1, row.Cells);// la otra clase no esta terminada :P
+                FormClienteNuevo alta = new FormClienteNuevo(1, row.Cells);
                 this.Hide();
                 alta.ShowDialog();
                 this.Close();

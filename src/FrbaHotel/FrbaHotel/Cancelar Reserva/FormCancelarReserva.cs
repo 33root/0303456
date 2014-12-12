@@ -45,7 +45,7 @@ namespace FrbaHotel.Cancelar_Reserva
                 SqlDataReader reader = comando.ExecuteReader();
                 reader.Read();
                 DateTime fechaInicioReserva = Convert.ToDateTime(reader["Fecha_Desde"]);
-                //reader.Close();
+                
 
                 string obtenerIdDelHotelDelUsuarioLogueado = "SELECT ID_Hotel " +
                                                              "FROM AEFI.TL_Usuario_Por_Hotel " +
@@ -55,7 +55,7 @@ namespace FrbaHotel.Cancelar_Reserva
                 reader = comando.ExecuteReader();
                 reader.Read();
                 int idHotel = Convert.ToInt32(reader[0]);
-                //reader.Close();
+                
 
                 string obtenerIdDelHotelDeLaReserva = "SELECT h.ID_Hotel " +
                                                       "FROM AEFI.TL_Regimen_Por_Hotel h, AEFI.TL_Reserva r " +
@@ -65,7 +65,7 @@ namespace FrbaHotel.Cancelar_Reserva
                 reader = comando.ExecuteReader();
                 reader.Read();
                 int idHotelDeReserva = Convert.ToInt32(reader[0]);
-                //reader.Close();
+                
 
                 string elIdDeLaReservaDelTxbExiste = "SELECT ID_Reserva " +
                                                      "FROM AEFI.TL_Reserva " +
@@ -96,7 +96,7 @@ namespace FrbaHotel.Cancelar_Reserva
                     {
                         if (reader2.HasRows)
                         {
-                            if (/*idHotel*/ Program.idHotel == idHotelDeReserva)
+                            if ( Program.idHotel == idHotelDeReserva)
                             {
                                 if (1 <= (fechaInicioReserva - DateTime.Now).TotalDays)
                                 {
