@@ -985,3 +985,21 @@ BEGIN
 	SET Fecha_Desde = @Fecha_Desde, Cantidad_Huespedes = @Cantidad_Huespedes, Cantidad_Noches = @Cantidad_Noches, ID_Regimen = @ID_Regimen, ID_Habitacion = @ID_Habitacion, Estado = @Estado, Fecha_Reserva = GETDATE()
 	WHERE ID_Reserva = @ID_Reserva
 END;
+
+GO
+CREATE PROCEDURE AEFI.crear_Rol
+@Nombre NVARCHAR(255)
+
+AS 
+BEGIN
+	IF NOT EXISTS(SELECT * FROM AEFI.TL_Rol WHERE Descripcion = @Nombre)
+	BEGIN
+	INSERT INTO AEFI.TL_Rol
+	VALUES (@Nombre, 0)
+	
+	INSERT INTO AEFI.TL_Usuario_Por_Rol
+	VALUES((SELECT ID_Rol FROM AEFI.TL_Rol WHERE Descripcion = @Nombre), 1)
+	
+	END
+	
+END;

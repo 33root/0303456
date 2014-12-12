@@ -53,13 +53,6 @@ namespace FrbaHotel.ABM_de_Rol
         
         }
 
-
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             FormRol rol = new FormRol();
@@ -75,8 +68,10 @@ namespace FrbaHotel.ABM_de_Rol
             try
             {
                 conexion.Open();
-                string consulta = "INSERT INTO AEFI.TL_Rol(Descripcion) VALUES ('" + nombreRolTxtBox.Text + "')";
-                SqlCommand comando = new SqlCommand(consulta, conexion);
+                
+                SqlCommand comando = new SqlCommand("AEFI.crear_Rol", conexion);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add(new SqlParameter("@Nombre", nombreRolTxtBox.Text));
                 comando.ExecuteNonQuery();
 
 

@@ -45,7 +45,6 @@
             this.nombreRolLbl.Size = new System.Drawing.Size(80, 13);
             this.nombreRolLbl.TabIndex = 0;
             this.nombreRolLbl.Text = "Nombre del Rol";
-            this.nombreRolLbl.Click += new System.EventHandler(this.label1_Click);
             // 
             // nombreRolTxtBox
             // 
@@ -103,7 +102,7 @@
             this.cancelarBtn.Name = "cancelarBtn";
             this.cancelarBtn.Size = new System.Drawing.Size(107, 39);
             this.cancelarBtn.TabIndex = 6;
-            this.cancelarBtn.Text = "Cancelar";
+            this.cancelarBtn.Text = "Volver";
             this.cancelarBtn.UseVisualStyleBackColor = true;
             this.cancelarBtn.Click += new System.EventHandler(this.button1_Click);
             // 
