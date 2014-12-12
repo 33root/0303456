@@ -77,6 +77,7 @@
             // 
             this.estadiaDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.estadiaDGV.Location = new System.Drawing.Point(16, 13);
+            this.estadiaDGV.MultiSelect = false;
             this.estadiaDGV.Name = "estadiaDGV";
             this.estadiaDGV.Size = new System.Drawing.Size(731, 297);
             this.estadiaDGV.TabIndex = 1;

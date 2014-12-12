@@ -26,7 +26,7 @@ namespace FrbaHotel.Facturar_Estadia
         private void FrmFacturar_Load(object sender, EventArgs e)
         {
 
-            String cargarEstadias = "SELECT e.ID_Estadia, e.ID_Reserva, e.Fecha_Inicio, e.Cantidad_Noches, e.ID_Factura FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r, AEFI.TL_Habitacion h WHERE e.ID_Reserva = r.ID_Reserva  AND e.Estado = 0 AND h.ID_Habitacion = r.ID_Habitacion AND e.Estado = 1 AND h.ID_Hotel = " + Program.idHotel;
+            String cargarEstadias = "SELECT e.ID_Estadia, e.ID_Reserva, e.Fecha_Inicio, e.Cantidad_Noches, e.ID_Factura FROM AEFI.TL_Estadia e, AEFI.TL_Reserva r, AEFI.TL_Habitacion h WHERE e.ID_Reserva = r.ID_Reserva  AND e.Estado = 0 AND h.ID_Habitacion = r.ID_Habitacion AND h.ID_Hotel = " + Program.idHotel;
             
             
             try
@@ -90,9 +90,10 @@ namespace FrbaHotel.Facturar_Estadia
                 {
                     foreach (DataGridViewRow row in estadiaDGV.SelectedRows)
                     {
-                        if ((Convert.ToDateTime(row.Cells["fecha_Inicio"].Value) > DateTime.Now))
+                        if ((Convert.ToDateTime(row.Cells["fecha_Inicio"].Value) > DateTime.Now) || (Convert.ToDateTime(row.Cells["fecha_Inicio"].Value).AddDays(Convert.ToInt32(row.Cells["Cantidad_Noches"].Value)) < DateTime.Now))
                         {
                             MessageBox.Show("La estadia posee información inconsistente. Por favor, contáctese con el administrador", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            conexion.Close();
                             this.FrmFacturar_Load(this, e);
                         }
 
@@ -215,7 +216,11 @@ namespace FrbaHotel.Facturar_Estadia
 
                     }
 
-                    
+
+                }
+                else
+                {
+                    MessageBox.Show("Debe seleccionar una estadía", "", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 }
             }
 
