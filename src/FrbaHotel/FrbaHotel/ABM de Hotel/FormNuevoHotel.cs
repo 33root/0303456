@@ -148,7 +148,7 @@ namespace FrbaHotel.ABM_de_Hotel
                 comando.Parameters.Add(new SqlParameter("@Nombre", tbNombre.Text));
                 comando.Parameters.Add(new SqlParameter("@Mail", tbMail.Text));
                 comando.Parameters.Add(new SqlParameter("@Telefono", tbTelefono.Text));
-                //comando.Parameters.Add(new SqlParameter("@Regimen", cbRegimen.Text));
+               
                 comando.Parameters.Add(new SqlParameter("@Cantidad_Estrellas", tbCantEstrellas.Text));
                 comando.Parameters.Add(new SqlParameter("@Fecha_Creacion", Program.fecha));
                 comando.Parameters.Add(new SqlParameter("@NroCalle", tbNroCalle.Text));
@@ -160,7 +160,16 @@ namespace FrbaHotel.ABM_de_Hotel
 
                 SqlDataReader dr = comando.ExecuteReader();
 
-                MessageBox.Show("El Hotel se creo satisfactoriamente", "Hotel Creado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (x == 0)
+                {
+                    MessageBox.Show("El Hotel se creo satisfactoriamente", "Hotel Creado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (x == 1)
+                {
+                    MessageBox.Show("El Hotel se actualizo correctamente", "Habitacion Creada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+               
 
             }
             catch (Excepciones exc)

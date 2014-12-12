@@ -19,6 +19,7 @@ namespace FrbaHotel.ABM_de_Habitacion
         public FormListaHabitacion()
         {
             InitializeComponent();
+            cmbVista.Items.Add("");
             cmbVista.Items.Add("S");
             cmbVista.Items.Add("N");
             cmbTHabitacion.Items.Add("");
@@ -93,7 +94,9 @@ namespace FrbaHotel.ABM_de_Habitacion
         {
             dgvHabitaciones.DataSource = null;
             tbNumero.Clear();
-            /*falta ver como limpiar los CMB */
+            cmbTHabitacion.SelectedIndex = 0;
+            cmbVista.SelectedIndex = 0;
+          
             
             
         }

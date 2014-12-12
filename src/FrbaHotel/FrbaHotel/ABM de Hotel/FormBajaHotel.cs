@@ -72,19 +72,11 @@ namespace FrbaHotel.ABM_de_Hotel
             }
             catch (SqlException exc)
             {
-                
-                    MessageBox.Show("El Hotel no se puede dar de Baja, revise que no existan Reservas o Estadias en el Periodo de Baja", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               
+                    MessageBox.Show("El Hotel no se puede dar de Baja, revise que no existan Reservas o Estadias en el Periodo de Baja o que ya no este dado de Baja", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 
             }
-                
-            
-            
-
-                
-                
-            /*{
-                MessageBox.Show(exc.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
+               
             finally
             {
                 conexion.Close();

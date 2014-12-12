@@ -16,13 +16,24 @@ CREATE PROCEDURE AEFI.crear_Hotel
 
 AS
 BEGIN
-		IF NOT EXISTS (SELECT * FROM AEFI.TL_Hotel h WHERE Nombre = @Nombre AND Nro_Calle = @NroCalle)
+		IF NOT EXISTS (SELECT * FROM AEFI.TL_Hotel h WHERE Nombre = @Nombre AND Mail = @Mail)
 	BEGIN
 			INSERT INTO AEFI.TL_Hotel(Nombre, Mail, Telefono, Calle, Cantidad_Estrellas, Ciudad, Pais, Fecha_Creacion, Nro_Calle, Recarga_Estrellas, Estado)
 			VALUES (@Nombre, @Mail, @Telefono, @Calle, @Cantidad_Estrellas, @Ciudad, @Pais, @Fecha_Creacion, @NroCalle, @Recarga_Estrellas, 'Habilitado')
+			
+			INSERT INTO AEFI.TL_Usuario_Por_Hotel(ID_Hotel, ID_Usuario, ID_Rol)
+			Select h.ID_Hotel, 1, 1 FROM AEFI.TL_Hotel h Where @Nombre = h.Nombre AND @Mail = h.Mail
+			
+			INSERT INTO AEFI.TL_Usuario_Por_Hotel(ID_Hotel, ID_Usuario, ID_Rol)
+			Select h.ID_Hotel, 1, 1 FROM AEFI.TL_Hotel h Where @Nombre = h.Nombre AND @Mail = h.Mail
+			
+			INSERT INTO AEFI.TL_Usuario_Por_Hotel(ID_Hotel, ID_Usuario, ID_Rol)
+			Select h.ID_Hotel, 1, 1 FROM AEFI.TL_Hotel h Where @Nombre = h.Nombre AND @Mail = h.Mail
+	
 	END;
-
+	
 END;
+
 
 
 GO
@@ -36,6 +47,7 @@ CREATE PROCEDURE AEFI.actualizar_Hotel
 		@Calle nvarchar(255),
 		@Cantidad_Estrellas numeric(18,0),
 		@Recarga_Estrellas numeric(18,0),
+		@Fecha_Creacion datetime,
 		@Ciudad nvarchar(255),
 		@Pais nvarchar(255),
 		@NroCalle numeric(18,0)
@@ -51,12 +63,10 @@ BEGIN
 						
 	END;	
 			
-END;	
-	
+END;		
 	
 
 GO
-
 CREATE PROCEDURE AEFI.baja_Hotel
 
 		@ID_Hotel numeric(18,0),
@@ -68,15 +78,32 @@ AS
 
 
 BEGIN
-										
+
+IF NOT EXISTS (Select * FROM AEFI.TL_Hotel h WHERE h.Estado = 'Deshabilitado' AND h.ID_Hotel = @ID_Hotel)
+	Begin
+
+	IF (NOT EXISTS (SELECT * FROM AEFI.TL_Reserva re, AEFI.TL_Habitacion ha WHERE ha.ID_Hotel = @ID_Hotel AND re.ID_Habitacion = ha.ID_Habitacion AND re.Fecha_Desde BETWEEN @Fecha_Inicio AND @Fecha_Fin AND @ID_Hotel = ha.ID_Hotel) AND NOT EXISTS 
+	(SELECT * 
+	FROM AEFI.TL_Estadia es, AEFI.TL_Reserva re, AEFI.TL_Habitacion ha 
+	WHERE es.ID_Reserva = re.ID_Reserva
+	AND re.ID_Habitacion = ha.ID_Habitacion
+	AND ha.ID_Hotel = @ID_Hotel
+	AND es.Fecha_Inicio BETWEEN @Fecha_Inicio AND @Fecha_Fin))
+	BEGIN 
 	INSERT INTO AEFI.TL_Baja_Hotel (Fecha_Inicio, Fecha_Fin, Descripcion, ID_Hotel)
 	VALUES (@Fecha_Inicio, @Fecha_Fin, @Descripcion, @ID_Hotel)
 	
 	UPDATE AEFI.TL_Hotel
 	SET Estado = 'Deshabilitado'
 	WHERE @ID_Hotel = ID_Hotel
+END
+ELSE
 
-	
+RAISERROR(61111, 1, 1)
+END
+ELSE 
+
+RAISERROR (61112 , 1, 1)	
 END;
 	
 	
@@ -105,7 +132,6 @@ BEGIN
 	END;
 
 END;
-
 
 
 GO
@@ -147,7 +173,6 @@ BEGIN
 	
 	
 END;
-
 
 GO
 
